@@ -1,4 +1,4 @@
-![SearchUnveil by Atelance. See how your website gets found.](assets/searchunveil-kinetic-cover.svg)
+![SearchUnveil in large gold letters, with subtle moving engraved contours contained within each letter.](assets/searchunveil-type-hero.gif)
 
 <p align="center"><strong>Understand how your website gets found.</strong></p>
 <p align="center">Website audits · Search performance · AI search visibility</p>
