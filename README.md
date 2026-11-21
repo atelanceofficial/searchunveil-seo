@@ -1,67 +1,81 @@
-# SearchUnveil
+![Atelance SearchUnveil. See how your website gets found.](assets/searchunveil-cover.svg)
 
-**See how your website gets found.**
+<p align="center"><strong>Make sense of your website's visibility.</strong></p>
+<p align="center">SEO audits · Search analytics · AI search visibility</p>
 
-SearchUnveil is an SEO and AI search visibility project by **Atelance**. Our goal is to make website analysis, search performance, and online visibility easier to understand.
+> [!IMPORTANT]
+> **SearchUnveil is in development.** This page explains what we plan to build. There is no public release or working installation yet.
 
-> **Status: In development.** SearchUnveil is not yet a finished product. The features below describe our plans, not capabilities available today.
+## One clear view of your website
 
-## Why we're building it
+SearchUnveil is a project by **Atelance**. We want to make it easier to understand how a website appears in search, what the numbers mean, and what to look at next.
 
-Understanding a website's visibility can mean switching between reports, searching for technical explanations, and guessing which findings matter most.
+Today, that information can be scattered across reports and tools. Our goal is to bring the important parts together and explain them in plain language.
 
-SearchUnveil aims to bring those signals into a clearer experience, so website owners and teams can understand what they see and decide what to investigate next.
+## What we're building
 
-## What we're planning
+| Area | What it will help you do |
+| :--- | :--- |
+| **Website audits** | Check common SEO issues and understand what needs attention. |
+| **Search analytics** | Explore Google Search Console CSV data, including clicks, impressions, pages, and queries. |
+| **AI visibility** | Keep a record of AI search mentions and citations, with sources and dates when available. |
+| **Clear reports** | See useful charts and explanations instead of complicated dashboards. |
+| **Seven languages** | Use the product in English, Spanish, German, French, Turkish, Simplified Chinese, and Arabic. |
 
-| Area | What we want to make easier |
-| --- | --- |
-| **Website audits** | Review common SEO issues and explain findings in plain language. |
-| **Search performance** | Explore trends in search queries, pages, clicks, and impressions using Google Search Console CSV exports. |
-| **AI search visibility** | Record and review observed mentions or citations of a website in AI-generated search answers. |
-| **Visual insights** | Turn complex data into clear, interactive charts and understandable summaries. |
-| **Multilingual experience** | Make the product approachable in English, Spanish, German, French, Turkish, Simplified Chinese, and Arabic. |
+These are **planned features**, not available tools. AI mentions are observations, not a complete measurement of AI search visibility. SearchUnveil will not guarantee traffic or rankings.
 
-**Important:** These are planned capabilities. AI citation observations are not a complete measure of visibility, and no feature can guarantee search rankings or traffic.
+## How the information will flow
 
-## Our principles
+Our proposed design keeps three types of information separate, then presents them in one clear view.
 
-- **Clarity first.** Prefer simple explanations over unnecessary jargon.
-- **Useful context.** Show what a finding means and where it comes from.
-- **Honest reporting.** Make uncertainty and limitations visible.
-- **Thoughtful design.** Prioritize accessibility, speed, and ease of use.
-- **Responsible development.** Consider security and privacy before handling user data.
+```mermaid
+flowchart TD
+    A[Website pages] --> D[Check and organize]
+    B[Search Console CSV] --> D
+    C[Recorded AI mentions] --> D
+    D --> E[Explain the findings]
+    E --> F[Charts and next steps]
+```
 
-## Roadmap
+*This is a product concept, not a diagram of a deployed system.*
 
-This is an early outline and may change as the product develops.
+## Built with care
 
-- [ ] Define the initial scope and user experience.
-- [ ] Build an early website audit prototype.
-- [ ] Prototype Google Search Console CSV analysis.
-- [ ] Explore a manual AI mention and citation log.
-- [ ] Develop clear dashboards and insight explanations.
-- [ ] Test accessibility, translations, privacy, and security.
-- [ ] Publish release and setup instructions when a usable version is ready.
+We want the product to feel simple without cutting corners in its engineering.
 
-## Follow the project
+- **Clear evidence.** Show where insights come from and explain their limits.
+- **Secure by design.** Plan for safe file imports, input validation, and careful handling of private data.
+- **Fast and accessible.** Design for mobile screens, keyboard navigation, and readable contrast.
+- **Reliable changes.** Introduce automated tests and code checks as development progresses.
+- **Natural language.** Write short explanations and review translations for clarity.
 
-This repository is where we plan to document SearchUnveil's development.
+## Development roadmap
 
-- **Watch** the repository to follow updates.
-- [Open an issue](https://github.com/atelanceofficial/searchunveil-seo/issues) to suggest a feature or share feedback.
-- Check the roadmap above for the current direction.
+| Stage | Status | Focus |
+| :--- | :--- | :--- |
+| Product planning | **In progress** | Shape the first release and user journeys. |
+| Core prototype | Planned | Website checks and Search Console CSV exploration. |
+| Insight experience | Planned | AI mention log, interactive charts, and clear explanations. |
+| Quality and access | Planned | Accessibility, translations, security testing, and documentation. |
+| Public release | Not announced | Publish a usable version when it is ready. |
 
-Please do not post passwords, API keys, private website data, or other sensitive information in public issues.
+The roadmap may change as we learn. We have not announced a release date.
+
+## Follow the progress
+
+We are documenting development here on GitHub.
+
+**[Watch the repository](https://github.com/atelanceofficial/searchunveil-seo)** to follow updates, or **[share feedback in an issue](https://github.com/atelanceofficial/searchunveil-seo/issues/new)** if there is a problem you would like SearchUnveil to solve.
+
+Please do not share passwords, API keys, or private website data in a public issue.
 
 ## Availability and licensing
 
-SearchUnveil is in development. There is no public stable release or installation guide yet.
+SearchUnveil is **not available to install or use yet**. There is no public demo or stable release in this repository.
 
-A software license has not been selected for this repository. Public visibility does **not** mean that the source code is available under an open source license. Licensing and contribution guidelines will be clarified before a broader code release.
+This repository currently has **no software license**. Being public on GitHub does not grant an open source license. We will clarify code usage and contribution terms before any wider release.
 
 ---
 
-**SearchUnveil is a project by Atelance.**
-
-*Better understanding starts with a clearer view.*
+<p align="center"><strong>SearchUnveil</strong> · An Atelance project</p>
+<p align="center"><em>See how your website gets found.</em></p>
