@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="350" viewBox="0 0 1280 350" role="img" aria-labelledby="title desc">
+<title id="title">Atelance SearchUnveil</title>
+<desc id="desc">A minimalist dark editorial banner with an abstract luminous lens, fine geometric rings and flowing search data lines.</desc>
+<defs>
+<linearGradient id="backdrop" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#111B22"/><stop offset="0.6" stop-color="#0B1319"/><stop offset="1" stop-color="#12212A"/></linearGradient>
+<linearGradient id="gold" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A99063"/><stop offset="0.56" stop-color="#E6D4A9"/><stop offset="1" stop-color="#B69A6E"/></linearGradient>
+<linearGradient id="wave" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#6D938E" stop-opacity="0"/><stop offset="0.45" stop-color="#A5D5CF" stop-opacity="0.86"/><stop offset="1" stop-color="#D9C393" stop-opacity="0.72"/></linearGradient>
+<radialGradient id="haze"><stop offset="0" stop-color="#6EA5A3" stop-opacity="0.17"/><stop offset="1" stop-color="#6EA5A3" stop-opacity="0"/></radialGradient>
+<clipPath id="clip"><rect width="1280" height="350" rx="22"/></clipPath>
+</defs>
+<g clip-path="url(#clip)">
+<rect width="1280" height="350" fill="url(#backdrop)"/><circle cx="1070" cy="175" r="270" fill="url(#haze)"/>
+<g stroke="#7D9D9C" stroke-width="1" opacity="0.12">
+<path d="M762 38H1246 M762 82H1246 M762 126H1246 M762 170H1246 M762 214H1246 M762 258H1246 M762 302H1246"/>
+<path d="M802 20V330 M846 20V330 M890 20V330 M934 20V330 M978 20V330 M1022 20V330 M1066 20V330 M1110 20V330 M1154 20V330 M1198 20V330"/>
+</g>
+<g fill="none" stroke-width="1.4">
+<circle cx="1030" cy="176" r="137" stroke="#D1B889" opacity="0.38"/>
+<circle cx="1030" cy="176" r="103" stroke="#C9D3CE" opacity="0.32"/>
+<circle cx="1030" cy="176" r="69" stroke="#A3BFB9" opacity="0.44"/>
+<circle cx="1030" cy="176" r="26" stroke="#C3A875" opacity="0.6"/>
+<path d="M1030 20V333 M876 176H1187" stroke="#BCD5CB" opacity="0.20" stroke-dasharray="3 9"/>
+<path d="M893 176 A137 137 0 0 1 1162 141" stroke="url(#gold)" stroke-width="3.3" stroke-linecap="round"/>
+<path d="M1064 79 A103 103 0 0 1 1121 224" stroke="#A6D8D0" stroke-width="2.4" opacity="0.72" stroke-linecap="round"/>
+</g>
+<path d="M736 272 C810 271 841 197 891 197 S966 271 1022 192 S1139 90 1257 145" fill="none" stroke="url(#wave)" stroke-width="3" stroke-linecap="round"/>
+<path d="M750 300 C826 292 872 242 922 254 S1015 284 1065 232 S1171 181 1259 203" fill="none" stroke="#9B927B" opacity="0.45" stroke-width="1.5"/>
+<circle cx="1022" cy="192" r="5" fill="#E8D6AE"/><circle cx="1022" cy="192" r="10" fill="none" stroke="#E8D6AE" stroke-opacity="0.35"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="76" y="72" font-size="21" font-weight="700" letter-spacing="6" fill="#D6C49E">ATELANCE</text>
+<path d="M77 93H646" stroke="#B9B3A4" opacity="0.3"/>
+<text x="74" y="200" font-size="82" font-weight="700" letter-spacing="-3" fill="#F7F6F0">SearchUnveil</text>
+<text x="78" y="248" font-size="26" font-weight="400" fill="#D6DEDA">See how your website gets found.</text>
+<path d="M78 290H137" stroke="url(#gold)" stroke-width="3" stroke-linecap="round"/>
+<text x="153" y="296" font-size="15" font-weight="600" letter-spacing="2.7" fill="#B7C2BD">SEO  /  SEARCH DATA  /  AI VISIBILITY</text>
+</g></g>
+<rect x="0.8" y="0.8" width="1278.4" height="348.4" rx="21" fill="none" stroke="#67817D" opacity="0.32" stroke-width="1.6"/>
+</svg>
