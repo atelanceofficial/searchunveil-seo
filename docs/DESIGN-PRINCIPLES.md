@@ -23,7 +23,7 @@ A user should be able to understand what SearchUnveil is for, what a chart shows
 
 ## Visual direction
 
-The current GitHub cover uses a deep blue-black background, soft off-white typography, warm metallic accents, and fine geometric lines.
+The GitHub cover keeps the black-and-white ATELANCE lettering still on a dark background. Fine green and pearl lines trace the lens beside it. The lens tilts once as light moves across it. Readers who prefer less motion see a still image. [Cover artwork (SVG)](../assets/searchunveil-cover.svg)
 
 | Role | Reference tone | Hex |
 | :--- | :--- | :--- |
