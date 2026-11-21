@@ -1,4 +1,4 @@
-![SearchUnveil by Atelance. See how your website gets found.](assets/searchunveil-cover.svg)
+![SearchUnveil by Atelance. See how your website gets found.](assets/searchunveil-kinetic-cover.svg)
 
 <p align="center"><strong>Understand how your website gets found.</strong></p>
 <p align="center">Website audits · Search performance · AI search visibility</p>
