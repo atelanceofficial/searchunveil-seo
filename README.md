@@ -1,4 +1,4 @@
-![SearchUnveil in large gold letters, with subtle moving engraved contours contained within each letter.](assets/searchunveil-type-hero.gif)
+![SearchUnveil lettering remains stationary while gold holographic lines animate inside every letter.](assets/searchunveil-approved-wordmark.gif)
 
 <p align="center"><strong>Understand how your website gets found.</strong></p>
 <p align="center">Website audits · Search performance · AI search visibility</p>
