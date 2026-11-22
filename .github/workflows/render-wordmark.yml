@@ -1,0 +1,102 @@
+name: Render SearchUnveil kinetic wordmark
+
+on:
+  push:
+    paths:
+      - .github/workflows/render-wordmark.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install font and rendering dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-inter
+          python -m pip install --disable-pip-version-check "Pillow>=11,<13" "numpy>=2,<3"
+      - name: Render animated wordmark
+        shell: bash
+        run: |
+          python - <<'PY'
+          import math, subprocess
+          from pathlib import Path
+          import numpy as np
+          from PIL import Image, ImageDraw, ImageFont
+          W,H=1920,520
+          TEXT='SearchUnveil'
+          Path('assets').mkdir(exist_ok=True)
+          fname=subprocess.check_output(['fc-match','Inter:style=Black','-f','%{file}'],text=True).strip()
+          def render(w,h,phase):
+              sf=w/1920
+              bg=Image.new('RGB',(w,h),(8,10,14))
+              fsize=round(279*sf)
+              font=ImageFont.truetype(fname,fsize)
+              dr=ImageDraw.Draw(bg)
+              while dr.textlength(TEXT,font=font)>w*.95:
+                  fsize-=max(1,round(2*sf))
+                  font=ImageFont.truetype(fname,fsize)
+              mask=Image.new('L',(w,h),0)
+              md=ImageDraw.Draw(mask)
+              box=md.textbbox((0,0),TEXT,font=font)
+              x=(w-(box[2]-box[0]))/2-box[0]
+              y=(h-(box[3]-box[1]))/2-box[1]-4*sf
+              md.text((x,y),TEXT,font=font,fill=255)
+              yy,xx=np.mgrid[0:h,0:w].astype(np.float32)
+              xx/=max(1,w-1);yy/=max(1,h-1)
+              shade=np.clip(.30+.26*np.cos(2*np.pi*(xx-.30))+.07*np.cos(yy*np.pi),.08,.76)
+              shimmer=np.exp(-((xx-(.15+.7*(1-math.cos(phase))/2))/.10)**2)*.28
+              c0=np.array([174,125,67],np.float32)
+              c1=np.array([250,229,186],np.float32)
+              ivory=np.array([248,241,218],np.float32)
+              pix=c0*(1-shade[...,None])+c1*shade[...,None]
+              pix=pix*(1-shimmer[...,None])+ivory*shimmer[...,None]
+              base=Image.fromarray(np.uint8(np.clip(pix,0,255)),'RGB').convert('RGBA')
+              line=Image.new('RGBA',(w,h),(0,0,0,0))
+              pen=ImageDraw.Draw(line,'RGBA')
+              for orb,(cx,cy,sc) in enumerate([(w*.16,h*.52,.92),(w*.48,h*.52,1.16),(w*.83,h*.49,.98)]):
+                  for j in range(61):
+                      s=(j+1)/61
+                      a=np.linspace(0,2*math.pi,170)
+                      radius=(25+310*s)*sf*sc
+                      deformation=(21*np.sin(3*a+.4*np.sin(phase+orb*.9)+.5*s)+15*np.cos(5*a-1.72*s+.72*np.sin(phase+orb*.8)))*(np.sin(math.pi*s)**.72)*sf
+                      rr=radius+deformation
+                      aa=a+.12+.075*np.sin(phase+.15*orb)
+                      tx=rr*np.cos(aa);ty=rr*np.sin(aa)
+                      z=(34*np.sin(2*aa+5*s+.63*np.sin(phase))+10*np.sin(4*aa+2*s-.5*np.cos(phase)))*np.sin(math.pi*s)**.7*sf
+                      px=cx+tx*.96-ty*.265
+                      py=cy+.62*(tx*.265+ty*.96)-.78*z
+                      points=list(zip(px.astype(float),py.astype(float)))
+                      luminance=.5+.5*math.cos((j-21)/61*math.pi)
+                      color=(248,225,164,int(92+105*luminance)) if j%4 else (255,241,201,int(130+97*luminance))
+                      pen.line(points+[points[0]],fill=color,width=max(1,round(1.6*sf)))
+                      if j%6==0:pen.line(points[26:63],fill=(255,251,230,180),width=max(1,round(1.2*sf)))
+                      if j%11==0:pen.line(points[109:137],fill=(171,132,191,100),width=max(1,round(1.1*sf)))
+              comp=Image.alpha_composite(base,line).convert('RGB')
+              bg.paste(comp,(0,0),mask)
+              return bg
+          frame0=render(3840,1040,.9)
+          frame0.save('assets/searchunveil-type-hero.png',optimize=True)
+          frames=[]
+          for i in range(48):
+              img=render(W,H,2*math.pi*i/48)
+              frames.append(img.quantize(colors=176,method=Image.Quantize.FASTOCTREE,dither=Image.Dither.NONE))
+          frames[0].save('assets/searchunveil-type-hero.gif',save_all=True,append_images=frames[1:],duration=100,loop=0,disposal=2,optimize=True)
+          print('GIF and 4K PNG generated')
+          PY
+      - name: Commit generated assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/searchunveil-type-hero.gif assets/searchunveil-type-hero.png
+          if ! git diff --cached --quiet; then
+            git commit -m "design: render SearchUnveil kinetic typography"
+            git push
+          fi
