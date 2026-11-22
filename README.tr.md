@@ -1,19 +1,23 @@
 [English](README.md) · **Türkçe**
 
+# SearchUnveil
+
+Sayfanı kontrol et, Google’da kaç tıklama aldığını gör ve yapay zekâ yanıtlarında sitene verilen bağlantıları kaydet.
+
+*Geliştirme aşamasında. Bir Atelance projesi.*
+
 <picture>
+  <source media="(max-width: 720px) and (prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-mobile-still.png">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-still.png">
-  <img src="assets/searchunveil-cover.png" width="100%" alt="Siyah beyaz ATELANCE yazısının altında SearchUnveil adı, yanında eğri çizgilerden oluşan bir mercek.">
+  <source media="(max-width: 720px)" srcset="assets/searchunveil-cover-mobile.png">
+  <img src="assets/searchunveil-cover.png" width="100%" alt="SearchUnveil adı, siyah beyaz çizgili ATELANCE imzası ve açık yeşil çizgilerle oluşturulmuş bir mercek.">
 </picture>
-
-# Atelance’tan SearchUnveil
-
-**SearchUnveil geliştirme aşamasında.** Bir web sayfasını kontrol edebilecek, Google arama verilerini inceleyebilecek ve yapay zekâ yanıtlarında sitene verilen bağlantıları kaydedebileceksin. Herkese açık sürümün çıkış tarihi henüz belli değil.
 
 ## Neler yapabileceksin?
 
-- **Sayfanı kontrol et.** HTML kodunu yapıştır veya bir HTML dosyası aç. Sonuçta sayfa başlığı, açıklama, ana başlık ve tercih edilen sayfa adresi ayrı ayrı gösterilir. Eksik olanları bir bakışta görebilirsin.
-- **Arama verilerini incele.** Google Search Console’dan indirdiğin CSV dosyasını yükle. Sitenin arama sonuçlarında kaç kez göründüğünü ve kaç tıklama aldığını gör.
-- **Yapay zekâ yanıtındaki bağlantıyı kaydet.** Bir yanıtta sitene bağlantı verildiğinde aracın adını ve bağlantıyı kaydet. Daha sonra kolayca bulmak için soruyu ya da kısa bir notu ekle.
+- **Sayfanı kontrol et.** HTML kodunu yapıştır veya bir HTML dosyası aç. Sayfa başlığı, açıklama, ana başlık ve tercih edilen sayfa adresinden hangilerinin eksik olduğunu gör.
+- **Google arama verilerini incele.** Google Search Console’dan aldığın CSV dosyasını aç. Sitenin aramalarda kaç kez göründüğünü ve kaç tıklama aldığını gör.
+- **Yapay zekâ yanıtındaki bağlantıyı sakla.** Aracın adını ve gördüğün bağlantıyı gir. Yanıtı daha sonra bulabilmek için bir not ekleyebilirsin.
 
 ### Örnek arama raporu
 
@@ -25,7 +29,7 @@
 
 ## Proje hakkında
 
-Arayüz yedi dilde planlanıyor. Bunlar Türkçe, İngilizce, İspanyolca, Almanca, Fransızca, Basitleştirilmiş Çince ve Arapça. Ayrıntılar için İngilizce hazırlanan [teknik planı](docs/TECHNICAL-DIRECTION.md) ve [tasarım ilkelerini](docs/DESIGN-PRINCIPLES.md) okuyabilirsin.
+Herkese açık sürümün çıkış tarihi henüz belli değil. Arayüz yedi dilde planlanıyor. Bunlar Türkçe, İngilizce, İspanyolca, Almanca, Fransızca, Basitleştirilmiş Çince ve Arapça. Ayrıntılar için İngilizce hazırlanan [teknik planı](docs/TECHNICAL-DIRECTION.md) ve [tasarım ilkelerini](docs/DESIGN-PRINCIPLES.md) okuyabilirsin.
 
 Bir sorun veya önerin mi var? [GitHub’da paylaş](https://github.com/atelanceofficial/searchunveil-seo/issues).
 

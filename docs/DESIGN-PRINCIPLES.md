@@ -23,7 +23,7 @@ A user should be able to understand what SearchUnveil is for, what a chart shows
 
 ## Visual direction
 
-The GitHub cover keeps the black-and-white ATELANCE lettering still on a dark background. Fine green and pearl lines trace the lens beside it. The lens tilts once as light moves across it. Readers who prefer less motion see a still image. [Cover artwork (SVG)](../assets/searchunveil-cover.svg)
+SearchUnveil is the main title on the cover. The smaller, black-and-white ATELANCE signature sits above it. A single light passes from the rim of the pearl-and-sage lens toward its center. The mobile artwork uses ten curves with extra space between them. Both sizes have a still version for readers who prefer less motion. [Desktop artwork](../assets/searchunveil-cover.svg) · [Mobile artwork](../assets/searchunveil-cover-mobile.svg)
 
 | Role | Reference tone | Hex |
 | :--- | :--- | :--- |
