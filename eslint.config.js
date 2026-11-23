@@ -13,7 +13,15 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          // Files that run in Node.js next to the web app, typed by its tsconfig.node.json.
+          allowDefaultProject: [
+            'apps/web/vite.config.ts',
+            'apps/web/playwright.config.ts',
+            'apps/web/e2e/*.ts',
+          ],
+          defaultProject: 'apps/web/tsconfig.node.json',
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -37,6 +45,10 @@ export default tseslint.config(
   {
     files: ['**/*.js'],
     ...tseslint.configs.disableTypeChecked,
-    languageOptions: { globals: globals.node },
+    languageOptions: {
+      // Keep disableTypeChecked's parser options: spreading would otherwise replace them.
+      ...tseslint.configs.disableTypeChecked.languageOptions,
+      globals: globals.node,
+    },
   },
 );

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>SearchUnveil</title>
+  <rect width="64" height="64" rx="14" fill="#0b1319"/>
+  <circle cx="28" cy="28" r="14" fill="none" stroke="#d6c49e" stroke-width="5"/>
+  <circle cx="28" cy="28" r="6" fill="none" stroke="#a5d5cf" stroke-width="2.5"/>
+  <path d="M38.5 38.5 L50 50" stroke="#d6c49e" stroke-width="6" stroke-linecap="round"/>
+</svg>

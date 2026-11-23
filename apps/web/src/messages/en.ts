@@ -1,0 +1,191 @@
+/**
+ * English interface text. The source catalog: its keys define `UiMessageKey`, and every
+ * other language must provide exactly the same keys and placeholders (enforced by the
+ * compiler and by tests). Keys start with `ui.` so they can never collide with the engine's.
+ */
+const messages = {
+  'ui.app.tagline': 'Understand how your website gets found.',
+  'ui.app.preview': 'Early preview',
+  'ui.app.local': 'Your files stay on this device.',
+  'ui.app.loading': 'Loading SearchUnveil…',
+  'ui.skip': 'Skip to main content',
+  'ui.nav.label': 'Main',
+  'ui.nav.home': 'Overview',
+  'ui.nav.search-console': 'Search Console',
+  'ui.nav.page-review': 'Page review',
+  'ui.nav.mentions': 'AI mentions',
+  'ui.nav.privacy': 'Your data',
+  'ui.language': 'Language',
+  'ui.theme': 'Theme',
+  'ui.theme.system': 'Match device',
+  'ui.theme.light': 'Light',
+  'ui.theme.dark': 'Dark',
+  'ui.footer.built-by': 'SearchUnveil · Built by Atelance',
+  'ui.footer.status': 'In development. Not a public release.',
+  'ui.footer.privacy': 'No cookies, no analytics, and no network requests after the page loads.',
+  'ui.page-title': '{page} · SearchUnveil',
+
+  'ui.home.title': 'See how your website gets found',
+  'ui.home.lead':
+    'Start with one source of information. Add it, understand it, and decide what to check next.',
+  'ui.home.gsc.title': 'How is my website doing in Google Search?',
+  'ui.home.gsc.text':
+    'Upload a Search Console export to see trends in clicks and appearances, explained in plain language.',
+  'ui.home.gsc.action': 'Analyze an export',
+  'ui.home.page.title': 'Is my page easy to find?',
+  'ui.home.page.text': 'Review a page’s HTML for common search and accessibility issues.',
+  'ui.home.page.action': 'Review a page',
+  'ui.home.mentions.title': 'Where has AI mentioned my website?',
+  'ui.home.mentions.text': 'Keep a dated record of AI answers that mention or cite your site.',
+  'ui.home.mentions.action': 'Open the log',
+  'ui.home.principles': 'How SearchUnveil works',
+  'ui.home.principle.local':
+    'Everything runs in your browser. The files you choose are never uploaded.',
+  'ui.home.principle.evidence': 'Every finding shows the evidence it is based on.',
+  'ui.home.principle.limits': 'Every result says what the data can’t tell you.',
+
+  'ui.file.choose': 'Choose files',
+  'ui.file.choose-one': 'Choose a file',
+  'ui.file.drop': 'or drop them here',
+  'ui.file.drop-one': 'or drop it here',
+  'ui.file.limit': 'ZIP or CSV files, up to {megabytes} MB each.',
+  'ui.file.selected': '{count, plural, one {# file selected} other {# files selected}}',
+
+  'ui.gsc.title': 'Search Console export',
+  'ui.gsc.lead':
+    'Choose the ZIP file that Search Console downloads, or one or more CSV files from it.',
+  'ui.gsc.how': 'How to export from Search Console',
+  'ui.gsc.how.1': 'Open the Performance report in Google Search Console.',
+  'ui.gsc.how.2': 'Choose a date range, ideally the last 3 months.',
+  'ui.gsc.how.3': 'Select Export, then Download CSV.',
+  'ui.gsc.sample': 'Try sample data',
+  'ui.gsc.sample.note': 'The sample is fictional data for example.com.',
+  'ui.gsc.sample.badge': 'Sample data',
+  'ui.gsc.reading': 'Reading your files…',
+  'ui.gsc.ready': 'Analysis ready.',
+  'ui.gsc.failed': 'We couldn’t read these files',
+  'ui.gsc.unexpected':
+    'Something went wrong while reading the files. Nothing was sent anywhere. Try again, or try another export.',
+  'ui.gsc.again': 'Analyze other files',
+  'ui.gsc.what-happened': 'What happened',
+  'ui.gsc.overview': 'Overview',
+  'ui.gsc.covers': 'Covers {range}',
+  'ui.gsc.previous-value': 'Before: {value}',
+  'ui.gsc.findings': 'Findings',
+  'ui.gsc.findings.none': 'No changes or opportunities stood out in this export.',
+  'ui.gsc.notes': 'About this data',
+  'ui.gsc.top-queries': 'Top queries',
+  'ui.gsc.top-pages': 'Top pages',
+  'ui.gsc.files': 'Files read',
+  'ui.gsc.diagnostics': 'Notes about your files',
+
+  'ui.chart.title': '{metric} per day',
+  'ui.chart.description':
+    '{metric} for each day from {start} to {end}. The thicker line shows the 7-day average.',
+  'ui.chart.metric': 'Show',
+  'ui.chart.average': '7-day average',
+  'ui.chart.daily': 'Each day',
+  'ui.chart.lower-better': 'Lower is better',
+  'ui.chart.incomplete': 'Possibly incomplete',
+  'ui.chart.table': 'Show the numbers as a table',
+  'ui.table.date': 'Date',
+
+  'ui.finding.evidence': 'Evidence',
+  'ui.finding.limits': 'Keep in mind',
+  'ui.finding.next': 'What to check next',
+  'ui.finding.sources': 'Sources',
+  'ui.finding.more': 'Limits and sources',
+  'ui.finding.new-tab': '(opens in a new tab)',
+  'ui.location.line': 'line {line}',
+  'ui.location.column': 'column “{column}”',
+
+  'ui.page.title': 'Page review',
+  'ui.page.lead':
+    'Paste a page’s HTML source, or choose a saved HTML file. The review runs on this device.',
+  'ui.page.html': 'Page HTML',
+  'ui.page.html.hint':
+    'In most browsers, open the page, press Ctrl+U (⌥⌘U on a Mac), then select all and copy.',
+  'ui.page.url': 'Page address',
+  'ui.page.url.hint':
+    'Used to compare canonical tags and links with the page. Nothing is downloaded.',
+  'ui.page.file': 'Or choose an HTML file',
+  'ui.page.submit': 'Review page',
+  'ui.page.sample': 'Try a sample page',
+  'ui.page.why-paste':
+    'Why paste instead of entering an address? Fetching pages would require a server. This preview keeps everything on your device.',
+  'ui.page.results': 'Results',
+  'ui.page.reviewed': 'Reviewed {url}',
+  'ui.page.reviewed-pasted': 'Reviewed the HTML you provided',
+  'ui.page.done': 'Review ready.',
+
+  'ui.mentions.title': 'AI mention log',
+  'ui.mentions.lead':
+    'Record when an AI assistant mentions or cites your site. Entries are stored only in this browser.',
+  'ui.mentions.add': 'Add a mention',
+  'ui.mentions.edit-title': 'Edit mention',
+  'ui.mentions.observedOn': 'Date seen',
+  'ui.mentions.assistant': 'AI assistant',
+  'ui.mentions.assistant.hint': 'For example ChatGPT, Gemini or Perplexity.',
+  'ui.mentions.kind': 'Type',
+  'ui.mentions.citedUrl': 'Cited page on your site',
+  'ui.mentions.citedUrl.hint': 'Required when the answer linked to your site.',
+  'ui.mentions.prompt': 'What was asked',
+  'ui.mentions.excerpt': 'What the answer said',
+  'ui.mentions.evidenceUrl': 'Link to the answer',
+  'ui.mentions.evidenceUrl.hint': 'A shared conversation link, if the assistant offers one.',
+  'ui.mentions.method': 'How you saw it',
+  'ui.mentions.certainty': 'How sure are you?',
+  'ui.mentions.notes': 'Notes',
+  'ui.mentions.optional': 'optional',
+  'ui.mentions.save': 'Save mention',
+  'ui.mentions.update': 'Save changes',
+  'ui.mentions.cancel': 'Cancel',
+  'ui.mentions.saved': 'Mention saved.',
+  'ui.mentions.deleted': 'Mention deleted.',
+  'ui.mentions.fix': 'Please correct the fields marked below.',
+  'ui.mentions.list': 'Recorded mentions',
+  'ui.mentions.empty': 'No mentions recorded yet.',
+  'ui.mentions.edit': 'Edit',
+  'ui.mentions.delete': 'Delete',
+  'ui.mentions.delete.confirm': 'Delete this mention? This can’t be undone.',
+  'ui.mentions.summary': 'Summary',
+  'ui.mentions.total': 'Mentions recorded',
+  'ui.mentions.citations': 'With a link to your site',
+  'ui.mentions.uncertain': 'Marked uncertain',
+  'ui.mentions.period': 'First and last seen',
+  'ui.mentions.by-assistant': 'By assistant',
+  'ui.mentions.by-month': 'By month',
+  'ui.mentions.cited-pages': 'Most cited pages',
+  'ui.mentions.count': 'Mentions',
+  'ui.mentions.export': 'Keep a copy',
+  'ui.mentions.export.json': 'Download log (JSON)',
+  'ui.mentions.export.csv': 'Download for spreadsheets (CSV)',
+  'ui.mentions.import': 'Import a log',
+  'ui.mentions.imported': '{count, plural, one {# mention imported.} other {# mentions imported.}}',
+  'ui.mentions.clear': 'Delete all mentions',
+  'ui.mentions.clear.confirm':
+    'Delete all {count} mentions from this browser? Download a copy first if you want to keep them.',
+  'ui.mentions.storage-error':
+    'This browser didn’t let us save. Private browsing or full storage can cause this. Download a copy so nothing is lost.',
+
+  'ui.privacy.title': 'Your data',
+  'ui.privacy.lead': 'SearchUnveil runs entirely in your browser.',
+  'ui.privacy.files': 'Files you analyze are read in memory. They are never stored or uploaded.',
+  'ui.privacy.stored':
+    'This browser stores only your AI mention log and your language and theme choices.',
+  'ui.privacy.network':
+    'After the page loads, its security policy blocks every network connection, so your data can’t leave your device.',
+  'ui.privacy.tracking': 'There are no cookies, analytics or trackers.',
+  'ui.privacy.clear': 'Delete everything stored in this browser',
+  'ui.privacy.clear.confirm': 'Delete your mention log and preferences from this browser?',
+  'ui.privacy.cleared': 'Everything SearchUnveil stored in this browser was deleted.',
+
+  'ui.not-found.title': 'Page not found',
+  'ui.not-found.back': 'Go to the overview',
+};
+
+export const uiEn = messages satisfies Readonly<Record<`ui.${string}`, string>>;
+
+export type UiMessageKey = keyof typeof uiEn;
+
+export type UiCatalog = Readonly<Record<UiMessageKey, string>>;
