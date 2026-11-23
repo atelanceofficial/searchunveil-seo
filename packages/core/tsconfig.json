@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // The engine runs in browsers and in Node.js. It may use web-platform APIs that both
+    // provide (TextDecoder, DecompressionStream, Intl, DOM interfaces) but never Node built-ins.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
+  "include": ["src"]
+}

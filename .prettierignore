@@ -1,0 +1,12 @@
+dist/
+coverage/
+playwright-report/
+test-results/
+package-lock.json
+assets/
+
+# Prose is formatted by hand; tables and line breaks are deliberate.
+*.md
+
+# The design render workflow embeds a Python program whose layout is deliberate.
+.github/workflows/render-wordmark.yml

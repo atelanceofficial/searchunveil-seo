@@ -1,0 +1,9 @@
+{
+  // Type-checks repository tooling files that run in Node.js.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": ["node"]
+  },
+  "include": ["*.config.ts"]
+}

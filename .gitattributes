@@ -1,0 +1,10 @@
+# Normalize text files to LF in the repository and working tree.
+* text=auto eol=lf
+
+# Binary design assets: never diff or normalize.
+*.gif binary
+*.png binary
+*.zip binary
+
+# Generated lockfile: collapse in diffs, merge as a whole.
+package-lock.json linguist-generated=true -diff
