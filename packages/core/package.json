@@ -7,6 +7,7 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./catalogs": "./src/i18n/catalogs/all.ts"
   }
 }

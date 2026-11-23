@@ -192,6 +192,38 @@ export function parseMessage(source: string): readonly Part[] {
   return new Parser(source).parse();
 }
 
+export interface MessageShape {
+  /** Every argument the message reads, including plural and select arguments. */
+  readonly arguments: ReadonlySet<string>;
+  /** The options each select argument handles, by argument name. */
+  readonly selectOptions: ReadonlyMap<string, ReadonlySet<string>>;
+}
+
+/**
+ * Describes which parameters a message uses. Catalog tests compare translations with the
+ * English source this way, so a mistyped placeholder fails the build instead of showing up
+ * in front of a reader.
+ */
+export function describeMessage(source: string): MessageShape {
+  const names = new Set<string>();
+  const selectOptions = new Map<string, Set<string>>();
+  const visit = (parts: readonly Part[]): void => {
+    for (const part of parts) {
+      if (typeof part === 'string' || part.type === 'pound') continue;
+      names.add(part.name);
+      if (part.type === 'argument') continue;
+      if (part.type === 'select') {
+        const options = selectOptions.get(part.name) ?? new Set<string>();
+        for (const key of part.options.keys()) options.add(key);
+        selectOptions.set(part.name, options);
+      }
+      for (const branch of part.options.values()) visit(branch);
+    }
+  };
+  visit(parseMessage(source));
+  return { arguments: names, selectOptions };
+}
+
 /** First Strong Isolate and Pop Directional Isolate: keep inserted text's direction intact. */
 const FSI = String.fromCodePoint(0x2068);
 const PDI = String.fromCodePoint(0x2069);
