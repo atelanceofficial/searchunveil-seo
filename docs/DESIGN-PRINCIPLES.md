@@ -23,7 +23,7 @@ A user should be able to understand what SearchUnveil is for, what a chart shows
 
 ## Visual direction
 
-The current GitHub cover uses a deep blue-black background, soft off-white typography, warm metallic accents, and fine geometric lines.
+The cover uses the letter shapes and engraved lines of the original gold SearchUnveil wordmark. The outlines stay still while the pattern moves inside the letters. The phone layout gives the wordmark room to read at a glance. Both layouts show a still image when a reader prefers reduced motion. [Original animation](../assets/searchunveil-approved-wordmark.gif) · [Cover rendering script](../scripts/render_cover.py)
 
 | Role | Reference tone | Hex |
 | :--- | :--- | :--- |
