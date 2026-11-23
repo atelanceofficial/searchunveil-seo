@@ -93,7 +93,8 @@ The interface targets WCAG 2.2 AA:
 - Status is always shown with an icon and words, never by color alone.
 - Color tokens are tested for contrast in both themes (text at least 4.5:1, interface parts at least 3:1).
 - Charts include a text description and a table of the same numbers.
-- Logical CSS properties mirror the layout for Arabic; `forced-colors` and `prefers-reduced-motion` are respected; touch targets are at least 44 pixels.
+- Logical CSS properties mirror the layout for Arabic; `forced-colors`, `prefers-contrast` and `prefers-reduced-motion` are respected; touch targets are at least 44 pixels.
+- Decorative patterns sit behind content, never carry meaning, and are hidden from assistive technology; see the [visual language](DESIGN-PRINCIPLES.md#how-the-prototype-uses-it).
 - Browser tests run axe-core against every main view in light, dark and right-to-left layouts, check keyboard flows, and check that nothing scrolls sideways at 320 CSS pixels.
 
 Automated checks find many problems but not all of them. Manual screen reader testing has not been done yet.

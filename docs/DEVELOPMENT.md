@@ -38,6 +38,7 @@ The build is a folder of static files with relative paths; it can be served from
 | `npm run test:e2e` | Browser tests against the production build. Run `npx playwright install chromium` in `apps/web` once first. |
 | `npm run lint` / `npm run typecheck` | Type-aware ESLint / TypeScript for every project. |
 | `npm run format` | Format code with Prettier (Markdown is formatted by hand). |
+| `npm run patterns` | Regenerate the decorative pattern files from their source; a unit test fails while they are out of date. |
 | `npm run check:links` | Check that every cited source still resolves (needs network access). |
 
 ## Project layout
@@ -54,6 +55,7 @@ The build is a folder of static files with relative paths; it can be served from
 | `apps/web/src/views` | One component per page of the app. |
 | `apps/web/src/messages` | Interface text in seven languages. |
 | `apps/web/src/styles/app.css` | Design tokens and styles; contrast is tested in `contrast.test.ts`. |
+| `apps/web/src/patterns` | The lens geometry and the pattern files it generates into `apps/web/src/assets/patterns`. |
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
 
 ## Common changes
@@ -74,6 +76,14 @@ Write apostrophes in prose as ’ so that they never act as ICU quoting characte
 3. Cite sources through `references.ts` only.
 4. Test it with realistic inputs, including the cases where it must stay silent.
 5. Document it in [FINDINGS.md](FINDINGS.md).
+
+### Change a decorative pattern
+
+1. Edit the drawing in `apps/web/src/patterns` (`lens.ts` holds the geometry, `assets.ts` the files).
+2. Run `npm run patterns` to rewrite `apps/web/src/assets/patterns`.
+3. Run `npm test`: it checks the geometry and that the committed files match their source.
+
+Patterns are drawn in black and used as CSS masks, so the stylesheet colors them for each theme. Keep them behind content: they must never carry meaning, and they disappear in forced colors, when more contrast is requested, and in print.
 
 ### Update dependencies
 

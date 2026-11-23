@@ -34,6 +34,29 @@ The current GitHub cover uses a deep blue-black background, soft off-white typog
 
 These are **brand references**, not final app color tokens. Interactive interface colors must be tested for contrast in every state. A good visual impression does not replace accessibility tests.
 
+### How the prototype uses it
+
+The interface borrows the cover's own elements rather than adding new ones.
+
+| Element | Where it appears | What it is for |
+| :--- | :--- | :--- |
+| **Lens rings** | Home page, page headings, the main finding, the drop zone, the footer | The brand's signature. Generated from the same equations as the cover's wire lens. |
+| **Measurement grid** | Page headings, the home page lens | Structure and precision, faded at the edges. |
+| **Dot grid** | The drop zone and the tool pictures | Graph paper for places where data arrives. |
+| **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on color. |
+| **Gold rule** | Eyebrow labels, the current page in the menu, the header's edge | The cover's short metallic line, used to mark what matters. |
+| **Grain and ambient light** | The page background | Keeps large gradients from banding and gives the canvas depth. |
+
+Rules for every decorative element:
+
+- Decoration stays behind content and never carries meaning on its own.
+- Status is always an icon and words, then color; the chart's periods also have labels and hatching.
+- Decoration disappears in forced-color modes, when more contrast is requested, and in print.
+- Nothing moves in a loop. When motion is welcome, the home page lens draws itself once, in under two seconds.
+- Patterns are generated from code (`npm run patterns`) and tested, so they can be rebuilt exactly.
+
+Type is Inter with optical sizes: large headings use its display design and numbers use tabular figures, so columns of figures line up.
+
 ## Writing rules
 
 1. Lead with the answer, not the method.
