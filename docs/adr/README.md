@@ -1,0 +1,17 @@
+# Architecture decision records
+
+Short records of significant technical decisions: the context, the decision and its consequences. They answer the open questions in the [technical direction](../TECHNICAL-DIRECTION.md#open-technical-questions).
+
+All four are **proposed**: they describe how the prototype works and why, and they are open to review before anything is released.
+
+| Record | Decision |
+| :--- | :--- |
+| [0001](0001-local-first-processing.md) | Process everything on the person's device; store almost nothing. |
+| [0002](0002-typescript-workspace-and-dependency-free-engine.md) | A TypeScript workspace with a dependency-free engine and a small Preact app. |
+| [0003](0003-explainable-findings-as-messages.md) | Findings are structured messages with evidence and limits, never prose. |
+| [0004](0004-dependency-and-supply-chain-policy.md) | Few dependencies, exact versions, a release cooldown and no install scripts. |
+
+---
+
+**SearchUnveil · An Atelance project**  
+Return to the [project overview](../../README.md).

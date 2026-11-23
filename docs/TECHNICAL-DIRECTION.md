@@ -86,7 +86,19 @@ Before describing any feature as available, aim to demonstrate:
 
 ## Open technical questions
 
-We still need to decide the initial application stack, where uploaded data is processed, whether any data is stored, and which workflows belong in the first release. We will record important choices once prototypes and constraints are clearer.
+An early prototype now proposes answers to the first questions. Each is recorded as a [decision record](adr/README.md), open to review:
+
+- **Initial application stack:** a TypeScript workspace with a dependency-free analysis engine and a small Preact web app ([ADR 0002](adr/0002-typescript-workspace-and-dependency-free-engine.md)).
+- **Where uploaded data is processed:** on the person's own device, in the browser; nothing is uploaded ([ADR 0001](adr/0001-local-first-processing.md)).
+- **Whether any data is stored:** only the AI mention log and two preferences, in the person's browser, with a control to delete them ([ADR 0001](adr/0001-local-first-processing.md)).
+
+Still open:
+
+- Which workflows belong in the first release.
+- Whether, and how, to fetch pages for review. Fetching would need a server with the protections described above.
+- Whether people need their mention logs to sync between devices, and what that would require.
+
+The [architecture](ARCHITECTURE.md) describes the prototype and where it stands against each release gate.
 
 ---
 

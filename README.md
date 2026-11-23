@@ -4,7 +4,7 @@
 <p align="center">Website audits · Search performance · AI search visibility</p>
 
 > [!IMPORTANT]
-> **In development.** SearchUnveil is a project we are building, not a finished product. No public version is available yet. All features below are planned.
+> **In development.** SearchUnveil is a project we are building, not a finished product. No public version is available yet. The features below are planned; an early prototype of each lives in this repository for development and review.
 
 ## A clearer view of your website
 
@@ -60,7 +60,7 @@ Imagine you upload a Search Console CSV file. You might see:
 >
 > See the trend, check the pages involved, and decide what to investigate.
 
-*This is an example of the intended experience, not a screenshot or real analysis from the product.*
+*This is an example of the intended experience. The prototype's fictional sample data for example.com reproduces it; it is not an analysis of a real site.*
 
 ## Designed to be useful, not complicated
 
@@ -73,20 +73,31 @@ Our priorities are:
 - **Privacy and security.** Validate inputs, limit data collection, and protect private information.
 - **Seven languages.** Work toward natural English, Spanish, German, French, Turkish, Simplified Chinese, and Arabic.
 
-Read the [proposed technical approach](docs/TECHNICAL-DIRECTION.md) or the [design principles](docs/DESIGN-PRINCIPLES.md). Both describe goals, not finished features.
+Read the [proposed technical approach](docs/TECHNICAL-DIRECTION.md) or the [design principles](docs/DESIGN-PRINCIPLES.md). Both describe goals, not finished features. To see how the early prototype works, read the [architecture](docs/ARCHITECTURE.md) and the [finding rules](docs/FINDINGS.md).
 
 ## Where the project stands
 
 | Stage | Current status |
 | :--- | :--- |
 | Product concept and documentation | **In progress** |
-| Website audit prototype | Planned |
-| Search Console CSV analysis | Planned |
-| AI mention log and clear reports | Planned |
-| Accessibility, language, and security checks | Planned |
+| Website audit prototype | **Early prototype** in this repository |
+| Search Console CSV analysis | **Early prototype** in this repository |
+| AI mention log and clear reports | **Early prototype** in this repository |
+| Accessibility, language, and security checks | **Automated checks in place**; manual and native-language reviews pending |
 | Public release | Not announced |
 
-This roadmap can change. We have not set a release date.
+This roadmap can change. We have not set a release date. The [architecture](docs/ARCHITECTURE.md#release-gates-where-the-prototype-stands) lists where the prototype stands against each release gate.
+
+## Try the early prototype
+
+The prototype runs on your own computer. Everything happens in your browser, and your files are never uploaded. You need [Node.js](https://nodejs.org/) 22.22 or later.
+
+```sh
+npm ci
+npm run dev
+```
+
+Open the address it prints, then choose **Try sample data** on the Search Console page. The sample is fictional data for example.com. The [development guide](docs/DEVELOPMENT.md) covers tests and the production build.
 
 ## Follow along
 
@@ -98,7 +109,7 @@ Please do not include passwords, API keys, or private website information in a p
 
 ## Availability and license
 
-SearchUnveil is **not available to use or install yet**. There is no stable public release.
+SearchUnveil has **no public release**. The code in this repository is an early prototype for development and review, not a product to rely on.
 
 This repository does not currently include a software license. Public access does **not** mean the code is offered under an open source license. Usage and contribution terms will be clarified before a wider code release.
 
