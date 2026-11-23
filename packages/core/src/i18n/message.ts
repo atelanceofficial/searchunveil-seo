@@ -17,7 +17,8 @@ export type ParamValue =
   | { readonly kind: 'date'; readonly value: string }
   | { readonly kind: 'dateRange'; readonly start: string; readonly end: string }
   | { readonly kind: 'list'; readonly values: readonly string[] }
-  | { readonly kind: 'code'; readonly value: string };
+  | { readonly kind: 'code'; readonly value: string }
+  | { readonly kind: 'text'; readonly value: string };
 
 export type MessageParams = Readonly<Record<string, ParamValue>>;
 
@@ -50,6 +51,15 @@ export function dateRange(start: string, end: string): ParamValue {
 
 export function list(values: readonly string[]): ParamValue {
   return { kind: 'list', values };
+}
+
+/**
+ * Text the interface itself produced (already translated), inserted without bidirectional
+ * isolation. Plain strings are treated as a person's own data and isolated; use this only
+ * for the application's own words.
+ */
+export function text(value: string): ParamValue {
+  return { kind: 'text', value };
 }
 
 /** Markup or source text quoted from a person's input, shown exactly as written. */

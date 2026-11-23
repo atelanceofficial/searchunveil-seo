@@ -1,4 +1,4 @@
-import { LOCALE_INFO, LOCALES, isLocale } from '@searchunveil/core';
+import { LOCALE_INFO, LOCALES, isLocale, text } from '@searchunveil/core';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { useI18n, type MessageKey } from './lib/i18n.tsx';
 import { href, ROUTES, useRoute, type Route } from './lib/router.ts';
@@ -53,7 +53,7 @@ export function App() {
     document.title =
       route === 'home'
         ? `SearchUnveil · ${t.t('ui.app.tagline')}`
-        : t.t('ui.page-title', { page: pageName });
+        : t.t('ui.page-title', { page: text(pageName) });
   }, [route, pageName, t]);
 
   // After navigating, start keyboard and screen reader users at the new page's heading.

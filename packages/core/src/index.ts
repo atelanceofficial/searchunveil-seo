@@ -170,6 +170,7 @@ export {
   list,
   message,
   percent,
+  text,
   type Message,
   type MessageParams,
   type ParamValue,

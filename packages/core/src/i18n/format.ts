@@ -297,6 +297,8 @@ export function createTranslator<K extends string>(
         return listFormat.format(input.values.map(isolate));
       case 'code':
         return isolate(input.value);
+      case 'text':
+        return input.value;
     }
   };
 

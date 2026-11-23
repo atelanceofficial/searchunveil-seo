@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createTranslator, isolate, MessageSyntaxError, parseMessage } from './format.ts';
 import { matchLocale } from './locales.ts';
-import { code, date, dateRange, decimal, list, percent } from './message.ts';
+import { code, date, dateRange, decimal, list, percent, text } from './message.ts';
 
 const strip = (text: string) => text.replace(/[\u2068\u2069]/g, '');
 /** ICU chooses between several space characters by version; compare them as plain spaces. */
@@ -91,6 +91,8 @@ describe('value formatting', () => {
     const ar = createTranslator('ar', {});
     expect(ar.value('running shoes')).toBe(isolate('running shoes'));
     expect(ar.value(code('<title>'))).toBe(isolate('<title>'));
+    // The interface's own, already translated words are inserted as they are.
+    expect(ar.value(text('النقرات'))).toBe('النقرات');
     expect(strip(createTranslator('en', {}).value(list(['a', 'b', 'c'])))).toBe('a, b, and c');
   });
 

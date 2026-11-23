@@ -1,4 +1,4 @@
-import { decimal, percent, type DailyPoint, type PeriodComparison } from '@searchunveil/core';
+import { decimal, percent, text, type DailyPoint, type PeriodComparison } from '@searchunveil/core';
 import { niceTicks, seriesFor, type ChartMetric } from './chart-math.ts';
 import { useId, useLayoutEffect, useMemo, useRef, useState } from 'preact/hooks';
 import { useI18n, type MessageKey } from '../lib/i18n.tsx';
@@ -120,7 +120,7 @@ export function TrendChart(props: {
   const first = points[0]?.date ?? '';
   const last = points.at(-1)?.date ?? '';
   const metricName = t.t(LABELS[metric]);
-  const title = t.t('ui.chart.title', { metric: metricName });
+  const title = t.t('ui.chart.title', { metric: text(metricName) });
 
   return (
     <figure class="chart" aria-labelledby={`${id}-title`}>
@@ -159,7 +159,7 @@ export function TrendChart(props: {
         >
           <desc id={`${id}-desc`}>
             {t.t('ui.chart.description', {
-              metric: metricName,
+              metric: text(metricName),
               start: { kind: 'date', value: first },
               end: { kind: 'date', value: last },
             })}
