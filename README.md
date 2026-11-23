@@ -10,8 +10,10 @@ Check a web page, see how many clicks you get from Google, and save links to you
   <source media="(max-width: 720px) and (prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-mobile-still.png">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-still.png">
   <source media="(max-width: 720px)" srcset="assets/searchunveil-cover-mobile.png">
-  <img src="assets/searchunveil-cover.png" width="100%" alt="SearchUnveil with the striped ATELANCE signature beside a lens drawn in pearl and sage.">
+  <img src="assets/searchunveil-cover.png" width="100%" alt="SearchUnveil in gold on a dark background, with fine curved lines engraved inside each letter.">
 </picture>
+
+[View the still cover](assets/searchunveil-cover-still.png)
 
 ## What you’ll be able to do
 

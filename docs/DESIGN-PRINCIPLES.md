@@ -23,7 +23,7 @@ A user should be able to understand what SearchUnveil is for, what a chart shows
 
 ## Visual direction
 
-SearchUnveil is the main title on the cover. The smaller, black-and-white ATELANCE signature sits above it. A single light passes from the rim of the pearl-and-sage lens toward its center. The mobile artwork uses ten curves with extra space between them. Both sizes have a still version for readers who prefer less motion. [Desktop artwork](../assets/searchunveil-cover.svg) · [Mobile artwork](../assets/searchunveil-cover-mobile.svg)
+The cover uses the letter shapes and engraved lines of the original gold SearchUnveil wordmark. The outlines stay still while the pattern moves inside the letters. The phone layout gives the wordmark room to read at a glance. Both layouts show a still image when a reader prefers reduced motion. [Original animation](../assets/searchunveil-approved-wordmark.gif) · [Cover rendering script](../scripts/render_cover.py)
 
 | Role | Reference tone | Hex |
 | :--- | :--- | :--- |

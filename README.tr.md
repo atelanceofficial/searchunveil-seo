@@ -10,8 +10,10 @@ Sayfanı kontrol et, Google’da kaç tıklama aldığını gör ve yapay zekâ 
   <source media="(max-width: 720px) and (prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-mobile-still.png">
   <source media="(prefers-reduced-motion: reduce)" srcset="assets/searchunveil-cover-still.png">
   <source media="(max-width: 720px)" srcset="assets/searchunveil-cover-mobile.png">
-  <img src="assets/searchunveil-cover.png" width="100%" alt="SearchUnveil adı, siyah beyaz çizgili ATELANCE imzası ve açık yeşil çizgilerle oluşturulmuş bir mercek.">
+  <img src="assets/searchunveil-cover.png" width="100%" alt="Koyu zeminde altın renkli SearchUnveil yazısı. Her harfin içinde ince, kıvrımlı çizgiler var.">
 </picture>
+
+[Kapağın sabit hâlini gör](assets/searchunveil-cover-still.png)
 
 ## Neler yapabileceksin?
 
