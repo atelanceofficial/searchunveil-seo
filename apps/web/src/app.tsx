@@ -1,5 +1,7 @@
 import { LOCALE_INFO, LOCALES, isLocale, text } from '@searchunveil/core';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { BrandMark } from './components/BrandMark.tsx';
+import { Icon } from './components/Icon.tsx';
 import { useI18n, type MessageKey } from './lib/i18n.tsx';
 import { href, ROUTES, useRoute, type Route } from './lib/router.ts';
 import { readTheme, saveTheme, THEMES, type ThemePreference } from './lib/theme.ts';
@@ -82,12 +84,14 @@ export function App() {
       <header class="site-header">
         <div class="container site-header__row">
           <a class="brand" href={href('home')}>
+            <BrandMark />
             <span class="brand__name">SearchUnveil</span>
             <span class="brand__badge">{t.t('ui.app.preview')}</span>
           </a>
           <div class="preferences">
             <label class="preference">
-              <span>{t.t('ui.language')}</span>
+              <Icon name="globe" class="preference__icon" />
+              <span class="preference__label">{t.t('ui.language')}</span>
               <select
                 value={locale}
                 onChange={(event) => {
@@ -103,7 +107,8 @@ export function App() {
               </select>
             </label>
             <label class="preference">
-              <span>{t.t('ui.theme')}</span>
+              <Icon name="moon" class="preference__icon" />
+              <span class="preference__label">{t.t('ui.theme')}</span>
               <select
                 value={theme}
                 onChange={(event) => {
@@ -135,16 +140,22 @@ export function App() {
         </nav>
       </header>
       <main id="main" class="container site-main" tabIndex={-1}>
-        <p class="local-note">{t.t('ui.app.local')}</p>
+        <p class="local-note">
+          <Icon name="lock" />
+          {t.t('ui.app.local')}
+        </p>
         <View route={route} />
       </main>
       <footer class="site-footer">
-        <div class="container">
-          <p>
+        <div class="container site-footer__inner">
+          <p class="site-footer__brand">
+            <BrandMark />
             <strong>{t.t('ui.footer.built-by')}</strong>
           </p>
-          <p>{t.t('ui.footer.status')}</p>
-          <p>{t.t('ui.footer.privacy')}</p>
+          <div class="site-footer__notes">
+            <p>{t.t('ui.footer.status')}</p>
+            <p>{t.t('ui.footer.privacy')}</p>
+          </div>
         </div>
       </footer>
     </>

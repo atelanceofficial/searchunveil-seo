@@ -33,6 +33,32 @@ function path(
   return d;
 }
 
+/** The area between a line and the floor, one closed shape per unbroken run of values. */
+function area(
+  values: readonly (number | null)[],
+  x: (i: number) => number,
+  y: (v: number) => number,
+  floor: number,
+): string {
+  let d = '';
+  let run: number[] = [];
+  const close = () => {
+    const first = run[0];
+    const last = run.at(-1);
+    if (first !== undefined && last !== undefined && run.length > 1) {
+      const top = run.map((i) => `${x(i).toFixed(1)} ${y(values[i] ?? 0).toFixed(1)}`);
+      d += `M${x(first).toFixed(1)} ${floor.toFixed(1)}L${top.join('L')}L${x(last).toFixed(1)} ${floor.toFixed(1)}Z`;
+    }
+    run = [];
+  };
+  values.forEach((value, i) => {
+    if (value === null) close();
+    else run.push(i);
+  });
+  close();
+  return d;
+}
+
 function useWidth(fallback: number) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(fallback);
@@ -119,6 +145,7 @@ export function TrendChart(props: {
   ];
   const first = points[0]?.date ?? '';
   const last = points.at(-1)?.date ?? '';
+  const lastAverage = series.average.findLastIndex((value) => value !== null);
   const metricName = t.t(LABELS[metric]);
   const title = t.t('ui.chart.title', { metric: text(metricName) });
 
@@ -164,6 +191,21 @@ export function TrendChart(props: {
               end: { kind: 'date', value: last },
             })}
           </desc>
+          <defs>
+            <pattern
+              id={`${id}-hatch`}
+              width="6"
+              height="6"
+              patternUnits="userSpaceOnUse"
+              patternTransform="rotate(45)"
+            >
+              <line class="chart__hatch-line" x1="0" y1="0" x2="0" y2="6" />
+            </pattern>
+            <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
+              <stop class="chart__area-top" offset="0" />
+              <stop class="chart__area-bottom" offset="1" />
+            </linearGradient>
+          </defs>
           {bands.map((band) => {
             // Each day owns the half-step on either side of its point, so adjacent periods meet.
             const start = Math.max(MARGIN.left, x(band.from) - halfStep);
@@ -171,11 +213,22 @@ export function TrendChart(props: {
             return (
               <g key={band.key} class={`chart__band chart__band--${band.key}`}>
                 <rect
+                  class="chart__band-fill"
                   x={start}
                   y={MARGIN.top}
                   width={Math.max(1, end - start)}
                   height={plotHeight}
                 />
+                {band.key === 'previous' ? (
+                  // Hatching marks the earlier period without relying on color.
+                  <rect
+                    x={start}
+                    y={MARGIN.top}
+                    width={Math.max(1, end - start)}
+                    height={plotHeight}
+                    fill={`url(#${id}-hatch)`}
+                  />
+                ) : null}
                 <text x={start + 6} y={MARGIN.top - 10}>
                   {band.label}
                 </text>
@@ -201,8 +254,25 @@ export function TrendChart(props: {
               {dayFormat.format(Date.parse(points[i]?.date ?? first))}
             </text>
           ))}
+          <path d={area(series.average, x, y, MARGIN.top + plotHeight)} fill={`url(#${id}-area)`} />
           <path class="chart__daily" d={path(series.daily, x, y)} />
           <path class="chart__average" d={path(series.average, x, y)} />
+          {lastAverage < 0 ? null : (
+            <g>
+              <circle
+                class="chart__end-halo"
+                cx={x(lastAverage)}
+                cy={y(series.average[lastAverage] ?? 0)}
+                r={10}
+              />
+              <circle
+                class="chart__end"
+                cx={x(lastAverage)}
+                cy={y(series.average[lastAverage] ?? 0)}
+                r={4.5}
+              />
+            </g>
+          )}
           {points.map((point, i) => {
             const value = series.daily[i] ?? null;
             return point.incomplete && value !== null ? (

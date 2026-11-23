@@ -184,7 +184,7 @@ function Results(props: {
           <h2 id="gsc-what" ref={props.headingRef} tabIndex={-1}>
             {t.t('ui.gsc.what-happened')}
           </h2>
-          {props.sample ? <span class="tag">{t.t('ui.gsc.sample.badge')}</span> : null}
+          {props.sample ? <span class="tag tag--sample">{t.t('ui.gsc.sample.badge')}</span> : null}
         </div>
         {report.headline === null ? null : (
           <div class="headline">

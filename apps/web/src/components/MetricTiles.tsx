@@ -6,6 +6,8 @@ import {
   type SearchConsoleReport,
 } from '@searchunveil/core';
 import { useI18n, type MessageKey } from '../lib/i18n.tsx';
+import { seriesFor } from './chart-math.ts';
+import { Sparkline } from './Sparkline.tsx';
 
 type Metric = 'clicks' | 'impressions' | 'ctr' | 'position';
 
@@ -44,9 +46,11 @@ function trend(change: MetricChange): 'good' | 'bad' | 'neutral' {
  */
 export function MetricTiles(props: { readonly report: SearchConsoleReport }) {
   const { t } = useI18n();
-  const { comparison, overview } = props.report;
+  const { comparison, overview, series } = props.report;
   if (overview === null) return null;
   const metrics: readonly Metric[] = ['clicks', 'impressions', 'ctr', 'position'];
+  const recentStart =
+    comparison === null ? -1 : series.findIndex((p) => p.date === comparison.current.start);
 
   return (
     <ul class="tiles" role="list">
@@ -62,10 +66,16 @@ export function MetricTiles(props: { readonly report: SearchConsoleReport }) {
             changeText = t.value(percent(change.relativeChange, true));
           }
         }
+        const value = t.value(display(metric, current));
         return (
           <li key={metric} class="tile">
             <p class="tile__label">{t.t(LABEL[metric])}</p>
-            <p class="tile__value">{t.value(display(metric, current))}</p>
+            <p class="tile__value">
+              {/* The number shrinks to fit its tile, however many digits it has. */}
+              <span class="tile__number" style={{ '--chars': value.length }}>
+                {value}
+              </span>
+            </p>
             {changeText === null ? null : (
               <p class="tile__change" data-trend={direction}>
                 <span aria-hidden="true">
@@ -79,6 +89,13 @@ export function MetricTiles(props: { readonly report: SearchConsoleReport }) {
                 {t.t('ui.gsc.previous-value', { value: display(metric, change.previous) })}
               </p>
             )}
+            {series.length > 1 ? (
+              <Sparkline
+                values={seriesFor(series, metric).average}
+                inverted={metric === 'position'}
+                highlightFrom={recentStart > 0 ? recentStart : undefined}
+              />
+            ) : null}
             <p class="tile__help">{t.t(HELP[metric])}</p>
           </li>
         );

@@ -8,7 +8,9 @@ export function NotFound() {
     <>
       <PageHeading>{t.t('ui.not-found.title')}</PageHeading>
       <p>
-        <a href={href('home')}>{t.t('ui.not-found.back')}</a>
+        <a class="button" href={href('home')}>
+          {t.t('ui.not-found.back')}
+        </a>
       </p>
     </>
   );
