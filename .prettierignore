@@ -1,4 +1,5 @@
 dist/
+dist-standalone/
 coverage/
 playwright-report/
 test-results/

@@ -15,6 +15,7 @@
   "scripts": {
     "dev": "npm run dev --workspace @searchunveil/web",
     "build": "npm run build --workspace @searchunveil/web",
+    "build:standalone": "npm run build:standalone --workspace @searchunveil/web",
     "preview": "npm run preview --workspace @searchunveil/web",
     "test": "vitest run",
     "test:watch": "vitest",

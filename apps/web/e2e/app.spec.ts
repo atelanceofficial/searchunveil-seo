@@ -1,5 +1,6 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
+import { existsSync } from 'node:fs';
 
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
@@ -234,5 +235,35 @@ test.describe('privacy and resilience', () => {
         () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
       ),
     ).toBeLessThanOrEqual(0);
+  });
+});
+
+test.describe('standalone file', () => {
+  const file = new URL('../dist-standalone/searchunveil.html', import.meta.url);
+
+  test('opens from disk, without a server, under the same strict policy', async ({ page }) => {
+    test.skip(!existsSync(file), 'Run `npm run build:standalone` first.');
+    await page.goto(file.href);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'See how your website gets found',
+    );
+    const policy = await page
+      .locator('meta[http-equiv="Content-Security-Policy"]')
+      .getAttribute('content');
+    expect(policy).toContain("connect-src 'none'");
+    expect(policy).toMatch(/script-src 'sha256-[\w+/=]+'/);
+    expect(policy).not.toContain('unsafe-inline');
+
+    // Every language is inside the file, and the analysis runs offline.
+    await page.goto(`${file.href}#/search-console`);
+    await page.getByRole('button', { name: 'Try sample data' }).click();
+    await expect(page.locator('.headline')).toContainText(
+      'Your pages appeared in search more often, but clicks stayed about the same.',
+    );
+    await page.getByLabel('Language').selectOption('tr');
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+      'Search Console dışa aktarımı',
+    );
+    await expectAccessible(page);
   });
 });
