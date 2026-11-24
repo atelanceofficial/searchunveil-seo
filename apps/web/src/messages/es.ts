@@ -56,7 +56,8 @@ export const uiEs: UiCatalog = {
   'ui.file.choose-one': 'Elegir un archivo',
   'ui.file.drop': 'o suéltalos aquí',
   'ui.file.drop-one': 'o suéltalo aquí',
-  'ui.file.limit': 'Archivos ZIP o CSV de hasta {megabytes} MB cada uno.',
+  'ui.file.hint':
+    'Archivos ZIP o CSV de cualquier tamaño. Solo se lee lo que el análisis necesita, en este dispositivo.',
   'ui.file.selected':
     '{count, plural, one {# archivo seleccionado} other {# archivos seleccionados}}',
 
@@ -76,6 +77,7 @@ export const uiEs: UiCatalog = {
   'ui.gsc.unexpected':
     'Algo salió mal al leer los archivos. No se envió nada a ningún sitio. Vuelve a intentarlo o prueba con otra exportación.',
   'ui.gsc.again': 'Analizar otros archivos',
+  'ui.gsc.website': 'Revisar las páginas de este sitio',
   'ui.gsc.what-happened': 'Qué pasó',
   'ui.gsc.overview': 'Resumen',
   'ui.gsc.covers': 'Periodo: {range}',
@@ -126,6 +128,33 @@ export const uiEs: UiCatalog = {
   'ui.page.reviewed': 'Revisada: {url}',
   'ui.page.reviewed-pasted': 'Se revisó el HTML que proporcionaste',
   'ui.page.done': 'Revisión lista.',
+  'ui.site.title': 'Revisar un sitio completo',
+  'ui.site.lead':
+    'Elige un ZIP con los archivos del sitio, como una copia de seguridad o una exportación estática, o varios archivos HTML. Cada página se revisa en este dispositivo; las imágenes, los estilos y otros archivos se cuentan, pero no se leen.',
+  'ui.site.url': 'Dirección del sitio',
+  'ui.site.url.hint':
+    'Da a cada página su dirección, para que también se ejecuten las comprobaciones que comparan los enlaces y las etiquetas canónicas con la página.',
+  'ui.site.choose': 'Elegir los archivos del sitio',
+  'ui.site.files.hint': 'Un archivo ZIP de cualquier tamaño, o archivos HTML.',
+  'ui.site.preparing': 'Abriendo los archivos…',
+  'ui.site.progress': 'Revisando la página {done} de {total}…',
+  'ui.site.stop': 'Detener',
+  'ui.site.stopped': 'Se detuvo la revisión.',
+  'ui.site.done': 'Revisión del sitio lista.',
+  'ui.site.results': 'Revisión del sitio',
+  'ui.site.summary': '{pages, plural, one {# página revisada.} other {# páginas revisadas.}}',
+  'ui.site.other':
+    '{count, plural, one {# archivo más, como una imagen o una hoja de estilos, no se revisó.} other {# archivos más, como imágenes y hojas de estilos, no se revisaron.}}',
+  'ui.site.issues': 'Problemas más frecuentes',
+  'ui.site.issues.none': 'Ninguna página necesita atención ni una revisión más detallada.',
+  'ui.site.issue.pages': '{count, plural, one {En # página:} other {En # páginas, como}} {path}',
+  'ui.site.issue.list': 'Ver las páginas',
+  'ui.site.and-more': '{count, plural, one {y # página más} other {y # páginas más}}',
+  'ui.site.pages': 'Páginas',
+  'ui.site.untitled': 'Sin título',
+  'ui.site.more': '{count, plural, one {Mostrar # página más} other {Mostrar # páginas más}}',
+  'ui.site.skipped': 'Páginas que no se pudieron revisar',
+  'ui.site.again': 'Revisar otro sitio',
 
   'ui.mentions.title': 'Registro de menciones de IA',
   'ui.mentions.lead':

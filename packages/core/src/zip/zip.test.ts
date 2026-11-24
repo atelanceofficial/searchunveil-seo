@@ -1,7 +1,34 @@
 import { describe, expect, it } from 'vitest';
+import { blobSource, bytesSource, type ByteSource } from '../source.ts';
 import { createZip, deflateRaw } from '../test-support/zip-writer.ts';
-import { crc32 } from './crc32.ts';
-import { baseName, isZip, openZip, readZip } from './read.ts';
+import { crc32, updateCrc32 } from './crc32.ts';
+import {
+  baseName,
+  entryChunks,
+  extractEntry,
+  isMetadataEntry,
+  isZip,
+  openZip,
+  readZip,
+} from './read.ts';
+
+/** A source that counts the bytes read from it, to prove what a reader leaves untouched. */
+function counted(source: ByteSource): ByteSource & { readonly bytesRead: () => number } {
+  let total = 0;
+  return {
+    size: source.size,
+    async read(start, end) {
+      const bytes = await source.read(start, end);
+      total += bytes.length;
+      return bytes;
+    },
+    stream(start, end) {
+      total += Math.max(0, Math.min(end, source.size) - start);
+      return source.stream(start, end);
+    },
+    bytesRead: () => total,
+  };
+}
 
 const text = (bytes: Uint8Array) => new TextDecoder().decode(bytes);
 const codes = (result: { diagnostics: readonly { code: string }[] }) =>
@@ -11,6 +38,11 @@ describe('crc32', () => {
   it('matches the standard check value', () => {
     expect(crc32(new TextEncoder().encode('123456789'))).toBe(0xcbf43926);
     expect(crc32(new Uint8Array())).toBe(0);
+  });
+
+  it('continues across chunks', () => {
+    const bytes = new TextEncoder().encode('123456789');
+    expect(updateCrc32(updateCrc32(0, bytes.subarray(0, 4)), bytes.subarray(4))).toBe(0xcbf43926);
   });
 });
 
@@ -72,12 +104,65 @@ describe('readZip', () => {
     });
   });
 
-  it('rejects ZIP64 archives', async () => {
-    const zip = await createZip([{ name: 'a.csv', data: 'a' }], { zip64Locator: true });
-    expect(codes(await readZip(zip))).toEqual(['zip.zip64']);
+  it('reads ZIP64 archives, as archives past 4 GB or 65,535 entries are written', async () => {
+    const zip = await createZip(
+      [
+        { name: 'site/index.html', data: '<title>Home</title>' },
+        { name: 'site/Dates.csv', data: 'Date,Clicks\n2026-01-01,1\n', method: 'stored' },
+      ],
+      { zip64: true },
+    );
+    const result = await readZip(zip);
+    expect(result.ok && result.value.map((e) => [e.name, text(e.bytes)])).toEqual([
+      ['site/index.html', '<title>Home</title>'],
+      ['site/Dates.csv', 'Date,Clicks\n2026-01-01,1\n'],
+    ]);
   });
 
-  it('enforces entry-count and size limits before decompressing', async () => {
+  it('rejects a ZIP64 locator that points nowhere', async () => {
+    const zip = await createZip([{ name: 'a.csv', data: 'a' }], { zip64Locator: true });
+    expect(codes(await readZip(zip))).toEqual(['zip.invalid']);
+  });
+
+  it('reads only the directory and the entries it is asked for, whatever the size', async () => {
+    // A large photo next to a small table: opening the archive and reading the table never
+    // touches the photo's bytes.
+    const photo = new Uint8Array(8 * 1024 * 1024).map((_, i) => (i * 2654435761) >>> 24);
+    const zip = await createZip([
+      { name: 'export/photo.jpg', data: photo, method: 'stored' },
+      { name: 'export/Dates.csv', data: 'Date,Clicks\n2026-01-01,1\n' },
+    ]);
+    const source = counted(blobSource(new Blob([zip.slice()])));
+    const archive = await openZip(source);
+    expect(archive.ok).toBe(true);
+    if (!archive.ok) return;
+    const table = archive.value.entries.find((entry) => entry.name.endsWith('.csv'));
+    expect(table).toBeDefined();
+    if (table === undefined) return;
+    const extracted = await extractEntry(source, table);
+    expect(extracted.ok && text(extracted.value)).toBe('Date,Clicks\n2026-01-01,1\n');
+    expect(source.bytesRead()).toBeLessThan(100 * 1024);
+    expect(source.size).toBeGreaterThan(8 * 1024 * 1024);
+  });
+
+  it('streams an entry in pieces and checks it at the end', async () => {
+    const rows = Array.from({ length: 100_000 }, (_, i) => `row ${i},${(i * 7919) % 104729}`);
+    const data = ['Key,Clicks', ...rows].join('\n');
+    const zip = await createZip([{ name: 'Dates.csv', data }]);
+    const archive = await openZip(bytesSource(zip));
+    const entry = archive.ok ? archive.value.entries[0] : undefined;
+    if (entry === undefined) throw new Error('no entry');
+    let length = 0;
+    let pieces = 0;
+    for await (const chunk of entryChunks(zip, entry)) {
+      length += chunk.length;
+      pieces++;
+    }
+    expect(length).toBe(data.length);
+    expect(pieces).toBeGreaterThan(1);
+  });
+
+  it('enforces entry-count and entry-size limits before decompressing', async () => {
     const zip = await createZip([
       { name: 'a.csv', data: 'x'.repeat(100) },
       { name: 'b.csv', data: 'y'.repeat(100) },
@@ -87,9 +172,6 @@ describe('readZip', () => {
     ]);
     expect(codes(await readZip(zip, { limits: { maxZipEntryBytes: 99 } }))).toEqual([
       'zip.entry-too-large',
-    ]);
-    expect(codes(await readZip(zip, { limits: { maxZipTotalBytes: 150 } }))).toEqual([
-      'zip.total-too-large',
     ]);
   });
 
@@ -106,7 +188,7 @@ describe('readZip', () => {
       { name: 'a.csv', data: 'shared data' },
       { name: 'b.csv', data: 'shared data', reuseLocalHeaderOf: 0 },
     ]);
-    expect(codes(openZip(zip))).toEqual(['zip.overlapping-entries']);
+    expect(codes(await openZip(zip))).toEqual(['zip.overlapping-entries']);
   });
 
   it('detects checksum mismatches', async () => {
@@ -136,5 +218,13 @@ describe('baseName', () => {
   it('drops folders', () => {
     expect(baseName('export/2026/Queries.csv')).toBe('Queries.csv');
     expect(baseName('Queries.csv')).toBe('Queries.csv');
+  });
+});
+
+describe('isMetadataEntry', () => {
+  it('recognizes what macOS adds to archives', () => {
+    expect(isMetadataEntry('__MACOSX/export/._Dates.csv')).toBe(true);
+    expect(isMetadataEntry('export/._Dates.csv')).toBe(true);
+    expect(isMetadataEntry('export/Dates.csv')).toBe(false);
   });
 });

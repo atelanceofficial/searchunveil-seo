@@ -56,7 +56,8 @@ const messages = {
   'ui.file.choose-one': 'Choose a file',
   'ui.file.drop': 'or drop them here',
   'ui.file.drop-one': 'or drop it here',
-  'ui.file.limit': 'ZIP or CSV files, up to {megabytes} MB each.',
+  'ui.file.hint':
+    'ZIP or CSV files of any size. Only the parts the analysis needs are read, on this device.',
   'ui.file.selected': '{count, plural, one {# file selected} other {# files selected}}',
 
   'ui.gsc.title': 'Search Console export',
@@ -75,6 +76,7 @@ const messages = {
   'ui.gsc.unexpected':
     'Something went wrong while reading the files. Nothing was sent anywhere. Try again, or try another export.',
   'ui.gsc.again': 'Analyze other files',
+  'ui.gsc.website': 'Review this site’s pages',
   'ui.gsc.what-happened': 'What happened',
   'ui.gsc.overview': 'Overview',
   'ui.gsc.covers': 'Covers {range}',
@@ -125,6 +127,33 @@ const messages = {
   'ui.page.reviewed': 'Reviewed {url}',
   'ui.page.reviewed-pasted': 'Reviewed the HTML you provided',
   'ui.page.done': 'Review ready.',
+  'ui.site.title': 'Review a whole site',
+  'ui.site.lead':
+    'Choose a ZIP of the site’s files, such as a backup or a static export, or several HTML files. Every page is reviewed on this device; images, styles and other files are counted but not read.',
+  'ui.site.url': 'Site address',
+  'ui.site.url.hint':
+    'Gives each page its address, so that the checks comparing links and canonical tags with the page can run.',
+  'ui.site.choose': 'Choose the site’s files',
+  'ui.site.files.hint': 'A ZIP file of any size, or HTML files.',
+  'ui.site.preparing': 'Opening the files…',
+  'ui.site.progress': 'Reviewing page {done} of {total}…',
+  'ui.site.stop': 'Stop',
+  'ui.site.stopped': 'The review was stopped.',
+  'ui.site.done': 'Site review ready.',
+  'ui.site.results': 'Site review',
+  'ui.site.summary': '{pages, plural, one {# page reviewed.} other {# pages reviewed.}}',
+  'ui.site.other':
+    '{count, plural, one {# other file, such as an image or a style sheet, was not reviewed.} other {# other files, such as images and style sheets, were not reviewed.}}',
+  'ui.site.issues': 'Most common issues',
+  'ui.site.issues.none': 'No page needs attention or a closer look.',
+  'ui.site.issue.pages': '{count, plural, one {On # page:} other {On # pages, such as}} {path}',
+  'ui.site.issue.list': 'Show the pages',
+  'ui.site.and-more': '{count, plural, one {and # more page} other {and # more pages}}',
+  'ui.site.pages': 'Pages',
+  'ui.site.untitled': 'No title',
+  'ui.site.more': '{count, plural, one {Show # more page} other {Show # more pages}}',
+  'ui.site.skipped': 'Pages that could not be reviewed',
+  'ui.site.again': 'Review another site',
 
   'ui.mentions.title': 'AI mention log',
   'ui.mentions.lead':

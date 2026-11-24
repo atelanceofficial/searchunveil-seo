@@ -57,7 +57,8 @@ export const uiFr: UiCatalog = {
   'ui.file.choose-one': 'Choisir un fichier',
   'ui.file.drop': 'ou déposez-les ici',
   'ui.file.drop-one': 'ou déposez-le ici',
-  'ui.file.limit': 'Fichiers ZIP ou CSV, jusqu’à {megabytes}\u00A0Mo chacun.',
+  'ui.file.hint':
+    'Fichiers ZIP ou CSV de toute taille. Seul ce dont l’analyse a besoin est lu, sur cet appareil.',
   'ui.file.selected':
     '{count, plural, one {# fichier sélectionné} other {# fichiers sélectionnés}}',
 
@@ -77,6 +78,7 @@ export const uiFr: UiCatalog = {
   'ui.gsc.unexpected':
     'Un problème est survenu pendant la lecture des fichiers. Rien n’a été envoyé. Réessayez, ou essayez une autre exportation.',
   'ui.gsc.again': 'Analyser d’autres fichiers',
+  'ui.gsc.website': 'Examiner les pages de ce site',
   'ui.gsc.what-happened': 'Ce qui s’est passé',
   'ui.gsc.overview': 'Vue d’ensemble',
   'ui.gsc.covers': 'Période\u00A0: {range}',
@@ -127,6 +129,34 @@ export const uiFr: UiCatalog = {
   'ui.page.reviewed': 'Page examinée\u00A0: {url}',
   'ui.page.reviewed-pasted': 'Le HTML que vous avez fourni a été examiné',
   'ui.page.done': 'Examen prêt.',
+  'ui.site.title': 'Examiner un site entier',
+  'ui.site.lead':
+    'Choisissez un ZIP des fichiers du site, comme une sauvegarde ou un export statique, ou plusieurs fichiers HTML. Chaque page est examinée sur cet appareil\u00A0; les images, les styles et les autres fichiers sont comptés, mais pas lus.',
+  'ui.site.url': 'Adresse du site',
+  'ui.site.url.hint':
+    'Donne à chaque page son adresse, pour que les vérifications qui comparent les liens et les balises canoniques à la page puissent aussi s’exécuter.',
+  'ui.site.choose': 'Choisir les fichiers du site',
+  'ui.site.files.hint': 'Un fichier ZIP de toute taille, ou des fichiers HTML.',
+  'ui.site.preparing': 'Ouverture des fichiers…',
+  'ui.site.progress': 'Examen de la page {done} sur {total}…',
+  'ui.site.stop': 'Arrêter',
+  'ui.site.stopped': 'L’examen a été arrêté.',
+  'ui.site.done': 'Examen du site prêt.',
+  'ui.site.results': 'Examen du site',
+  'ui.site.summary': '{pages, plural, one {# page examinée.} other {# pages examinées.}}',
+  'ui.site.other':
+    '{count, plural, one {# autre fichier, comme une image ou une feuille de style, n’a pas été examiné.} other {# autres fichiers, comme des images et des feuilles de style, n’ont pas été examinés.}}',
+  'ui.site.issues': 'Problèmes les plus fréquents',
+  'ui.site.issues.none': 'Aucune page ne demande d’attention ni d’examen plus poussé.',
+  'ui.site.issue.pages':
+    '{count, plural, one {Sur # page\u00A0:} other {Sur # pages, comme}} {path}',
+  'ui.site.issue.list': 'Voir les pages',
+  'ui.site.and-more': '{count, plural, one {et # autre page} other {et # autres pages}}',
+  'ui.site.pages': 'Pages',
+  'ui.site.untitled': 'Sans titre',
+  'ui.site.more': '{count, plural, one {Afficher # page de plus} other {Afficher # pages de plus}}',
+  'ui.site.skipped': 'Pages qui n’ont pas pu être examinées',
+  'ui.site.again': 'Examiner un autre site',
 
   'ui.mentions.title': 'Journal des mentions par l’IA',
   'ui.mentions.lead':

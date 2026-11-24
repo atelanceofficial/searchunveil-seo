@@ -13,6 +13,9 @@ import { DEFAULT_LIMITS } from '../limits.ts';
  * An RFC 4180 CSV reader that also accepts what spreadsheet software really produces:
  * semicolon- and tab-separated files, CR, LF and CRLF line breaks, Excel's `sep=` hint,
  * and blank rows. Malformed quoting is reported with its line number instead of guessed at.
+ *
+ * Text can arrive in pieces ({@link CsvReader}), so a file of any size is parsed as it
+ * streams in, without ever being held as one string.
  */
 
 export type CsvDelimiter = ',' | ';' | '\t' | '|';
@@ -50,6 +53,8 @@ interface Limits {
 interface TokenizeResult {
   readonly records: CsvRecord[];
   readonly error: Diagnostic | null;
+  /** The line on which the text after the last record begins. */
+  readonly line: number;
 }
 
 const QUOTE = 0x22;
@@ -59,48 +64,173 @@ const SNIFF_SAMPLE_LENGTH = 64 * 1024;
 const SNIFF_RECORDS = 30;
 
 export function parseCsv(text: string, options: CsvOptions = {}): Result<CsvTable> {
-  const { file } = options;
-  // A byte order mark that survived decoding would otherwise become part of the first header.
-  let start = text.charCodeAt(0) === 0xfeff ? 1 : 0;
-  let firstLine = 1;
-  let delimiter = options.delimiter;
+  const reader = new CsvReader(options);
+  reader.push(text);
+  return reader.finish();
+}
 
-  const hint = /^sep=([,;\t|])\r?\n/i.exec(text.slice(start, start + 8));
-  if (hint !== null) {
-    delimiter ??= hint[1] as CsvDelimiter;
-    start += hint[0].length;
-    firstLine = 2;
+/**
+ * Parses CSV text that arrives in pieces. Each piece is scanned for the last place where a
+ * record ends outside quotes; complete records are parsed at once and only the unfinished
+ * one is kept, so a quoted value may span any number of pieces.
+ */
+export class CsvReader {
+  readonly #options: CsvOptions;
+  readonly #limits: Limits;
+  readonly #collector = new DiagnosticCollector();
+  readonly #records: CsvRecord[] = [];
+  #buffer = '';
+  #delimiter: CsvDelimiter | undefined;
+  #delimiterCode = 0;
+  #line = 1;
+  #error: Diagnostic | null = null;
+  // Where scanning stopped, and the quoting state there.
+  #scanned = 0;
+  #inQuotes = false;
+  #atFieldStart = true;
+
+  constructor(options: CsvOptions = {}) {
+    this.#options = options;
+    this.#limits = {
+      maxRecords: (options.maxRows ?? DEFAULT_LIMITS.maxRows) + 1, // plus the header row
+      maxColumns: options.maxColumns ?? DEFAULT_LIMITS.maxColumns,
+      maxFieldLength: options.maxFieldLength ?? DEFAULT_LIMITS.maxFieldLength,
+    };
   }
-  delimiter ??= sniffDelimiter(text, start);
 
-  const collector = new DiagnosticCollector();
-  const limits: Limits = {
-    maxRecords: (options.maxRows ?? DEFAULT_LIMITS.maxRows) + 1, // plus the header row
-    maxColumns: options.maxColumns ?? DEFAULT_LIMITS.maxColumns,
-    maxFieldLength: options.maxFieldLength ?? DEFAULT_LIMITS.maxFieldLength,
-  };
-  const { records, error } = tokenize(text, delimiter, start, firstLine, limits, file, (d) => {
-    collector.add(d);
-  });
-  if (error !== null) return failure([...collector.toArray(), error]);
+  /** True once the text broke a rule that ends parsing, such as the row limit. */
+  get failed(): boolean {
+    return this.#error !== null;
+  }
 
-  const [header, ...data] = records;
-  if (header === undefined)
-    return failure([diagnostic('csv.no-header', 'error', {}, locate(file))]);
-
-  for (const record of data) {
-    if (record.fields.length !== header.fields.length) {
-      collector.add(
-        diagnostic(
-          'csv.field-count',
-          'warning',
-          { expected: header.fields.length, actual: record.fields.length },
-          locate(file, record.line),
-        ),
-      );
+  push(text: string): void {
+    if (this.#error !== null || text === '') return;
+    this.#buffer += text;
+    if (this.#delimiter === undefined) {
+      // The delimiter is chosen from a sample, so wait until there is one.
+      if (this.#buffer.length <= SNIFF_SAMPLE_LENGTH + 16) return;
+      this.#start();
     }
+    const boundary = this.#scan();
+    if (boundary > 0) this.#parse(boundary);
   }
-  return success({ delimiter, header, records: data }, collector.toArray());
+
+  finish(): Result<CsvTable> {
+    if (this.#error === null) {
+      if (this.#delimiter === undefined) this.#start();
+      if (this.#buffer !== '') this.#parse(this.#buffer.length);
+    }
+    const file = this.#options.file;
+    if (this.#error !== null) return failure([...this.#collector.toArray(), this.#error]);
+
+    const [header, ...data] = this.#records;
+    if (header === undefined)
+      return failure([diagnostic('csv.no-header', 'error', {}, locate(file))]);
+
+    for (const record of data) {
+      if (record.fields.length !== header.fields.length) {
+        this.#collector.add(
+          diagnostic(
+            'csv.field-count',
+            'warning',
+            { expected: header.fields.length, actual: record.fields.length },
+            locate(file, record.line),
+          ),
+        );
+      }
+    }
+    return success(
+      { delimiter: this.#delimiter ?? ',', header, records: data },
+      this.#collector.toArray(),
+    );
+  }
+
+  /** Handles what only the start of a file can hold, then settles the delimiter. */
+  #start(): void {
+    let start = 0;
+    // A byte order mark that survived decoding would otherwise become part of the first header.
+    if (this.#buffer.charCodeAt(0) === 0xfeff) start = 1;
+    let delimiter = this.#options.delimiter;
+    const hint = /^sep=([,;\t|])\r?\n/i.exec(this.#buffer.slice(start, start + 8));
+    if (hint !== null) {
+      delimiter ??= hint[1] as CsvDelimiter;
+      start += hint[0].length;
+      this.#line = 2;
+    }
+    this.#buffer = this.#buffer.slice(start);
+    delimiter ??= sniffDelimiter(this.#buffer);
+    this.#delimiter = delimiter;
+    this.#delimiterCode = delimiter.charCodeAt(0);
+  }
+
+  /**
+   * Scans the unparsed text, following the tokenizer's own quoting rules, and returns the
+   * position just after the last record that is certainly complete, or 0.
+   */
+  #scan(): number {
+    const text = this.#buffer;
+    const length = text.length;
+    let i = this.#scanned;
+    let boundary = 0;
+    while (i < length) {
+      if (this.#inQuotes) {
+        const quote = text.indexOf('"', i);
+        if (quote === -1 || quote + 1 >= length) {
+          // An escaped quote cannot be told from a closing one until the next character.
+          i = quote === -1 ? length : quote;
+          break;
+        }
+        if (text.charCodeAt(quote + 1) === QUOTE) {
+          i = quote + 2;
+          continue;
+        }
+        this.#inQuotes = false;
+        i = quote + 1;
+        continue;
+      }
+      const code = text.charCodeAt(i);
+      if (code === QUOTE && this.#atFieldStart) {
+        this.#inQuotes = true;
+        this.#atFieldStart = false;
+        i++;
+      } else if (code === this.#delimiterCode) {
+        this.#atFieldStart = true;
+        i++;
+      } else if (code === CR || code === LF) {
+        // A CR at the very end may be the first half of a CRLF.
+        if (code === CR && i + 1 >= length) break;
+        i += code === CR && text.charCodeAt(i + 1) === LF ? 2 : 1;
+        boundary = i;
+        this.#atFieldStart = true;
+      } else {
+        this.#atFieldStart = false;
+        i++;
+      }
+    }
+    this.#scanned = i;
+    return boundary;
+  }
+
+  /** Parses the records before `end` and keeps the rest for the next piece. */
+  #parse(end: number): void {
+    const segment = this.#buffer.slice(0, end);
+    this.#buffer = this.#buffer.slice(end);
+    this.#scanned = Math.max(0, this.#scanned - end);
+    const result = tokenize(
+      segment,
+      this.#delimiter ?? ',',
+      0,
+      this.#line,
+      this.#limits,
+      this.#options.file,
+      (d) => {
+        this.#collector.add(d);
+      },
+      this.#records,
+    );
+    this.#line = result.line;
+    this.#error = result.error;
+  }
 }
 
 /**
@@ -142,13 +272,14 @@ function tokenize(
   limits: Limits,
   file: string | undefined,
   report: (d: Diagnostic) => void,
+  records: CsvRecord[] = [],
 ): TokenizeResult {
   const delimiterCode = delimiter.charCodeAt(0);
   const length = text.length;
-  const records: CsvRecord[] = [];
-  const fail = (code: Diagnostic['code'], line: number, params = {}): TokenizeResult => ({
+  const fail = (code: Diagnostic['code'], at: number, params = {}): TokenizeResult => ({
     records,
-    error: diagnostic(code, 'error', params, locate(file, line)),
+    error: diagnostic(code, 'error', params, locate(file, at)),
+    line: at,
   });
   let i = start;
   let line = firstLine;
@@ -222,7 +353,7 @@ function tokenize(
       return fail('csv.too-many-rows', recordLine, { limit: limits.maxRecords - 1 });
     }
   }
-  return { records, error: null };
+  return { records, error: null, line };
 }
 
 function isFieldEnd(code: number, delimiterCode: number): boolean {

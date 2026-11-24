@@ -1,6 +1,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 import { existsSync } from 'node:fs';
+import { writeFile } from 'node:fs/promises';
+import { createZip } from '../../../packages/core/src/test-support/zip-writer.ts';
 
 const WCAG_TAGS = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
@@ -195,6 +197,49 @@ test.describe('languages', () => {
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Web sitenizin nasıl bulunduğunu görün',
     );
+  });
+});
+
+test.describe('large files', () => {
+  /** A site's backup: three pages and a 30 MB video, larger than any limit the app once had. */
+  async function siteArchive(): Promise<Uint8Array> {
+    const page = (title: string, description = '') =>
+      `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${title}</title>` +
+      (description === '' ? '' : `<meta name="description" content="${description}">`) +
+      `</head><body><h1>${title}</h1></body></html>`;
+    const video = new Uint8Array(30 * 1024 * 1024);
+    for (let i = 0; i < video.length; i++) video[i] = (i * 2654435761) >>> 24;
+    return createZip([
+      { name: 'atelance/index.html', data: page('Atelance, a studio for brands', 'Identity.') },
+      { name: 'atelance/about/index.html', data: page('About the Atelance studio team') },
+      { name: 'atelance/contact.html', data: page('Contact') },
+      { name: 'atelance/media/showreel.mp4', data: video, method: 'stored' },
+    ]);
+  }
+
+  test('passes a 30 MB site archive from Search Console to a review of every page', async ({
+    page,
+  }, testInfo) => {
+    const file = testInfo.outputPath('atelance-site.zip');
+    await writeFile(file, await siteArchive());
+    await page.goto('/#search-console');
+    await page.locator('input[type="file"]').setInputFiles(file);
+    await expect(
+      page.getByText(/This ZIP file holds a website \(3 web pages among 4 files\)/),
+    ).toBeVisible();
+
+    await page.getByRole('link', { name: 'Review this site’s pages' }).click();
+    await expect(page.getByRole('heading', { name: 'Site review', level: 3 })).toBeVisible();
+    await expect(page.locator('.site-results > p.muted').first()).toContainText(
+      '3 pages reviewed.',
+    );
+    await expect(page.locator('.site-page')).toHaveCount(3);
+    await expect(page.locator('.site-issue').first()).toContainText('On ');
+
+    const first = page.locator('.site-page').first();
+    await first.locator('summary').click();
+    await expect(first.locator('.finding').first()).toBeVisible();
+    await expectAccessible(page);
   });
 });
 

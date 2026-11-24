@@ -10,13 +10,12 @@ import { useEffect, useId, useRef, useState } from 'preact/hooks';
 import { DiagnosticList } from '../components/Diagnostics.tsx';
 import { FindingList } from '../components/FindingCard.tsx';
 import { PageHeading } from '../components/PageHeading.tsx';
+import { SiteReview } from '../components/SiteReview.tsx';
 import { StatusBadge } from '../components/StatusBadge.tsx';
 import { useAnnounce } from '../lib/announce.tsx';
 import { useI18n } from '../lib/i18n.tsx';
 import { parseInertHtml } from '../lib/inert-html.ts';
 import { SAMPLE_PAGE_HTML, SAMPLE_PAGE_URL } from '../samples/page.ts';
-
-const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 type State =
   | { readonly kind: 'editing'; readonly diagnostics: readonly Diagnostic[] }
@@ -54,7 +53,7 @@ export function PageReviewView() {
   };
 
   const readFile = async (file: File | undefined) => {
-    if (file === undefined || file.size > MAX_FILE_BYTES) return;
+    if (file === undefined) return;
     const decoded = decodeText(new Uint8Array(await file.arrayBuffer()), {
       file: file.name,
       legacyEncoding: legacyEncodingFor(locale),
@@ -184,6 +183,8 @@ export function PageReviewView() {
           <FindingList findings={state.report.findings} />
         </section>
       ) : null}
+
+      <SiteReview />
     </>
   );
 }

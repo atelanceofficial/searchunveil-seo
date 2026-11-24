@@ -376,8 +376,6 @@ export const fr: CoreCatalog = {
     'Voici les mentions que vous avez enregistrées. Elles montrent où vous avez vu votre site, et non la fréquence à laquelle les assistants IA le mentionnent en général.',
 
   'diagnostic.input.empty': 'Ce fichier est vide.',
-  'diagnostic.input.too-large':
-    'Ce fichier est trop volumineux. Les fichiers peuvent atteindre {megabytes}\u00A0Mo.',
   'diagnostic.input.binary':
     'Ce n’est pas un fichier texte. Choisissez un fichier CSV, ou le fichier ZIP que télécharge la Search Console.',
   'diagnostic.input.spreadsheet':
@@ -406,8 +404,6 @@ export const fr: CoreCatalog = {
     'Ce fichier ZIP est endommagé ou incomplet. Essayez de le télécharger à nouveau.',
   'diagnostic.zip.multi-disk':
     'Ce fichier ZIP est découpé en plusieurs parties, ce qui n’est pas pris en charge.',
-  'diagnostic.zip.zip64':
-    'Ce fichier ZIP utilise le format ZIP64, destiné aux très grandes archives, qui n’est pas pris en charge.',
   'diagnostic.zip.encrypted':
     'Ce fichier ZIP est protégé par un mot de passe. Utilisez une exportation sans mot de passe.',
   'diagnostic.zip.unsupported-method':
@@ -415,8 +411,6 @@ export const fr: CoreCatalog = {
   'diagnostic.zip.too-many-entries': 'Ce fichier ZIP contient plus de {limit} fichiers.',
   'diagnostic.zip.entry-too-large':
     '«\u202F{entry}\u202F», dans ce fichier ZIP, dépasse {megabytes}\u00A0Mo une fois décompressé.',
-  'diagnostic.zip.total-too-large':
-    'Ce fichier ZIP dépasse {megabytes}\u00A0Mo une fois décompressé.',
   'diagnostic.zip.suspicious-ratio':
     '«\u202F{entry}\u202F», dans ce fichier ZIP, est si compressé que sa décompression pourrait être dangereuse\u202F; nous nous sommes donc arrêtés.',
   'diagnostic.zip.overlapping-entries':
@@ -425,6 +419,8 @@ export const fr: CoreCatalog = {
   'diagnostic.zip.checksum-mismatch':
     '«\u202F{entry}\u202F», dans ce fichier ZIP, n’a pas passé le contrôle d’intégrité.',
   'diagnostic.zip.no-csv': 'Ce fichier ZIP ne contient aucun fichier CSV.',
+  'diagnostic.zip.website':
+    'Ce fichier ZIP contient un site web ({pages, plural, one {# page web} other {# pages web}} parmi {files, plural, one {# fichier} other {# fichiers}}), pas un export Search Console. L’examen de page peut vérifier chacune de ses pages.',
 
   'diagnostic.gsc.no-tables':
     'Nous n’avons trouvé aucune donnée de la Search Console dans les fichiers choisis.',
@@ -481,6 +477,8 @@ export const fr: CoreCatalog = {
     'Cela ne ressemble pas à du HTML. Collez le code source de la page, pas son adresse.',
   'diagnostic.page.invalid-url':
     '«\u202F{value}\u202F» n’est pas une adresse Web complète\u202F; nous avons donc ignoré les vérifications qui comparent les liens à la page.',
+  'diagnostic.site.no-pages':
+    'Aucun des fichiers choisis n’est une page web (un fichier .html ou .htm).',
 
   'diagnostic.diagnostic.more':
     '…et {count, plural, one {# autre cas semblable} other {# autres cas semblables}}.',

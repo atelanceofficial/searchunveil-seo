@@ -367,8 +367,6 @@ export const de: CoreCatalog = {
     'Das sind die Erwähnungen, die Sie erfasst haben. Sie zeigen, wo Sie Ihre Website gesehen haben, nicht, wie oft KI-Assistenten sie insgesamt erwähnen.',
 
   'diagnostic.input.empty': 'Diese Datei ist leer.',
-  'diagnostic.input.too-large':
-    'Diese Datei ist zu groß. Dateien dürfen bis zu {megabytes}\u00A0MB groß sein.',
   'diagnostic.input.binary':
     'Das ist keine Textdatei. Wählen Sie eine CSV-Datei oder die ZIP-Datei, die die Search Console herunterlädt.',
   'diagnostic.input.spreadsheet':
@@ -396,8 +394,6 @@ export const de: CoreCatalog = {
     'Diese ZIP-Datei ist beschädigt oder unvollständig. Laden Sie sie erneut herunter.',
   'diagnostic.zip.multi-disk':
     'Diese ZIP-Datei ist in mehrere Teile aufgeteilt, was nicht unterstützt wird.',
-  'diagnostic.zip.zip64':
-    'Diese ZIP-Datei verwendet das ZIP64-Format für sehr große Archive, das nicht unterstützt wird.',
   'diagnostic.zip.encrypted':
     'Diese ZIP-Datei ist passwortgeschützt. Verwenden Sie einen Export ohne Passwort.',
   'diagnostic.zip.unsupported-method':
@@ -405,7 +401,6 @@ export const de: CoreCatalog = {
   'diagnostic.zip.too-many-entries': 'Diese ZIP-Datei enthält mehr als {limit} Dateien.',
   'diagnostic.zip.entry-too-large':
     '„{entry}“ in dieser ZIP-Datei ist entpackt größer als {megabytes}\u00A0MB.',
-  'diagnostic.zip.total-too-large': 'Diese ZIP-Datei ist entpackt größer als {megabytes}\u00A0MB.',
   'diagnostic.zip.suspicious-ratio':
     '„{entry}“ in dieser ZIP-Datei ist so stark komprimiert, dass das Entpacken unsicher sein könnte. Wir haben deshalb abgebrochen.',
   'diagnostic.zip.overlapping-entries':
@@ -414,6 +409,8 @@ export const de: CoreCatalog = {
   'diagnostic.zip.checksum-mismatch':
     '„{entry}“ in dieser ZIP-Datei hat die Integritätsprüfung nicht bestanden.',
   'diagnostic.zip.no-csv': 'Diese ZIP-Datei enthält keine CSV-Dateien.',
+  'diagnostic.zip.website':
+    'Diese ZIP-Datei enthält eine Website ({pages, plural, one {# Webseite} other {# Webseiten}} unter {files, plural, one {# Datei} other {# Dateien}}), keinen Search-Console-Export. Die Seitenprüfung kann jede Seite darin prüfen.',
 
   'diagnostic.gsc.no-tables':
     'In den ausgewählten Dateien haben wir keine Search Console-Daten gefunden.',
@@ -469,6 +466,8 @@ export const de: CoreCatalog = {
     'Das sieht nicht nach HTML aus. Fügen Sie den Quellcode der Seite ein, nicht ihre Adresse.',
   'diagnostic.page.invalid-url':
     '„{value}“ ist keine vollständige Webadresse, daher haben wir die Prüfungen übersprungen, die Links mit der Seite vergleichen.',
+  'diagnostic.site.no-pages':
+    'Keine der ausgewählten Dateien ist eine Webseite (eine .html- oder .htm-Datei).',
 
   'diagnostic.diagnostic.more':
     '…und {count, plural, one {# weiterer Fall dieser Art} other {# weitere Fälle dieser Art}}.',

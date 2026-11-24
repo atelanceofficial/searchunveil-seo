@@ -22,7 +22,10 @@ export interface TestZipEntry {
 export interface TestZipOptions {
   readonly comment?: string;
   readonly totalEntriesOverride?: number;
+  /** Writes a ZIP64 locator that points nowhere, as a damaged archive would. */
   readonly zip64Locator?: boolean;
+  /** Writes every size and offset in ZIP64 form, as archives past 4 GB must. */
+  readonly zip64?: boolean;
 }
 
 const encoder = new TextEncoder();
@@ -50,19 +53,29 @@ export async function createZip(
     const size = entry.uncompressedSize ?? raw.length;
     const flags = (entry.flags ?? 0) | 0x0800;
 
+    const zip64 = options.zip64 === true;
     let localOffset = offset;
     if (entry.reuseLocalHeaderOf === undefined) {
-      const local = new Uint8Array(30 + name.length);
+      const localExtra = zip64 ? 20 : 0;
+      const local = new Uint8Array(30 + name.length + localExtra);
       const view = new DataView(local.buffer);
       view.setUint32(0, 0x04034b50, true);
-      view.setUint16(4, 20, true);
+      view.setUint16(4, zip64 ? 45 : 20, true);
       view.setUint16(6, flags, true);
       view.setUint16(8, methodCode, true);
       view.setUint32(14, checksum, true);
-      view.setUint32(18, payload.length, true);
-      view.setUint32(22, size, true);
+      view.setUint32(18, zip64 ? 0xffffffff : payload.length, true);
+      view.setUint32(22, zip64 ? 0xffffffff : size, true);
       view.setUint16(26, name.length, true);
+      view.setUint16(28, localExtra, true);
       local.set(name, 30);
+      if (zip64) {
+        const at = 30 + name.length;
+        view.setUint16(at, 0x0001, true);
+        view.setUint16(at + 2, 16, true);
+        view.setBigUint64(at + 4, BigInt(size), true);
+        view.setBigUint64(at + 12, BigInt(payload.length), true);
+      }
       parts.push(local, payload);
       offset += local.length + payload.length;
     } else {
@@ -70,39 +83,73 @@ export async function createZip(
     }
     localOffsets.push(localOffset);
 
-    const record = new Uint8Array(46 + name.length);
+    const centralExtra = zip64 ? 28 : 0;
+    const record = new Uint8Array(46 + name.length + centralExtra);
     const view = new DataView(record.buffer);
     view.setUint32(0, 0x02014b50, true);
-    view.setUint16(4, 20, true);
-    view.setUint16(6, 20, true);
+    view.setUint16(4, zip64 ? 45 : 20, true);
+    view.setUint16(6, zip64 ? 45 : 20, true);
     view.setUint16(8, flags, true);
     view.setUint16(10, methodCode, true);
     view.setUint32(16, checksum, true);
-    view.setUint32(20, payload.length, true);
-    view.setUint32(24, size, true);
+    view.setUint32(20, zip64 ? 0xffffffff : payload.length, true);
+    view.setUint32(24, zip64 ? 0xffffffff : size, true);
     view.setUint16(28, name.length, true);
-    view.setUint32(42, localOffset, true);
+    view.setUint16(30, centralExtra, true);
+    view.setUint32(42, zip64 ? 0xffffffff : localOffset, true);
     record.set(name, 46);
+    if (zip64) {
+      const at = 46 + name.length;
+      view.setUint16(at, 0x0001, true);
+      view.setUint16(at + 2, 24, true);
+      view.setBigUint64(at + 4, BigInt(size), true);
+      view.setBigUint64(at + 12, BigInt(payload.length), true);
+      view.setBigUint64(at + 20, BigInt(localOffset), true);
+    }
     central.push(record);
   }
 
   const directoryOffset = offset;
   const directorySize = central.reduce((sum, record) => sum + record.length, 0);
   const comment = encoder.encode(options.comment ?? '');
-  const locator = options.zip64Locator === true ? new Uint8Array(20) : new Uint8Array(0);
-  if (locator.length > 0) new DataView(locator.buffer).setUint32(0, 0x07064b50, true);
+  const total = options.totalEntriesOverride ?? entries.length;
+
+  // ZIP64: a record with 64-bit counts and offsets, and a locator that points to it.
+  let record64 = new Uint8Array(0);
+  let locator = new Uint8Array(0);
+  if (options.zip64 === true) {
+    record64 = new Uint8Array(56);
+    const view = new DataView(record64.buffer);
+    view.setUint32(0, 0x06064b50, true);
+    view.setBigUint64(4, 44n, true);
+    view.setUint16(12, 45, true);
+    view.setUint16(14, 45, true);
+    view.setBigUint64(24, BigInt(total), true);
+    view.setBigUint64(32, BigInt(total), true);
+    view.setBigUint64(40, BigInt(directorySize), true);
+    view.setBigUint64(48, BigInt(directoryOffset), true);
+    locator = new Uint8Array(20);
+    const locatorView = new DataView(locator.buffer);
+    locatorView.setUint32(0, 0x07064b50, true);
+    locatorView.setBigUint64(8, BigInt(directoryOffset + directorySize), true);
+    locatorView.setUint32(16, 1, true);
+  } else if (options.zip64Locator === true) {
+    locator = new Uint8Array(20);
+    new DataView(locator.buffer).setUint32(0, 0x07064b50, true);
+  }
+
   const end = new Uint8Array(22 + comment.length);
   const endView = new DataView(end.buffer);
-  const total = options.totalEntriesOverride ?? entries.length;
+  const zip64 = options.zip64 === true;
   endView.setUint32(0, 0x06054b50, true);
-  endView.setUint16(8, total, true);
-  endView.setUint16(10, total, true);
-  endView.setUint32(12, directorySize, true);
-  endView.setUint32(16, directoryOffset, true);
+  endView.setUint16(8, zip64 ? 0xffff : total, true);
+  endView.setUint16(10, zip64 ? 0xffff : total, true);
+  endView.setUint32(12, zip64 ? 0xffffffff : directorySize, true);
+  endView.setUint32(16, zip64 ? 0xffffffff : directoryOffset, true);
   endView.setUint16(20, comment.length, true);
   end.set(comment, 22);
 
-  return concat([...parts, ...central, locator, end]);
+  return concat([...parts, ...central, record64, locator, end]);
 }
 
 export async function deflateRaw(data: Uint8Array): Promise<Uint8Array> {

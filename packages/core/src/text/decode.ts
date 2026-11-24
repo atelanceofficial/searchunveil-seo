@@ -1,4 +1,4 @@
-import { diagnostic, failure, success, type Diagnostic, type Result } from '../diagnostics.ts';
+import { diagnostic, failure, success, type Result } from '../diagnostics.ts';
 import type { Locale } from '../i18n/locales.ts';
 
 /**
@@ -42,49 +42,83 @@ export function legacyEncodingFor(locale: Locale): LegacyEncoding {
   }
 }
 
-const SAMPLE_BYTES = 4096;
+/** How many bytes from a file's start are enough to choose its encoding. */
+export const ENCODING_SAMPLE_BYTES = 4096;
 
-/**
- * Decodes a text file using, in order: its byte order mark, a UTF-16 pattern check,
- * strict UTF-8, and finally a legacy encoding (reported as a warning, because it is a guess).
- * Binary files are rejected instead of being decoded into noise.
- */
-export function decodeText(bytes: Uint8Array, options: DecodeOptions = {}): Result<DecodedText> {
-  const location = options.file === undefined ? undefined : { file: options.file };
-  if (bytes.length === 0) return failure([diagnostic('input.empty', 'error', {}, location)]);
-
-  const bom = detectByteOrderMark(bytes);
-  if (bom !== null) {
-    return success({ text: decode(bom, bytes), encoding: bom, byteOrderMark: true });
-  }
-
-  const diagnostics: Diagnostic[] = [];
-  const utf16 = detectUtf16WithoutBom(bytes);
-  if (utf16 !== null) {
-    diagnostics.push(
-      diagnostic('encoding.utf16-without-bom', 'info', { encoding: utf16 }, location),
-    );
-    return success(
-      { text: decode(utf16, bytes), encoding: utf16, byteOrderMark: false },
-      diagnostics,
-    );
-  }
-
-  if (containsNul(bytes)) return failure([diagnostic('input.binary', 'error', {}, location)]);
-
-  try {
-    const text = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
-    return success({ text, encoding: 'utf-8', byteOrderMark: false });
-  } catch {
-    const encoding = options.legacyEncoding ?? 'windows-1252';
-    diagnostics.push(diagnostic('encoding.legacy-fallback', 'warning', { encoding }, location));
-    return success({ text: decode(encoding, bytes), encoding, byteOrderMark: false }, diagnostics);
-  }
+export interface TextDecoderChoice {
+  /** Decodes the whole file; with `{ stream: true }` it accepts the file in pieces. */
+  readonly decoder: TextDecoder;
+  readonly encoding: TextEncoding;
+  readonly byteOrderMark: boolean;
+  /**
+   * True for UTF-8 without a byte order mark: the decoder throws on invalid bytes, and the
+   * file should then be decoded again with `legacy: true`.
+   */
+  readonly strict: boolean;
 }
 
-function decode(encoding: TextEncoding, bytes: Uint8Array): string {
+/**
+ * Chooses how to decode a file from its first bytes ({@link ENCODING_SAMPLE_BYTES} are
+ * enough), in order: its byte order mark, a UTF-16 pattern check, strict UTF-8, and with
+ * `legacy` a legacy encoding (reported as a warning, because it is a guess). Binary files are
+ * rejected instead of being decoded into noise.
+ */
+export function chooseTextDecoder(
+  head: Uint8Array,
+  options: DecodeOptions & { readonly legacy?: boolean } = {},
+): Result<TextDecoderChoice> {
+  const location = options.file === undefined ? undefined : { file: options.file };
+  if (head.length === 0) return failure([diagnostic('input.empty', 'error', {}, location)]);
+
   // TextDecoder removes a matching byte order mark by default.
-  return new TextDecoder(encoding).decode(bytes);
+  const bom = detectByteOrderMark(head);
+  if (bom !== null) {
+    return success({
+      decoder: new TextDecoder(bom),
+      encoding: bom,
+      byteOrderMark: true,
+      strict: false,
+    });
+  }
+
+  const utf16 = detectUtf16WithoutBom(head);
+  if (utf16 !== null) {
+    return success(
+      { decoder: new TextDecoder(utf16), encoding: utf16, byteOrderMark: false, strict: false },
+      [diagnostic('encoding.utf16-without-bom', 'info', { encoding: utf16 }, location)],
+    );
+  }
+
+  if (containsNul(head)) return failure([diagnostic('input.binary', 'error', {}, location)]);
+
+  if (options.legacy === true) {
+    const encoding = options.legacyEncoding ?? 'windows-1252';
+    return success(
+      { decoder: new TextDecoder(encoding), encoding, byteOrderMark: false, strict: false },
+      [diagnostic('encoding.legacy-fallback', 'warning', { encoding }, location)],
+    );
+  }
+  return success({
+    decoder: new TextDecoder('utf-8', { fatal: true }),
+    encoding: 'utf-8',
+    byteOrderMark: false,
+    strict: true,
+  });
+}
+
+/** Decodes a whole text file already in memory; see {@link chooseTextDecoder}. */
+export function decodeText(bytes: Uint8Array, options: DecodeOptions = {}): Result<DecodedText> {
+  let choice = chooseTextDecoder(bytes, options);
+  for (;;) {
+    if (!choice.ok) return choice;
+    const { decoder, encoding, byteOrderMark, strict } = choice.value;
+    try {
+      return success({ text: decoder.decode(bytes), encoding, byteOrderMark }, choice.diagnostics);
+    } catch (error) {
+      if (!strict) throw error;
+      choice = chooseTextDecoder(bytes, { ...options, legacy: true });
+    }
+  }
 }
 
 function detectByteOrderMark(bytes: Uint8Array): 'utf-8' | 'utf-16le' | 'utf-16be' | null {
@@ -101,7 +135,7 @@ function detectByteOrderMark(bytes: Uint8Array): 'utf-8' | 'utf-16le' | 'utf-16b
  * leaves every other byte zero. Real UTF-8 text and binary formats do not look like this.
  */
 function detectUtf16WithoutBom(bytes: Uint8Array): 'utf-16le' | 'utf-16be' | null {
-  const length = Math.min(bytes.length, SAMPLE_BYTES) & ~1;
+  const length = Math.min(bytes.length, ENCODING_SAMPLE_BYTES) & ~1;
   if (length < 4) return null;
   let evenZeros = 0;
   let oddZeros = 0;
@@ -116,7 +150,7 @@ function detectUtf16WithoutBom(bytes: Uint8Array): 'utf-16le' | 'utf-16be' | nul
 }
 
 function containsNul(bytes: Uint8Array): boolean {
-  const length = Math.min(bytes.length, SAMPLE_BYTES);
+  const length = Math.min(bytes.length, ENCODING_SAMPLE_BYTES);
   for (let i = 0; i < length; i++) if (bytes[i] === 0) return true;
   return false;
 }

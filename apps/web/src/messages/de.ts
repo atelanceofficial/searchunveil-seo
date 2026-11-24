@@ -56,7 +56,8 @@ export const uiDe: UiCatalog = {
   'ui.file.choose-one': 'Datei auswählen',
   'ui.file.drop': 'oder hier ablegen',
   'ui.file.drop-one': 'oder hier ablegen',
-  'ui.file.limit': 'ZIP- oder CSV-Dateien, jeweils bis zu {megabytes}\u00A0MB.',
+  'ui.file.hint':
+    'ZIP- oder CSV-Dateien jeder Größe. Gelesen wird nur, was die Analyse braucht, auf diesem Gerät.',
   'ui.file.selected': '{count, plural, one {# Datei ausgewählt} other {# Dateien ausgewählt}}',
 
   'ui.gsc.title': 'Search Console-Export',
@@ -75,6 +76,7 @@ export const uiDe: UiCatalog = {
   'ui.gsc.unexpected':
     'Beim Lesen der Dateien ist etwas schiefgegangen. Es wurde nichts übertragen. Versuchen Sie es erneut oder mit einem anderen Export.',
   'ui.gsc.again': 'Andere Dateien analysieren',
+  'ui.gsc.website': 'Die Seiten dieser Website prüfen',
   'ui.gsc.what-happened': 'Was ist passiert?',
   'ui.gsc.overview': 'Übersicht',
   'ui.gsc.covers': 'Zeitraum: {range}',
@@ -125,6 +127,34 @@ export const uiDe: UiCatalog = {
   'ui.page.reviewed': 'Geprüft: {url}',
   'ui.page.reviewed-pasted': 'Das von Ihnen bereitgestellte HTML wurde geprüft',
   'ui.page.done': 'Prüfung fertig.',
+  'ui.site.title': 'Eine ganze Website prüfen',
+  'ui.site.lead':
+    'Wählen Sie ein ZIP mit den Dateien der Website, etwa ein Backup oder einen statischen Export, oder mehrere HTML-Dateien. Jede Seite wird auf diesem Gerät geprüft; Bilder, Stylesheets und andere Dateien werden gezählt, aber nicht gelesen.',
+  'ui.site.url': 'Adresse der Website',
+  'ui.site.url.hint':
+    'Gibt jeder Seite ihre Adresse, damit auch die Prüfungen laufen, die Links und Canonical-Tags mit der Seite vergleichen.',
+  'ui.site.choose': 'Dateien der Website wählen',
+  'ui.site.files.hint': 'Eine ZIP-Datei beliebiger Größe oder HTML-Dateien.',
+  'ui.site.preparing': 'Dateien werden geöffnet…',
+  'ui.site.progress': 'Seite {done} von {total} wird geprüft…',
+  'ui.site.stop': 'Anhalten',
+  'ui.site.stopped': 'Die Prüfung wurde angehalten.',
+  'ui.site.done': 'Website-Prüfung fertig.',
+  'ui.site.results': 'Website-Prüfung',
+  'ui.site.summary': '{pages, plural, one {# Seite geprüft.} other {# Seiten geprüft.}}',
+  'ui.site.other':
+    '{count, plural, one {# andere Datei, etwa ein Bild oder ein Stylesheet, wurde nicht geprüft.} other {# andere Dateien, etwa Bilder und Stylesheets, wurden nicht geprüft.}}',
+  'ui.site.issues': 'Häufigste Probleme',
+  'ui.site.issues.none': 'Keine Seite braucht Aufmerksamkeit oder einen genaueren Blick.',
+  'ui.site.issue.pages': '{count, plural, one {Auf # Seite:} other {Auf # Seiten, etwa}} {path}',
+  'ui.site.issue.list': 'Seiten anzeigen',
+  'ui.site.and-more': '{count, plural, one {und # weitere Seite} other {und # weitere Seiten}}',
+  'ui.site.pages': 'Seiten',
+  'ui.site.untitled': 'Kein Titel',
+  'ui.site.more':
+    '{count, plural, one {# weitere Seite anzeigen} other {# weitere Seiten anzeigen}}',
+  'ui.site.skipped': 'Seiten, die nicht geprüft werden konnten',
+  'ui.site.again': 'Eine andere Website prüfen',
 
   'ui.mentions.title': 'Protokoll der KI-Erwähnungen',
   'ui.mentions.lead':

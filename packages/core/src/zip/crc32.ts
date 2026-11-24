@@ -14,8 +14,16 @@ function crcTable(): Uint32Array {
 }
 
 export function crc32(bytes: Uint8Array): number {
+  return updateCrc32(0, bytes);
+}
+
+/**
+ * Continues a checksum with more bytes, so a stream can be checked chunk by chunk:
+ * `updateCrc32(updateCrc32(0, a), b)` equals `crc32` of `a` followed by `b`.
+ */
+export function updateCrc32(previous: number, bytes: Uint8Array): number {
   const t = crcTable();
-  let crc = 0xffffffff;
+  let crc = (previous ^ 0xffffffff) >>> 0;
   for (const byte of bytes) crc = (t[(crc ^ byte) & 0xff] ?? 0) ^ (crc >>> 8);
   return (crc ^ 0xffffffff) >>> 0;
 }

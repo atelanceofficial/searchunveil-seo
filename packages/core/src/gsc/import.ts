@@ -1,4 +1,5 @@
-import { parseCsv, type CsvRecord, type CsvTable } from '../csv/parse.ts';
+import type { CsvRecord, CsvTable } from '../csv/parse.ts';
+import { readCsv } from '../csv/stream.ts';
 import {
   DiagnosticCollector,
   diagnostic,
@@ -7,9 +8,17 @@ import {
   success,
   type Result,
 } from '../diagnostics.ts';
-import { resolveLimits, toMegabytes, type InputLimits } from '../limits.ts';
-import { decodeText, type LegacyEncoding } from '../text/decode.ts';
-import { baseName, extractEntry, isZip, openZip } from '../zip/read.ts';
+import { resolveLimits, type InputLimits } from '../limits.ts';
+import { chunksOf, isWebPage, sourceOf, type ByteSource, type InputFile } from '../source.ts';
+import type { LegacyEncoding } from '../text/decode.ts';
+import {
+  baseName,
+  entryChunks,
+  isMetadataEntry,
+  isZip,
+  openZip,
+  ZipEntryError,
+} from '../zip/read.ts';
 import {
   isFilterHeader,
   matchDimension,
@@ -39,10 +48,7 @@ import {
   type DecimalSeparator,
 } from './values.ts';
 
-export interface InputFile {
-  readonly name: string;
-  readonly bytes: Uint8Array;
-}
+export type { InputFile } from '../source.ts';
 
 export interface SearchConsoleImportOptions {
   readonly limits?: Partial<InputLimits>;
@@ -59,11 +65,25 @@ const SWAPPED_SHARE = 0.5;
 /** Share of rows whose CTR disagrees with clicks ÷ impressions above which we warn. */
 const CTR_MISMATCH_SHARE = 0.1;
 
+/** A CSV table to read: from a file chosen directly, or from an entry in an archive. */
+interface TableSource {
+  readonly name: string;
+  readonly open: () => AsyncIterable<Uint8Array>;
+}
+
+/** An archive that holds web pages, remembered in case it turns out to hold no export. */
+interface WebsiteArchive {
+  readonly name: string;
+  readonly pages: number;
+  readonly files: number;
+}
+
 /**
  * Reads the files of a Search Console performance export: the ZIP archive Search Console
- * downloads, or any of the CSV files inside it. Each file is validated independently; a broken
- * file is reported without discarding the others. The import fails only when no table could
- * be read at all.
+ * downloads, or any of the CSV files inside it. Files of any size are accepted: an archive is
+ * read from its directory and only its CSV files are decompressed, and every table is decoded
+ * and parsed as it streams in. Each file is validated independently; a broken file is
+ * reported without discarding the others. The import fails only when no table could be read.
  */
 export async function importSearchConsole(
   files: readonly InputFile[],
@@ -71,46 +91,40 @@ export async function importSearchConsole(
 ): Promise<Result<SearchConsoleExport>> {
   const limits = resolveLimits(options.limits);
   const collector = new DiagnosticCollector();
-  const csvFiles: InputFile[] = [];
+  const sources: TableSource[] = [];
+  const websites: WebsiteArchive[] = [];
 
   for (const file of files) {
     const where = locate(file.name);
-    if (file.bytes.length > limits.maxFileBytes) {
-      collector.add(
-        diagnostic(
-          'input.too-large',
-          'error',
-          { megabytes: toMegabytes(limits.maxFileBytes) },
-          where,
-        ),
-      );
-    } else if (isZip(file.bytes)) {
-      csvFiles.push(...(await unpackArchive(file, limits, collector)));
-    } else if (SPREADSHEET_EXTENSIONS.test(file.name) || hasOleSignature(file.bytes)) {
+    const source = sourceOf(file);
+    const head = await source.read(0, OLE_SIGNATURE.length);
+    if (isZip(head)) {
+      sources.push(...(await unpackArchive(file.name, source, limits, collector, websites)));
+    } else if (SPREADSHEET_EXTENSIONS.test(file.name) || hasOleSignature(head)) {
       collector.add(diagnostic('input.spreadsheet', 'error', {}, where));
     } else {
-      csvFiles.push(file);
+      sources.push({ name: file.name, open: () => chunksOf(source.stream(0, source.size)) });
     }
   }
 
   const tables: MetricTable[] = [];
   const filters: ExportFilter[] = [];
   const read: string[] = [];
-  for (const file of csvFiles) {
-    const decoded = decodeText(
-      file.bytes,
-      options.legacyEncoding === undefined
-        ? { file: file.name }
-        : { file: file.name, legacyEncoding: options.legacyEncoding },
-    );
-    collector.addAll(decoded.diagnostics);
-    if (!decoded.ok) continue;
-    const csv = parseCsv(decoded.value.text, {
-      file: file.name,
-      maxRows: limits.maxRows,
-      maxColumns: limits.maxColumns,
-      maxFieldLength: limits.maxFieldLength,
-    });
+  for (const file of sources) {
+    let csv: Result<CsvTable>;
+    try {
+      csv = await readCsv(file.open, {
+        file: file.name,
+        maxRows: limits.maxRows,
+        maxColumns: limits.maxColumns,
+        maxFieldLength: limits.maxFieldLength,
+        ...(options.legacyEncoding === undefined ? {} : { legacyEncoding: options.legacyEncoding }),
+      });
+    } catch (error) {
+      if (!(error instanceof ZipEntryError)) throw error;
+      collector.add(error.diagnostic);
+      continue;
+    }
     collector.addAll(csv.diagnostics);
     if (!csv.ok) continue;
     read.push(file.name);
@@ -134,6 +148,17 @@ export async function importSearchConsole(
   }
 
   if (tables.length === 0) {
+    // An archive of web pages was probably meant for the page review.
+    for (const site of websites) {
+      collector.add(
+        diagnostic(
+          'zip.website',
+          'error',
+          { pages: site.pages, files: site.files },
+          locate(site.name),
+        ),
+      );
+    }
     collector.add(diagnostic('gsc.no-tables', 'error'));
     return failure(collector.toArray());
   }
@@ -141,37 +166,37 @@ export async function importSearchConsole(
 }
 
 async function unpackArchive(
-  file: InputFile,
+  name: string,
+  source: ByteSource,
   limits: InputLimits,
   collector: DiagnosticCollector,
-): Promise<InputFile[]> {
-  const where = locate(file.name);
-  const archive = openZip(file.bytes, { file: file.name, limits });
+  websites: WebsiteArchive[],
+): Promise<TableSource[]> {
+  const where = locate(name);
+  const archive = await openZip(source, { file: name, limits });
   collector.addAll(archive.diagnostics);
   if (!archive.ok) return [];
-  const names = archive.value.entries.map((entry) => entry.name);
-  if (names.includes('[Content_Types].xml')) {
+  const entries = archive.value.entries.filter((entry) => !isMetadataEntry(entry.name));
+  if (entries.some((entry) => entry.name === '[Content_Types].xml')) {
     // Office documents are ZIP archives too.
     collector.add(diagnostic('input.spreadsheet', 'error', {}, where));
     return [];
   }
-  const csvEntries = archive.value.entries.filter(
-    (entry) =>
-      entry.name.toLowerCase().endsWith('.csv') &&
-      !entry.name.startsWith('__MACOSX/') &&
-      !baseName(entry.name).startsWith('._'),
-  );
+  const csvEntries = entries.filter((entry) => entry.name.toLowerCase().endsWith('.csv'));
+  const pages = entries.filter((entry) => isWebPage(entry.name)).length;
   if (csvEntries.length === 0) {
-    collector.add(diagnostic('zip.no-csv', 'error', {}, where));
+    collector.add(
+      pages > 0
+        ? diagnostic('zip.website', 'error', { pages, files: entries.length }, where)
+        : diagnostic('zip.no-csv', 'error', {}, where),
+    );
     return [];
   }
-  const result: InputFile[] = [];
-  for (const entry of csvEntries) {
-    const extracted = await extractEntry(file.bytes, entry, { file: file.name });
-    collector.addAll(extracted.diagnostics);
-    if (extracted.ok) result.push({ name: baseName(entry.name), bytes: extracted.value });
-  }
-  return result;
+  if (pages > 0) websites.push({ name, pages, files: entries.length });
+  return csvEntries.map((entry) => ({
+    name: baseName(entry.name),
+    open: () => entryChunks(source, entry, { file: name, limits }),
+  }));
 }
 
 function hasOleSignature(bytes: Uint8Array): boolean {

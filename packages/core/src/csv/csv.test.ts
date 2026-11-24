@@ -1,7 +1,8 @@
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 import { formatCsv } from './format.ts';
-import { parseCsv, sniffDelimiter, type CsvTable } from './parse.ts';
+import { CsvReader, parseCsv, sniffDelimiter, type CsvTable } from './parse.ts';
+import { readCsv } from './stream.ts';
 
 function table(text: string, options?: Parameters<typeof parseCsv>[1]): CsvTable {
   const result = parseCsv(text, options);
@@ -199,5 +200,128 @@ describe('formatCsv', () => {
       }),
       { numRuns: 300 },
     );
+  });
+});
+
+describe('CsvReader', () => {
+  /** Parses text split at the given positions, as a stream would deliver it. */
+  function pieces(text: string, cuts: readonly number[]) {
+    const reader = new CsvReader();
+    let previous = 0;
+    for (const cut of [...cuts].sort((a, b) => a - b)) {
+      reader.push(text.slice(previous, cut));
+      previous = cut;
+    }
+    reader.push(text.slice(previous));
+    return reader.finish();
+  }
+
+  const tricky =
+    '\uFEFFsep=;\r\nq;n\r\n"a; b";1\r\n"say ""hi""";2\r\n"two\r\nlines";3\r\n\r\nlast;4\rlone;5\nx"y;6\n';
+
+  it('gives the same result however the text is cut, even inside quotes and CRLFs', () => {
+    const whole = parseCsv(tricky);
+    for (let cut = 0; cut <= tricky.length; cut++) {
+      expect(pieces(tricky, [cut])).toEqual(whole);
+    }
+  });
+
+  it('matches whole-text parsing for arbitrary text cut anywhere', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.array(fc.string({ unit: fc.constantFrom('a', ',', '"', '\n', '\r', ' ') }))),
+        fc.array(fc.nat()),
+        (cells, positions) => {
+          const text = cells.map((row) => row.join(',')).join('\r\n');
+          const cuts = positions.map((p) => p % (text.length + 1));
+          expect(pieces(text, cuts)).toEqual(parseCsv(text));
+        },
+      ),
+      { numRuns: 300 },
+    );
+  });
+
+  it('parses long files as they arrive and stops at the row limit', () => {
+    // Parsing starts once there is enough text to choose the delimiter from (64 KB).
+    const reader = new CsvReader({ maxRows: 1000 });
+    reader.push('Key,Clicks\n');
+    let pushed = 0;
+    while (pushed < 50_000 && !reader.failed) reader.push(`row ${String(pushed++)},1\n`);
+    expect(reader.failed).toBe(true);
+    expect(pushed).toBeLessThan(10_000);
+    const result = reader.finish();
+    expect(result.ok).toBe(false);
+    expect(result.diagnostics.at(-1)).toMatchObject({ code: 'csv.too-many-rows' });
+  });
+});
+
+describe('readCsv', () => {
+  const encoder = new TextEncoder();
+  function streamOf(bytes: Uint8Array, size = 7): () => AsyncIterable<Uint8Array> {
+    return async function* () {
+      for (let i = 0; i < bytes.length; i += size) {
+        await Promise.resolve(); // As a real stream would, between pieces.
+        yield bytes.slice(i, i + size);
+      }
+    };
+  }
+
+  it('decodes and parses bytes as they stream in, keeping characters split across pieces', async () => {
+    const result = await readCsv(streamOf(encoder.encode('Sorgu,Tıklama\nayakkabı,12\nçizme,3\n')));
+    expect(result.ok && rows(result.value)).toEqual([
+      ['ayakkabı', '12'],
+      ['çizme', '3'],
+    ]);
+  });
+
+  it('reads the file again in the legacy encoding when it is not UTF-8', async () => {
+    // "ğ" (0xF0) and "ı" (0xFD) in Windows-1254, after enough ASCII that UTF-8 seemed fine.
+    const ascii = encoder.encode('Key,Clicks\n' + 'plain,1\n'.repeat(1000));
+    const bytes = new Uint8Array([
+      ...ascii,
+      0x64,
+      0x61,
+      0xf0,
+      0x2c,
+      0x32,
+      0x0a,
+      0x6b,
+      0xfd,
+      0x2c,
+      0x33,
+    ]);
+    const result = await readCsv(streamOf(bytes, 512), { legacyEncoding: 'windows-1254' });
+    expect(result.ok && rows(result.value).slice(-2)).toEqual([
+      ['dağ', '2'],
+      ['kı', '3'],
+    ]);
+    expect(result.diagnostics[0]).toMatchObject({
+      code: 'encoding.legacy-fallback',
+      params: { encoding: 'windows-1254' },
+    });
+  });
+
+  it('rejects empty and binary files', async () => {
+    expect((await readCsv(streamOf(new Uint8Array()))).diagnostics[0]?.code).toBe('input.empty');
+    const png = new Uint8Array([
+      0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0, 0, 0, 0x0d, 0x49,
+    ]);
+    expect((await readCsv(streamOf(png))).diagnostics[0]?.code).toBe('input.binary');
+  });
+
+  it('stops reading once the CSV breaks a limit', async () => {
+    let served = 0;
+    const many = encoder.encode('Key,Clicks\n' + 'row,1\n'.repeat(100_000));
+    const open = async function* () {
+      for (let i = 0; i < many.length; i += 1024) {
+        await Promise.resolve();
+        served += 1024;
+        yield many.slice(i, i + 1024);
+      }
+    };
+    const result = await readCsv(open, { maxRows: 10 });
+    expect(result.ok).toBe(false);
+    // It stops after the first 64 KB sample instead of reading all 600 KB.
+    expect(served).toBeLessThan(many.length / 5);
   });
 });

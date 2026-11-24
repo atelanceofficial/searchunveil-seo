@@ -374,7 +374,6 @@ const messages = {
 
   // Diagnostics: files
   'diagnostic.input.empty': 'This file is empty.',
-  'diagnostic.input.too-large': 'This file is too large. Files can be up to {megabytes} MB.',
   'diagnostic.input.binary':
     'This isn’t a text file. Choose a CSV file, or the ZIP file Search Console downloads.',
   'diagnostic.input.spreadsheet':
@@ -396,8 +395,6 @@ const messages = {
     'A value is longer than {limit} characters, the most we can read.',
   'diagnostic.zip.invalid': 'This ZIP file is damaged or incomplete. Try downloading it again.',
   'diagnostic.zip.multi-disk': 'This ZIP file is split into several parts, which isn’t supported.',
-  'diagnostic.zip.zip64':
-    'This ZIP file uses the ZIP64 format for very large archives, which isn’t supported.',
   'diagnostic.zip.encrypted':
     'This ZIP file is password-protected. Use an export without a password.',
   'diagnostic.zip.unsupported-method':
@@ -405,7 +402,6 @@ const messages = {
   'diagnostic.zip.too-many-entries': 'This ZIP file contains more than {limit} files.',
   'diagnostic.zip.entry-too-large':
     '“{entry}” in this ZIP file is larger than {megabytes} MB when unpacked.',
-  'diagnostic.zip.total-too-large': 'This ZIP file unpacks to more than {megabytes} MB.',
   'diagnostic.zip.suspicious-ratio':
     '“{entry}” in this ZIP file is compressed so much that unpacking it may be unsafe, so we stopped.',
   'diagnostic.zip.overlapping-entries':
@@ -413,6 +409,8 @@ const messages = {
   'diagnostic.zip.corrupt-entry': '“{entry}” in this ZIP file is damaged.',
   'diagnostic.zip.checksum-mismatch': '“{entry}” in this ZIP file failed its integrity check.',
   'diagnostic.zip.no-csv': 'This ZIP file contains no CSV files.',
+  'diagnostic.zip.website':
+    'This ZIP file holds a website ({pages, plural, one {# web page} other {# web pages}} among {files, plural, one {# file} other {# files}}), not a Search Console export. Page review can check every page in it.',
 
   // Diagnostics: Search Console exports
   'diagnostic.gsc.no-tables': 'We couldn’t find Search Console data in the files you chose.',
@@ -463,6 +461,7 @@ const messages = {
     'This doesn’t look like HTML. Paste the page’s source code, not its address.',
   'diagnostic.page.invalid-url':
     '“{value}” isn’t a full web address, so checks that compare links with the page were skipped.',
+  'diagnostic.site.no-pages': 'None of the files you chose is a web page (an .html or .htm file).',
 
   'diagnostic.diagnostic.more':
     '…and {count, plural, one {# more like this} other {# more like this}}.',

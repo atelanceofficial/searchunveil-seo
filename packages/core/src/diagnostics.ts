@@ -11,7 +11,6 @@ export type Severity = 'error' | 'warning' | 'info';
 export type DiagnosticCode =
   // Input files
   | 'input.empty'
-  | 'input.too-large'
   | 'input.binary'
   | 'input.spreadsheet'
   | 'input.unsupported-type'
@@ -30,17 +29,16 @@ export type DiagnosticCode =
   // ZIP archives
   | 'zip.invalid'
   | 'zip.multi-disk'
-  | 'zip.zip64'
   | 'zip.encrypted'
   | 'zip.unsupported-method'
   | 'zip.too-many-entries'
   | 'zip.entry-too-large'
-  | 'zip.total-too-large'
   | 'zip.suspicious-ratio'
   | 'zip.overlapping-entries'
   | 'zip.corrupt-entry'
   | 'zip.checksum-mismatch'
   | 'zip.no-csv'
+  | 'zip.website'
   // Search Console exports
   | 'gsc.no-tables'
   | 'gsc.unrecognized-table'
@@ -73,6 +71,8 @@ export type DiagnosticCode =
   | 'page.too-large'
   | 'page.not-html'
   | 'page.invalid-url'
+  // Site review
+  | 'site.no-pages'
   // Aggregation
   | 'diagnostic.more';
 

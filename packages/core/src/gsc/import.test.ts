@@ -323,13 +323,38 @@ describe('importSearchConsole', () => {
     expect(codes(await importSearchConsole([archive]))).toEqual(['zip.no-csv', 'gsc.no-tables']);
   });
 
-  it('enforces the file size limit', async () => {
-    const file = queriesFile([['a', 1, 10, 2]]);
-    const result = await importSearchConsole([file], { limits: { maxFileBytes: 10 } });
-    expect(result.diagnostics[0]).toMatchObject({
-      code: 'input.too-large',
-      params: { megabytes: 0 },
-    });
+  it('reads files of any size, as they stream in', async () => {
+    const rows = Array.from(
+      { length: 60_000 },
+      (_, i) => [`query ${String(i)}`, i % 7, 10 + (i % 97), 1 + (i % 40)] as const,
+    );
+    const file = queriesFile(rows);
+    const data = await imported([{ name: file.name, blob: new Blob([file.bytes.slice()]) }]);
+    expect(data.tables[0]?.rows).toHaveLength(60_000);
+  });
+
+  it('reads the export inside a large archive without reading the rest', async () => {
+    const photo = new Uint8Array(6 * 1024 * 1024).map((_, i) => (i * 2654435761) >>> 24);
+    const archive = await createZip([
+      { name: 'site/photo.jpg', data: photo, method: 'stored' },
+      { name: 'site/Queries.csv', data: queriesFile([['shoes', 3, 40, 2.5]]).bytes },
+    ]);
+    const data = await imported([{ name: 'export.zip', blob: new Blob([archive.slice()]) }]);
+    expect(data.tables[0]?.rows.map((row) => row.key)).toEqual(['shoes']);
+  });
+
+  it('explains that an archive of web pages is a website, not an export', async () => {
+    const archive = {
+      name: 'site.zip',
+      bytes: await createZip([
+        { name: 'site/index.html', data: '<title>Home</title>' },
+        { name: 'site/about/index.html', data: '<title>About</title>' },
+        { name: 'site/logo.png', data: new Uint8Array([0x89, 0x50, 0x4e, 0x47]) },
+      ]),
+    };
+    const result = await importSearchConsole([archive]);
+    expect(codes(result)).toEqual(['zip.website', 'gsc.no-tables']);
+    expect(result.diagnostics[0]?.params).toEqual({ pages: 2, files: 3 });
   });
 
   it('keeps good files when another file is broken', async () => {

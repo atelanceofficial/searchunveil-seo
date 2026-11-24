@@ -16,7 +16,7 @@ Today, website information is often spread across different tools and reports. W
 
 | What you want to understand | What SearchUnveil aims to show |
 | :--- | :--- |
-| **Is my website easy to find?** | Common website and SEO issues, explained in plain language. |
+| **Is my website easy to find?** | Common website and SEO issues, explained in plain language, for one page or every page in a ZIP of your site. |
 | **How is my website doing in Google Search?** | Trends in clicks, impressions, pages, and queries from a Search Console CSV file you provide. |
 | **Where has AI mentioned my website?** | A record of AI-generated mentions or citations that you add, with a source and date when known. |
 | **What should I look at next?** | Simple charts, clear explanations, and suggested checks based on the information available. |
@@ -90,7 +90,7 @@ This roadmap can change. We have not set a release date. The [architecture](docs
 
 ## Try the early prototype
 
-The prototype runs on your own computer. Everything happens in your browser, and your files are never uploaded. You need [Node.js](https://nodejs.org/) 22.22 or later.
+The prototype runs on your own computer. Everything happens in your browser, and your files are never uploaded. Files of any size work: archives are read from their table of contents, and only what an analysis needs is read. You need [Node.js](https://nodejs.org/) 22.22 or later.
 
 ```sh
 npm ci

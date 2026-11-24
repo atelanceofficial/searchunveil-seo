@@ -359,7 +359,6 @@ export const tr: CoreCatalog = {
     'Bunlar sizin kaydettiğiniz bahsetmeler. Yapay zekâ asistanlarının sitenizden genel olarak ne sıklıkla bahsettiğini değil, sitenizi nerede gördüğünüzü gösterir.',
 
   'diagnostic.input.empty': 'Bu dosya boş.',
-  'diagnostic.input.too-large': 'Bu dosya çok büyük. Dosyalar en fazla {megabytes} MB olabilir.',
   'diagnostic.input.binary':
     'Bu bir metin dosyası değil. Bir CSV dosyası ya da Search Console’un indirdiği ZIP dosyasını seçin.',
   'diagnostic.input.spreadsheet':
@@ -384,8 +383,6 @@ export const tr: CoreCatalog = {
     'Bir değer, okuyabildiğimiz en fazla uzunluk olan {limit} karakterden uzun.',
   'diagnostic.zip.invalid': 'Bu ZIP dosyası hasarlı veya eksik. Yeniden indirmeyi deneyin.',
   'diagnostic.zip.multi-disk': 'Bu ZIP dosyası birkaç parçaya bölünmüş; bu desteklenmiyor.',
-  'diagnostic.zip.zip64':
-    'Bu ZIP dosyası çok büyük arşivler için kullanılan ZIP64 biçiminde; bu desteklenmiyor.',
   'diagnostic.zip.encrypted':
     'Bu ZIP dosyası parola korumalı. Parolasız bir dışa aktarım kullanın.',
   'diagnostic.zip.unsupported-method':
@@ -393,7 +390,6 @@ export const tr: CoreCatalog = {
   'diagnostic.zip.too-many-entries': 'Bu ZIP dosyasında {limit} dosyadan fazlası var.',
   'diagnostic.zip.entry-too-large':
     'Bu ZIP dosyasındaki “{entry}”, açıldığında {megabytes} MB’tan büyük.',
-  'diagnostic.zip.total-too-large': 'Bu ZIP dosyası açıldığında {megabytes} MB’tan büyük oluyor.',
   'diagnostic.zip.suspicious-ratio':
     'Bu ZIP dosyasındaki “{entry}” o kadar çok sıkıştırılmış ki açmak güvenli olmayabilir; bu yüzden durduk.',
   'diagnostic.zip.overlapping-entries':
@@ -402,6 +398,8 @@ export const tr: CoreCatalog = {
   'diagnostic.zip.checksum-mismatch':
     'Bu ZIP dosyasındaki “{entry}” bütünlük denetiminden geçemedi.',
   'diagnostic.zip.no-csv': 'Bu ZIP dosyasında CSV dosyası yok.',
+  'diagnostic.zip.website':
+    'Bu ZIP dosyası bir Search Console dışa aktarımı değil, bir web sitesi: {files, plural, one {# dosyanın} other {# dosyanın}} {pages, plural, one {# tanesi} other {# tanesi}} web sayfası. Sayfa incelemesi içindeki her sayfayı kontrol edebilir.',
 
   'diagnostic.gsc.no-tables': 'Seçtiğiniz dosyalarda Search Console verisi bulamadık.',
   'diagnostic.gsc.unrecognized-table':
@@ -452,6 +450,8 @@ export const tr: CoreCatalog = {
     'Bu HTML’e benzemiyor. Sayfanın adresini değil, kaynak kodunu yapıştırın.',
   'diagnostic.page.invalid-url':
     '“{value}” tam bir web adresi değil; bu yüzden bağlantıları sayfayla karşılaştıran kontroller atlandı.',
+  'diagnostic.site.no-pages':
+    'Seçtiğiniz dosyaların hiçbiri bir web sayfası (.html ya da .htm dosyası) değil.',
 
   'diagnostic.diagnostic.more':
     '…ve bunun gibi {count, plural, one {# tane daha} other {# tane daha}}.',

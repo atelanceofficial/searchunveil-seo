@@ -53,6 +53,8 @@ Lists show at most ten rows.
 
 The review sees only the HTML it is given. Every report states that content added by JavaScript, HTTP headers, robots.txt, speed and links from other sites are outside its scope.
 
+A **site review** applies exactly these rules to every web page in a ZIP of the site's files (a backup or a static export, of any size) or in several HTML files. It adds no rules of its own: it groups the findings that need attention or a closer look by rule and wording, and shows on how many pages each appears, with an example. When the site's address is given, each page's address follows from its path, and `index.html` stands for its folder, as web servers serve it.
+
 | Rule | What it checks | Status when it fails |
 | :--- | :--- | :--- |
 | `page.head` | Important tags (title, description, robots, viewport, canonical, hreflang) that the HTML parser moved out of `<head>` because something invalid came first. | Needs attention; worth a look when a `<noscript>` block caused it, because only tools without JavaScript are affected. |

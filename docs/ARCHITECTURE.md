@@ -37,12 +37,13 @@ flowchart TD
 
 | Module | Responsibility | Guarantees |
 | :--- | :--- | :--- |
-| `zip` | Reads the ZIP archive Search Console downloads. | Rejects encrypted, split and ZIP64 archives; enforces entry, size and compression-ratio limits before inflating; detects overlapping entries; stops at the declared size; verifies every CRC-32. |
+| `source` | Gives every file random access, read in parts. | A browser `File` is never loaded whole: size alone never turns a file away. |
+| `zip` | Reads ZIP archives of any size: the one Search Console downloads, or a site's backup. | Reads only the end record, the directory and the entries asked for, ZIP64 included; rejects encrypted and split archives; checks entry counts, overlapping entries and compression ratios before inflating; stops at the declared size; verifies every CRC-32 while streaming. |
 | `text` | Decodes files and folds text for matching. | Honors byte order marks, detects UTF-16, refuses binary files, and reports when it had to assume a legacy encoding chosen from the reader's language. |
-| `csv` | Reads and writes CSV. | RFC 4180 with real-world tolerance (semicolons, tabs, `sep=` hints, CR/LF/CRLF); malformed quoting is reported with line numbers; explicit row, column and field limits; formula-safe export. |
+| `csv` | Reads and writes CSV. | Parses text as it streams in, with exact record boundaries across pieces; RFC 4180 with real-world tolerance (semicolons, tabs, `sep=` hints, CR/LF/CRLF); malformed quoting is reported with line numbers; explicit row, column and field limits; formula-safe export. |
 | `gsc` | Understands Search Console exports and analyzes them. | Recognizes tables by header or by Search Console's fixed column order; parses numbers and dates written in any of the seven languages; checks integrity (clicks never exceed impressions, CTR matches clicks ÷ impressions); keeps comparison-period labels verbatim. |
 | `analysis` | Period comparison and statistics. | Whole-week periods aligned by weekday; incomplete final days left out; CTR recomputed from sums; position weighted by impressions; an exact sign test describes day-by-day consistency. |
-| `audit` | Reviews one page's HTML. | Works on any standard DOM; detects tags pushed out of `<head>`; never claims to know about JavaScript, HTTP headers or robots.txt. |
+| `audit` | Reviews one page's HTML, or every page of a site from a ZIP or several HTML files. | Works on any standard DOM; detects tags pushed out of `<head>`; never claims to know about JavaScript, HTTP headers or robots.txt. A site review decompresses one page at a time, hands control back to the browser between pages, can be stopped, and shows how many pages each issue affects. |
 | `mentions` | The AI mention log. | Validates every field; imports and exports a versioned JSON format; summarizes counts only, with no visibility score. |
 | `i18n` | Messages and formatting. | ICU MessageFormat subset with plural and select; locale-aware numbers and UTC-safe dates; bidirectional isolation of people's own text. |
 
@@ -74,8 +75,8 @@ Seven languages ship together: English, Spanish, German, French, Turkish, Simpli
 | Concern | Control in the prototype |
 | :--- | :--- |
 | Data leaving the device | No server. The production Content Security Policy sets `connect-src 'none'`; a browser test proves a `fetch` is refused. |
-| Malicious archives | Limits on entries, sizes and ratios; overlap detection; streaming inflation that stops at the declared size; CRC-32 verification. |
-| Oversized or malformed files | Explicit limits for file size, rows, columns and field length, reported instead of silently truncated. |
+| Malicious archives | Limits on entries, directory size and compression ratio; overlap detection; streaming inflation that stops at the declared size; CRC-32 verification. |
+| Large or malformed files | Size alone is never refused: archives are read from their directory and text streams through the parsers, so memory holds only what an analysis keeps. Explicit limits for rows, columns, field length and pages held whole are reported instead of silently truncated. |
 | Pasted HTML | Parsed with `DOMParser` into an inert document (no scripts, no resource loading; verified in a browser test) through the only Trusted Types policy the page allows. |
 | Cross-site scripting | No `innerHTML`; Preact escapes text; Trusted Types are required for any HTML sink. |
 | Spreadsheet formula injection | Exported CSV neutralizes cells that begin with `=`, `+`, `-`, `@` and their full-width forms. |

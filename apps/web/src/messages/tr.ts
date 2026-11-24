@@ -54,7 +54,8 @@ export const uiTr: UiCatalog = {
   'ui.file.choose-one': 'Bir dosya seç',
   'ui.file.drop': 'ya da buraya bırakın',
   'ui.file.drop-one': 'ya da buraya bırakın',
-  'ui.file.limit': 'ZIP veya CSV dosyaları, her biri en fazla {megabytes} MB.',
+  'ui.file.hint':
+    'Her boyutta ZIP veya CSV dosyası. Yalnızca gereken kısımlar okunur; dosya bu cihazdan çıkmaz.',
   'ui.file.selected': '{count, plural, one {# dosya seçildi} other {# dosya seçildi}}',
 
   'ui.gsc.title': 'Search Console dışa aktarımı',
@@ -73,6 +74,7 @@ export const uiTr: UiCatalog = {
   'ui.gsc.unexpected':
     'Dosyalar okunurken bir şeyler ters gitti. Hiçbir şey hiçbir yere gönderilmedi. Yeniden deneyin ya da başka bir dışa aktarım deneyin.',
   'ui.gsc.again': 'Başka dosyaları analiz et',
+  'ui.gsc.website': 'Bu sitenin sayfalarını incele',
   'ui.gsc.what-happened': 'Ne oldu?',
   'ui.gsc.overview': 'Genel bakış',
   'ui.gsc.covers': 'Kapsanan dönem: {range}',
@@ -123,6 +125,33 @@ export const uiTr: UiCatalog = {
   'ui.page.reviewed': 'İncelenen: {url}',
   'ui.page.reviewed-pasted': 'Sağladığınız HTML incelendi',
   'ui.page.done': 'İnceleme hazır.',
+  'ui.site.title': 'Tüm siteyi inceleyin',
+  'ui.site.lead':
+    'Sitenin dosyalarını içeren bir ZIP (örneğin bir yedek ya da statik dışa aktarım) veya birkaç HTML dosyası seçin. Her sayfa bu cihazda incelenir; görseller, stiller ve diğer dosyalar sayılır ama okunmaz.',
+  'ui.site.url': 'Sitenin adresi',
+  'ui.site.url.hint':
+    'Her sayfaya adresini verir; böylece bağlantıları ve kanonik etiketleri sayfayla karşılaştıran kontroller de çalışır.',
+  'ui.site.choose': 'Sitenin dosyalarını seç',
+  'ui.site.files.hint': 'Her boyutta bir ZIP dosyası ya da HTML dosyaları.',
+  'ui.site.preparing': 'Dosyalar açılıyor…',
+  'ui.site.progress': '{total} sayfanın {done} tanesi incelendi…',
+  'ui.site.stop': 'Durdur',
+  'ui.site.stopped': 'İnceleme durduruldu.',
+  'ui.site.done': 'Site incelemesi hazır.',
+  'ui.site.results': 'Site incelemesi',
+  'ui.site.summary': '{pages, plural, one {# sayfa incelendi.} other {# sayfa incelendi.}}',
+  'ui.site.other':
+    '{count, plural, one {Görsel ya da stil dosyası gibi # dosya incelenmedi.} other {Görsel ve stil dosyaları gibi # dosya incelenmedi.}}',
+  'ui.site.issues': 'En sık görülen sorunlar',
+  'ui.site.issues.none': 'Hiçbir sayfa dikkat ya da daha yakından bakış gerektirmiyor.',
+  'ui.site.issue.pages': '{count, plural, one {# sayfada:} other {# sayfada, örneğin}} {path}',
+  'ui.site.issue.list': 'Sayfaları göster',
+  'ui.site.and-more': '{count, plural, one {ve # sayfa daha} other {ve # sayfa daha}}',
+  'ui.site.pages': 'Sayfalar',
+  'ui.site.untitled': 'Başlık yok',
+  'ui.site.more': '{count, plural, one {# sayfa daha göster} other {# sayfa daha göster}}',
+  'ui.site.skipped': 'İncelenemeyen sayfalar',
+  'ui.site.again': 'Başka bir site incele',
 
   'ui.mentions.title': 'Yapay zekâ bahsetme günlüğü',
   'ui.mentions.lead':

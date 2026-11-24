@@ -52,7 +52,8 @@ export const uiAr: UiCatalog = {
   'ui.file.choose-one': 'اختيار ملف',
   'ui.file.drop': 'أو أفلتها هنا',
   'ui.file.drop-one': 'أو أفلته هنا',
-  'ui.file.limit': 'ملفات ZIP أو CSV، بحد أقصى {megabytes} ميغابايت لكل ملف.',
+  'ui.file.hint':
+    'ملفات ZIP أو CSV بأي حجم. لا يُقرأ منها إلا ما يحتاج إليه التحليل، على هذا الجهاز.',
   'ui.file.selected': 'الملفات المحددة: {count}',
 
   'ui.gsc.title': 'ملف مُصدَّر من Search Console',
@@ -70,6 +71,7 @@ export const uiAr: UiCatalog = {
   'ui.gsc.unexpected':
     'حدث خطأ أثناء قراءة الملفات. لم يُرسَل أي شيء إلى أي مكان. حاول مرة أخرى، أو جرّب ملفًا مُصدَّرًا آخر.',
   'ui.gsc.again': 'تحليل ملفات أخرى',
+  'ui.gsc.website': 'مراجعة صفحات هذا الموقع',
   'ui.gsc.what-happened': 'ما الذي حدث',
   'ui.gsc.overview': 'نظرة عامة',
   'ui.gsc.covers': 'الفترة: {range}',
@@ -118,6 +120,37 @@ export const uiAr: UiCatalog = {
   'ui.page.reviewed': 'تمت مراجعة {url}',
   'ui.page.reviewed-pasted': 'تمت مراجعة رمز HTML الذي قدّمته',
   'ui.page.done': 'المراجعة جاهزة.',
+  'ui.site.title': 'مراجعة موقع كامل',
+  'ui.site.lead':
+    'اختر ملف ZIP يضم ملفات الموقع، مثل نسخة احتياطية أو تصدير ثابت، أو عدة ملفات HTML. تُراجَع كل صفحة على هذا الجهاز؛ أما الصور وملفات الأنماط والملفات الأخرى فتُحصى ولا تُقرأ.',
+  'ui.site.url': 'عنوان الموقع',
+  'ui.site.url.hint':
+    'يمنح كل صفحة عنوانها، كي تعمل أيضًا عمليات التحقق التي تقارن الروابط ووسوم canonical بالصفحة.',
+  'ui.site.choose': 'اختر ملفات الموقع',
+  'ui.site.files.hint': 'ملف ZIP بأي حجم، أو ملفات HTML.',
+  'ui.site.preparing': 'جارٍ فتح الملفات…',
+  'ui.site.progress': 'جارٍ مراجعة الصفحة {done} من {total}…',
+  'ui.site.stop': 'إيقاف',
+  'ui.site.stopped': 'أُوقفت المراجعة.',
+  'ui.site.done': 'مراجعة الموقع جاهزة.',
+  'ui.site.results': 'مراجعة الموقع',
+  'ui.site.summary':
+    '{pages, plural, zero {لم تُراجَع أي صفحة.} one {رُوجعت صفحة واحدة.} two {رُوجعت صفحتان.} few {رُوجعت # صفحات.} many {رُوجعت # صفحة.} other {رُوجعت # صفحة.}}',
+  'ui.site.other':
+    '{count, plural, one {لم يُراجَع ملف آخر واحد، مثل صورة أو ملف أنماط.} two {لم يُراجَع ملفان آخران، مثل الصور وملفات الأنماط.} few {لم تُراجَع # ملفات أخرى، مثل الصور وملفات الأنماط.} many {لم يُراجَع # ملفًا آخر، مثل الصور وملفات الأنماط.} other {لم يُراجَع # ملف آخر، مثل الصور وملفات الأنماط.}}',
+  'ui.site.issues': 'المشكلات الأكثر شيوعًا',
+  'ui.site.issues.none': 'لا توجد صفحة تحتاج إلى اهتمام أو نظرة أدق.',
+  'ui.site.issue.pages':
+    '{count, plural, one {في صفحة واحدة:} two {في صفحتين، مثل} few {في # صفحات، مثل} many {في # صفحة، مثل} other {في # صفحة، مثل}} {path}',
+  'ui.site.issue.list': 'عرض الصفحات',
+  'ui.site.and-more':
+    '{count, plural, one {وصفحة أخرى} two {وصفحتان أخريان} few {و# صفحات أخرى} many {و# صفحة أخرى} other {و# صفحة أخرى}}',
+  'ui.site.pages': 'الصفحات',
+  'ui.site.untitled': 'بلا عنوان',
+  'ui.site.more':
+    '{count, plural, one {عرض صفحة أخرى} two {عرض صفحتين أخريين} few {عرض # صفحات أخرى} many {عرض # صفحة أخرى} other {عرض # صفحة أخرى}}',
+  'ui.site.skipped': 'صفحات تعذّرت مراجعتها',
+  'ui.site.again': 'مراجعة موقع آخر',
 
   'ui.mentions.title': 'سجل إشارات الذكاء الاصطناعي',
   'ui.mentions.lead':

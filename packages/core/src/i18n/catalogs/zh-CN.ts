@@ -299,7 +299,6 @@ export const zhCN: CoreCatalog = {
     '这些是您记录的提及。它们表明您在哪里看到过自己的网站，而不是 AI 助手总体上提及它的频率。',
 
   'diagnostic.input.empty': '此文件为空。',
-  'diagnostic.input.too-large': '此文件太大。文件最大可为 {megabytes} MB。',
   'diagnostic.input.binary': '这不是文本文件。请选择 CSV 文件，或 Search Console 下载的 ZIP 文件。',
   'diagnostic.input.spreadsheet':
     '这是电子表格工作簿。请将其另存为 CSV，或使用 Search Console 提供的原始 ZIP 文件。',
@@ -317,12 +316,10 @@ export const zhCN: CoreCatalog = {
   'diagnostic.csv.field-too-long': '某个值超过 {limit} 个字符，这是我们能读取的上限。',
   'diagnostic.zip.invalid': '此 ZIP 文件已损坏或不完整。请尝试重新下载。',
   'diagnostic.zip.multi-disk': '此 ZIP 文件被拆分成了多个部分，不受支持。',
-  'diagnostic.zip.zip64': '此 ZIP 文件使用了用于超大归档的 ZIP64 格式，不受支持。',
   'diagnostic.zip.encrypted': '此 ZIP 文件受密码保护。请使用没有密码的导出文件。',
   'diagnostic.zip.unsupported-method': '此 ZIP 文件中的“{entry}”使用了我们无法读取的压缩方法。',
   'diagnostic.zip.too-many-entries': '此 ZIP 文件包含超过 {limit} 个文件。',
   'diagnostic.zip.entry-too-large': '此 ZIP 文件中的“{entry}”解压后超过 {megabytes} MB。',
-  'diagnostic.zip.total-too-large': '此 ZIP 文件解压后超过 {megabytes} MB。',
   'diagnostic.zip.suspicious-ratio':
     '此 ZIP 文件中的“{entry}”压缩程度过高，解压可能不安全，因此我们停止了处理。',
   'diagnostic.zip.overlapping-entries':
@@ -330,6 +327,8 @@ export const zhCN: CoreCatalog = {
   'diagnostic.zip.corrupt-entry': '此 ZIP 文件中的“{entry}”已损坏。',
   'diagnostic.zip.checksum-mismatch': '此 ZIP 文件中的“{entry}”未通过完整性检查。',
   'diagnostic.zip.no-csv': '此 ZIP 文件中没有 CSV 文件。',
+  'diagnostic.zip.website':
+    '此 ZIP 文件包含的是一个网站，而不是 Search Console 导出文件：{files, plural, other {# 个文件}}中有 {pages, plural, other {# 个网页}}。网页检查可以检查其中的每个网页。',
 
   'diagnostic.gsc.no-tables': '我们没有在您选择的文件中找到 Search Console 数据。',
   'diagnostic.gsc.unrecognized-table': '此文件看起来不像 Search Console 的效果导出文件。',
@@ -372,6 +371,7 @@ export const zhCN: CoreCatalog = {
   'diagnostic.page.not-html': '这看起来不像 HTML。请粘贴网页的源代码，而不是它的网址。',
   'diagnostic.page.invalid-url':
     '“{value}”不是完整的网址，因此我们跳过了将链接与网页进行比较的检查。',
+  'diagnostic.site.no-pages': '您选择的文件中没有网页（.html 或 .htm 文件）。',
 
   'diagnostic.diagnostic.more': '……另有 {count} 处类似问题。',
 };

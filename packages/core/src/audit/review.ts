@@ -40,6 +40,8 @@ export interface PageReviewOptions {
 
 export interface PageReport {
   readonly url: string | null;
+  /** The page's title as written, for telling pages apart; `null` when it has none. */
+  readonly title: string | null;
   readonly findings: readonly Finding[];
   /** What this review cannot see, stated before it can mislead. */
   readonly limitations: readonly CoreMessage[];
@@ -92,8 +94,10 @@ export function reviewSnapshot(snapshot: PageSnapshot): PageReport {
   const counts = Object.fromEntries(
     STATUS_ORDER.map((status) => [status, findings.filter((f) => f.status === status).length]),
   ) as Record<FindingStatus, number>;
+  const title = (snapshot.titles.find((t) => t.inHead) ?? snapshot.titles[0])?.value.trim();
   return {
     url: snapshot.url,
+    title: title === undefined || title === '' ? null : title,
     findings,
     limitations: [message('page.limit.source'), message('page.limit.scope')],
     counts,

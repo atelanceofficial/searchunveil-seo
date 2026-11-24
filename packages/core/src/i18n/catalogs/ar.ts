@@ -352,8 +352,6 @@ export const ar: CoreCatalog = {
     'هذه هي الإشارات التي سجّلتها. وهي تُظهر أين رأيت موقعك، لا عدد المرات التي تذكره فيها مساعدات الذكاء الاصطناعي عمومًا.',
 
   'diagnostic.input.empty': 'هذا الملف فارغ.',
-  'diagnostic.input.too-large':
-    'هذا الملف كبير جدًا. يمكن أن يصل حجم الملفات إلى {megabytes} ميغابايت.',
   'diagnostic.input.binary':
     'هذا ليس ملفًا نصيًا. اختر ملف CSV، أو ملف ZIP الذي ينزّله Search Console.',
   'diagnostic.input.spreadsheet':
@@ -377,8 +375,6 @@ export const ar: CoreCatalog = {
     'تتجاوز إحدى القيم {limit} حرف، وهو الحد الأقصى الذي يمكننا قراءته.',
   'diagnostic.zip.invalid': 'ملف ZIP هذا تالف أو غير مكتمل. حاول تنزيله مرة أخرى.',
   'diagnostic.zip.multi-disk': 'ملف ZIP هذا مقسّم إلى عدة أجزاء، وهذا غير مدعوم.',
-  'diagnostic.zip.zip64':
-    'يستخدم ملف ZIP هذا تنسيق ZIP64 المخصص للأرشيفات الكبيرة جدًا، وهو غير مدعوم.',
   'diagnostic.zip.encrypted': 'ملف ZIP هذا محمي بكلمة مرور. استخدم ملفًا مُصدَّرًا بلا كلمة مرور.',
   'diagnostic.zip.unsupported-method':
     'يستخدم «{entry}» في ملف ZIP هذا طريقة ضغط لا يمكننا قراءتها.',
@@ -386,7 +382,6 @@ export const ar: CoreCatalog = {
     'يحتوي ملف ZIP هذا على أكثر من {limit, plural, few {# ملفات} many {# ملفًا} other {# ملف}}.',
   'diagnostic.zip.entry-too-large':
     'يتجاوز حجم «{entry}» في ملف ZIP هذا {megabytes} ميغابايت بعد فك الضغط.',
-  'diagnostic.zip.total-too-large': 'يتجاوز حجم ملف ZIP هذا {megabytes} ميغابايت بعد فك الضغط.',
   'diagnostic.zip.suspicious-ratio':
     '«{entry}» في ملف ZIP هذا مضغوط بدرجة كبيرة قد تجعل فك ضغطه غير آمن، لذا توقفنا.',
   'diagnostic.zip.overlapping-entries':
@@ -394,6 +389,8 @@ export const ar: CoreCatalog = {
   'diagnostic.zip.corrupt-entry': '«{entry}» في ملف ZIP هذا تالف.',
   'diagnostic.zip.checksum-mismatch': 'لم يجتز «{entry}» في ملف ZIP هذا فحص السلامة.',
   'diagnostic.zip.no-csv': 'لا يحتوي ملف ZIP هذا على ملفات CSV.',
+  'diagnostic.zip.website':
+    'يحتوي ملف ZIP هذا على موقع ويب، لا على بيانات مُصدَّرة من Search Console: {pages, plural, zero {لا صفحات ويب} one {صفحة ويب واحدة} two {صفحتا ويب} few {# صفحات ويب} many {# صفحة ويب} other {# صفحة ويب}} من بين {files, plural, zero {لا ملفات} one {ملف واحد} two {ملفين} few {# ملفات} many {# ملفًا} other {# ملف}}. يمكن لمراجعة الصفحة فحص كل صفحة فيه.',
 
   'diagnostic.gsc.no-tables': 'لم نعثر على بيانات Search Console في الملفات التي اخترتها.',
   'diagnostic.gsc.unrecognized-table': 'لا يبدو هذا الملف ملف تصدير لأداء Search Console.',
@@ -440,6 +437,8 @@ export const ar: CoreCatalog = {
   'diagnostic.page.not-html': 'لا يبدو هذا رمز HTML. الصق الرمز المصدري للصفحة، لا عنوانها.',
   'diagnostic.page.invalid-url':
     '«{value}» ليس عنوان ويب كاملًا، لذا تخطّينا عمليات التحقق التي تقارن الروابط بالصفحة.',
+  'diagnostic.site.no-pages':
+    'لا يوجد بين الملفات التي اخترتها أي صفحة ويب (ملف بامتداد html أو htm).',
 
   'diagnostic.diagnostic.more':
     '…و{count, plural, one {حالة أخرى مماثلة} two {حالتان أخريان مماثلتان} few {# حالات أخرى مماثلة} many {# حالةً أخرى مماثلة} other {# حالة أخرى مماثلة}}.',

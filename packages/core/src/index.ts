@@ -24,8 +24,18 @@ export {
 export { DEFAULT_LIMITS, resolveLimits, toMegabytes, type InputLimits } from './limits.ts';
 
 // Files
+export {
+  blobSource,
+  bytesSource,
+  chunksOf,
+  isWebPage,
+  sourceOf,
+  type ByteSource,
+  type InputFile,
+} from './source.ts';
 export { formatCsv, type CsvCell, type CsvFormatOptions } from './csv/format.ts';
 export {
+  CsvReader,
   parseCsv,
   sniffDelimiter,
   type CsvDelimiter,
@@ -33,21 +43,29 @@ export {
   type CsvRecord,
   type CsvTable,
 } from './csv/parse.ts';
+export { readCsv, type CsvStreamOptions } from './csv/stream.ts';
 export {
+  chooseTextDecoder,
   decodeText,
+  ENCODING_SAMPLE_BYTES,
   legacyEncodingFor,
   type DecodedText,
   type LegacyEncoding,
+  type TextDecoderChoice,
   type TextEncoding,
 } from './text/decode.ts';
 export {
+  entryChunks,
   extractEntry,
+  isMetadataEntry,
   isZip,
   openZip,
   readZip,
+  ZipEntryError,
   type ZipArchive,
   type ZipDirectoryEntry,
   type ZipEntry,
+  type ZipEntryOptions,
 } from './zip/read.ts';
 
 // Findings
@@ -71,11 +89,7 @@ export {
   type Overview,
   type SearchConsoleReport,
 } from './gsc/analyze.ts';
-export {
-  importSearchConsole,
-  type InputFile,
-  type SearchConsoleImportOptions,
-} from './gsc/import.ts';
+export { importSearchConsole, type SearchConsoleImportOptions } from './gsc/import.ts';
 export {
   EXPORT_ROW_LIMIT,
   findTable,
@@ -109,6 +123,16 @@ export {
   type PageReviewOptions,
 } from './audit/review.ts';
 export { extractSnapshot, type PageSnapshot } from './audit/snapshot.ts';
+export {
+  pageAddress,
+  reviewSite,
+  sharedFolder,
+  type SiteIssue,
+  type SitePage,
+  type SiteReport,
+  type SiteReviewOptions,
+  type SkippedPage,
+} from './audit/site.ts';
 
 // AI mention log
 export {

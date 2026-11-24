@@ -1,6 +1,9 @@
 /** Builders for realistic Search Console export files used across tests. */
 
-import type { InputFile } from '../gsc/import.ts';
+import type { InputFile } from '../source.ts';
+
+/** A file held in memory, as the fixtures build them. */
+export type BytesFile = Extract<InputFile, { readonly bytes: Uint8Array }>;
 import { createZip } from './zip-writer.ts';
 
 const encoder = new TextEncoder();
@@ -27,7 +30,7 @@ export function csvFile(
   header: readonly string[],
   rows: readonly (readonly CsvCellValue[])[],
   delimiter = ',',
-): InputFile {
+): BytesFile {
   const body = encoder.encode(csvText(header, rows, delimiter));
   const bytes = new Uint8Array(body.length + 3);
   bytes.set([0xef, 0xbb, 0xbf]);
@@ -49,7 +52,7 @@ export function percent(clicks: number, impressions: number): string {
 }
 
 /** A `Dates.csv` table. Search Console lists the newest day first. */
-export function datesFile(days: readonly DailyValues[]): InputFile {
+export function datesFile(days: readonly DailyValues[]): BytesFile {
   return csvFile(
     'Dates.csv',
     ['Date', ...METRIC_HEADERS],
@@ -105,7 +108,7 @@ export function queriesFile(
     position: number,
   ])[],
   name = 'Queries.csv',
-): InputFile {
+): BytesFile {
   return csvFile(
     name,
     ['Top queries', ...METRIC_HEADERS],
@@ -113,11 +116,11 @@ export function queriesFile(
   );
 }
 
-export function filtersFile(entries: readonly (readonly [string, string])[]): InputFile {
+export function filtersFile(entries: readonly (readonly [string, string])[]): BytesFile {
   return csvFile('Filters.csv', ['Filter', 'Value'], entries);
 }
 
-export async function zipFile(name: string, files: readonly InputFile[]): Promise<InputFile> {
+export async function zipFile(name: string, files: readonly BytesFile[]): Promise<BytesFile> {
   return {
     name,
     bytes: await createZip(files.map((f) => ({ name: f.name, data: f.bytes }))),

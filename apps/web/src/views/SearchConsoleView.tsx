@@ -2,11 +2,9 @@ import {
   analyzeSearchConsole,
   dateRange,
   decimal,
-  DEFAULT_LIMITS,
   importSearchConsole,
   legacyEncodingFor,
   percent,
-  toMegabytes,
   type Diagnostic,
   type InputFile,
   type MetricRow,
@@ -22,7 +20,9 @@ import { PageHeading } from '../components/PageHeading.tsx';
 import { TrendChart } from '../components/TrendChart.tsx';
 import { Value } from '../components/Value.tsx';
 import { useAnnounce } from '../lib/announce.tsx';
+import { handOff } from '../lib/handoff.ts';
 import { useI18n } from '../lib/i18n.tsx';
+import { href } from '../lib/router.ts';
 import { sampleSearchConsoleFiles } from '../samples/search-console.ts';
 
 type State =
@@ -41,6 +41,8 @@ export function SearchConsoleView() {
   const announce = useAnnounce();
   const [state, setState] = useState<State>({ kind: 'idle' });
   const resultsHeading = useRef<HTMLHeadingElement>(null);
+  // The files last chosen, so a site's ZIP can go on to the page review without choosing again.
+  const chosen = useRef<readonly File[]>([]);
 
   useEffect(() => {
     if (state.kind === 'ready' || state.kind === 'failed') resultsHeading.current?.focus();
@@ -71,15 +73,16 @@ export function SearchConsoleView() {
     }
   };
 
+  // Files are read in parts as the analysis needs them, never loaded whole: any size works.
   const readFiles = async (files: readonly File[]) => {
-    const inputs = await Promise.all(
-      files.map(async (file) => ({
-        name: file.name,
-        bytes: new Uint8Array(await file.arrayBuffer()),
-      })),
+    chosen.current = files;
+    await analyze(
+      files.map((file) => ({ name: file.name, blob: file })),
+      false,
     );
-    await analyze(inputs, false);
   };
+  const website =
+    state.kind === 'failed' && state.diagnostics.some((d) => d.code === 'zip.website');
 
   return (
     <>
@@ -90,7 +93,7 @@ export function SearchConsoleView() {
           <FileDrop
             label={t.t('ui.file.choose')}
             dropText={t.t('ui.file.drop')}
-            hint={t.t('ui.file.limit', { megabytes: toMegabytes(DEFAULT_LIMITS.maxFileBytes) })}
+            hint={t.t('ui.file.hint')}
             accept=".zip,.csv,application/zip,text/csv"
             multiple
             disabled={state.kind === 'reading'}
@@ -129,6 +132,19 @@ export function SearchConsoleView() {
           ) : (
             <DiagnosticList diagnostics={state.diagnostics} />
           )}
+          {website ? (
+            <p>
+              <a
+                class="button button--primary"
+                href={href('page-review')}
+                onClick={() => {
+                  handOff(chosen.current);
+                }}
+              >
+                {t.t('ui.gsc.website')}
+              </a>
+            </p>
+          ) : null}
           <ResetButton
             onReset={() => {
               setState({ kind: 'idle' });
