@@ -9,26 +9,13 @@ import {
   type PageReport,
 } from '@searchunveil/core';
 import type { JSX } from 'preact';
-import { useEffect, useId, useMemo, useRef, useState } from 'preact/hooks';
-import { useAnnounce } from '../lib/announce.tsx';
-import { modelName, useAnalyst, type AnalystError } from '../lib/analyst.ts';
+import { useId, useMemo } from 'preact/hooks';
 import { useI18n } from '../lib/i18n.tsx';
 import { Icon } from './Icon.tsx';
 
 type Level = 4 | 5;
 type HeadingTag = 'h4' | 'h5' | 'h6';
 const heading = (level: number): HeadingTag => (level <= 4 ? 'h4' : level === 5 ? 'h5' : 'h6');
-
-type State =
-  | { readonly kind: 'idle' }
-  | { readonly kind: 'running'; readonly writing: boolean }
-  | {
-      readonly kind: 'done';
-      readonly analysis: PageAnalysis;
-      readonly model: string | null;
-      readonly fallback: boolean;
-    }
-  | { readonly kind: 'failed'; readonly error: AnalystError };
 
 function pageLanguage(report: PageReport): string | undefined {
   return report.facts.lang !== null && isValidLanguageTag(report.facts.lang)
@@ -37,10 +24,8 @@ function pageLanguage(report: PageReport): string | undefined {
 }
 
 /**
- * The analysis of one page review. SearchUnveil Analyst, the app's own engine, writes it at once
- * on the person's device, with no API key or account. Inside Claude, Claude Fable 5.2 can add a
- * second opinion on the viewer's own account; nothing is sent until the person asks, and the
- * panel says beforehand what will be sent.
+ * The analysis of one page review, written by SearchUnveil Analyst, the app's own engine: at once,
+ * on the person's device, with nothing sent anywhere and no key or account.
  */
 export function AnalysisPanel(props: { readonly report: PageReport }) {
   const { t } = useI18n();
@@ -65,123 +50,6 @@ export function AnalysisPanel(props: { readonly report: PageReport }) {
         pageLang={pageLanguage(props.report)}
         byline={t.t('ui.analyst.by', { version: ANALYST_VERSION })}
       />
-      <SecondOpinion report={props.report} />
-    </section>
-  );
-}
-
-/** Claude Fable 5.2's reading of the same review, on request. */
-function SecondOpinion(props: { readonly report: PageReport }) {
-  const { t, locale } = useI18n();
-  const announce = useAnnounce();
-  const analyst = useAnalyst();
-  const id = useId();
-  const [state, setState] = useState<State>({ kind: 'idle' });
-  const controller = useRef<AbortController | null>(null);
-  const resultHeading = useRef<HTMLHeadingElement>(null);
-
-  // Stop a running analysis when the panel goes away (another review, another page).
-  useEffect(
-    () => () => {
-      controller.current?.abort();
-    },
-    [],
-  );
-
-  useEffect(() => {
-    if (state.kind === 'done') resultHeading.current?.focus();
-  }, [state.kind]);
-
-  // Without Claude, the analyst's plan stands alone: nothing to offer, nothing to explain.
-  if (analyst === undefined || analyst === null) return null;
-
-  const start = async () => {
-    controller.current?.abort();
-    const current = new AbortController();
-    controller.current = current;
-    setState({ kind: 'running', writing: false });
-    const outcome = await analyst.run(props.report, locale, {
-      signal: current.signal,
-      onWriting: () => {
-        if (!current.signal.aborted) setState({ kind: 'running', writing: true });
-      },
-    });
-    if (controller.current !== current) return;
-    controller.current = null;
-    if (outcome.ok) {
-      setState({ kind: 'done', ...outcome });
-      announce(t.t('ui.analysis.done'));
-    } else {
-      setState({ kind: 'failed', error: outcome.error });
-      announce(t.t(`ui.analysis.error.${outcome.error}`));
-    }
-  };
-
-  const running = state.kind === 'running';
-  const byline = (model: string | null, fallback: boolean) =>
-    [
-      model === null
-        ? t.t('ui.analysis.by-tier')
-        : t.t('ui.analysis.by', { model: modelName(model) }),
-      fallback && model !== null ? t.t('ui.analysis.fallback', { model: modelName(model) }) : '',
-    ]
-      .filter((part) => part !== '')
-      .join(' ');
-
-  return (
-    <section class="second-opinion" aria-labelledby={`${id}-title`}>
-      <h4 id={`${id}-title`}>{t.t('ui.analysis.title')}</h4>
-      <p>{t.t('ui.analysis.lead')}</p>
-      <p class="hint">
-        <Icon name="lock" />
-        {t.t('ui.analysis.sends.claude')}
-      </p>
-      <div class="actions">
-        <button
-          type="button"
-          class="button"
-          disabled={running}
-          onClick={() => {
-            void start();
-          }}
-        >
-          {t.t(state.kind === 'done' ? 'ui.analysis.again' : 'ui.analysis.start')}
-        </button>
-        {running ? (
-          <button
-            type="button"
-            class="button"
-            onClick={() => {
-              controller.current?.abort();
-            }}
-          >
-            {t.t('ui.site.stop')}
-          </button>
-        ) : null}
-      </div>
-      <div role="status" class="analysis-panel__status">
-        {running ? (
-          <p class="progress analysis-progress">
-            <span class="analysis-progress__pulse" aria-hidden="true" />
-            {t.t(state.writing ? 'ui.analysis.writing' : 'ui.analysis.thinking')}
-          </p>
-        ) : null}
-        {state.kind === 'failed' ? (
-          <p class={state.error === 'cancelled' ? 'muted' : 'alert'}>
-            {t.t(`ui.analysis.error.${state.error}`)}
-          </p>
-        ) : null}
-      </div>
-      {state.kind === 'done' ? (
-        <AnalysisResult
-          analysis={state.analysis}
-          level={5}
-          pageLang={pageLanguage(props.report)}
-          byline={byline(state.model, state.fallback)}
-          caution
-          headingRef={resultHeading}
-        />
-      ) : null}
     </section>
   );
 }
@@ -192,9 +60,6 @@ function AnalysisResult(props: {
   readonly level: Level;
   readonly pageLang: string | undefined;
   readonly byline: string;
-  /** Whether to warn that the text was written by a language model. */
-  readonly caution?: boolean;
-  readonly headingRef?: { current: HTMLHeadingElement | null };
 }) {
   const { t } = useI18n();
   const { analysis, level } = props;
@@ -203,11 +68,7 @@ function AnalysisResult(props: {
   return (
     <article class="analysis">
       <header class="analysis__head">
-        <Verdict
-          {...(props.headingRef === undefined ? {} : { ref: props.headingRef })}
-          tabIndex={-1}
-          class={`verdict verdict--${analysis.verdict}`}
-        >
+        <Verdict class={`verdict verdict--${analysis.verdict}`}>
           {t.t('ui.analysis.verdict', { verdict: analysis.verdict })}
         </Verdict>
         {analysis.summary === '' ? null : (
@@ -250,7 +111,6 @@ function AnalysisResult(props: {
 
       <footer class="analysis__footer">
         <p>{props.byline}</p>
-        {props.caution === true ? <p>{t.t('ui.analysis.caution')}</p> : null}
       </footer>
     </article>
   );

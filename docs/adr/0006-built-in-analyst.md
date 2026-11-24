@@ -1,6 +1,6 @@
 # 0006. Our own analysis engine, on the device
 
-**Status:** Proposed · **Date:** 2026-11-24 · **Builds on:** [0005](0005-optional-server-for-addresses-and-ai.md)
+**Status:** Proposed · **Date:** 2026-11-24 · **Builds on:** [0005](0005-optional-server-for-addresses-and-ai.md) · **Amended by:** [0008](0008-only-our-own-analyst.md): the second opinion is removed
 
 ## Context
 

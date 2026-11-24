@@ -26,8 +26,6 @@ const messages = {
   'ui.footer.privacy': 'No cookies, no analytics, and no network requests after the page loads.',
   'ui.footer.privacy.server':
     'No cookies and no analytics. Pages are downloaded only when you ask, and reviewed on your device.',
-  'ui.footer.privacy.claude':
-    'No cookies and no analytics. Nothing leaves your device unless you ask for an AI analysis.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'See how your website gets found',
@@ -212,22 +210,6 @@ const messages = {
   'ui.analyst.lead':
     'SearchUnveil Analyst, our own analysis engine, turns this review and the page’s text into a ranked plan. It runs on your device, instantly and free, and every point rests on evidence from this page.',
   'ui.analyst.by': 'Written by SearchUnveil Analyst {version}, on your device.',
-  'ui.analysis.title': 'Second opinion from Claude Fable 5.2',
-  'ui.analysis.lead':
-    'Claude Fable 5.2, Anthropic’s most capable model, reads this review and the page’s text, then explains what matters most and exactly what to change.',
-  'ui.analysis.sends.claude':
-    'When you start it, the findings, the facts above and the start of the page’s visible text are sent to Claude, on your own Claude account.',
-  'ui.analysis.start': 'Analyze with Fable 5.2',
-  'ui.analysis.again': 'Analyze again',
-  'ui.analysis.thinking':
-    'Claude is reading the review and thinking it through. This usually takes one to three minutes.',
-  'ui.analysis.writing': 'Claude is writing the analysis…',
-  'ui.analysis.done': 'Analysis ready.',
-  'ui.analysis.by': 'Written by {model}.',
-  'ui.analysis.by-tier': 'Written by the most capable Claude model available to you.',
-  'ui.analysis.fallback':
-    'The requested model declined part of this request, so {model} finished it.',
-  'ui.analysis.caution': 'AI can make mistakes. Check each suggestion before you change your site.',
   'ui.analysis.verdict': 'Overall: {verdict, select, strong {strong} weak {weak} other {fair}}',
   'ui.analysis.priorities': 'What to do, in order',
   'ui.analysis.why': 'Why it matters',
@@ -241,15 +223,6 @@ const messages = {
   'ui.analysis.content': 'About the content',
   'ui.analysis.technical': 'Technical notes',
   'ui.analysis.caveats': 'What this analysis can’t know',
-  'ui.analysis.error.cancelled': 'The analysis was stopped.',
-  'ui.analysis.error.not-granted':
-    'Claude wasn’t allowed to run here. Reload the page to be asked again.',
-  'ui.analysis.error.rate-limited': 'Too many analyses in a short time. Try again later.',
-  'ui.analysis.error.refused': 'Claude declined to analyze this page.',
-  'ui.analysis.error.too-long': 'The answer was cut short. Try again.',
-  'ui.analysis.error.invalid-answer': 'The answer couldn’t be read. Try again.',
-  'ui.analysis.error.unavailable': 'The AI analysis isn’t available right now. Try again later.',
-  'ui.analysis.error.failed': 'The analysis didn’t finish. Try again in a moment.',
   'ui.site.title': 'Review a whole site',
   'ui.site.lead':
     'Choose a ZIP of the site’s files, such as a backup or a static export, or several HTML files. Every page is reviewed on this device; images, styles and other files are counted but not read.',
@@ -332,12 +305,8 @@ const messages = {
   'ui.privacy.lead': 'SearchUnveil runs entirely in your browser.',
   'ui.privacy.lead.server':
     'SearchUnveil reviews pages in your browser. Its server helps only when you ask.',
-  'ui.privacy.lead.claude':
-    'SearchUnveil works in your browser. Only the AI analysis, when you ask for it, sends data out.',
   'ui.privacy.address':
     'When you review by address, the server downloads that public page and its robots.txt and passes them to your browser. It keeps nothing.',
-  'ui.privacy.ai.claude':
-    'When you ask for an AI analysis, the findings, the page facts and the start of the page’s visible text go to Claude on your account. Your files don’t.',
   'ui.privacy.network.server': 'The page’s security policy lets it connect only to its own server.',
   'ui.privacy.files': 'Files you analyze are read in memory. They are never stored or uploaded.',
   'ui.privacy.stored':

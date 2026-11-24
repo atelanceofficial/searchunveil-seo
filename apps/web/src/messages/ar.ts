@@ -23,8 +23,6 @@ export const uiAr: UiCatalog = {
   'ui.footer.privacy': 'لا ملفات تعريف ارتباط، ولا تحليلات، ولا طلبات شبكة بعد تحميل الصفحة.',
   'ui.footer.privacy.server':
     'لا ملفات تعريف ارتباط ولا تحليلات. لا تُنزَّل الصفحات إلا عندما تطلب ذلك، وتُراجَع على جهازك.',
-  'ui.footer.privacy.claude':
-    'لا ملفات تعريف ارتباط ولا تحليلات. لا يغادر جهازك شيء إلا إذا طلبت تحليلًا بالذكاء الاصطناعي.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'اكتشف كيف يعثر الناس على موقعك',
@@ -198,21 +196,6 @@ export const uiAr: UiCatalog = {
   'ui.analyst.lead':
     'يحوّل SearchUnveil Analyst، محرّك التحليل الخاص بنا، هذه المراجعة ونص الصفحة إلى خطة مرتّبة حسب الأولوية. يعمل على جهازك فورًا ومجانًا، ويستند كل بند فيها إلى دليل من هذه الصفحة.',
   'ui.analyst.by': 'كتبه SearchUnveil Analyst {version} على جهازك.',
-  'ui.analysis.title': 'رأي ثانٍ من Claude Fable 5.2',
-  'ui.analysis.lead':
-    'يقرأ Claude Fable 5.2، أقوى نماذج Anthropic، هذه المراجعة ونص الصفحة، ثم يشرح ما يهم أكثر وما الذي يجب تغييره بالضبط.',
-  'ui.analysis.sends.claude':
-    'عند بدئه، تُرسَل النتائج والمعلومات أعلاه وبداية النص الظاهر في الصفحة إلى Claude، عبر حسابك الخاص في Claude.',
-  'ui.analysis.start': 'حلّل باستخدام Fable 5.2',
-  'ui.analysis.again': 'أعِد التحليل',
-  'ui.analysis.thinking':
-    'يقرأ Claude المراجعة ويفكّر فيها مليًّا. يستغرق ذلك عادةً من دقيقة إلى ثلاث دقائق.',
-  'ui.analysis.writing': 'يكتب Claude التحليل…',
-  'ui.analysis.done': 'التحليل جاهز.',
-  'ui.analysis.by': 'كتبه {model}.',
-  'ui.analysis.by-tier': 'كتبه أقوى نموذج من Claude متاح لك.',
-  'ui.analysis.fallback': 'رفض النموذج المطلوب جزءًا من هذا الطلب، لذا أكمله {model}.',
-  'ui.analysis.caution': 'قد يخطئ الذكاء الاصطناعي. تحقّق من كل اقتراح قبل أن تغيّر موقعك.',
   'ui.analysis.verdict': 'التقييم العام: {verdict, select, strong {قوي} weak {ضعيف} other {مقبول}}',
   'ui.analysis.priorities': 'ما يجب فعله، بالترتيب',
   'ui.analysis.why': 'لماذا يهم',
@@ -227,15 +210,6 @@ export const uiAr: UiCatalog = {
   'ui.analysis.content': 'عن المحتوى',
   'ui.analysis.technical': 'ملاحظات تقنية',
   'ui.analysis.caveats': 'ما لا يستطيع هذا التحليل معرفته',
-  'ui.analysis.error.cancelled': 'أُوقف التحليل.',
-  'ui.analysis.error.not-granted':
-    'لم يُسمح لـ Claude بالعمل هنا. أعِد تحميل الصفحة ليُطلب منك الإذن مجددًا.',
-  'ui.analysis.error.rate-limited': 'تحليلات كثيرة جدًا في وقت قصير. حاول مجددًا لاحقًا.',
-  'ui.analysis.error.refused': 'رفض Claude تحليل هذه الصفحة.',
-  'ui.analysis.error.too-long': 'انقطعت الإجابة قبل اكتمالها. حاول مجددًا.',
-  'ui.analysis.error.invalid-answer': 'تعذّرت قراءة الإجابة. حاول مجددًا.',
-  'ui.analysis.error.unavailable': 'التحليل بالذكاء الاصطناعي غير متاح الآن. حاول مجددًا لاحقًا.',
-  'ui.analysis.error.failed': 'لم يكتمل التحليل. حاول مجددًا بعد قليل.',
   'ui.site.title': 'مراجعة موقع كامل',
   'ui.site.lead':
     'اختر ملف ZIP يضم ملفات الموقع، مثل نسخة احتياطية أو تصدير ثابت، أو عدة ملفات HTML. تُراجَع كل صفحة على هذا الجهاز؛ أما الصور وملفات الأنماط والملفات الأخرى فتُحصى ولا تُقرأ.',
@@ -322,12 +296,8 @@ export const uiAr: UiCatalog = {
   'ui.privacy.lead': 'يعمل SearchUnveil بالكامل داخل متصفحك.',
   'ui.privacy.lead.server':
     'يراجع SearchUnveil الصفحات داخل متصفحك. ولا يتدخّل خادمه إلا عندما تطلب ذلك.',
-  'ui.privacy.lead.claude':
-    'يعمل SearchUnveil داخل متصفحك. وحده التحليل بالذكاء الاصطناعي، عندما تطلبه، يرسل بيانات إلى الخارج.',
   'ui.privacy.address':
     'عندما تراجع بالعنوان، ينزّل الخادم تلك الصفحة العامة وملف robots.txt الخاص بها ويمرّرهما إلى متصفحك. ولا يحتفظ بشيء.',
-  'ui.privacy.ai.claude':
-    'عندما تطلب تحليلًا بالذكاء الاصطناعي، تذهب النتائج ومعلومات الصفحة وبداية نصها الظاهر إلى Claude عبر حسابك. أما ملفاتك فلا.',
   'ui.privacy.network.server': 'لا تسمح سياسة الأمان في الصفحة إلا بالاتصال بخادمها الخاص.',
   'ui.privacy.files': 'تُقرأ الملفات التي تحللها في الذاكرة، ولا تُحفظ أو تُحمَّل أبدًا.',
   'ui.privacy.stored':

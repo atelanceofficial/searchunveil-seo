@@ -6,14 +6,14 @@
 
 ## In one paragraph
 
-SearchUnveil is a web app backed by a small analysis engine and its own analyst, which turns each page review into a ranked plan on the device ([ADR 0006](adr/0006-built-in-analyst.md)). The checks run on the person's own device: the files they choose are read in memory, analyzed, and explained in their language. The static build uploads nothing, and its security policy blocks every network connection after the page loads. An optional server build adds the one thing a browser cannot do alone: downloading a page by its address ([ADR 0005](adr/0005-optional-server-for-addresses-and-ai.md)). Nothing needs an API key ([ADR 0007](adr/0007-no-api-keys.md)); opened inside Claude, the app can also ask Claude Fable 5.2 for a second opinion on the viewer's own account. Each result is a **finding** that carries its evidence, its limitations and what to check next.
+SearchUnveil is a web app backed by a small analysis engine and its own analyst, which turns each page review into a ranked plan on the device ([ADR 0006](adr/0006-built-in-analyst.md)). The checks run on the person's own device: the files they choose are read in memory, analyzed, and explained in their language. The static build uploads nothing, and its security policy blocks every network connection after the page loads. An optional server build adds the one thing a browser cannot do alone: downloading a page by its address ([ADR 0005](adr/0005-optional-server-for-addresses-and-ai.md)). Nothing needs an API key or an outside service ([ADR 0007](adr/0007-no-api-keys.md), [ADR 0008](adr/0008-only-our-own-analyst.md)). Each result is a **finding** that carries its evidence, its limitations and what to check next.
 
 ## How the pieces fit
 
 ```mermaid
 flowchart TD
     accTitle: How SearchUnveil turns inputs into explained findings
-    accDescr: A Search Console export, pasted page HTML or a recorded AI mention enters the browser app; in the server build, a site's address can be given instead, and the server downloads that page and its robots.txt. The engine validates and reads each input separately, analyzes it with documented rules, and produces findings made of message keys and typed values. A translator renders those findings in the reader's language, and the interface shows them with charts and tables. Only when the person asks does a review go to Claude Fable 5.2 for a deeper analysis.
+    accDescr: A Search Console export, pasted page HTML or a recorded AI mention enters the browser app; in the server build, a site's address can be given instead, and the server downloads that page and its robots.txt. The engine validates and reads each input separately, analyzes it with documented rules, and produces findings made of message keys and typed values. A translator renders those findings in the reader's language, and the interface shows them with charts and tables. SearchUnveil Analyst turns a page review into a ranked plan, on the device.
 
     A["Search Console ZIP or CSV"] --> V["Validate and read each input on its own"]
     B["Page HTML, pasted or from a file"] --> V
@@ -24,8 +24,8 @@ flowchart TD
     R --> F["Findings: evidence, limits, next checks"]
     F --> T["Render in the reader's language"]
     T --> U["Summary, charts and tables in the browser"]
-    F -. "only when asked" .-> AI["AI analysis by Claude Fable 5.2"]
-    AI --> U
+    F --> AN["SearchUnveil Analyst: a ranked plan, on the device"]
+    AN --> T
 ```
 
 ## Repository layout
@@ -50,7 +50,6 @@ flowchart TD
 | `analysis` | Period comparison and statistics. | Whole-week periods aligned by weekday; incomplete final days left out; CTR recomputed from sums; position weighted by impressions; an exact sign test describes day-by-day consistency. |
 | `audit` | Reviews one page's HTML, or every page of a site from a ZIP or several HTML files; describes what search engines see; reviews a server's answer and reads robots.txt. | Works on any standard DOM; detects tags pushed out of `<head>`; never claims to know about JavaScript, and covers HTTP headers and robots.txt only when the server fetched the page. robots.txt follows RFC 9309 as Googlebot applies it. A site review decompresses one page at a time, hands control back to the browser between pages, can be stopped, and shows how many pages each issue affects. |
 | `analyst` | SearchUnveil Analyst: turns a review into a ranked plan with ideas, on the device. | Rules and text statistics only: no model, no network, the same output for the same input. Language detection for twelve languages, word and sentence division by `Intl.Segmenter`, ideas built only from the page's own words, every message translated. |
-| `ai` | Builds the request for Claude's second opinion, inside Claude, and reads the answer. | Never calls a model itself. Sends evidence only (findings, facts, the start of the visible text), marked as data rather than instructions; an invalid page language never reaches the instructions; answers are untrusted: unknown fields are dropped, lengths and counts are capped, and anything without a summary or a usable priority is refused. |
 | `mentions` | The AI mention log. | Validates every field; imports and exports a versioned JSON format; summarizes counts only, with no visibility score. |
 | `i18n` | Messages and formatting. | ICU MessageFormat subset with plural and select; locale-aware numbers and UTC-safe dates; bidirectional isolation of people's own text. |
 
@@ -95,8 +94,6 @@ Seven languages ship together: English, Spanish, German, French, Turkish, Simpli
 | Use of the API by other sites | JSON requests only, and the `Origin` must be the app's own; no cross-origin headers are sent. |
 | Abuse | At most 20 page fetches a minute per visitor. |
 | API keys | None, in any build ([ADR 0007](adr/0007-no-api-keys.md)). |
-| What the AI second opinion receives | Only inside Claude, only on request, after the panel says what is sent: findings, page facts and the start of the visible text, through the viewer's own account and consent dialog. Files, the mention log and the rest of the page are never sent. |
-| Model output | Treated as untrusted input: parsed against a fixed shape, capped in length, and rendered as text, never as HTML. |
 | Malicious archives | Limits on entries, directory size and compression ratio; overlap detection; streaming inflation that stops at the declared size; CRC-32 verification. |
 | Large or malformed files | Size alone is never refused: archives are read from their directory and text streams through the parsers, so memory holds only what an analysis keeps. Explicit limits for rows, columns, field length and pages held whole are reported instead of silently truncated. |
 | Pasted HTML | Parsed with `DOMParser` into an inert document (no scripts, no resource loading; verified in a browser test) through the only Trusted Types policy the page allows. |
@@ -156,7 +153,7 @@ The [technical direction](TECHNICAL-DIRECTION.md#release-gates) lists what must 
 
 - It does not connect to Google Search Console; it reads exports the person chooses.
 - The static app does not fetch web pages; people paste HTML or choose a saved file. The optional server build fetches one page at a time by its address; it does not crawl a site.
-- Claude's second opinion needs the app opened inside Claude; it reads one review at a time and is never run without being asked. SearchUnveil Analyst's plan needs nothing.
+- It does not use a language model. SearchUnveil Analyst works from documented rules and text statistics on the device.
 - It does not monitor AI assistants; it records what people observed.
 - It has no accounts, sync or sharing.
 

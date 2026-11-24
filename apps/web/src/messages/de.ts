@@ -24,8 +24,6 @@ export const uiDe: UiCatalog = {
     'Keine Cookies, keine Analyse und keine Netzwerkanfragen, nachdem die Seite geladen ist.',
   'ui.footer.privacy.server':
     'Keine Cookies und keine Analyse. Seiten werden nur auf Ihren Wunsch geladen und auf Ihrem Gerät geprüft.',
-  'ui.footer.privacy.claude':
-    'Keine Cookies und keine Analyse. Nichts verlässt Ihr Gerät, außer Sie fordern eine KI-Analyse an.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'Sehen Sie, wie Ihre Website gefunden wird',
@@ -216,24 +214,6 @@ export const uiDe: UiCatalog = {
   'ui.analyst.lead':
     'SearchUnveil Analyst, unsere eigene Analyse-Engine, macht aus dieser Prüfung und dem Text der Seite einen priorisierten Plan. Sie läuft auf Ihrem Gerät, sofort und kostenlos, und jeder Punkt stützt sich auf Belege von dieser Seite.',
   'ui.analyst.by': 'Geschrieben von SearchUnveil Analyst {version}, auf Ihrem Gerät.',
-  'ui.analysis.title': 'Zweite Meinung von Claude Fable 5.2',
-  'ui.analysis.lead':
-    'Claude Fable 5.2, das leistungsfähigste Modell von Anthropic, liest diese Prüfung und den Text der Seite und erklärt, worauf es am meisten ankommt und was genau Sie ändern sollten.',
-  'ui.analysis.sends.claude':
-    'Wenn Sie sie starten, gehen die Ergebnisse, die Angaben oben und der Anfang des sichtbaren Seitentexts an Claude, über Ihr eigenes Claude-Konto.',
-  'ui.analysis.start': 'Mit Fable 5.2 analysieren',
-  'ui.analysis.again': 'Erneut analysieren',
-  'ui.analysis.thinking':
-    'Claude liest die Prüfung und denkt sie durch. Das dauert meist ein bis drei Minuten.',
-  'ui.analysis.writing': 'Claude schreibt die Analyse …',
-  'ui.analysis.done': 'Analyse fertig.',
-  'ui.analysis.by': 'Geschrieben von {model}.',
-  'ui.analysis.by-tier':
-    'Geschrieben vom leistungsfähigsten Claude-Modell, das Ihnen zur Verfügung steht.',
-  'ui.analysis.fallback':
-    'Das angefragte Modell hat einen Teil dieser Anfrage abgelehnt, daher hat {model} sie beendet.',
-  'ui.analysis.caution':
-    'KI kann sich irren. Prüfen Sie jeden Vorschlag, bevor Sie Ihre Website ändern.',
   'ui.analysis.verdict':
     'Gesamteindruck: {verdict, select, strong {stark} weak {schwach} other {ordentlich}}',
   'ui.analysis.priorities': 'Was zu tun ist, der Reihe nach',
@@ -248,18 +228,6 @@ export const uiDe: UiCatalog = {
   'ui.analysis.content': 'Zum Inhalt',
   'ui.analysis.technical': 'Technische Hinweise',
   'ui.analysis.caveats': 'Was diese Analyse nicht wissen kann',
-  'ui.analysis.error.cancelled': 'Die Analyse wurde angehalten.',
-  'ui.analysis.error.not-granted':
-    'Claude durfte hier nicht ausgeführt werden. Laden Sie die Seite neu, um erneut gefragt zu werden.',
-  'ui.analysis.error.rate-limited':
-    'Zu viele Analysen in kurzer Zeit. Versuchen Sie es später erneut.',
-  'ui.analysis.error.refused': 'Claude hat die Analyse dieser Seite abgelehnt.',
-  'ui.analysis.error.too-long': 'Die Antwort wurde abgeschnitten. Versuchen Sie es erneut.',
-  'ui.analysis.error.invalid-answer': 'Die Antwort ließ sich nicht lesen. Versuchen Sie es erneut.',
-  'ui.analysis.error.unavailable':
-    'Die KI-Analyse ist gerade nicht verfügbar. Versuchen Sie es später erneut.',
-  'ui.analysis.error.failed':
-    'Die Analyse wurde nicht fertig. Versuchen Sie es gleich noch einmal.',
   'ui.site.title': 'Eine ganze Website prüfen',
   'ui.site.lead':
     'Wählen Sie ein ZIP mit den Dateien der Website, etwa ein Backup oder einen statischen Export, oder mehrere HTML-Dateien. Jede Seite wird auf diesem Gerät geprüft; Bilder, Stylesheets und andere Dateien werden gezählt, aber nicht gelesen.',
@@ -345,12 +313,8 @@ export const uiDe: UiCatalog = {
   'ui.privacy.lead': 'SearchUnveil läuft vollständig in Ihrem Browser.',
   'ui.privacy.lead.server':
     'SearchUnveil prüft Seiten in Ihrem Browser. Sein Server hilft nur, wenn Sie darum bitten.',
-  'ui.privacy.lead.claude':
-    'SearchUnveil arbeitet in Ihrem Browser. Nur die KI-Analyse sendet Daten, und nur wenn Sie sie anfordern.',
   'ui.privacy.address':
     'Wenn Sie per Adresse prüfen, lädt der Server diese öffentliche Seite und ihre robots.txt und gibt sie an Ihren Browser weiter. Er speichert nichts.',
-  'ui.privacy.ai.claude':
-    'Wenn Sie eine KI-Analyse anfordern, gehen die Ergebnisse, die Seitenangaben und der Anfang des sichtbaren Seitentexts über Ihr Konto an Claude. Ihre Dateien nicht.',
   'ui.privacy.network.server':
     'Die Sicherheitsrichtlinie der Seite erlaubt Verbindungen nur zu ihrem eigenen Server.',
   'ui.privacy.files':

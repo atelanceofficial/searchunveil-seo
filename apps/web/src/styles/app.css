@@ -2094,8 +2094,7 @@
   }
 
   /* The status region stays in place for screen readers, without leaving a gap while empty. */
-  .panel > .page-form__status:empty,
-  .analysis-panel__status:empty {
+  .panel > .page-form__status:empty {
     margin-block-start: 0;
   }
 
@@ -2337,59 +2336,6 @@
   .analysis-panel .hint .icon {
     flex: none;
     margin-block-start: 0.2em;
-  }
-
-  /* Claude's second opinion sits below the analyst's plan, under a hairline. */
-  .second-opinion {
-    display: grid;
-    gap: var(--space-3);
-    padding-block-start: var(--space-5);
-    border-block-start: 1px solid var(--color-border);
-  }
-
-  .second-opinion > p:not(.hint) {
-    max-inline-size: var(--measure);
-    color: var(--color-text-soft);
-  }
-
-  .second-opinion .hint {
-    display: flex;
-    gap: var(--space-2);
-    align-items: flex-start;
-    max-inline-size: var(--measure);
-  }
-
-  .second-opinion .hint .icon {
-    flex: none;
-    margin-block-start: 0.2em;
-  }
-
-  .analysis-progress {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .analysis-progress__pulse {
-    flex: none;
-    inline-size: 0.75rem;
-    block-size: 0.75rem;
-    border-radius: 50%;
-    background: var(--color-gold);
-    animation: analysis-pulse 1.6s ease-in-out infinite;
-  }
-
-  @keyframes analysis-pulse {
-    0%,
-    100% {
-      opacity: 0.35;
-      transform: scale(0.8);
-    }
-
-    50% {
-      opacity: 1;
-      transform: scale(1.1);
-    }
   }
 
   .analysis {
@@ -3047,14 +2993,6 @@ body:lang(ar) {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-/* A steady dot instead of a pulse: the words beside it already say the analysis is running. */
-@media (prefers-reduced-motion: reduce) {
-  .analysis-progress__pulse {
-    animation: none;
-    opacity: 1;
   }
 }
 

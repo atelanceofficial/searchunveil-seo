@@ -23,8 +23,6 @@ export const uiZhCN: UiCatalog = {
   'ui.footer.privacy': '没有 Cookie，没有统计分析，网页加载后也不会发出任何网络请求。',
   'ui.footer.privacy.server':
     '没有 Cookie，没有统计分析。只有在您要求时才会下载网页，并在您的设备上检查。',
-  'ui.footer.privacy.claude':
-    '没有 Cookie，没有统计分析。除非您要求 AI 分析，否则任何数据都不会离开您的设备。',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': '看看用户如何找到您的网站',
@@ -189,20 +187,6 @@ export const uiZhCN: UiCatalog = {
   'ui.analyst.lead':
     '我们自己的分析引擎 SearchUnveil Analyst 会把这份检查结果和网页文字整理成按优先级排列的计划。它在您的设备上运行，即时、免费，每一条都以本网页中的证据为依据。',
   'ui.analyst.by': '由 SearchUnveil Analyst {version} 在您的设备上撰写。',
-  'ui.analysis.title': 'Claude Fable 5.2 提供的第二意见',
-  'ui.analysis.lead':
-    'Anthropic 最强大的模型 Claude Fable 5.2 会阅读这份检查结果和网页文字，然后说明最重要的问题，以及具体该改什么。',
-  'ui.analysis.sends.claude':
-    '开始后，检查发现、上方的信息以及网页可见文字的开头部分，会通过您自己的 Claude 账户发送给 Claude。',
-  'ui.analysis.start': '用 Fable 5.2 分析',
-  'ui.analysis.again': '重新分析',
-  'ui.analysis.thinking': 'Claude 正在阅读检查结果并仔细思考，通常需要一到三分钟。',
-  'ui.analysis.writing': 'Claude 正在撰写分析…',
-  'ui.analysis.done': '分析已完成。',
-  'ui.analysis.by': '由 {model} 撰写。',
-  'ui.analysis.by-tier': '由您可用的最强大的 Claude 模型撰写。',
-  'ui.analysis.fallback': '所请求的模型拒绝了这项请求的一部分，因此由 {model} 完成。',
-  'ui.analysis.caution': 'AI 可能会出错。修改网站之前，请逐条核实建议。',
   'ui.analysis.verdict': '总体评价：{verdict, select, strong {良好} weak {较弱} other {一般}}',
   'ui.analysis.priorities': '按顺序要做的事',
   'ui.analysis.why': '为什么重要',
@@ -216,14 +200,6 @@ export const uiZhCN: UiCatalog = {
   'ui.analysis.content': '关于内容',
   'ui.analysis.technical': '技术说明',
   'ui.analysis.caveats': '这项分析无法得知的内容',
-  'ui.analysis.error.cancelled': '分析已停止。',
-  'ui.analysis.error.not-granted': 'Claude 未获准在这里运行。重新加载页面即可再次授权。',
-  'ui.analysis.error.rate-limited': '短时间内分析次数过多。请稍后再试。',
-  'ui.analysis.error.refused': 'Claude 拒绝分析这个网页。',
-  'ui.analysis.error.too-long': '回答被截断了。请重试。',
-  'ui.analysis.error.invalid-answer': '无法读取回答。请重试。',
-  'ui.analysis.error.unavailable': 'AI 分析暂时不可用。请稍后再试。',
-  'ui.analysis.error.failed': '分析没有完成。请稍后再试。',
   'ui.site.title': '检查整个网站',
   'ui.site.lead':
     '选择包含网站文件的 ZIP（例如备份或静态导出），或多个 HTML 文件。每个网页都在此设备上检查；图片、样式表和其他文件只计数，不读取。',
@@ -303,11 +279,8 @@ export const uiZhCN: UiCatalog = {
   'ui.privacy.lead': 'SearchUnveil 完全在您的浏览器中运行。',
   'ui.privacy.lead.server':
     'SearchUnveil 在您的浏览器中检查网页，只有在您要求时才会用到它的服务器。',
-  'ui.privacy.lead.claude': 'SearchUnveil 在您的浏览器中运行。只有您要求的 AI 分析会向外发送数据。',
   'ui.privacy.address':
     '按网址检查时，服务器会下载该公开网页及其 robots.txt，再传给您的浏览器，不会保存任何内容。',
-  'ui.privacy.ai.claude':
-    '当您要求 AI 分析时，检查发现、网页信息和网页可见文字的开头部分会通过您的账户发送给 Claude。您的文件不会被发送。',
   'ui.privacy.network.server': '网页的安全策略只允许它连接到自己的服务器。',
   'ui.privacy.files': '您分析的文件只在内存中读取，绝不会被保存或上传。',
   'ui.privacy.stored': '这个浏览器只会保存您的 AI 提及记录，以及您选择的语言和主题。',

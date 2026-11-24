@@ -2,7 +2,7 @@ import { LOCALE_INFO, LOCALES, isLocale, text } from '@searchunveil/core';
 import { useEffect, useRef, useState } from 'preact/hooks';
 import { BrandMark } from './components/BrandMark.tsx';
 import { Icon } from './components/Icon.tsx';
-import { useDataMode } from './lib/data-mode.ts';
+import { DATA_MODE } from './lib/data-mode.ts';
 import { useI18n, type MessageKey } from './lib/i18n.tsx';
 import { href, ROUTES, useRoute, type Route } from './lib/router.ts';
 import { readTheme, saveTheme, THEMES, type ThemePreference } from './lib/theme.ts';
@@ -46,7 +46,6 @@ function View(props: { readonly route: Route }) {
 
 export function App() {
   const { t, locale, setLocale } = useI18n();
-  const dataMode = useDataMode();
   const route = useRoute();
   const [theme, setTheme] = useState<ThemePreference>(readTheme);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -184,15 +183,7 @@ export function App() {
           </p>
           <div class="site-footer__notes">
             <p>{t.t('ui.footer.status')}</p>
-            <p>
-              {t.t(
-                dataMode === 'server'
-                  ? 'ui.footer.privacy.server'
-                  : dataMode === 'claude'
-                    ? 'ui.footer.privacy.claude'
-                    : 'ui.footer.privacy',
-              )}
-            </p>
+            <p>{t.t(DATA_MODE === 'server' ? 'ui.footer.privacy.server' : 'ui.footer.privacy')}</p>
           </div>
         </div>
       </footer>

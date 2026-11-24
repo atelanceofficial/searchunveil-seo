@@ -1,6 +1,6 @@
 # 0007. No API keys
 
-**Status:** Proposed · **Date:** 2026-11-24 · **Amends:** [0005](0005-optional-server-for-addresses-and-ai.md)
+**Status:** Proposed · **Date:** 2026-11-24 · **Amends:** [0005](0005-optional-server-for-addresses-and-ai.md) · **Amended by:** [0008](0008-only-our-own-analyst.md): the second opinion is removed
 
 ## Context
 

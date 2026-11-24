@@ -23,8 +23,6 @@ export const uiTr: UiCatalog = {
   'ui.footer.privacy': 'Çerez yok, analiz yok ve sayfa yüklendikten sonra hiçbir ağ isteği yok.',
   'ui.footer.privacy.server':
     'Çerez yok, analiz yok. Sayfalar yalnızca siz istediğinizde indirilir ve cihazınızda incelenir.',
-  'ui.footer.privacy.claude':
-    'Çerez yok, analiz yok. Yapay zekâ analizi istemediğiniz sürece hiçbir şey cihazınızdan çıkmaz.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'Web sitenizin nasıl bulunduğunu görün',
@@ -209,23 +207,6 @@ export const uiTr: UiCatalog = {
   'ui.analyst.lead':
     'Kendi analiz motorumuz SearchUnveil Analist, bu incelemeyi ve sayfanın metnini öncelik sırasına konmuş bir eylem planına dönüştürür. Cihazınızda, anında ve ücretsiz çalışır; her maddesi bu sayfadaki bir kanıta dayanır.',
   'ui.analyst.by': 'SearchUnveil Analist {version} tarafından, cihazınızda yazıldı.',
-  'ui.analysis.title': 'Claude Fable 5.2 ile ikinci görüş',
-  'ui.analysis.lead':
-    'Anthropic’in en yetenekli modeli Claude Fable 5.2, bu incelemeyi ve sayfanın metnini okur; en çok neyin önemli olduğunu ve tam olarak neyi değiştirmeniz gerektiğini açıklar.',
-  'ui.analysis.sends.claude':
-    'Başlattığınızda bulgular, yukarıdaki bilgiler ve sayfadaki görünür metnin başı, kendi Claude hesabınız üzerinden Claude’a gönderilir.',
-  'ui.analysis.start': 'Fable 5.2 ile analiz et',
-  'ui.analysis.again': 'Yeniden analiz et',
-  'ui.analysis.thinking':
-    'Claude incelemeyi okuyor ve üzerinde düşünüyor. Bu genellikle bir ile üç dakika sürer.',
-  'ui.analysis.writing': 'Claude analizi yazıyor…',
-  'ui.analysis.done': 'Analiz hazır.',
-  'ui.analysis.by': 'Yazan: {model}.',
-  'ui.analysis.by-tier': 'Hesabınızda kullanılabilen en yetenekli Claude modeli yazdı.',
-  'ui.analysis.fallback':
-    'İstenen model bu isteğin bir kısmını geri çevirdiği için analizi {model} tamamladı.',
-  'ui.analysis.caution':
-    'Yapay zekâ hata yapabilir. Sitenizi değiştirmeden önce her öneriyi kontrol edin.',
   'ui.analysis.verdict': 'Genel durum: {verdict, select, strong {güçlü} weak {zayıf} other {orta}}',
   'ui.analysis.priorities': 'Sırasıyla yapılacaklar',
   'ui.analysis.why': 'Neden önemli',
@@ -239,17 +220,6 @@ export const uiTr: UiCatalog = {
   'ui.analysis.content': 'İçerik hakkında',
   'ui.analysis.technical': 'Teknik notlar',
   'ui.analysis.caveats': 'Bu analizin bilemeyecekleri',
-  'ui.analysis.error.cancelled': 'Analiz durduruldu.',
-  'ui.analysis.error.not-granted':
-    'Claude’un burada çalışmasına izin verilmedi. Yeniden sorulması için sayfayı yenileyin.',
-  'ui.analysis.error.rate-limited':
-    'Kısa sürede çok fazla analiz yapıldı. Daha sonra yeniden deneyin.',
-  'ui.analysis.error.refused': 'Claude bu sayfayı analiz etmeyi geri çevirdi.',
-  'ui.analysis.error.too-long': 'Yanıt yarıda kesildi. Yeniden deneyin.',
-  'ui.analysis.error.invalid-answer': 'Yanıt okunamadı. Yeniden deneyin.',
-  'ui.analysis.error.unavailable':
-    'Yapay zekâ analizi şu anda kullanılamıyor. Daha sonra yeniden deneyin.',
-  'ui.analysis.error.failed': 'Analiz tamamlanamadı. Birazdan yeniden deneyin.',
   'ui.site.title': 'Tüm siteyi inceleyin',
   'ui.site.lead':
     'Sitenin dosyalarını içeren bir ZIP (örneğin bir yedek ya da statik dışa aktarım) veya birkaç HTML dosyası seçin. Her sayfa bu cihazda incelenir; görseller, stiller ve diğer dosyalar sayılır ama okunmaz.',
@@ -333,12 +303,8 @@ export const uiTr: UiCatalog = {
   'ui.privacy.lead': 'SearchUnveil tamamen tarayıcınızda çalışır.',
   'ui.privacy.lead.server':
     'SearchUnveil sayfaları tarayıcınızda inceler. Sunucusu yalnızca siz istediğinizde devreye girer.',
-  'ui.privacy.lead.claude':
-    'SearchUnveil tarayıcınızda çalışır. Dışarıya veri gönderen tek şey, istediğinizde çalışan yapay zekâ analizidir.',
   'ui.privacy.address':
     'Adresle inceleme yaptığınızda sunucu, herkese açık o sayfayı ve robots.txt dosyasını indirip tarayıcınıza iletir. Hiçbir şey saklamaz.',
-  'ui.privacy.ai.claude':
-    'Yapay zekâ analizi istediğinizde bulgular, sayfa bilgileri ve sayfadaki görünür metnin başı, hesabınız üzerinden Claude’a gider. Dosyalarınız gitmez.',
   'ui.privacy.network.server':
     'Sayfanın güvenlik politikası, yalnızca kendi sunucusuna bağlanmasına izin verir.',
   'ui.privacy.files': 'Analiz ettiğiniz dosyalar bellekte okunur. Asla saklanmaz veya yüklenmez.',

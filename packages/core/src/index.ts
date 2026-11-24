@@ -156,26 +156,14 @@ export {
   analyzePage,
   MAX_ACTIONS,
   renderAnalystReport,
-  type AnalystAction,
-  type AnalystReport,
-} from './analyst/analyst.ts';
-export { detectLanguage, type DetectedLanguage } from './analyst/language.ts';
-
-// A second opinion by a language model, inside Claude
-export {
-  ANALYSIS_MODEL,
-  extractJson,
-  pageAnalysisEvidence,
-  pageAnalysisInstructions,
-  pageAnalysisPrompt,
-  pageAnalysisRequest,
-  parsePageAnalysis,
   type AnalysisLevel,
   type AnalysisPriority,
-  type AnalysisRequest,
   type AnalysisVerdict,
+  type AnalystAction,
+  type AnalystReport,
   type PageAnalysis,
-} from './ai/page-analysis.ts';
+} from './analyst/analyst.ts';
+export { detectLanguage, type DetectedLanguage } from './analyst/language.ts';
 
 // AI mention log
 export {

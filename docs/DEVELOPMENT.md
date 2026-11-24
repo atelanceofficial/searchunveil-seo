@@ -74,7 +74,6 @@ To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.t
 | `apps/web/src/styles/app.css` | Design tokens and styles; contrast is tested in `contrast.test.ts`. |
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
 | `packages/core/src/analyst` | SearchUnveil Analyst: language detection, key phrases, ideas and the ranked plan. |
-| `packages/core/src/ai` | Claude's second opinion inside Claude: the request and the checks on its answer. |
 | `apps/server/src` | The optional server: page fetching (`fetch-page.ts`, `network.ts`) and the HTTP endpoints (`server.ts`). |
 
 ## Common changes

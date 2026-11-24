@@ -16,7 +16,7 @@ Today, website information is often spread across different tools and reports. W
 
 | What you want to understand | What SearchUnveil aims to show |
 | :--- | :--- |
-| **Is my website easy to find?** | Common website and SEO issues, explained in plain language: type an address or paste a page, or review every page in a ZIP of your site. SearchUnveil Analyst, our own engine, turns each review into a ranked plan with title and description ideas, on your device, with no API key or account. Opened inside Claude, Claude Fable 5.2 can add a second opinion. |
+| **Is my website easy to find?** | Common website and SEO issues, explained in plain language: type an address or paste a page, or review every page in a ZIP of your site. SearchUnveil Analyst, our own engine, turns each review into a ranked plan with title and description ideas, on your device, with no API key or account. |
 | **How is my website doing in Google Search?** | Trends in clicks, impressions, pages, and queries from a Search Console CSV file you provide. |
 | **Where has AI mentioned my website?** | A record of AI-generated mentions or citations that you add, with a source and date when known. |
 | **What should I look at next?** | Simple charts, clear explanations, and suggested checks based on the information available. |

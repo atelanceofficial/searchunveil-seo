@@ -175,33 +175,11 @@ test.describe('page review', () => {
     await expect(page.getByRole('heading', { name: 'Expert analysis' })).toBeVisible();
     await expect(page.locator('.analysis').first().locator('.priority').first()).toBeVisible();
     await expect(page.locator('.analysis__footer').first()).toContainText('SearchUnveil Analyst');
-    // Claude's second opinion exists only inside Claude; nothing here asks for an API key.
-    await expect(page.locator('.second-opinion')).toHaveCount(0);
-    await expect(page.getByText(/API key/i)).toHaveCount(0);
+    // The analyst is the only one: no outside model, no key, no account.
+    await expect(page.getByText(/Fable|Claude|API key/)).toHaveCount(0);
     await expectAccessible(page);
   });
 });
-
-/** An answer in the analysis's JSON shape, as Claude would write it. */
-const ANALYSIS = {
-  summary: 'A clear page whose title says too little.',
-  verdict: 'fair',
-  priorities: [
-    {
-      title: 'Rewrite the title',
-      why: 'One word tells searchers nothing.',
-      how: 'Use `<title>Trail running shoes | Example</title>`.',
-      evidence: 'Title: Shoes',
-      impact: 'high',
-      effort: 'low',
-    },
-  ],
-  title_suggestions: ['Trail running shoes | Example'],
-  description_suggestions: [],
-  content_notes: ['Say who the shoes are for.'],
-  technical_notes: [],
-  caveats: ['Rankings of other sites are unknown.'],
-};
 
 const FETCHED_PAGE =
   '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Shoes</title>' +
@@ -254,7 +232,7 @@ test.describe('server version', () => {
     await expect(plan.locator('.priority__title').first()).toHaveText(
       'Remove noindex from the server’s headers',
     );
-    await expect(page.locator('.second-opinion')).toHaveCount(0);
+    await expect(page.getByText(/Fable|Claude|API key/)).toHaveCount(0);
     expect(requests).toHaveLength(1);
     await expectAccessible(page);
   });
@@ -278,49 +256,6 @@ test.describe('server version', () => {
       /connect-src 'self'/,
     );
     await expect(page.getByText('lets it connect only to its own server')).toBeVisible();
-  });
-});
-
-test.describe('inside Claude', () => {
-  test('asks Claude Fable 5.2 through the viewer, on the person’s account', async ({ page }) => {
-    await page.addInitScript((answer) => {
-      const calls: unknown[] = [];
-      const sample = async (
-        input: string,
-        options: { model: string; modelTier: string; effort: string; onText?: (u: object) => void },
-      ) => {
-        calls.push({
-          input,
-          model: options.model,
-          tier: options.modelTier,
-          effort: options.effort,
-        });
-        options.onText?.({ text: '{', delta: '{' });
-        await new Promise((resolve) => setTimeout(resolve, 50));
-        return { text: JSON.stringify(answer), truncated: false, modelApplied: options.model };
-      };
-      Object.assign(window, {
-        sampleCalls: calls,
-        claude: { use: (name: string) => Promise.resolve(name === 'sample' ? sample : null) },
-      });
-    }, ANALYSIS);
-
-    await page.goto('/#/page-review');
-    await page.getByRole('button', { name: 'Try a sample page' }).click();
-    await expect(page.getByText('sent to Claude, on your own Claude account')).toBeVisible();
-    await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
-    const second = page.locator('.second-opinion');
-    await expect(second.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
-    await expect(second.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
-    const [call] = await page.evaluate(
-      () => (window as unknown as { sampleCalls: Record<string, string>[] }).sampleCalls,
-    );
-    expect(call).toMatchObject({ model: 'claude-fable-5-2', tier: 'complex', effort: 'high' });
-    expect(call?.['input']).toContain('Reply with only the JSON object');
-    await expectAccessible(page);
-
-    await page.goto('/#/privacy');
-    await expect(page.getByText('go to Claude on your account')).toBeVisible();
   });
 });
 

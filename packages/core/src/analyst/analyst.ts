@@ -1,4 +1,3 @@
-import type { AnalysisLevel, AnalysisVerdict, PageAnalysis } from '../ai/page-analysis.ts';
 import { robotsAddress, type HttpFacts } from '../audit/http.ts';
 import { isValidLanguageTag, type PageFacts, type PageReport } from '../audit/review.ts';
 import type { CoreMessage, Evidence, Finding, FindingStatus } from '../findings.ts';
@@ -24,6 +23,38 @@ import { brandOf, descriptionIdeas, fold, isGeneric, subjectOf, titleIdeas } fro
  * the person's device in an instant, costs nothing, gives the same answer every time, and never
  * states anything the review doesn't show. Its output is messages, translated like findings.
  */
+
+export type AnalysisVerdict = 'strong' | 'fair' | 'weak';
+export type AnalysisLevel = 'high' | 'medium' | 'low';
+
+/** One change in the plan, in the reader's language. */
+export interface AnalysisPriority {
+  readonly title: string;
+  /** Why it matters for this page, in plain words. */
+  readonly why: string;
+  /** Exactly what to do; code to use is marked with backticks. */
+  readonly how: string;
+  /** The facts from the review that show it. */
+  readonly evidence: string;
+  readonly impact: AnalysisLevel;
+  readonly effort: AnalysisLevel;
+}
+
+/** The analysis as the interface shows it: every message rendered in the reader's language. */
+export interface PageAnalysis {
+  readonly summary: string;
+  readonly verdict: AnalysisVerdict;
+  /** The most important changes first. */
+  readonly priorities: readonly AnalysisPriority[];
+  /** Better titles, in the page's own language. */
+  readonly titleSuggestions: readonly string[];
+  /** Better meta descriptions, in the page's own language. */
+  readonly descriptionSuggestions: readonly string[];
+  readonly contentNotes: readonly string[];
+  readonly technicalNotes: readonly string[];
+  /** What this analysis cannot know. */
+  readonly caveats: readonly string[];
+}
 
 export const ANALYST_NAME = 'SearchUnveil Analyst';
 export const ANALYST_VERSION = '1.0';
@@ -700,8 +731,8 @@ function pathOf(address: string | null): string {
 }
 
 /**
- * The report in the reader's language, in the same shape as an AI analysis, so both read alike.
- * Code in steps is marked with backticks; language codes become language names.
+ * The report in the reader's language. Code in steps is marked with backticks; language codes
+ * become language names.
  */
 export function renderAnalystReport(
   report: AnalystReport,

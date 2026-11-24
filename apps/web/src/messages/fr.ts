@@ -24,8 +24,6 @@ export const uiFr: UiCatalog = {
     'Aucun cookie, aucune mesure d’audience et aucune requête réseau une fois la page chargée.',
   'ui.footer.privacy.server':
     'Aucun cookie, aucune mesure d’audience. Les pages ne sont téléchargées qu’à votre demande, et examinées sur votre appareil.',
-  'ui.footer.privacy.claude':
-    'Aucun cookie, aucune mesure d’audience. Rien ne quitte votre appareil, sauf si vous demandez une analyse par IA.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'Voyez comment votre site est trouvé',
@@ -213,23 +211,6 @@ export const uiFr: UiCatalog = {
   'ui.analyst.lead':
     'SearchUnveil Analyst, notre propre moteur d’analyse, transforme cet examen et le texte de la page en un plan classé par priorité. Il fonctionne sur votre appareil, instantanément et gratuitement, et chaque point repose sur des éléments de cette page.',
   'ui.analyst.by': 'Rédigé par SearchUnveil Analyst {version}, sur votre appareil.',
-  'ui.analysis.title': 'Deuxième avis de Claude Fable 5.2',
-  'ui.analysis.lead':
-    'Claude Fable 5.2, le modèle le plus performant d’Anthropic, lit cet examen et le texte de la page, puis explique ce qui compte le plus et ce qu’il faut changer, précisément.',
-  'ui.analysis.sends.claude':
-    'Quand vous la lancez, les constats, les informations ci-dessus et le début du texte visible de la page sont envoyés à Claude, avec votre propre compte Claude.',
-  'ui.analysis.start': 'Analyser avec Fable 5.2',
-  'ui.analysis.again': 'Relancer l’analyse',
-  'ui.analysis.thinking':
-    'Claude lit l’examen et y réfléchit. Cela prend généralement une à trois minutes.',
-  'ui.analysis.writing': 'Claude rédige l’analyse…',
-  'ui.analysis.done': 'Analyse prête.',
-  'ui.analysis.by': 'Rédigé par {model}.',
-  'ui.analysis.by-tier': 'Rédigé par le modèle Claude le plus performant auquel vous avez accès.',
-  'ui.analysis.fallback':
-    'Le modèle demandé a refusé une partie de cette demande\u202F; {model} l’a donc terminée.',
-  'ui.analysis.caution':
-    'L’IA peut se tromper. Vérifiez chaque suggestion avant de modifier votre site.',
   'ui.analysis.verdict':
     'Bilan\u00A0: {verdict, select, strong {solide} weak {faible} other {correct}}',
   'ui.analysis.priorities': 'Que faire, dans l’ordre',
@@ -245,16 +226,6 @@ export const uiFr: UiCatalog = {
   'ui.analysis.content': 'Sur le contenu',
   'ui.analysis.technical': 'Remarques techniques',
   'ui.analysis.caveats': 'Ce que cette analyse ne peut pas savoir',
-  'ui.analysis.error.cancelled': 'L’analyse a été arrêtée.',
-  'ui.analysis.error.not-granted':
-    'Claude n’a pas été autorisé à s’exécuter ici. Rechargez la page pour que la question vous soit reposée.',
-  'ui.analysis.error.rate-limited': 'Trop d’analyses en peu de temps. Réessayez plus tard.',
-  'ui.analysis.error.refused': 'Claude a refusé d’analyser cette page.',
-  'ui.analysis.error.too-long': 'La réponse a été coupée. Réessayez.',
-  'ui.analysis.error.invalid-answer': 'La réponse n’a pas pu être lue. Réessayez.',
-  'ui.analysis.error.unavailable':
-    'L’analyse par IA n’est pas disponible pour le moment. Réessayez plus tard.',
-  'ui.analysis.error.failed': 'L’analyse n’a pas abouti. Réessayez dans un instant.',
   'ui.site.title': 'Examiner un site entier',
   'ui.site.lead':
     'Choisissez un ZIP des fichiers du site, comme une sauvegarde ou un export statique, ou plusieurs fichiers HTML. Chaque page est examinée sur cet appareil\u00A0; les images, les styles et les autres fichiers sont comptés, mais pas lus.',
@@ -340,12 +311,8 @@ export const uiFr: UiCatalog = {
   'ui.privacy.lead': 'SearchUnveil fonctionne entièrement dans votre navigateur.',
   'ui.privacy.lead.server':
     'SearchUnveil examine les pages dans votre navigateur. Son serveur n’intervient qu’à votre demande.',
-  'ui.privacy.lead.claude':
-    'SearchUnveil fonctionne dans votre navigateur. Seule l’analyse par IA, quand vous la demandez, envoie des données.',
   'ui.privacy.address':
     'Quand vous examinez une adresse, le serveur télécharge cette page publique et son fichier robots.txt, puis les transmet à votre navigateur. Il ne garde rien.',
-  'ui.privacy.ai.claude':
-    'Quand vous demandez une analyse par IA, les constats, les informations sur la page et le début de son texte visible vont à Claude, avec votre compte. Vos fichiers, non.',
   'ui.privacy.network.server':
     'La politique de sécurité de la page ne l’autorise à se connecter qu’à son propre serveur.',
   'ui.privacy.files':
