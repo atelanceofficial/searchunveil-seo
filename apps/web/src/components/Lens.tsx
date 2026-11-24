@@ -14,8 +14,8 @@ const GRID = [
 
 /**
  * The brand's lens, drawn live: fine rings around a dashed crosshair, a gold arc and a line of
- * search data passing through. Purely decorative, so it is hidden from assistive technology.
- * When motion is welcome, the rings draw themselves once and then hold still.
+ * search data passing through, as on the cover. Purely decorative, so it is hidden from
+ * assistive technology.
  */
 export function Lens(props: { readonly class?: string }) {
   const id = useId();
@@ -65,18 +65,11 @@ export function Lens(props: { readonly class?: string }) {
             class={ring.accent ? 'lens__ring lens__ring--accent' : 'lens__ring'}
             d={ring.d}
             stroke-opacity={(0.3 + 0.7 * ring.glow).toFixed(2)}
-            pathLength={1}
-            style={{ '--ring': i }}
           />
         ))}
       </g>
       <path class="lens__crosshair" d="M280 12V428M28 184H532" />
-      <path
-        class="lens__arc"
-        stroke={`url(#${id}-gold)`}
-        d="M10 184A270 150 0 0 1 540.8 145.2"
-        pathLength={1}
-      />
+      <path class="lens__arc" stroke={`url(#${id}-gold)`} d="M10 184A270 150 0 0 1 540.8 145.2" />
       <path
         class="lens__wave lens__wave--faint"
         d="M18 410C96 402 144 352 196 362S292 394 344 340S454 288 548 306"

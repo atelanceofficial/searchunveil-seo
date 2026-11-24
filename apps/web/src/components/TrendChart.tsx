@@ -33,32 +33,6 @@ function path(
   return d;
 }
 
-/** The area between a line and the floor, one closed shape per unbroken run of values. */
-function area(
-  values: readonly (number | null)[],
-  x: (i: number) => number,
-  y: (v: number) => number,
-  floor: number,
-): string {
-  let d = '';
-  let run: number[] = [];
-  const close = () => {
-    const first = run[0];
-    const last = run.at(-1);
-    if (first !== undefined && last !== undefined && run.length > 1) {
-      const top = run.map((i) => `${x(i).toFixed(1)} ${y(values[i] ?? 0).toFixed(1)}`);
-      d += `M${x(first).toFixed(1)} ${floor.toFixed(1)}L${top.join('L')}L${x(last).toFixed(1)} ${floor.toFixed(1)}Z`;
-    }
-    run = [];
-  };
-  values.forEach((value, i) => {
-    if (value === null) close();
-    else run.push(i);
-  });
-  close();
-  return d;
-}
-
 function useWidth(fallback: number) {
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(fallback);
@@ -201,10 +175,6 @@ export function TrendChart(props: {
             >
               <line class="chart__hatch-line" x1="0" y1="0" x2="0" y2="6" />
             </pattern>
-            <linearGradient id={`${id}-area`} x1="0" y1="0" x2="0" y2="1">
-              <stop class="chart__area-top" offset="0" />
-              <stop class="chart__area-bottom" offset="1" />
-            </linearGradient>
           </defs>
           {bands.map((band) => {
             // Each day owns the half-step on either side of its point, so adjacent periods meet.
@@ -254,17 +224,10 @@ export function TrendChart(props: {
               {dayFormat.format(Date.parse(points[i]?.date ?? first))}
             </text>
           ))}
-          <path d={area(series.average, x, y, MARGIN.top + plotHeight)} fill={`url(#${id}-area)`} />
           <path class="chart__daily" d={path(series.daily, x, y)} />
           <path class="chart__average" d={path(series.average, x, y)} />
           {lastAverage < 0 ? null : (
             <g>
-              <circle
-                class="chart__end-halo"
-                cx={x(lastAverage)}
-                cy={y(series.average[lastAverage] ?? 0)}
-                r={10}
-              />
               <circle
                 class="chart__end"
                 cx={x(lastAverage)}

@@ -38,9 +38,7 @@ export function FileDrop(props: {
         if (props.disabled !== true) take(event.dataTransfer?.files);
       }}
     >
-      <span class="dropzone__badge">
-        <Icon name="upload" class="dropzone__icon" />
-      </span>
+      <Icon name="upload" class="dropzone__icon" />
       <input
         id={id}
         class="visually-hidden"
