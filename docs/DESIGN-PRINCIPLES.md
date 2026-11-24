@@ -36,26 +36,24 @@ These are **brand references**, not final app color tokens. Interactive interfac
 
 ### How the prototype uses it
 
-The interface should read like a well-made report, not like a screen effect. It takes its marks from technical drawing and cartography, which is what a tool for measuring search visibility is closest to.
+The interface is an observing instrument at night: the cover's deep blue-black, brass for what matters, mist green for data. Every page uses Inter, the typeface of the wordmark; small labels are set in a monospaced face, like the readouts engraved on an instrument.
 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |
-| **Paper and ink** | Everywhere | A warm ivory or deep blue-black page, solid text colors, hairline rules instead of shadows. |
-| **Editorial serif** | Page and section titles, standfirsts, the main finding, large figures | Newsreader gives the writing a voice, with italics for names and numerals; Inter stays for the interface and for tables. |
-| **Lens** | The home page, behind page titles, in the footer | On the home page, a photographed wire sculpture of the cover's lens, one picture per theme, blended into the page colour. Elsewhere, an engraving generated from the same equations as the wordmark render. |
-| **Report structure** | Results | Numbered sections and tables ruled like a printed book: strong lines above and below, none at the sides. |
-| **Ink band** | The footer | Closes every page in the cover's deep blue-black, in both themes. |
-| **Ruler** | Under every page title, along the footer | Marks the start of the content, like the scale on a drawing. |
+| **Mark** | Header, footer, favicon | The photographed lens reduced to three shapes: a tilted disc, the loop standing beside it, a bright core. |
+| **Cover** | The home page, in both themes | The lens photograph on the cover's blue-black, blended into the page, with the three tools named above the title. |
+| **Ruler** | Under the cover and every page title, along the footer | Marks where content begins, like the scale on an instrument. |
 | **Graph paper** | The drop zone | A sheet for data to land on, with a heavier line every fifth square. |
-| **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on color, as maps and drawings do. |
+| **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on colour. |
+| **Dark plates** | The headline finding, the footer | The answer to "what happened" and the closing band stay dark in both themes. |
 
 Rules for every decorative element:
 
 - Decoration stays behind content and never carries meaning on its own.
-- Status is always an icon and words, then color; the chart's periods also have labels and hatching.
-- No glows, gradients on text, glass effects or looping motion.
-- Decoration disappears in forced-color modes, when more contrast is requested, and in print.
-- The lens is generated from code (`npm run patterns`) and tested, so it can be rebuilt exactly.
+- Status is always an icon and words, then colour; the chart's periods also have labels and hatching.
+- No glows, gradients on text, glass effects, accent rails on cards or looping motion.
+- Text colours are tested for contrast in both themes and on the dark plates.
+- Decoration disappears in forced-colour modes, when more contrast is requested, and in print.
 
 Figures use tabular numbers so that columns line up, and a metric's number shrinks to fit its tile rather than wrapping.
 

@@ -6,6 +6,7 @@ export const uiDe: UiCatalog = {
   'ui.app.local': 'Ihre Dateien bleiben auf diesem Gerät.',
   'ui.app.loading': 'SearchUnveil wird geladen …',
   'ui.skip': 'Zum Hauptinhalt springen',
+  'ui.menu': 'Menü',
   'ui.nav.label': 'Hauptmenü',
   'ui.nav.home': 'Übersicht',
   'ui.nav.search-console': 'Search Console',

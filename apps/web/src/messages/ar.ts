@@ -6,6 +6,7 @@ export const uiAr: UiCatalog = {
   'ui.app.local': 'تبقى ملفاتك على هذا الجهاز.',
   'ui.app.loading': 'جارٍ تحميل SearchUnveil…',
   'ui.skip': 'الانتقال إلى المحتوى الرئيسي',
+  'ui.menu': 'القائمة',
   'ui.nav.label': 'التنقل الرئيسي',
   'ui.nav.home': 'نظرة عامة',
   'ui.nav.search-console': 'Search Console',

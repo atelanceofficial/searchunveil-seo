@@ -7,8 +7,9 @@ export const ROUTES = ['home', 'search-console', 'page-review', 'mentions', 'pri
 
 export type Route = (typeof ROUTES)[number] | 'not-found';
 
+/** Plain names (`#mentions`): the form every host passes through intact; `#/mentions` still works. */
 export function href(route: (typeof ROUTES)[number]): string {
-  return route === 'home' ? '#/' : `#/${route}`;
+  return `#${route}`;
 }
 
 export function parseRoute(hash: string): Route {

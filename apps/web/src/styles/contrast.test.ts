@@ -24,7 +24,7 @@ function hexTokens(source: string): Map<string, string> {
 }
 
 const LIGHT = hexTokens(block(':root'));
-const DARK = hexTokens(block(":root[data-theme='dark']"));
+const DARK = hexTokens(block('.tone-dark'));
 const DARK_BY_SYSTEM = hexTokens(block(":root:not([data-theme='light'])"));
 
 function tokens(theme: 0 | 1): Map<string, string> {
@@ -87,14 +87,10 @@ const PAIRS: readonly (readonly [string, string, number])[] = [
   ['color-good', 'color-good-soft', 4.5],
   ['color-info', 'color-info-soft', 3],
   ['color-chart', 'color-surface', 3],
+  ['color-mist', 'color-surface', 3],
   ['color-chart-daily', 'color-surface', 3],
   ['color-text-muted', 'color-band-previous', 4.5],
   ['color-text-muted', 'color-band-recent', 4.5],
-  ['color-on-band', 'color-band', 4.5],
-  ['color-on-band-muted', 'color-band', 4.5],
-  ['color-band-accent', 'color-band', 3],
-  ['color-brand-start', 'color-surface', 4.5],
-  ['color-brand-end', 'color-surface', 4.5],
 ];
 
 describe.each([
@@ -120,5 +116,19 @@ describe('contrast', () => {
   it('matches the WCAG reference values', () => {
     expect(contrast('#000000', '#ffffff')).toBeCloseTo(21, 5);
     expect(contrast('#777777', '#ffffff')).toBeCloseTo(4.48, 2);
+  });
+});
+
+describe('dark-only surfaces', () => {
+  // The footer is an ink band in both themes, so its text always uses the dark tokens.
+  const dark = tokens(1);
+  it.each([
+    ['color-text', 4.5],
+    ['color-text-muted', 4.5],
+    ['color-gold', 3],
+  ] as const)('%s on the footer band reaches %d:1', (foreground, minimum) => {
+    expect(
+      contrast(dark.get(foreground) ?? '', dark.get('color-band') ?? ''),
+    ).toBeGreaterThanOrEqual(minimum);
   });
 });

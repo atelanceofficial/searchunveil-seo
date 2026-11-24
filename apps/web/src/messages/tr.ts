@@ -6,6 +6,7 @@ export const uiTr: UiCatalog = {
   'ui.app.local': 'Dosyalarınız bu cihazda kalır.',
   'ui.app.loading': 'SearchUnveil yükleniyor…',
   'ui.skip': 'Ana içeriğe geç',
+  'ui.menu': 'Menü',
   'ui.nav.label': 'Ana menü',
   'ui.nav.home': 'Genel bakış',
   'ui.nav.search-console': 'Search Console',

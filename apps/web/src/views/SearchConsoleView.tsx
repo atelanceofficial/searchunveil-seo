@@ -187,7 +187,7 @@ function Results(props: {
           {props.sample ? <span class="tag tag--sample">{t.t('ui.gsc.sample.badge')}</span> : null}
         </div>
         {report.headline === null ? null : (
-          <div class="headline">
+          <div class="headline tone-dark">
             <FindingCard finding={report.headline} />
           </div>
         )}

@@ -9,6 +9,7 @@ const messages = {
   'ui.app.local': 'Your files stay on this device.',
   'ui.app.loading': 'Loading SearchUnveil…',
   'ui.skip': 'Skip to main content',
+  'ui.menu': 'Menu',
   'ui.nav.label': 'Main',
   'ui.nav.home': 'Overview',
   'ui.nav.search-console': 'Search Console',

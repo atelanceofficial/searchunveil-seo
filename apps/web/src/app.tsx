@@ -47,7 +47,9 @@ export function App() {
   const { t, locale, setLocale } = useI18n();
   const route = useRoute();
   const [theme, setTheme] = useState<ThemePreference>(readTheme);
+  const [menuOpen, setMenuOpen] = useState(false);
   const firstRender = useRef(true);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   const pageName = t.t(route === 'not-found' ? 'ui.not-found.title' : NAV_LABELS[route]);
 
@@ -60,6 +62,7 @@ export function App() {
 
   // After navigating, start keyboard and screen reader users at the new page's heading.
   useEffect(() => {
+    setMenuOpen(false);
     if (firstRender.current) {
       firstRender.current = false;
       return;
@@ -81,73 +84,98 @@ export function App() {
       >
         {t.t('ui.skip')}
       </a>
-      <header class="site-header">
-        <div class="container site-header__row">
+      {/* On the home page the header joins the dark cover below it, in both themes. */}
+      <header class={route === 'home' ? 'site-header tone-dark' : 'site-header'}>
+        <div class="site-header__bar">
           <a class="brand" href={href('home')}>
             <BrandMark />
-            <span class="brand__name">SearchUnveil</span>
+            <span class="brand__name">
+              Search<span class="brand__accent">Unveil</span>
+            </span>
             <span class="brand__badge">{t.t('ui.app.preview')}</span>
           </a>
-          <div class="preferences">
-            <label class="preference">
-              <Icon name="globe" class="preference__icon" />
-              <span class="preference__label">{t.t('ui.language')}</span>
-              <select
-                value={locale}
-                onChange={(event) => {
-                  const next = event.currentTarget.value;
-                  if (isLocale(next)) setLocale(next);
-                }}
-              >
-                {LOCALES.map((code) => (
-                  <option key={code} value={code} lang={code}>
-                    {LOCALE_INFO[code].name}
-                  </option>
+          <button
+            ref={menuButton}
+            type="button"
+            class="menu-button"
+            aria-expanded={menuOpen}
+            aria-controls="site-menu"
+            onClick={() => {
+              setMenuOpen((open) => !open);
+            }}
+          >
+            <Icon name={menuOpen ? 'close' : 'menu'} />
+            <span>{t.t('ui.menu')}</span>
+          </button>
+          {/* One menu for every width: a row on wide screens, a panel behind the button on narrow ones. */}
+          <div
+            id="site-menu"
+            class="site-menu"
+            data-open={menuOpen}
+            onKeyDown={(event) => {
+              if (event.key === 'Escape' && menuOpen) {
+                setMenuOpen(false);
+                menuButton.current?.focus();
+              }
+            }}
+          >
+            <nav class="site-nav" aria-label={t.t('ui.nav.label')}>
+              <ul role="list">
+                {ROUTES.map((name) => (
+                  <li key={name}>
+                    <a href={href(name)} aria-current={route === name ? 'page' : undefined}>
+                      {t.t(NAV_LABELS[name])}
+                    </a>
+                  </li>
                 ))}
-              </select>
-            </label>
-            <label class="preference">
-              <Icon name="moon" class="preference__icon" />
-              <span class="preference__label">{t.t('ui.theme')}</span>
-              <select
-                value={theme}
-                onChange={(event) => {
-                  const next =
-                    THEMES.find((value) => value === event.currentTarget.value) ?? 'system';
-                  setTheme(next);
-                  saveTheme(next);
-                }}
-              >
-                {THEMES.map((value) => (
-                  <option key={value} value={value}>
-                    {t.t(THEME_LABELS[value])}
-                  </option>
-                ))}
-              </select>
-            </label>
+              </ul>
+            </nav>
+            <div class="preferences">
+              <label class="preference">
+                <Icon name="globe" class="preference__icon" />
+                <span class="preference__label">{t.t('ui.language')}</span>
+                <select
+                  value={locale}
+                  onChange={(event) => {
+                    const next = event.currentTarget.value;
+                    if (isLocale(next)) setLocale(next);
+                  }}
+                >
+                  {LOCALES.map((code) => (
+                    <option key={code} value={code} lang={code}>
+                      {LOCALE_INFO[code].name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label class="preference">
+                <Icon name="moon" class="preference__icon" />
+                <span class="preference__label">{t.t('ui.theme')}</span>
+                <select
+                  value={theme}
+                  onChange={(event) => {
+                    const next =
+                      THEMES.find((value) => value === event.currentTarget.value) ?? 'system';
+                    setTheme(next);
+                    saveTheme(next);
+                  }}
+                >
+                  {THEMES.map((value) => (
+                    <option key={value} value={value}>
+                      {t.t(THEME_LABELS[value])}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
           </div>
         </div>
-        <nav class="container site-nav" aria-label={t.t('ui.nav.label')}>
-          <ul role="list">
-            {ROUTES.map((name) => (
-              <li key={name}>
-                <a href={href(name)} aria-current={route === name ? 'page' : undefined}>
-                  {t.t(NAV_LABELS[name])}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
       </header>
-      <main id="main" class="container site-main" tabIndex={-1}>
-        <p class="local-note">
-          <Icon name="lock" />
-          {t.t('ui.app.local')}
-        </p>
+      <main id="main" class="site-main" tabIndex={-1}>
         <View route={route} />
       </main>
-      <footer class="site-footer">
-        <div class="container site-footer__inner">
+      <footer class="site-footer tone-dark">
+        <div class="site-footer__inner">
           <p class="site-footer__brand">
             <BrandMark />
             <strong>{t.t('ui.footer.built-by')}</strong>

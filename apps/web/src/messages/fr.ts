@@ -6,6 +6,7 @@ export const uiFr: UiCatalog = {
   'ui.app.local': 'Vos fichiers restent sur cet appareil.',
   'ui.app.loading': 'Chargement de SearchUnveil…',
   'ui.skip': 'Aller au contenu principal',
+  'ui.menu': 'Menu',
   'ui.nav.label': 'Navigation principale',
   'ui.nav.home': 'Vue d’ensemble',
   'ui.nav.search-console': 'Search Console',

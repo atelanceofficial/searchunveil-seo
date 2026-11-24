@@ -6,6 +6,7 @@ export const uiZhCN: UiCatalog = {
   'ui.app.local': '您的文件只保留在这台设备上。',
   'ui.app.loading': '正在加载 SearchUnveil…',
   'ui.skip': '跳到主要内容',
+  'ui.menu': '菜单',
   'ui.nav.label': '主导航',
   'ui.nav.home': '概览',
   'ui.nav.search-console': 'Search Console',

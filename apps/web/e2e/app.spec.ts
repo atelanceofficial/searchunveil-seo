@@ -14,6 +14,13 @@ async function expectAccessible(page: Page): Promise<void> {
   expect(summary).toEqual([]);
 }
 
+/** On narrow screens the language and theme choices sit behind the Menu button. */
+async function chooseLanguage(page: Page, locale: string): Promise<void> {
+  const menu = page.getByRole('button', { name: 'Menu' });
+  if (await menu.isVisible()) await menu.click();
+  await page.getByLabel('Language').selectOption(locale);
+}
+
 // Every test fails if the page logs an error, unless the test expects that exact message.
 const watched = new WeakMap<Page, { problems: string[]; allowed: RegExp[] }>();
 
@@ -175,7 +182,7 @@ test.describe('AI mention log', () => {
 test.describe('languages', () => {
   test('switches to Arabic with a right-to-left layout', async ({ page }) => {
     await page.goto('/#/search-console');
-    await page.getByLabel('Language').selectOption('ar');
+    await chooseLanguage(page, 'ar');
     await expect(page.locator('html')).toHaveAttribute('dir', 'rtl');
     await expect(page.locator('html')).toHaveAttribute('lang', 'ar');
     await page.locator('.panel__aside button').click();
@@ -260,7 +267,7 @@ test.describe('standalone file', () => {
     await expect(page.locator('.headline')).toContainText(
       'Your pages appeared in search more often, but clicks stayed about the same.',
     );
-    await page.getByLabel('Language').selectOption('tr');
+    await chooseLanguage(page, 'tr');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText(
       'Search Console dışa aktarımı',
     );

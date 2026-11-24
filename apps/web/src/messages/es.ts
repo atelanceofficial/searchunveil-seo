@@ -6,6 +6,7 @@ export const uiEs: UiCatalog = {
   'ui.app.local': 'Tus archivos se quedan en este dispositivo.',
   'ui.app.loading': 'Cargando SearchUnveil…',
   'ui.skip': 'Saltar al contenido principal',
+  'ui.menu': 'Menú',
   'ui.nav.label': 'Principal',
   'ui.nav.home': 'Resumen',
   'ui.nav.search-console': 'Search Console',

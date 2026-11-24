@@ -1,6 +1,4 @@
 import '@fontsource-variable/inter/opsz.css';
-import '@fontsource-variable/newsreader/opsz.css';
-import '@fontsource-variable/newsreader/opsz-italic.css';
 import './styles/app.css';
 import { render } from 'preact';
 import { App } from './app.tsx';
