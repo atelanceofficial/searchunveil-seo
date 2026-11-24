@@ -51,16 +51,17 @@ Typography rules:
 - Nothing people need to read is smaller than 13 pixels, lighter than regular weight, or set in capitals with wide spacing.
 - Every text colour reaches 4.5:1 against what is really behind it, including placeholders and unavailable buttons, which use quieter colours instead of transparency.
 - The home title is sized to its own column, so whole phrases stay together on any screen.
+- The page's ground, text colour and colour scheme sit outside the stylesheet's cascade layers. A page that wraps the app with its own reset, as the artifact preview does, therefore cannot turn text black on the dark theme; a browser test checks this.
 - Arabic and Chinese keep their own system typefaces at every level, without condensed widths or negative spacing.
 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |
-| **Mark** | Header, footer, favicon | The photographed lens reduced to three shapes: a tilted disc, the loop standing beside it, a bright core. |
-| **Cover** | The home page, in both themes | The lens photograph on the cover's blue-black, blended into the page, with the three tools named above the title. |
+| **Mark** | Header, footer, favicon | A lens reduced to three shapes: a tilted disc, the loop standing beside it, a bright core. |
+| **Threads** | The home page's cover, the sample section's far corner, the footer's far edge on wide screens | Threads of light lifted from a photograph without its ground: loops beside the title, strands dissolving towards the page's edge. They never pass behind words. |
 | **Ruler** | Under the cover and every page title, along the footer | Marks where content begins, like the scale on an instrument. |
 | **Graph paper** | The drop zone | A sheet for data to land on, with a heavier line every fifth square. |
 | **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on colour. |
-| **Dark plates** | The headline finding, the footer | The answer to "what happened" and the closing band stay dark in both themes. |
+| **Dark plates** | The cover, the sample section, the headline finding, the footer | These stay dark in both themes, so the threads always shine on night blue. |
 
 Rules for every decorative element:
 

@@ -8,9 +8,9 @@
  * The look is an observing instrument at night: the cover's deep blue-black, brass for what
  * matters, mist for data. Instrument Sans sets headings and figures, Inter every sentence, and
  * IBM Plex Mono the short labels, like readouts engraved on an instrument. The home page opens
- * on the photographed lens; rulers and graph paper appear where something is measured,
- * hatching where periods are compared. Decoration never carries meaning, and it disappears in
- * forced colours, when more contrast is requested, and in print.
+ * on threads of light lifted from a photograph; rulers and graph paper appear where something
+ * is measured, hatching where periods are compared. Decoration never carries meaning, and it
+ * disappears in forced colours, when more contrast is requested, and in print.
  *
  * Every direction-dependent rule uses logical properties, so Arabic mirrors correctly.
  */
@@ -139,10 +139,9 @@
     --color-grid-minor: rgb(11 19 25 / 5%);
     --color-grid-major: rgb(11 19 25 / 10%);
     --color-hatch: rgb(31 111 102 / 45%);
-    --color-contour: #8f6f33;
     --shadow: 0 1px 2px rgb(10 18 24 / 5%), 0 10px 24px -16px rgb(10 18 24 / 22%);
 
-    --pattern-lens: url('../assets/patterns/lens.svg');
+    --art-threads: url('../assets/hero/threads.webp');
     --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%233f4a55' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
@@ -191,7 +190,6 @@
       --color-grid-minor: rgb(143 208 198 / 5%);
       --color-grid-major: rgb(143 208 198 / 10%);
       --color-hatch: rgb(143 208 198 / 26%);
-      --color-contour: #8fd0c6;
       --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 14px 30px -18px rgb(0 0 0 / 70%);
       --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23b9c4c0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
@@ -233,7 +231,6 @@
     --color-grid-minor: rgb(143 208 198 / 5%);
     --color-grid-major: rgb(143 208 198 / 10%);
     --color-hatch: rgb(143 208 198 / 26%);
-    --color-contour: #8fd0c6;
     --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 14px 30px -18px rgb(0 0 0 / 70%);
     --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23b9c4c0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
@@ -260,18 +257,11 @@
     scroll-padding-block-start: var(--space-6);
   }
 
+  /* The body's ground, ink and type are set outside the layers, at the end of this file. */
   body {
     min-block-size: 100dvh;
     display: flex;
     flex-direction: column;
-    background: var(--color-canvas);
-    color: var(--color-text);
-    font-family: var(--font-sans);
-    font-size: var(--text-base);
-    line-height: 1.6;
-    font-feature-settings: 'ss01';
-    font-kerning: normal;
-    font-optical-sizing: auto;
     text-rendering: optimizeLegibility;
     hanging-punctuation: first last;
   }
@@ -288,11 +278,6 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
-  }
-
-  :lang(ar) body,
-  body:lang(ar) {
-    line-height: 1.85;
   }
 
   /* A dark part of a light page takes its own ground and text colour. */
@@ -463,19 +448,27 @@
       linear-gradient(to right, var(--color-tick) 1px, transparent 1px) 0 0 / 8px 5px repeat-x;
   }
 
-  /* The lens, engraved faintly into the footer's far corner. */
-  .site-footer::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    inset-block-end: -10rem;
-    inset-inline-end: -6rem;
-    inline-size: min(40rem, 120vw);
-    aspect-ratio: 10 / 7;
-    background: var(--color-contour);
-    mask: var(--pattern-lens) center / contain no-repeat;
-    opacity: 0.14;
-    pointer-events: none;
+  /*
+   * On wide screens the cover's threads return at the footer's far edge: loops at the edge, strands
+   * dissolving before they reach the words.
+   */
+  @media (min-width: 48rem) {
+    .site-footer::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset-block: -4rem -10rem;
+      inset-inline-end: 0;
+      inline-size: min(30rem, 40%);
+      background: var(--art-threads) left top / cover no-repeat;
+      transform: scaleX(-1);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    [dir='rtl'] .site-footer::after {
+      transform: none;
+    }
   }
 
   .site-footer__inner {
@@ -882,21 +875,36 @@
     font-weight: 500;
     line-height: 1;
     letter-spacing: -0.02em;
-    font-variant-numeric: lining-nums tabular-nums;
+    font-variant-numeric: lining-nums proportional-nums;
   }
 
-  /* The photograph melts into the cover; its threads fade out at the edges. */
-  .hero__image {
+  /*
+   * The cover's art: threads of light, lifted from a photograph without its ground. Their loops
+   * sit beside the words and their strands stream towards the page's edge, dissolving before it.
+   * Only the loops and the two main strands are shown; the faint fan below them is cropped.
+   */
+  .hero__art::before {
+    content: '';
     position: absolute;
-    inset: 0;
-    inline-size: 100%;
-    block-size: 100%;
-    object-fit: contain;
-    mix-blend-mode: lighten;
-    mask:
-      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
-      linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
-    mask-composite: intersect;
+    z-index: -1;
+    inset-block: -10% -6%;
+    inset-inline: 0 calc(-1 * var(--gutter));
+    background: var(--art-threads) center top / auto 150% no-repeat;
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 84%, transparent);
+    pointer-events: none;
+  }
+
+  @media (min-width: 60rem) {
+    .hero__art::before {
+      inset-block: -16% -4%;
+      inset-inline: -4% calc(-1 * (max(0px, (100vw - var(--page)) / 2) + var(--gutter)));
+      background-position: left top;
+    }
+  }
+
+  /* Right to left, the loops still sit beside the words and the strands run to the far edge. */
+  [dir='rtl'] .hero__art::before {
+    transform: scaleX(-1);
   }
 
   /* Home: the three tools */
@@ -995,7 +1003,7 @@
     font-size: var(--text-2xl);
     font-weight: 600;
     color: var(--color-good);
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: lining-nums proportional-nums;
   }
 
   .preview-trend .readout {
@@ -1056,7 +1064,30 @@
   /* Home: the sample, analyzed live, on a dark plate across the page. */
   .showcase {
     position: relative;
+    isolation: isolate;
     border-block: 1px solid var(--color-border);
+  }
+
+  /* The cover's threads drift in again at the plate's far corner, where no words sit. */
+  @media (min-width: 64rem) {
+    .showcase::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      inset-block-start: 0;
+      inset-inline-end: 0;
+      block-size: 30rem;
+      inline-size: 24rem;
+      background: var(--art-threads) left top / contain no-repeat;
+      transform: scaleX(-1);
+      opacity: 0.55;
+      mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 55%, transparent 85%);
+      pointer-events: none;
+    }
+
+    [dir='rtl'] .showcase::before {
+      transform: none;
+    }
   }
 
   .showcase__inner {
@@ -1904,7 +1935,7 @@
     font-weight: 500;
     line-height: 1.05;
     letter-spacing: -0.02em;
-    font-variant-numeric: lining-nums tabular-nums;
+    font-variant-numeric: lining-nums proportional-nums;
     white-space: nowrap;
   }
 
@@ -2235,7 +2266,7 @@
     font-size: var(--text-2xl);
     font-weight: 500;
     letter-spacing: -0.02em;
-    font-variant-numeric: lining-nums tabular-nums;
+    font-variant-numeric: lining-nums proportional-nums;
   }
 
   /* Mentions */
@@ -2301,6 +2332,41 @@
   }
 }
 
+/*
+ * The page's colour scheme, ground, ink and type, deliberately outside the layers. A page that
+ * wraps this one may bring its own unlayered reset: the artifact viewer's skeleton, for one,
+ * paints body black on white. Unlayered rules beat every layered one, so on the dark theme all
+ * inherited text turned black on dark cards. Unlayered and later in the cascade, these win.
+ */
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  font-feature-settings: 'ss01';
+  font-kerning: normal;
+  font-optical-sizing: auto;
+}
+
+body:lang(ar) {
+  line-height: 1.85;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -2324,7 +2390,9 @@
     background: none;
   }
 
-  .site-footer::after {
+  .site-footer::after,
+  .hero__art::before,
+  .showcase::before {
     display: none;
   }
 
@@ -2348,7 +2416,8 @@
   }
 
   .site-footer::after,
-  .hero__art {
+  .hero__art,
+  .showcase::before {
     display: none;
   }
 

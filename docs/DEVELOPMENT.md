@@ -39,7 +39,6 @@ The build is a folder of static files with relative paths; it can be served from
 | `npm run lint` / `npm run typecheck` | Type-aware ESLint / TypeScript for every project. |
 | `npm run format` | Format code with Prettier (Markdown is formatted by hand). |
 | `npm run build:standalone` | One self-contained file, `apps/web/dist-standalone/searchunveil.html`, that opens in a browser without a server. |
-| `npm run patterns` | Regenerate the decorative pattern files from their source; a unit test fails while they are out of date. |
 | `npm run check:links` | Check that every cited source still resolves (needs network access). |
 
 ## Project layout
@@ -56,7 +55,6 @@ The build is a folder of static files with relative paths; it can be served from
 | `apps/web/src/views` | One component per page of the app. |
 | `apps/web/src/messages` | Interface text in seven languages. |
 | `apps/web/src/styles/app.css` | Design tokens and styles; contrast is tested in `contrast.test.ts`. |
-| `apps/web/src/patterns` | The lens geometry and the pattern files it generates into `apps/web/src/assets/patterns`. |
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
 
 ## Common changes
@@ -78,13 +76,11 @@ Write apostrophes in prose as ’ so that they never act as ICU quoting characte
 4. Test it with realistic inputs, including the cases where it must stay silent.
 5. Document it in [FINDINGS.md](FINDINGS.md).
 
-### Change a decorative pattern
+### Change the cover art
 
-1. Edit the drawing in `apps/web/src/patterns` (`lens.ts` holds the geometry, `assets.ts` the files).
-2. Run `npm run patterns` to rewrite `apps/web/src/assets/patterns`.
-3. Run `npm test`: it checks the geometry and that the committed files match their source.
+The threads on the cover are `apps/web/src/assets/hero/threads.webp`: light threads on a transparent ground, lifted from a photograph by separating them from its black background. A replacement must also be transparent, with nothing but the drawing in it, because the stylesheet places it on the dark plates of both themes and lets it run off the page's edge.
 
-Patterns are drawn in black and used as CSS masks, so the stylesheet colors them for each theme. Keep them behind content: they must never carry meaning, and they disappear in forced colors, when more contrast is requested, and in print.
+Keep decoration behind content: it must never carry meaning or pass behind words, and it disappears in forced colors, when more contrast is requested, and in print. Run `npm run test:e2e` afterwards: the accessibility checks cover the home page in both themes.
 
 ### Update dependencies
 

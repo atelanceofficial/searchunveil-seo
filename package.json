@@ -25,7 +25,6 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "patterns": "node scripts/generate-patterns.ts",
     "check": "npm run check:text && npm run format:check && npm run lint && npm run typecheck && npm run test:coverage",
     "check:text": "node scripts/check-source-text.ts",
     "check:links": "node scripts/check-links.ts"

@@ -65,7 +65,7 @@ const sha256 = (text: string) =>
 
 /**
  * The standalone build: one HTML file holding the script, the styles, the fonts and the
- * patterns, so the app opens straight from disk, without a server. The policy stays as strict
+ * images, so the app opens straight from disk, without a server. The policy stays as strict
  * as the hosted one: the inline script and styles are allowed by their hashes alone, and
  * the page still cannot connect anywhere.
  */
@@ -145,7 +145,7 @@ export default defineConfig(({ mode }) => {
       ? {
           target: 'es2022',
           outDir: 'dist-standalone',
-          // Everything goes inside the one file: fonts and patterns as data: URLs,
+          // Everything goes inside the one file: fonts and images as data: URLs,
           // every language in the single script.
           assetsInlineLimit: () => true,
           cssCodeSplit: false,

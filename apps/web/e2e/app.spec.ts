@@ -198,6 +198,42 @@ test.describe('languages', () => {
   });
 });
 
+test.describe('inside a host page', () => {
+  // Viewers that embed pages, such as artifact previews, wrap them in a skeleton whose own
+  // unlayered reset paints body black on white. It must not reach the dark theme's text.
+  test('keeps its own ground and text colours under a host reset', async ({ page }) => {
+    await page.route('**/host-reset.css', (route) =>
+      route.fulfill({
+        contentType: 'text/css',
+        body: ':root{color-scheme:light}body{margin:0;padding:0;font:14px sans-serif;background:#fff;color:#000}',
+      }),
+    );
+    await page.route(
+      (url) => url.pathname === '/',
+      async (route) => {
+        const response = await route.fetch();
+        const html = await response.text();
+        await route.fulfill({
+          response,
+          body: html.replace('<head>', '<head><link rel="stylesheet" href="/host-reset.css" />'),
+        });
+      },
+    );
+    await page.emulateMedia({ colorScheme: 'dark' });
+    await page.goto('/');
+    await expect(page.locator('.tool__title').first()).toBeVisible();
+
+    const black = 'rgb(0, 0, 0)';
+    await expect(page.locator('body')).not.toHaveCSS('color', black);
+    await expect(page.locator('body')).not.toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(page.locator('html')).toHaveCSS('color-scheme', 'dark');
+    for (const title of await page.locator('.tool__title').all()) {
+      await expect(title).not.toHaveCSS('color', black);
+    }
+    await expectAccessible(page);
+  });
+});
+
 test.describe('privacy and resilience', () => {
   test('blocks network connections once the page has loaded', async ({ page }) => {
     // The browser reports the refused connection; that report is the expected outcome.

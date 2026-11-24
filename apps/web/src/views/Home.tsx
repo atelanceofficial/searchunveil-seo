@@ -12,7 +12,6 @@ import {
 } from '@searchunveil/core';
 import { Fragment, type ComponentChildren } from 'preact';
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import lensPhoto from '../assets/hero/lens-dark.webp';
 import { seriesFor } from '../components/chart-math.ts';
 import { FindingCard } from '../components/FindingCard.tsx';
 import { Icon, type IconName } from '../components/Icon.tsx';
@@ -107,7 +106,7 @@ export function Home() {
 
   return (
     <>
-      {/* The cover: the brand's lens, photographed, on the deep blue-black of the cover art. */}
+      {/* The cover: the title beside threads of light, on the deep blue-black of the night sky. */}
       <section class="hero tone-dark" aria-labelledby="home-title">
         <div class="hero__inner">
           <div class="hero__copy">
@@ -132,16 +131,8 @@ export function Home() {
               {t.t('ui.app.local')}
             </p>
           </div>
-          <div class="hero__art">
-            <img
-              class="hero__image"
-              src={lensPhoto}
-              alt=""
-              width={1280}
-              height={960}
-              decoding="async"
-            />
-          </div>
+          {/* Threads of light from a photograph, without its ground; drawn by the stylesheet. */}
+          <div class="hero__art" aria-hidden="true" />
           {/* Facts about how it works, read like the dials of an instrument. */}
           <dl class="facts">
             <div class="fact">
