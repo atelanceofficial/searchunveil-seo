@@ -6,10 +6,11 @@
  * tested for WCAG contrast in both themes (src/styles/contrast.test.ts).
  *
  * The look is an observing instrument at night: the cover's deep blue-black, brass for what
- * matters, mist for data, Inter for every word, and small monospaced readouts for labels. The
- * home page opens on the photographed lens; rulers and graph paper appear where something is
- * measured, hatching where periods are compared. Decoration never carries meaning, and it
- * disappears in forced colours, when more contrast is requested, and in print.
+ * matters, mist for data. Instrument Sans sets headings and figures, Inter every sentence, and
+ * IBM Plex Mono the short labels, like readouts engraved on an instrument. The home page opens
+ * on the photographed lens; rulers and graph paper appear where something is measured,
+ * hatching where periods are compared. Decoration never carries meaning, and it disappears in
+ * forced colours, when more contrast is requested, and in print.
  *
  * Every direction-dependent rule uses logical properties, so Arabic mirrors correctly.
  */
@@ -73,17 +74,19 @@
     --font-sans:
       'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans', 'Helvetica Neue',
       Arial, 'Noto Sans Arabic', 'Geeza Pro', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-display: 'Instrument Sans Variable', 'Inter Variable', system-ui, sans-serif;
     --font-mono:
-      ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Menlo, Consolas, monospace;
+      'IBM Plex Mono', ui-monospace, 'SF Mono', 'Cascadia Code', 'Roboto Mono', Menlo, Consolas,
+      monospace;
 
-    --text-xs: 0.75rem;
+    --text-xs: 0.8125rem;
     --text-sm: 0.875rem;
     --text-base: 1rem;
     --text-lg: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
     --text-xl: clamp(1.25rem, 1.12rem + 0.6vw, 1.5rem);
     --text-2xl: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
     --text-3xl: clamp(2rem, 1.45rem + 2.4vw, 3rem);
-    --text-hero: clamp(2.5rem, 1.6rem + 4vw, 4.25rem);
+    --text-hero: clamp(2.5rem, 1.7rem + 4.2vw, 4.5rem);
 
     --space-1: 0.25rem;
     --space-2: 0.5rem;
@@ -110,7 +113,8 @@
     --color-border-strong: #6c7a80;
     --color-text: #0b1319;
     --color-text-soft: #26303a;
-    --color-text-muted: #4a5560;
+    --color-text-muted: #3f4a55;
+    --color-text-faint: #5b6670;
     --color-accent: #7a5a1f;
     --color-accent-soft: #f2ecdf;
     --color-gold: #9a7630;
@@ -139,7 +143,7 @@
     --shadow: 0 1px 2px rgb(10 18 24 / 5%), 0 10px 24px -16px rgb(10 18 24 / 22%);
 
     --pattern-lens: url('../assets/patterns/lens.svg');
-    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%234a5560' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%233f4a55' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
   :root[data-theme='light'] {
@@ -161,7 +165,8 @@
       --color-border-strong: #5f7882;
       --color-text: #f1f4f2;
       --color-text-soft: #d9e1dd;
-      --color-text-muted: #a9b6b2;
+      --color-text-muted: #b9c4c0;
+      --color-text-faint: #93a19e;
       --color-accent: #d9c49a;
       --color-accent-soft: #1e1c15;
       --color-gold: #d9c49a;
@@ -188,7 +193,7 @@
       --color-hatch: rgb(143 208 198 / 26%);
       --color-contour: #8fd0c6;
       --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 14px 30px -18px rgb(0 0 0 / 70%);
-      --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23a9b6b2' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23b9c4c0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     }
   }
 
@@ -202,7 +207,8 @@
     --color-border-strong: #5f7882;
     --color-text: #f1f4f2;
     --color-text-soft: #d9e1dd;
-    --color-text-muted: #a9b6b2;
+    --color-text-muted: #b9c4c0;
+    --color-text-faint: #93a19e;
     --color-accent: #d9c49a;
     --color-accent-soft: #1e1c15;
     --color-gold: #d9c49a;
@@ -229,18 +235,21 @@
     --color-hatch: rgb(143 208 198 / 26%);
     --color-contour: #8fd0c6;
     --shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 14px 30px -18px rgb(0 0 0 / 70%);
-    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23a9b6b2' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%23b9c4c0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   }
 
+  /* The display face covers Latin scripts; Arabic and Chinese keep their own sans throughout. */
   :lang(ar) {
     --font-sans:
       'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, 'Inter Variable', system-ui, sans-serif;
+    --font-display: var(--font-sans);
   }
 
   :lang(zh) {
     --font-sans:
       'Inter Variable', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC',
       system-ui, sans-serif;
+    --font-display: var(--font-sans);
   }
 }
 
@@ -260,9 +269,25 @@
     font-family: var(--font-sans);
     font-size: var(--text-base);
     line-height: 1.6;
-    font-feature-settings: 'cv11', 'ss01';
+    font-feature-settings: 'ss01';
+    font-kerning: normal;
     font-optical-sizing: auto;
     text-rendering: optimizeLegibility;
+    hanging-punctuation: first last;
+  }
+
+  /* Light text on dark grounds looks heavier without this on macOS. */
+  .tone-dark,
+  :root[data-theme='dark'] body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
   }
 
   :lang(ar) body,
@@ -280,22 +305,23 @@
   h2,
   h3,
   h4 {
-    line-height: 1.2;
-    font-weight: 650;
-    letter-spacing: -0.015em;
+    font-family: var(--font-display);
+    font-stretch: 96%;
+    line-height: 1.15;
+    font-weight: 600;
+    letter-spacing: -0.012em;
     text-wrap: balance;
   }
 
   h1 {
     font-size: var(--text-3xl);
-    font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -0.032em;
+    line-height: 1.04;
+    letter-spacing: -0.028em;
   }
 
   h2 {
     font-size: var(--text-xl);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.018em;
   }
 
   h3 {
@@ -328,7 +354,8 @@
 
   code {
     font-family: var(--font-mono);
-    font-size: 0.875em;
+    font-size: max(0.875em, var(--text-xs));
+    font-weight: 500;
     padding: 0.1em 0.35em;
     border-radius: var(--radius-s);
     background: var(--color-surface-sunken);
@@ -339,6 +366,11 @@
     padding-inline-start: var(--space-4);
     border-inline-start: 2px solid var(--color-accent);
     color: var(--color-text-soft);
+  }
+
+  ::placeholder {
+    color: var(--color-text-faint);
+    opacity: 1;
   }
 
   :focus-visible {
@@ -506,8 +538,8 @@
     font-family: var(--font-mono);
     font-size: var(--text-xs);
     font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.45;
   }
 
   :lang(ar) :is(.hero__label, .tool__name, .tile__label, .readout, .fact dt, th),
@@ -515,7 +547,6 @@
     font-family: var(--font-sans);
     font-size: var(--text-sm);
     letter-spacing: 0;
-    text-transform: none;
   }
 
   /* Brand */
@@ -553,9 +584,11 @@
   }
 
   .brand__name {
-    font-size: 1.1875rem;
-    font-weight: 750;
-    letter-spacing: -0.025em;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    font-weight: 650;
+    font-stretch: 94%;
+    letter-spacing: -0.02em;
   }
 
   .brand__accent {
@@ -564,10 +597,10 @@
 
   .brand__badge {
     margin-inline-start: var(--space-1);
-    padding: 0.05rem 0.5rem;
+    padding: 0.05rem 0.55rem;
     border: 1px solid var(--color-border);
     border-radius: 999px;
-    font-size: 0.6875rem;
+    font-size: var(--text-xs);
     font-weight: 600;
     color: var(--color-text-muted);
     white-space: nowrap;
@@ -761,10 +794,14 @@
 
   @media (min-width: 60rem) {
     .hero__inner {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
       gap: var(--space-6);
       padding-block: var(--space-7) var(--space-8);
     }
+  }
+
+  .hero__copy {
+    container-type: inline-size;
   }
 
   .hero__copy > * + * {
@@ -775,11 +812,19 @@
     color: var(--color-accent);
   }
 
+  /* Each tool's name stays whole; lines break only between names. */
+  .hero__label-item {
+    white-space: nowrap;
+  }
+
+  /* Sized to its own column, so the title keeps whole phrases together at every width. */
   .hero__title {
     font-size: var(--text-hero);
-    font-weight: 700;
-    line-height: 1.02;
-    letter-spacing: -0.04em;
+    font-size: clamp(2.5rem, 12cqi, 4.5rem);
+    font-weight: 600;
+    font-stretch: 90%;
+    line-height: 0.98;
+    letter-spacing: -0.03em;
   }
 
   :lang(ar) .hero__title,
@@ -789,8 +834,9 @@
   }
 
   .hero__lead {
-    max-inline-size: 32rem;
-    font-size: var(--text-lg);
+    max-inline-size: 31rem;
+    font-size: clamp(1.125rem, 1.04rem + 0.4vw, 1.3125rem);
+    line-height: 1.5;
     color: var(--color-text-soft);
   }
 
@@ -831,11 +877,12 @@
   }
 
   .fact dd {
-    font-size: var(--text-2xl);
-    font-weight: 650;
-    line-height: 1.1;
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+    font-weight: 500;
+    line-height: 1;
     letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: lining-nums tabular-nums;
   }
 
   /* The photograph melts into the cover; its threads fade out at the edges. */
@@ -907,7 +954,8 @@
 
   .tool__title {
     font-size: var(--text-xl);
-    line-height: 1.2;
+    line-height: 1.18;
+    letter-spacing: -0.018em;
   }
 
   /* The preview sits on graph paper, the way a reading sits on a chart. */
@@ -943,8 +991,9 @@
   }
 
   .preview-trend__value {
-    font-size: var(--text-xl);
-    font-weight: 700;
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 600;
     color: var(--color-good);
     font-variant-numeric: tabular-nums;
   }
@@ -1024,9 +1073,8 @@
   }
 
   .showcase__head h2 {
-    font-size: var(--text-2xl);
-    font-weight: 700;
-    letter-spacing: -0.03em;
+    font-size: var(--text-3xl);
+    letter-spacing: -0.028em;
   }
 
   .showcase__head .hero__label {
@@ -1102,6 +1150,10 @@
     gap: var(--space-4);
   }
 
+  .principles h2 {
+    font-size: var(--text-2xl);
+  }
+
   .principles__list {
     display: grid;
     gap: var(--space-4);
@@ -1171,7 +1223,8 @@
   }
 
   .lead {
-    font-size: var(--text-lg);
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.55;
     color: var(--color-text-soft);
   }
 
@@ -1245,11 +1298,6 @@
     background: var(--color-surface-sunken);
   }
 
-  .button:disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-  }
-
   .button--primary {
     border-color: var(--color-primary);
     background: var(--color-primary);
@@ -1268,6 +1316,17 @@
 
   .button--danger:hover {
     background: var(--color-attention-soft);
+  }
+
+  /* Unavailable actions stay readable: no fill, a dashed edge and quieter text instead of fading. */
+  .button:disabled,
+  .button:disabled:hover {
+    cursor: not-allowed;
+    border-style: dashed;
+    border-color: var(--color-border-strong);
+    background: transparent;
+    color: var(--color-text-muted);
+    filter: none;
   }
 
   .button--small {
@@ -1615,10 +1674,11 @@
   .tag {
     display: inline-flex;
     align-items: center;
-    padding: 0.1rem 0.55rem;
+    padding: 0.1rem 0.6rem;
     border: 1px solid var(--color-border-strong);
     border-radius: 999px;
     font-size: var(--text-xs);
+    line-height: 1.5;
     font-weight: 600;
     color: var(--color-text-soft);
     white-space: nowrap;
@@ -1693,10 +1753,9 @@
 
   .headline .finding__title {
     font-size: var(--text-2xl);
-    font-weight: 700;
-    line-height: 1.15;
-    letter-spacing: -0.025em;
-    max-inline-size: 26em;
+    line-height: 1.12;
+    letter-spacing: -0.022em;
+    max-inline-size: 24em;
   }
 
   :lang(ar) .headline .finding__title,
@@ -1841,16 +1900,17 @@
   .tile__value {
     grid-area: value;
     container-type: inline-size;
-    font-weight: 650;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-display);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-variant-numeric: lining-nums tabular-nums;
     white-space: nowrap;
   }
 
   /* About 0.62em per character, so the whole number always fits on one line. */
   .tile__number {
-    font-size: min(2.5rem, calc(100cqi / (var(--chars, 6) * 0.62)));
+    font-size: min(2.75rem, calc(100cqi / (var(--chars, 6) * 0.6)));
   }
 
   .tile__change {
@@ -1925,8 +1985,9 @@
   }
 
   .chart__title {
-    font-weight: 650;
-    font-size: var(--text-lg);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: var(--text-xl);
     letter-spacing: -0.015em;
   }
 
@@ -1990,7 +2051,8 @@
 
   .chart__svg {
     font-family: var(--font-sans);
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
   }
 
@@ -2169,10 +2231,11 @@
   }
 
   .stats dd {
+    font-family: var(--font-display);
     font-size: var(--text-2xl);
-    font-weight: 650;
+    font-weight: 500;
     letter-spacing: -0.02em;
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: lining-nums tabular-nums;
   }
 
   /* Mentions */

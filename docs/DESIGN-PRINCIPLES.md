@@ -36,7 +36,22 @@ These are **brand references**, not final app color tokens. Interactive interfac
 
 ### How the prototype uses it
 
-The interface is an observing instrument at night: the cover's deep blue-black, brass for what matters, mist green for data. Every page uses Inter, the typeface of the wordmark; small labels are set in a monospaced face, like the readouts engraved on an instrument.
+The interface is an observing instrument at night: the cover's deep blue-black, brass for what matters, mist green for data.
+
+Type comes in three voices, all bundled with the app and licensed under the SIL Open Font License, so every device renders the same letters:
+
+| Voice | Typeface | Where |
+| :--- | :--- | :--- |
+| **Display** | Instrument Sans, slightly condensed, semibold | The wordmark, headings and large figures. |
+| **Text** | Inter, with open digits | Everything people read: sentences, buttons, chart labels. |
+| **Readout** | IBM Plex Mono, medium | Short labels engraved like an instrument's scale: tool names, metric names, table headers. |
+
+Typography rules:
+
+- Nothing people need to read is smaller than 13 pixels, lighter than regular weight, or set in capitals with wide spacing.
+- Every text colour reaches 4.5:1 against what is really behind it, including placeholders and unavailable buttons, which use quieter colours instead of transparency.
+- The home title is sized to its own column, so whole phrases stay together on any screen.
+- Arabic and Chinese keep their own system typefaces at every level, without condensed widths or negative spacing.
 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |

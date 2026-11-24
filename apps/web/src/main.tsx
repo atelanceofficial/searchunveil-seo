@@ -1,4 +1,7 @@
 import '@fontsource-variable/inter/opsz.css';
+import '@fontsource-variable/instrument-sans/wdth.css';
+import '@fontsource/ibm-plex-mono/latin-500.css';
+import '@fontsource/ibm-plex-mono/latin-ext-500.css';
 import './styles/app.css';
 import { render } from 'preact';
 import { App } from './app.tsx';

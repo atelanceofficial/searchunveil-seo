@@ -10,7 +10,7 @@ import {
   type FindingStatus,
   type SearchConsoleReport,
 } from '@searchunveil/core';
-import type { ComponentChildren } from 'preact';
+import { Fragment, type ComponentChildren } from 'preact';
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import lensPhoto from '../assets/hero/lens-dark.webp';
 import { seriesFor } from '../components/chart-math.ts';
@@ -25,6 +25,12 @@ import { parseInertHtml } from '../lib/inert-html.ts';
 import { href, type ROUTES } from '../lib/router.ts';
 import { SAMPLE_PAGE_HTML, SAMPLE_PAGE_URL } from '../samples/page.ts';
 import { sampleSearchConsoleFiles } from '../samples/search-console.ts';
+
+const TOOL_NAMES: readonly MessageKey[] = [
+  'ui.nav.search-console',
+  'ui.nav.page-review',
+  'ui.nav.mentions',
+];
 
 const PRINCIPLES: readonly { readonly icon: IconName; readonly text: MessageKey }[] = [
   { icon: 'lock', text: 'ui.home.principle.local' },
@@ -106,11 +112,16 @@ export function Home() {
         <div class="hero__inner">
           <div class="hero__copy">
             <p class="hero__label">
-              {[
-                t.t('ui.nav.search-console'),
-                t.t('ui.nav.page-review'),
-                t.t('ui.nav.mentions'),
-              ].join(' · ')}
+              {TOOL_NAMES.map((name, index) => (
+                <Fragment key={name}>
+                  {index === 0 ? null : ' '}
+                  {/* A no-break space keeps each dot on the line of the name before it. */}
+                  <span class="hero__label-item">
+                    {t.t(name)}
+                    {index < TOOL_NAMES.length - 1 ? '\u00A0·' : null}
+                  </span>
+                </Fragment>
+              ))}
             </p>
             <h1 id="home-title" class="hero__title" tabIndex={-1} data-page-heading>
               {t.t('ui.home.title')}

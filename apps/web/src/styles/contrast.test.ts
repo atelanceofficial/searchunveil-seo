@@ -64,6 +64,10 @@ const PAIRS: readonly (readonly [string, string, number])[] = [
   ['color-text-muted', 'color-canvas', 4.5],
   ['color-text-muted', 'color-surface', 4.5],
   ['color-text-muted', 'color-surface-sunken', 4.5],
+  // Placeholders are lighter than typed text but are still text.
+  ['color-text-faint', 'color-canvas', 4.5],
+  ['color-text-faint', 'color-surface', 4.5],
+  ['color-text-faint', 'color-surface-sunken', 4.5],
   ['color-accent', 'color-canvas', 4.5],
   ['color-accent', 'color-surface', 4.5],
   ['color-text', 'color-accent-soft', 4.5],
