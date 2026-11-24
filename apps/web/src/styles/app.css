@@ -85,6 +85,7 @@
     --text-2xl: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
     --text-3xl: clamp(2.25rem, 1.6rem + 2.6vw, 3.5rem);
     --text-hero: clamp(2.75rem, 1.7rem + 4.2vw, 4.75rem);
+    --text-standfirst: clamp(1.1875rem, 1.05rem + 0.55vw, 1.4375rem);
 
     --space-1: 0.25rem;
     --space-2: 0.5rem;
@@ -136,6 +137,12 @@
     --color-grid-major: light-dark(rgb(11 19 25 / 10%), rgb(165 213 207 / 10%));
     --color-hatch: light-dark(rgb(63 125 117 / 50%), rgb(165 213 207 / 24%));
     --color-contour: light-dark(#8f6f33, #a5d5cf);
+
+    /* The footer is an ink band in both themes, like the cover of a printed report. */
+    --color-band: light-dark(#0b1319, #070d12);
+    --color-on-band: light-dark(#f7f6f0, #f7f6f0);
+    --color-on-band-muted: light-dark(#b4c0bb, #b4c0bb);
+    --color-band-accent: light-dark(#d6c49e, #d6c49e);
 
     --pattern-lens: url('../assets/patterns/lens.svg');
     --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 6.5l4 4 4-4' fill='none' stroke='%234b5661' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
@@ -215,7 +222,7 @@
   h1,
   h2 {
     font-family: var(--font-serif);
-    font-weight: 560;
+    font-weight: 520;
     letter-spacing: -0.012em;
   }
 
@@ -304,6 +311,7 @@
   }
 
   .site-header {
+    border-block-start: 3px solid var(--color-accent);
     border-block-end: 1px solid var(--color-border);
   }
 
@@ -327,11 +335,14 @@
   }
 
   .site-footer {
+    --color-tick: rgb(214 196 158 / 45%);
+
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding-block: var(--space-7) var(--space-6);
-    color: var(--color-text-muted);
+    padding-block: var(--space-7) var(--space-7);
+    background: var(--color-band);
+    color: var(--color-on-band-muted);
     font-size: var(--text-sm);
   }
 
@@ -342,7 +353,6 @@
     inset-inline: 0;
     inset-block-start: 0;
     block-size: 10px;
-    border-block-start: 1px solid var(--color-border);
     background:
       linear-gradient(to right, var(--color-tick) 1px, transparent 1px) 0 0 / 40px 10px repeat-x,
       linear-gradient(to right, var(--color-tick) 1px, transparent 1px) 0 0 / 8px 5px repeat-x;
@@ -357,9 +367,9 @@
     inset-inline-end: -6rem;
     inline-size: min(40rem, 120vw);
     aspect-ratio: 10 / 7;
-    background: var(--color-contour);
+    background: #a5d5cf;
     mask: var(--pattern-lens) center / contain no-repeat;
-    opacity: 0.16;
+    opacity: 0.14;
     pointer-events: none;
   }
 
@@ -372,7 +382,24 @@
     display: flex;
     align-items: center;
     gap: var(--space-3);
-    color: var(--color-text);
+    color: var(--color-on-band);
+  }
+
+  .site-footer .brand-mark__ring,
+  .site-footer .brand-mark__arc,
+  .site-footer .brand-mark__dot {
+    stroke: var(--color-band-accent);
+  }
+
+  .site-footer .brand-mark__dot {
+    fill: var(--color-band-accent);
+  }
+
+  .site-footer .brand-mark__ring--mid,
+  .site-footer .brand-mark__ring--inner,
+  .site-footer .brand-mark__cross,
+  .site-footer .brand-mark__arc--mist {
+    stroke: #a5d5cf;
   }
 
   .site-footer__notes {
@@ -385,8 +412,26 @@
     margin-block-start: var(--space-4);
   }
 
+  .results {
+    counter-reset: part;
+  }
+
   .results > * + * {
     margin-block-start: var(--space-7);
+  }
+
+  .results > .section {
+    counter-increment: part;
+  }
+
+  .results > .section > h2::before,
+  .results > .section > .section__title-row > h2::before {
+    content: counter(part) '.';
+    content: counter(part) '.' / '';
+    margin-inline-end: 0.4em;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--color-accent);
   }
 
   /* Each part of the results opens with a full-width rule, like a section in a report. */
@@ -589,7 +634,28 @@
   /* Page heading: the title, its lead, and a ruler beneath them. */
   .page-heading {
     position: relative;
+    isolation: isolate;
     padding-block: var(--space-4) var(--space-6);
+  }
+
+  .page-heading::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset-block-start: -2rem;
+    inset-inline-end: -5rem;
+    inline-size: min(30rem, 75%);
+    aspect-ratio: 10 / 7;
+    background: var(--color-contour);
+    mask: var(--pattern-lens) center / contain no-repeat;
+    opacity: 0.13;
+    pointer-events: none;
+  }
+
+  @media (max-width: 40rem) {
+    .page-heading::before {
+      opacity: 0.07;
+    }
   }
 
   .page-heading > * {
@@ -612,8 +678,12 @@
       linear-gradient(to right, var(--color-tick) 1px, transparent 1px) 0 100% / 8px 5px repeat-x;
   }
 
-  .lead {
-    font-size: var(--text-lg);
+  .lead,
+  .hero__lead {
+    font-family: var(--font-serif);
+    font-size: var(--text-standfirst);
+    font-weight: 400;
+    line-height: 1.45;
     color: var(--color-text-muted);
   }
 
@@ -727,8 +797,8 @@
   /* Home: the opening statement beside the brand's lens */
   .hero {
     display: grid;
-    gap: var(--space-6);
-    align-items: end;
+    gap: var(--space-5);
+    align-items: center;
     padding-block: var(--space-4) var(--space-7);
     border-block-end: 1px solid var(--color-border);
   }
@@ -746,7 +816,7 @@
 
   .hero__title {
     font-size: var(--text-hero);
-    font-weight: 500;
+    font-weight: 440;
     line-height: 1.02;
     letter-spacing: -0.02em;
   }
@@ -758,117 +828,53 @@
   }
 
   .hero__lead {
-    max-inline-size: 34rem;
-    font-size: var(--text-lg);
-    color: var(--color-text-muted);
+    max-inline-size: 32rem;
   }
 
-  /* The lens window: the cover art itself, in both themes. */
+  /* The lens, photographed: each version blends into its own page colour. */
   .hero__art {
-    overflow: hidden;
-    border: 1px solid #2a3a40;
-    border-radius: var(--radius-l);
-    background: #0b1319;
-    aspect-ratio: 14 / 11;
+    position: relative;
+    aspect-ratio: 4 / 3;
   }
 
-  .lens {
+  /* The photograph's edges dissolve, so the threads in it fade out instead of stopping. */
+  .hero__image {
+    position: absolute;
+    inset: 0;
     inline-size: 100%;
     block-size: 100%;
+    object-fit: contain;
+    mask:
+      linear-gradient(to right, transparent, #000 9%, #000 91%, transparent),
+      linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+    mask-composite: intersect;
   }
 
-  .lens__grid {
-    stroke: #9ebbb5;
-    stroke-width: 0.7;
-    opacity: 0.12;
+  .hero__image--light {
+    mix-blend-mode: multiply;
   }
 
-  .lens__rings {
-    fill: none;
-    stroke-width: 1;
-    stroke-linejoin: round;
+  .hero__image--dark {
+    display: none;
+    mix-blend-mode: lighten;
   }
 
-  .lens__ring--accent {
-    stroke-width: 1.5;
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) .hero__image--light {
+      display: none;
+    }
+
+    :root:not([data-theme='light']) .hero__image--dark {
+      display: block;
+    }
   }
 
-  .lens__wire-a {
-    stop-color: #a8d7ce;
-    stop-opacity: 0.18;
+  :root[data-theme='dark'] .hero__image--light {
+    display: none;
   }
 
-  .lens__wire-b {
-    stop-color: #a8d7ce;
-    stop-opacity: 0.8;
-  }
-
-  .lens__wire-c {
-    stop-color: #d5ba8d;
-    stop-opacity: 0.5;
-  }
-
-  .lens__gold-a {
-    stop-color: #a99063;
-  }
-
-  .lens__gold-b {
-    stop-color: #e6d4a9;
-  }
-
-  .lens__gold-c {
-    stop-color: #b69a6e;
-  }
-
-  .lens__wave-a {
-    stop-color: #6d938e;
-    stop-opacity: 0;
-  }
-
-  .lens__wave-b {
-    stop-color: #a5d5cf;
-    stop-opacity: 0.86;
-  }
-
-  .lens__wave-c {
-    stop-color: #d9c393;
-    stop-opacity: 0.72;
-  }
-
-  .lens__crosshair {
-    fill: none;
-    stroke: #bcd5cb;
-    stroke-width: 1;
-    stroke-dasharray: 3 9;
-    opacity: 0.22;
-  }
-
-  .lens__arc {
-    fill: none;
-    stroke-width: 3;
-    stroke-linecap: round;
-  }
-
-  .lens__wave {
-    fill: none;
-    stroke-width: 2.6;
-    stroke-linecap: round;
-  }
-
-  .lens__wave--faint {
-    stroke: #9b927b;
-    stroke-width: 1.4;
-    opacity: 0.5;
-  }
-
-  .lens__dot {
-    fill: #e8d6ae;
-  }
-
-  .lens__dot-halo {
-    fill: none;
-    stroke: #e8d6ae;
-    stroke-opacity: 0.38;
+  :root[data-theme='dark'] .hero__image--dark {
+    display: block;
   }
 
   /* Home: the three tools as a numbered index */
@@ -878,17 +884,29 @@
 
   .tool {
     counter-increment: tool;
+    position: relative;
     display: grid;
     gap: var(--space-2) var(--space-5);
-    padding-block: var(--space-5);
-    border-block-end: 1px solid var(--color-border);
+    margin-inline: calc(-1 * var(--space-3));
+    padding: var(--space-6) var(--space-3);
+    /* The rule lines up with the content, not with the wider hover area. */
+    background: linear-gradient(var(--color-border), var(--color-border)) 50% 100% /
+      calc(100% - 2 * var(--space-3)) 1px no-repeat;
+    transition: background-color 160ms ease;
+  }
+
+  .tool:hover {
+    background-color: color-mix(in oklab, var(--color-accent-soft) 55%, transparent);
   }
 
   .tool::before {
     content: counter(tool, decimal-leading-zero);
+    content: counter(tool, decimal-leading-zero) / '';
     font-family: var(--font-serif);
-    font-size: var(--text-xl);
-    line-height: 1.2;
+    font-size: var(--text-2xl);
+    font-style: italic;
+    font-weight: 380;
+    line-height: 1;
     color: var(--color-accent);
     font-variant-numeric: lining-nums tabular-nums;
   }
@@ -905,13 +923,15 @@
   }
 
   .tool__name {
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-text-muted);
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-style: italic;
+    color: var(--color-accent);
   }
 
   .tool__title {
     font-size: var(--text-2xl);
+    font-weight: 480;
     line-height: 1.12;
   }
 
@@ -926,6 +946,36 @@
     min-block-size: var(--target);
     font-weight: 650;
     white-space: nowrap;
+  }
+
+  .tool__action .icon {
+    transition: translate 200ms ease;
+  }
+
+  .tool:hover .tool__action .icon {
+    translate: 4px 0;
+  }
+
+  [dir='rtl'] .tool:hover .tool__action .icon {
+    translate: -4px 0;
+  }
+
+  /* The whole row is the link's target; the link itself still carries the name. */
+  .tool__action::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  @supports selector(:has(*)) {
+    .tool__action:focus-visible {
+      outline: none;
+    }
+
+    .tool:has(.tool__action:focus-visible) {
+      outline: 3px solid var(--color-focus);
+      outline-offset: -3px;
+    }
   }
 
   /* Home: how it works */
@@ -1489,10 +1539,11 @@
   .tile__value {
     grid-area: value;
     container-type: inline-size;
-    font-weight: 650;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-serif);
+    font-weight: 460;
+    line-height: 1.05;
+    letter-spacing: -0.015em;
+    font-variant-numeric: lining-nums proportional-nums;
     white-space: nowrap;
   }
 
@@ -1721,9 +1772,7 @@
   .table-frame {
     inline-size: 100%;
     overflow-x: auto;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-l);
-    background: var(--color-surface);
+    border-block: 2px solid var(--color-text);
   }
 
   table {
@@ -1747,9 +1796,13 @@
   }
 
   th {
-    background: var(--color-surface-sunken);
+    border-block-end-color: var(--color-text);
     font-weight: 650;
     white-space: nowrap;
+  }
+
+  tbody tr:hover {
+    background: color-mix(in oklab, var(--color-accent-soft) 50%, transparent);
   }
 
   tbody tr:last-child td {
@@ -1790,9 +1843,10 @@
   }
 
   .stats dd {
-    font-size: var(--text-xl);
-    font-weight: 650;
-    font-variant-numeric: tabular-nums;
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 460;
+    font-variant-numeric: lining-nums;
   }
 
   /* Mentions */
@@ -1878,7 +1932,8 @@
     background: none;
   }
 
-  .site-footer::after {
+  .site-footer::after,
+  .page-heading::before {
     display: none;
   }
 
@@ -1905,6 +1960,7 @@
   }
 
   .site-footer::after,
+  .page-heading::before,
   .hero__art {
     display: none;
   }
@@ -1946,6 +2002,7 @@
     color: #000;
   }
 
+  .page-heading::before,
   .page-heading::after {
     display: none;
   }

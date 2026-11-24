@@ -41,8 +41,10 @@ The interface should read like a well-made report, not like a screen effect. It 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |
 | **Paper and ink** | Everywhere | A warm ivory or deep blue-black page, solid text colors, hairline rules instead of shadows. |
-| **Editorial serif** | Page and section titles, the main finding | Newsreader gives headings a voice; Inter stays for the interface and for figures. |
-| **Lens** | The home page, engraved into the footer | The cover's own artwork, generated from the same equations as the wordmark render. |
+| **Editorial serif** | Page and section titles, standfirsts, the main finding, large figures | Newsreader gives the writing a voice, with italics for names and numerals; Inter stays for the interface and for tables. |
+| **Lens** | The home page, behind page titles, in the footer | On the home page, a photographed wire sculpture of the cover's lens, one picture per theme, blended into the page colour. Elsewhere, an engraving generated from the same equations as the wordmark render. |
+| **Report structure** | Results | Numbered sections and tables ruled like a printed book: strong lines above and below, none at the sides. |
+| **Ink band** | The footer | Closes every page in the cover's deep blue-black, in both themes. |
 | **Ruler** | Under every page title, along the footer | Marks the start of the content, like the scale on a drawing. |
 | **Graph paper** | The drop zone | A sheet for data to land on, with a heavier line every fifth square. |
 | **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on color, as maps and drawings do. |

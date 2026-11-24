@@ -1,5 +1,6 @@
+import lensDark from '../assets/hero/lens-dark.webp';
+import lensLight from '../assets/hero/lens-light.webp';
 import { Icon, type IconName } from '../components/Icon.tsx';
-import { Lens } from '../components/Lens.tsx';
 import { useI18n, type MessageKey } from '../lib/i18n.tsx';
 import { href, type ROUTES } from '../lib/router.ts';
 
@@ -52,8 +53,26 @@ export function Home() {
           </h1>
           <p class="hero__lead">{t.t('ui.home.lead')}</p>
         </div>
+        {/* The lens, photographed in both lights; each blends into its own page colour. */}
         <div class="hero__art">
-          <Lens />
+          <img
+            class="hero__image hero__image--light"
+            src={lensLight}
+            alt=""
+            width={1280}
+            height={960}
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            class="hero__image hero__image--dark"
+            src={lensDark}
+            alt=""
+            width={1280}
+            height={960}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       </section>
 

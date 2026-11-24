@@ -65,6 +65,9 @@ const PAIRS: readonly (readonly [string, string, number])[] = [
   ['color-chart-daily', 'color-surface', 3],
   ['color-text-muted', 'color-band-previous', 4.5],
   ['color-text-muted', 'color-band-recent', 4.5],
+  ['color-on-band', 'color-band', 4.5],
+  ['color-on-band-muted', 'color-band', 4.5],
+  ['color-band-accent', 'color-band', 3],
   ['color-brand-start', 'color-surface', 4.5],
   ['color-brand-end', 'color-surface', 4.5],
 ];
