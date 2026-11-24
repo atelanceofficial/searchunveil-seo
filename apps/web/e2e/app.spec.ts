@@ -136,6 +136,7 @@ test.describe('page review', () => {
     // the browser reports that refusal, which is exactly what should happen.
     allowConsole(page, /inline event handler violates the following Content Security Policy/);
     await page.goto('/#/page-review');
+    await page.getByRole('radio', { name: 'Pasted HTML' }).check();
     await page
       .getByLabel('Page HTML')
       .fill(
@@ -147,6 +148,185 @@ test.describe('page review', () => {
     // The pasted page's scripts and event handlers never ran.
     expect(await page.evaluate(() => (window as Window & { ran?: boolean }).ran)).toBeUndefined();
     await expectAccessible(page);
+  });
+
+  test('explains how to review by address when there is no server', async ({ page }) => {
+    await page.goto('/#/page-review');
+    await page.getByLabel('Website address').fill('not an address');
+    await page.getByRole('button', { name: 'Review page' }).click();
+    await expect(page.getByText('Enter a website address, such as example.com.')).toBeVisible();
+    await expect(page.getByLabel('Website address')).toHaveAttribute('aria-invalid', 'true');
+
+    await page.getByLabel('Website address').fill('example.com/shop');
+    await page.getByRole('button', { name: 'Review page' }).click();
+    await expect(page.getByText('This copy can’t download pages')).toBeVisible();
+    await page.getByRole('button', { name: 'Paste the HTML instead' }).click();
+    await expect(page.getByLabel('Page HTML')).toBeFocused();
+    await expect(page.getByLabel(/^Page address/)).toHaveValue('https://example.com/shop');
+    await expectAccessible(page);
+  });
+
+  test('shows what search engines see, and where the AI analysis works', async ({ page }) => {
+    await page.goto('/#/page-review');
+    await page.getByRole('button', { name: 'Try a sample page' }).click();
+    await expect(page.getByRole('heading', { name: 'What search engines see' })).toBeVisible();
+    await expect(page.locator('.serp__title')).not.toBeEmpty();
+    await expect(page.getByText('The AI analysis works when SearchUnveil runs with')).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Analyze with Fable 5.2' })).toHaveCount(0);
+    await expectAccessible(page);
+  });
+});
+
+/** An answer in the analysis's JSON shape, as Claude would write it. */
+const ANALYSIS = {
+  summary: 'A clear page whose title says too little.',
+  verdict: 'fair',
+  priorities: [
+    {
+      title: 'Rewrite the title',
+      why: 'One word tells searchers nothing.',
+      how: 'Use `<title>Trail running shoes | Example</title>`.',
+      evidence: 'Title: Shoes',
+      impact: 'high',
+      effort: 'low',
+    },
+  ],
+  title_suggestions: ['Trail running shoes | Example'],
+  description_suggestions: [],
+  content_notes: ['Say who the shoes are for.'],
+  technical_notes: [],
+  caveats: ['Rankings of other sites are unknown.'],
+};
+
+const FETCHED_PAGE =
+  '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Shoes</title>' +
+  '<meta name="viewport" content="width=device-width"></head><body><h1>Shoes</h1></body></html>';
+
+test.describe('server version', () => {
+  test.use({ baseURL: 'http://localhost:4174' });
+
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/api/health', (route) =>
+      route.fulfill({ json: { fetch: true, analysis: true, model: 'claude-fable-5-2' } }),
+    );
+  });
+
+  test('reviews a site by its address, then analyzes it with Claude', async ({ page }) => {
+    const requests: unknown[] = [];
+    await page.route('**/api/page', async (route) => {
+      requests.push(route.request().postDataJSON());
+      await route.fulfill({
+        json: {
+          html: FETCHED_PAGE,
+          http: {
+            requestedUrl: 'https://example.com/',
+            finalUrl: 'https://www.example.com/',
+            status: 200,
+            redirects: [{ url: 'https://example.com/', status: 301 }],
+            elapsedMs: 420,
+            bytes: 2048,
+            contentType: 'text/html; charset=utf-8',
+            contentEncoding: 'br',
+            xRobotsTag: 'noindex',
+            hsts: true,
+            robotsTxt: { found: true, allowsPage: true, rule: null, sitemaps: [] },
+          },
+        },
+      });
+    });
+    await page.route('**/api/analyze', async (route) => {
+      requests.push(route.request().postDataJSON());
+      await route.fulfill({
+        json: { analysis: ANALYSIS, model: 'claude-fable-5-2', fallback: false },
+      });
+    });
+
+    await page.goto('/#/page-review');
+    await page.getByLabel('Website address').fill('example.com');
+    await page.getByRole('button', { name: 'Review page' }).click();
+    await expect(page.getByRole('heading', { name: 'Results', exact: true })).toBeFocused();
+    expect(requests[0]).toEqual({ address: 'https://example.com/' });
+    // Inserted values sit inside direction isolates, so compare the text they contain.
+    await expect(page.locator('#page-results + p')).toContainText('https://www.example.com/');
+    await expect(
+      page.getByText('The server tells search engines not to show the page in results'),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'The server', exact: true })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
+    await expect(page.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
+    await expect(page.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
+    await expect(page.locator('.priority__how code')).toHaveText(
+      '<title>Trail running shoes | Example</title>',
+    );
+    const analysis = requests[1] as { locale: string; pageLanguage: string; evidence: string };
+    expect(analysis.locale).toBe('en');
+    expect(analysis.pageLanguage).toBe('en');
+    expect(JSON.parse(analysis.evidence)).toMatchObject({ server: { status: 200 } });
+    await expectAccessible(page);
+  });
+
+  test('says why a page could not be fetched', async ({ page }) => {
+    // The browser reports the failed request itself; that report is expected here.
+    allowConsole(page, /status of 502/);
+    await page.route('**/api/page', (route) =>
+      route.fulfill({ status: 502, json: { error: 'unreachable' } }),
+    );
+    await page.goto('/#/page-review');
+    await page.getByLabel('Website address').fill('example.com');
+    await page.getByRole('button', { name: 'Review page' }).click();
+    await expect(page.getByText('The website didn’t answer.')).toBeVisible();
+  });
+
+  test('connects only to its own server', async ({ page }) => {
+    await page.goto('/#/privacy');
+    await expect(page.locator('meta[http-equiv="Content-Security-Policy"]')).toHaveAttribute(
+      'content',
+      /connect-src 'self'/,
+    );
+    await expect(page.getByText('lets it connect only to its own server')).toBeVisible();
+  });
+});
+
+test.describe('inside Claude', () => {
+  test('asks Claude Fable 5.2 through the viewer, on the person’s account', async ({ page }) => {
+    await page.addInitScript((answer) => {
+      const calls: unknown[] = [];
+      const sample = async (
+        input: string,
+        options: { model: string; modelTier: string; effort: string; onText?: (u: object) => void },
+      ) => {
+        calls.push({
+          input,
+          model: options.model,
+          tier: options.modelTier,
+          effort: options.effort,
+        });
+        options.onText?.({ text: '{', delta: '{' });
+        await new Promise((resolve) => setTimeout(resolve, 50));
+        return { text: JSON.stringify(answer), truncated: false, modelApplied: options.model };
+      };
+      Object.assign(window, {
+        sampleCalls: calls,
+        claude: { use: (name: string) => Promise.resolve(name === 'sample' ? sample : null) },
+      });
+    }, ANALYSIS);
+
+    await page.goto('/#/page-review');
+    await page.getByRole('button', { name: 'Try a sample page' }).click();
+    await expect(page.getByText('sent to Claude, on your own Claude account')).toBeVisible();
+    await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
+    await expect(page.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
+    await expect(page.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
+    const [call] = await page.evaluate(
+      () => (window as unknown as { sampleCalls: Record<string, string>[] }).sampleCalls,
+    );
+    expect(call).toMatchObject({ model: 'claude-fable-5-2', tier: 'complex', effort: 'high' });
+    expect(call?.['input']).toContain('Reply with only the JSON object');
+    await expectAccessible(page);
+
+    await page.goto('/#/privacy');
+    await expect(page.getByText('go to Claude on your account')).toBeVisible();
   });
 });
 

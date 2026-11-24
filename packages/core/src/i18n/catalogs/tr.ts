@@ -33,6 +33,12 @@ export const tr: CoreCatalog = {
   'evidence.canonical': 'Kanonik bağlantı',
   'evidence.heading': 'Başlık',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'Durum kodu',
+  'evidence.final-address': 'Son adres',
+  'evidence.redirect': 'Yönlendirmeler',
+  'evidence.header': 'Üst bilgi',
+  'evidence.robots-rule': 'robots.txt kuralı',
+  'evidence.response-time': 'Yanıt süresi (saniye)',
   'table.query': 'Sorgu',
   'table.page': 'Sayfa',
   'table.text': '{text}',
@@ -62,6 +68,9 @@ export const tr: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2: Bilgi ve İlişkiler (1.3.1)',
   'ref.viewport': 'MDN: viewport meta etiketi',
   'ref.open-graph': 'Open Graph protokolü',
+  'ref.robots-txt': 'Google Arama Merkezi: robots.txt’ye giriş',
+  'ref.http-status': 'Google Arama Merkezi: HTTP durum kodları ve ağ hataları',
+  'ref.https': 'web.dev: HTTPS neden önemlidir',
 
   'gsc.headline.method':
     '{current} dönemini {previous} dönemiyle, her günü haftanın aynı günüyle eşleştirerek karşılaştırdık.',
@@ -340,6 +349,40 @@ export const tr: CoreCatalog = {
   'page.social.missing.summary':
     'Sosyal ağlar ve mesajlaşma uygulamaları bağlantı önizlemelerini Open Graph etiketleriyle oluşturur. Bunlar arama sıralamasını etkilemez.',
   'page.social.ok': 'Sayfada bağlantı önizleme etiketleri var',
+  'page.limit.fetched':
+    'Bu adres için sunucunun gönderdiği HTML’i inceledik. Sayfa yüklendikten sonra JavaScript’in eklediği içerik buna dahil değil.',
+  'page.limit.scope.fetched':
+    'Yükleme hızı ve diğer sitelerden gelen bağlantılar da arama için önemlidir. Bunlar bu incelemenin kapsamında değil.',
+
+  'http.status': 'Sunucu sayfa yerine {status} durum koduyla yanıt verdi',
+  'http.status.summary':
+    'Arama motorları, başarılı durum koduyla (200) yanıt veren sayfaları dizine ekler. Hata ve yönlendirme kodları bu adresi sonuçların dışında tutar.',
+  'http.check.status':
+    'Adresi bir tarayıcıda açın ve bu kodu döndüren sunucu ya da barındırma ayarını kontrol edin.',
+  'http.https': 'Sayfa HTTPS olmadan sunuluyor',
+  'http.https.summary':
+    'Tarayıcılar HTTPS kullanmayan sayfaları “güvenli değil” diye işaretler; arama motorları da sayfanın güvenli sürümünü tercih eder.',
+  'http.check.https': 'Bir sertifika kurun ve her http:// adresini https:// sürümüne yönlendirin.',
+  'http.x-robots-tag': 'Sunucu, arama motorlarına sayfayı sonuçlarda göstermemelerini söylüyor',
+  'http.x-robots-tag.summary':
+    'X-Robots-Tag üst bilgisi robots meta etiketi gibi çalışır ama onu sunucu ekler; bu yüzden HTML’e bakarken gözden kaçması kolaydır.',
+  'http.check.x-robots-tag':
+    'Bu sayfanın aramada görünmesi gerekiyorsa sunucu ya da barındırma ayarlarındaki X-Robots-Tag üst bilgisinden noindex’i kaldırın.',
+  'http.robots-txt': 'robots.txt, arama motorlarının bu sayfaya erişmesini engelliyor',
+  'http.robots-txt.summary':
+    'Googlebot, robots.txt’nin yasakladığı adresleri taramaz; bu yüzden bu sayfanın içeriğini okuyamaz.',
+  'http.check.robots-txt':
+    'Bu sayfanın aramada görünmesi gerekiyorsa robots.txt’deki kuralı kaldırın ya da daraltın.',
+  'http.robots-txt.unreadable': 'Sitenin robots.txt dosyasını okuyamadık',
+  'http.robots-txt.unreadable.summary':
+    'robots.txt sunucu hatası verirse Google, dosyayı yeniden okuyabilene kadar sitenin tamamını taramayı durdurur. Dosyanın açıldığını kontrol edin.',
+  'http.redirects':
+    'Adres, sayfaya ulaşana kadar {count, plural, one {bir kez} other {# kez}} yönlendiriliyor',
+  'http.redirects.summary':
+    'Her yönlendirme, ziyaretçiler ve arama motoru botları için fazladan bir istek demektir. Bağlantılarda doğrudan son adresi kullanın.',
+  'http.ok': 'Sunucu sayfayı engelsiz sunuyor',
+  'http.ok.summary':
+    'HTTPS üzerinden başarıyla yanıt veriyor; ne robots.txt ne de sunucunun üst bilgileri arama motorlarını uzak tutuyor.',
 
   'mentions.kind.citation': 'Bağlantıyla kaynak gösterildi',
   'mentions.kind.mention': 'Bağlantısız olarak adı geçti',

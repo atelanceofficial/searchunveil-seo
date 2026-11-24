@@ -51,7 +51,9 @@ Lists show at most ten rows.
 
 ## Page review
 
-The review sees only the HTML it is given. Every report states that content added by JavaScript, HTTP headers, robots.txt, speed and links from other sites are outside its scope.
+The review sees only the HTML it is given. Every report states that content added by JavaScript, speed and links from other sites are outside its scope, and so are HTTP headers and robots.txt unless the page was fetched by its address.
+
+Every report also lists **what search engines see**: a sketch of the search result (title, address and description, which Google may rewrite), the facts the rules read (language, canonical address, robots rules, words, headings, images, links, structured data, link preview, language versions), the heading outline and, for pages fetched by address, the server's answer.
 
 A **site review** applies exactly these rules to every web page in a ZIP of the site's files (a backup or a static export, of any size) or in several HTML files. It adds no rules of its own: it groups the findings that need attention or a closer look by rule and wording, and shows on how many pages each appears, with an example. When the site's address is given, each page's address follows from its path, and `index.html` stands for its folder, as web servers serve it.
 
@@ -75,6 +77,24 @@ A **site review** applies exactly these rules to every web page in a ZIP of the 
 | `page.hreflang` | Valid language codes or `x-default`, and that the page lists itself. Return links can't be checked from one page, and the finding says so. | Invalid code: needs attention. Missing self-reference: worth a look. |
 | `page.charset` | A declared character encoding, preferably UTF-8. | Missing: worth a look. Legacy: good to know. |
 | `page.social` | `og:title`, `og:description` and `og:image` for link previews. Stated plainly: they do not affect rankings. | Good to know |
+
+### Server response
+
+These rules run only when the [optional server](adr/0005-optional-server-for-addresses-and-ai.md) fetched the page by its address. robots.txt is read the way Googlebot reads it ([RFC 9309](https://www.rfc-editor.org/rfc/rfc9309)): its own group or the `*` group, the longest matching rule, `Allow` winning a tie, `*` and `$` in paths, and the first 500 KiB.
+
+| Rule | What it checks | Status when it fails |
+| :--- | :--- | :--- |
+| `http.status` | The final answer, after redirects, is a success (2xx). | Needs attention |
+| `http.https` | The final address uses HTTPS. | Needs attention |
+| `http.x-robots-tag` | The `X-Robots-Tag` header carries `noindex` or `none`, for all crawlers or one. | Needs attention |
+| `http.robots-txt` | robots.txt lets Googlebot crawl the page; the deciding rule is shown. A missing file (4xx) allows everything. | Needs attention |
+| `http.robots-txt.unreadable` | robots.txt answered with a server error or 429, or not at all. Google then stops crawling the site until it can read the file. | Worth a look |
+| `http.redirects` | Two or more redirects before the page; each one is listed. | Worth a look |
+| `http.ok` | All of the above pass. Shows the status and the time the page took to arrive. | Looks good |
+
+## AI analysis
+
+The analysis is not a rule: it is a reading of a finished review by Claude Fable 5.2, offered only when the person asks. It receives the findings (in English, as evidence), the page facts, the server's answer when there is one, and the start of the page's visible text (at most 6,000 characters). It is asked to rank changes by their effect on being found and chosen in search and on accessibility, to point to the evidence for each, to give exact steps, to write title and description ideas in the page's own language and everything else in the reader's, and to say what it cannot know. The answer must match a fixed JSON schema; anything else is discarded, and long fields are cut to fixed lengths.
 
 ## AI mention log
 

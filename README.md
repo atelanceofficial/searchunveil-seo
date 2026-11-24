@@ -16,7 +16,7 @@ Today, website information is often spread across different tools and reports. W
 
 | What you want to understand | What SearchUnveil aims to show |
 | :--- | :--- |
-| **Is my website easy to find?** | Common website and SEO issues, explained in plain language, for one page or every page in a ZIP of your site. |
+| **Is my website easy to find?** | Common website and SEO issues, explained in plain language: type an address or paste a page, or review every page in a ZIP of your site. An optional analysis by Claude Fable 5.2 ranks what to change and explains how. |
 | **How is my website doing in Google Search?** | Trends in clicks, impressions, pages, and queries from a Search Console CSV file you provide. |
 | **Where has AI mentioned my website?** | A record of AI-generated mentions or citations that you add, with a source and date when known. |
 | **What should I look at next?** | Simple charts, clear explanations, and suggested checks based on the information available. |
@@ -90,7 +90,7 @@ This roadmap can change. We have not set a release date. The [architecture](docs
 
 ## Try the early prototype
 
-The prototype runs on your own computer. Everything happens in your browser, and your files are never uploaded. Files of any size work: archives are read from their table of contents, and only what an analysis needs is read. You need [Node.js](https://nodejs.org/) 22.22 or later.
+The prototype runs on your own computer. Every review happens in your browser, and your files are never uploaded. Files of any size work: archives are read from their table of contents, and only what an analysis needs is read. You need [Node.js](https://nodejs.org/) 22.22 or later.
 
 ```sh
 npm ci
@@ -100,6 +100,15 @@ npm run dev
 Open the address it prints, then choose **Try sample data** on the Search Console page. The sample is fictional data for example.com. The [development guide](docs/DEVELOPMENT.md) covers tests and the production build.
 
 To share the prototype as a single file, run `npm run build:standalone`. It writes `apps/web/dist-standalone/searchunveil.html`, which opens in any current browser without a server or a network connection.
+
+To review pages by typing only their address, and to get the AI analysis, run the server version:
+
+```sh
+export ANTHROPIC_API_KEY=...   # optional; turns on the AI analysis
+npm run serve                  # then open http://127.0.0.1:8787
+```
+
+The server downloads the page you name and its robots.txt, and runs the AI analysis only when you ask, showing first what will be sent. It keeps nothing. The [development guide](docs/DEVELOPMENT.md#run-the-server-version) lists its settings.
 
 ## Follow along
 

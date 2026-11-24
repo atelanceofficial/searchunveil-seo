@@ -13,6 +13,14 @@ export default defineConfig({
       },
       {
         test: {
+          name: 'server',
+          root: './apps/server',
+          include: ['src/**/*.test.ts'],
+          environment: 'node',
+        },
+      },
+      {
+        test: {
           name: 'web',
           root: './apps/web',
           include: ['src/**/*.test.ts'],

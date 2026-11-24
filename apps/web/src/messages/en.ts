@@ -24,6 +24,10 @@ const messages = {
   'ui.footer.built-by': 'SearchUnveil · Built by Atelance',
   'ui.footer.status': 'In development. Not a public release.',
   'ui.footer.privacy': 'No cookies, no analytics, and no network requests after the page loads.',
+  'ui.footer.privacy.server':
+    'No cookies and no analytics. Pages are downloaded and analyzed only when you ask.',
+  'ui.footer.privacy.claude':
+    'No cookies and no analytics. Nothing leaves your device unless you ask for an AI analysis.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'See how your website gets found',
@@ -34,20 +38,21 @@ const messages = {
     'Upload a Search Console export to see trends in clicks and appearances, explained in plain language.',
   'ui.home.gsc.action': 'Analyze an export',
   'ui.home.page.title': 'Is my page easy to find?',
-  'ui.home.page.text': 'Review a page’s HTML for common search and accessibility issues.',
+  'ui.home.page.text':
+    'Enter an address or paste HTML to check a page for common search and accessibility issues.',
   'ui.home.page.action': 'Review a page',
   'ui.home.mentions.title': 'Where has AI mentioned my website?',
   'ui.home.mentions.text': 'Keep a dated record of AI answers that mention or cite your site.',
   'ui.home.mentions.action': 'Open the log',
   'ui.home.principles': 'How SearchUnveil works',
   'ui.home.principle.local':
-    'Everything runs in your browser. The files you choose are never uploaded.',
+    'Every review runs in your browser, and the files you choose are never uploaded.',
   'ui.home.principle.evidence': 'Every finding shows the evidence it is based on.',
   'ui.home.principle.limits': 'Every result says what the data can’t tell you.',
   'ui.home.fact.languages': 'languages',
   'ui.home.fact.uploads': 'files uploaded',
   'ui.home.fact.trackers': 'cookies or trackers',
-  'ui.home.fact.device': 'of the work happens on your device',
+  'ui.home.fact.device': 'of the checks run on your device',
   'ui.home.showcase.title': 'What the sample export shows',
   'ui.home.showcase.text':
     'A fictional site, example.com, analyzed in your browser the moment this page opened.',
@@ -111,7 +116,16 @@ const messages = {
 
   'ui.page.title': 'Page review',
   'ui.page.lead':
-    'Paste a page’s HTML source, or choose a saved HTML file. The review runs on this device.',
+    'Enter a website’s address, or paste a page’s HTML. Every finding comes with its evidence and sources.',
+  'ui.page.mode': 'What to review',
+  'ui.page.mode.address': 'An address',
+  'ui.page.mode.html': 'Pasted HTML',
+  'ui.page.address': 'Website address',
+  'ui.page.address.hint':
+    'For example atelance.com or atelance.com/about. The page and its robots.txt are downloaded the way a browser would.',
+  'ui.page.address.no-server':
+    'Reviewing by address needs SearchUnveil’s server, which this copy runs without. You can still paste the page’s HTML.',
+  'ui.page.address.invalid': 'Enter a website address, such as example.com.',
   'ui.page.html': 'Page HTML',
   'ui.page.html.hint':
     'In most browsers, open the page, press Ctrl+U (⌥⌘U on a Mac), then select all and copy.',
@@ -121,12 +135,121 @@ const messages = {
   'ui.page.file': 'Or choose an HTML file',
   'ui.page.submit': 'Review page',
   'ui.page.sample': 'Try a sample page',
-  'ui.page.why-paste':
-    'Why paste instead of entering an address? Fetching pages would require a server. This preview keeps everything on your device.',
+  'ui.page.fetching': 'Downloading {address}…',
+  'ui.page.no-server.title': 'This copy can’t download pages',
+  'ui.page.no-server.steps':
+    'Open {address} in your browser and press Ctrl+U (⌥⌘U on a Mac) to see its source. Copy all of it, then paste it under “Pasted HTML”.',
+  'ui.page.no-server.switch': 'Paste the HTML instead',
+  'ui.page.fetch.invalid-address':
+    'That doesn’t look like a website address. Try something like example.com.',
+  'ui.page.fetch.blocked-address':
+    'For safety, only public websites on the standard web ports can be downloaded.',
+  'ui.page.fetch.unknown-host': 'No website answers at this address. Check the spelling.',
+  'ui.page.fetch.unreachable':
+    'The website didn’t answer. It may be down, or it may turn away automated visits.',
+  'ui.page.fetch.timeout': 'The website took too long to answer. Try again in a moment.',
+  'ui.page.fetch.tls':
+    'The website’s security certificate couldn’t be verified, so the page wasn’t downloaded.',
+  'ui.page.fetch.too-many-redirects':
+    'The address redirects too many times. Open it in a browser to check.',
+  'ui.page.fetch.too-large': 'The page is too large to review.',
+  'ui.page.fetch.not-html': 'The address leads to a file, not a web page.',
+  'ui.page.fetch.http-status': 'The website answered with status {detail} instead of a page.',
+  'ui.page.fetch.rate-limited': 'Too many reviews in a short time. Wait a minute, then try again.',
+  'ui.page.fetch.offline':
+    'SearchUnveil’s server couldn’t be reached. Check your connection and try again.',
+  'ui.page.fetch.failed': 'The page couldn’t be downloaded. Try again, or paste its HTML.',
   'ui.page.results': 'Results',
   'ui.page.reviewed': 'Reviewed {url}',
   'ui.page.reviewed-pasted': 'Reviewed the HTML you provided',
   'ui.page.done': 'Review ready.',
+  'ui.overview.title': 'What search engines see',
+  'ui.overview.serp': 'How it might appear in Google',
+  'ui.overview.serp.note':
+    'Google may shorten the title and description, or write its own from the page.',
+  'ui.overview.serp.no-description': 'No description. Google will choose text from the page.',
+  'ui.overview.page': 'The page',
+  'ui.overview.server': 'The server',
+  'ui.overview.language': 'Language',
+  'ui.overview.canonical': 'Canonical address',
+  'ui.overview.robots': 'Robots rules',
+  'ui.overview.words': 'Words of text',
+  'ui.overview.headings': 'Headings',
+  'ui.overview.images': 'Images',
+  'ui.overview.images.value': '{total} · {missing} without a text alternative',
+  'ui.overview.links': 'Links',
+  'ui.overview.links.value': '{internal} internal · {external} external',
+  'ui.overview.structured-data': 'Structured data',
+  'ui.overview.social': 'Link preview',
+  'ui.overview.social.complete': 'Title, description and image',
+  'ui.overview.social.partial': 'Incomplete',
+  'ui.overview.languages': 'Language versions',
+  'ui.overview.none': 'None',
+  'ui.overview.not-set': 'Not set',
+  'ui.overview.status': 'Status',
+  'ui.overview.final-address': 'Final address',
+  'ui.overview.redirects': 'Redirects',
+  'ui.overview.time': 'Download time',
+  'ui.overview.time.value': '{seconds} s',
+  'ui.overview.size': 'HTML size',
+  'ui.overview.size.value': '{kilobytes} KB',
+  'ui.overview.compression': 'Compression',
+  'ui.overview.https': 'Secure connection',
+  'ui.overview.https.hsts': 'HTTPS, with HSTS',
+  'ui.overview.https.on': 'HTTPS',
+  'ui.overview.https.off': 'None',
+  'ui.overview.robots-txt': 'robots.txt',
+  'ui.overview.robots-txt.allows': 'Allows Googlebot',
+  'ui.overview.robots-txt.blocks': 'Blocks Googlebot',
+  'ui.overview.robots-txt.missing': 'None, so everything is allowed',
+  'ui.overview.robots-txt.unknown': 'Couldn’t be read',
+  'ui.overview.sitemaps': 'Sitemaps listed',
+  'ui.overview.outline': 'Heading outline',
+  'ui.overview.outline.empty': 'The page has no headings.',
+  'ui.overview.outline.more':
+    '{count, plural, one {and # more heading} other {and # more headings}}',
+  'ui.analysis.title': 'Deeper analysis with AI',
+  'ui.analysis.lead':
+    'Claude Fable 5.2, Anthropic’s most capable model, reads this review and the page’s text, then explains what matters most and exactly what to change.',
+  'ui.analysis.sends.server':
+    'When you start it, the findings, the facts above and the start of the page’s visible text are sent to Anthropic through SearchUnveil’s server.',
+  'ui.analysis.sends.claude':
+    'When you start it, the findings, the facts above and the start of the page’s visible text are sent to Claude, on your own Claude account.',
+  'ui.analysis.unavailable':
+    'The AI analysis works when SearchUnveil runs with its server and an Anthropic API key, or inside Claude.',
+  'ui.analysis.start': 'Analyze with Fable 5.2',
+  'ui.analysis.again': 'Analyze again',
+  'ui.analysis.thinking':
+    'Claude is reading the review and thinking it through. This usually takes one to three minutes.',
+  'ui.analysis.writing': 'Claude is writing the analysis…',
+  'ui.analysis.done': 'Analysis ready.',
+  'ui.analysis.by': 'Written by {model}.',
+  'ui.analysis.by-tier': 'Written by the most capable Claude model available to you.',
+  'ui.analysis.fallback':
+    'The requested model declined part of this request, so {model} finished it.',
+  'ui.analysis.caution': 'AI can make mistakes. Check each suggestion before you change your site.',
+  'ui.analysis.verdict': 'Overall: {verdict, select, strong {strong} weak {weak} other {fair}}',
+  'ui.analysis.priorities': 'What to do, in order',
+  'ui.analysis.why': 'Why it matters',
+  'ui.analysis.how': 'How to do it',
+  'ui.analysis.evidence': 'Based on',
+  'ui.analysis.impact': 'Impact: {level, select, high {high} low {low} other {medium}}',
+  'ui.analysis.effort': 'Effort: {level, select, high {high} low {low} other {medium}}',
+  'ui.analysis.titles': 'Title ideas',
+  'ui.analysis.descriptions': 'Description ideas',
+  'ui.analysis.characters': '{count, plural, one {# character} other {# characters}}',
+  'ui.analysis.content': 'About the content',
+  'ui.analysis.technical': 'Technical notes',
+  'ui.analysis.caveats': 'What this analysis can’t know',
+  'ui.analysis.error.cancelled': 'The analysis was stopped.',
+  'ui.analysis.error.not-granted':
+    'Claude wasn’t allowed to run here. Reload the page to be asked again.',
+  'ui.analysis.error.rate-limited': 'Too many analyses in a short time. Try again later.',
+  'ui.analysis.error.refused': 'Claude declined to analyze this page.',
+  'ui.analysis.error.too-long': 'The answer was cut short. Try again.',
+  'ui.analysis.error.invalid-answer': 'The answer couldn’t be read. Try again.',
+  'ui.analysis.error.unavailable': 'The AI analysis isn’t available right now. Try again later.',
+  'ui.analysis.error.failed': 'The analysis didn’t finish. Try again in a moment.',
   'ui.site.title': 'Review a whole site',
   'ui.site.lead':
     'Choose a ZIP of the site’s files, such as a backup or a static export, or several HTML files. Every page is reviewed on this device; images, styles and other files are counted but not read.',
@@ -207,6 +330,17 @@ const messages = {
 
   'ui.privacy.title': 'Your data',
   'ui.privacy.lead': 'SearchUnveil runs entirely in your browser.',
+  'ui.privacy.lead.server':
+    'SearchUnveil reviews pages in your browser. Its server helps only when you ask.',
+  'ui.privacy.lead.claude':
+    'SearchUnveil works in your browser. Only the AI analysis, when you ask for it, sends data out.',
+  'ui.privacy.address':
+    'When you review by address, the server downloads that public page and its robots.txt and passes them to your browser. It keeps nothing.',
+  'ui.privacy.ai.server':
+    'When you ask for an AI analysis, the findings, the page facts and the start of the page’s visible text go to Anthropic’s Claude through the server. Your files don’t.',
+  'ui.privacy.ai.claude':
+    'When you ask for an AI analysis, the findings, the page facts and the start of the page’s visible text go to Claude on your account. Your files don’t.',
+  'ui.privacy.network.server': 'The page’s security policy lets it connect only to its own server.',
   'ui.privacy.files': 'Files you analyze are read in memory. They are never stored or uploaded.',
   'ui.privacy.stored':
     'This browser stores only your AI mention log and your language and theme choices.',

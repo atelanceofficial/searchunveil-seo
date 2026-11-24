@@ -29,7 +29,14 @@ export interface PageSnapshot {
   readonly headBreaker: string | null;
   /** True when the `<head>` ends with a `<noscript>` element. */
   readonly headEndsWithNoscript: boolean;
+  /** Words in the text a visitor reads (scripts, styles and templates left out). */
+  readonly words: number;
+  /** The start of that text, for summaries; at most {@link TEXT_SAMPLE_LENGTH} characters. */
+  readonly textSample: string;
 }
+
+/** How much of a page's text a snapshot keeps. */
+export const TEXT_SAMPLE_LENGTH = 6000;
 
 export interface HeadValue {
   readonly value: string;
@@ -233,6 +240,7 @@ export function extractSnapshot(document: Document, url: string | null = null): 
   }
 
   const { misplaced, headBreaker } = findMisplacedHeadElements(document);
+  const { words, textSample } = readableText(document);
 
   return {
     url,
@@ -259,7 +267,36 @@ export function extractSnapshot(document: Document, url: string | null = null): 
     misplaced,
     headBreaker,
     headEndsWithNoscript: head.lastElementChild?.localName === 'noscript',
+    words,
+    textSample,
   };
+}
+
+/** Elements whose text a visitor never reads as page content. */
+const NOT_READ = new Set(['script', 'style', 'noscript', 'template', 'svg', 'math']);
+
+/** The page's readable text: every text node in the body outside scripts, styles and the like. */
+function readableText(document: Document): { words: number; textSample: string } {
+  let words = 0;
+  let sample = '';
+  const walker = document.createTreeWalker(document.body, SHOW_TEXT);
+  for (let node = walker.nextNode(); node !== null; node = walker.nextNode()) {
+    let parent = node.parentElement;
+    let skipped = false;
+    while (parent !== null && parent !== document.body) {
+      if (NOT_READ.has(parent.localName) || parent.hasAttribute('hidden')) {
+        skipped = true;
+        break;
+      }
+      parent = parent.parentElement;
+    }
+    if (skipped) continue;
+    const value = (node.nodeValue ?? '').replace(/\s+/g, ' ').trim();
+    if (value === '') continue;
+    words += value.split(' ').length;
+    if (sample.length < TEXT_SAMPLE_LENGTH) sample += (sample === '' ? '' : ' ') + value;
+  }
+  return { words, textSample: sample.slice(0, TEXT_SAMPLE_LENGTH) };
 }
 
 /**

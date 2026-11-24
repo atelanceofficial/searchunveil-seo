@@ -22,6 +22,10 @@ export const uiDe: UiCatalog = {
   'ui.footer.status': 'In Entwicklung. Keine öffentliche Version.',
   'ui.footer.privacy':
     'Keine Cookies, keine Analyse und keine Netzwerkanfragen, nachdem die Seite geladen ist.',
+  'ui.footer.privacy.server':
+    'Keine Cookies und keine Analyse. Seiten werden nur auf Ihren Wunsch geladen und analysiert.',
+  'ui.footer.privacy.claude':
+    'Keine Cookies und keine Analyse. Nichts verlässt Ihr Gerät, außer Sie fordern eine KI-Analyse an.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'Sehen Sie, wie Ihre Website gefunden wird',
@@ -33,7 +37,7 @@ export const uiDe: UiCatalog = {
   'ui.home.gsc.action': 'Export analysieren',
   'ui.home.page.title': 'Ist meine Seite leicht zu finden?',
   'ui.home.page.text':
-    'Prüfen Sie das HTML einer Seite auf häufige Probleme bei Suche und Barrierefreiheit.',
+    'Geben Sie eine Adresse ein oder fügen Sie HTML ein, um eine Seite auf häufige Probleme bei Suche und Barrierefreiheit zu prüfen.',
   'ui.home.page.action': 'Seite prüfen',
   'ui.home.mentions.title': 'Wo hat KI meine Website erwähnt?',
   'ui.home.mentions.text':
@@ -41,13 +45,13 @@ export const uiDe: UiCatalog = {
   'ui.home.mentions.action': 'Protokoll öffnen',
   'ui.home.principles': 'So funktioniert SearchUnveil',
   'ui.home.principle.local':
-    'Alles läuft in Ihrem Browser. Die Dateien, die Sie auswählen, werden nie hochgeladen.',
+    'Jede Prüfung läuft in Ihrem Browser, und die Dateien, die Sie auswählen, werden nie hochgeladen.',
   'ui.home.principle.evidence': 'Jedes Ergebnis zeigt die Belege, auf denen es beruht.',
   'ui.home.principle.limits': 'Jedes Ergebnis sagt auch, was die Daten nicht verraten können.',
   'ui.home.fact.languages': 'Sprachen',
   'ui.home.fact.uploads': 'hochgeladene Dateien',
   'ui.home.fact.trackers': 'Cookies oder Tracker',
-  'ui.home.fact.device': 'der Arbeit geschieht auf Ihrem Gerät',
+  'ui.home.fact.device': 'der Prüfungen laufen auf Ihrem Gerät',
   'ui.home.showcase.title': 'Was der Beispielexport zeigt',
   'ui.home.showcase.text':
     'Eine fiktive Website, example.com, in Ihrem Browser analysiert, sobald sich diese Seite geöffnet hat.',
@@ -111,7 +115,16 @@ export const uiDe: UiCatalog = {
 
   'ui.page.title': 'Seitenprüfung',
   'ui.page.lead':
-    'Fügen Sie den HTML-Quelltext einer Seite ein oder wählen Sie eine gespeicherte HTML-Datei. Die Prüfung läuft auf diesem Gerät.',
+    'Geben Sie die Adresse einer Website ein oder fügen Sie das HTML einer Seite ein. Jedes Ergebnis kommt mit seinen Belegen und Quellen.',
+  'ui.page.mode': 'Was geprüft werden soll',
+  'ui.page.mode.address': 'Eine Adresse',
+  'ui.page.mode.html': 'Eingefügtes HTML',
+  'ui.page.address': 'Adresse der Website',
+  'ui.page.address.hint':
+    'Zum Beispiel atelance.com oder atelance.com/about. Die Seite und ihre robots.txt werden geladen, wie es ein Browser tun würde.',
+  'ui.page.address.no-server':
+    'Für die Prüfung per Adresse braucht SearchUnveil seinen Server, und diese Kopie läuft ohne ihn. Sie können das HTML der Seite trotzdem einfügen.',
+  'ui.page.address.invalid': 'Geben Sie eine Website-Adresse ein, etwa example.com.',
   'ui.page.html': 'HTML der Seite',
   'ui.page.html.hint':
     'In den meisten Browsern: Seite öffnen, Strg+U drücken (auf dem Mac ⌥⌘U), dann alles auswählen und kopieren.',
@@ -121,12 +134,132 @@ export const uiDe: UiCatalog = {
   'ui.page.file': 'Oder eine HTML-Datei auswählen',
   'ui.page.submit': 'Seite prüfen',
   'ui.page.sample': 'Beispielseite ausprobieren',
-  'ui.page.why-paste':
-    'Warum einfügen statt eine Adresse einzugeben? Seiten abzurufen erfordert einen Server. Diese Vorschau behält alles auf Ihrem Gerät.',
+  'ui.page.fetching': '{address} wird geladen …',
+  'ui.page.no-server.title': 'Diese Kopie kann keine Seiten laden',
+  'ui.page.no-server.steps':
+    'Öffnen Sie {address} in Ihrem Browser und drücken Sie Strg+U (auf dem Mac ⌥⌘U), um den Quelltext zu sehen. Kopieren Sie alles und fügen Sie es unter „Eingefügtes HTML“ ein.',
+  'ui.page.no-server.switch': 'Stattdessen HTML einfügen',
+  'ui.page.fetch.invalid-address':
+    'Das sieht nicht nach einer Website-Adresse aus. Versuchen Sie etwas wie example.com.',
+  'ui.page.fetch.blocked-address':
+    'Aus Sicherheitsgründen lassen sich nur öffentliche Websites über die üblichen Web-Ports laden.',
+  'ui.page.fetch.unknown-host':
+    'Unter dieser Adresse antwortet keine Website. Prüfen Sie die Schreibweise.',
+  'ui.page.fetch.unreachable':
+    'Die Website hat nicht geantwortet. Sie ist vielleicht nicht erreichbar oder weist automatische Besuche ab.',
+  'ui.page.fetch.timeout':
+    'Die Website hat zu lange gebraucht. Versuchen Sie es gleich noch einmal.',
+  'ui.page.fetch.tls':
+    'Das Sicherheitszertifikat der Website ließ sich nicht prüfen, daher wurde die Seite nicht geladen.',
+  'ui.page.fetch.too-many-redirects':
+    'Die Adresse leitet zu oft weiter. Öffnen Sie sie zur Kontrolle im Browser.',
+  'ui.page.fetch.too-large': 'Die Seite ist zu groß für eine Prüfung.',
+  'ui.page.fetch.not-html': 'Die Adresse führt zu einer Datei, nicht zu einer Webseite.',
+  'ui.page.fetch.http-status':
+    'Die Website hat mit Status {detail} statt mit einer Seite geantwortet.',
+  'ui.page.fetch.rate-limited':
+    'Zu viele Prüfungen in kurzer Zeit. Warten Sie eine Minute und versuchen Sie es dann erneut.',
+  'ui.page.fetch.offline':
+    'Der Server von SearchUnveil war nicht erreichbar. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.',
+  'ui.page.fetch.failed':
+    'Die Seite ließ sich nicht laden. Versuchen Sie es erneut oder fügen Sie ihr HTML ein.',
   'ui.page.results': 'Ergebnisse',
   'ui.page.reviewed': 'Geprüft: {url}',
   'ui.page.reviewed-pasted': 'Das von Ihnen bereitgestellte HTML wurde geprüft',
   'ui.page.done': 'Prüfung fertig.',
+  'ui.overview.title': 'Was Suchmaschinen sehen',
+  'ui.overview.serp': 'So könnte sie bei Google erscheinen',
+  'ui.overview.serp.note':
+    'Google kann Titel und Beschreibung kürzen oder anhand der Seite eigene schreiben.',
+  'ui.overview.serp.no-description': 'Keine Beschreibung. Google wählt Text aus der Seite.',
+  'ui.overview.page': 'Die Seite',
+  'ui.overview.server': 'Der Server',
+  'ui.overview.language': 'Sprache',
+  'ui.overview.canonical': 'Kanonische Adresse',
+  'ui.overview.robots': 'Robots-Regeln',
+  'ui.overview.words': 'Wörter im Text',
+  'ui.overview.headings': 'Überschriften',
+  'ui.overview.images': 'Bilder',
+  'ui.overview.images.value': '{total} · {missing} ohne Textalternative',
+  'ui.overview.links': 'Links',
+  'ui.overview.links.value': '{internal} intern · {external} extern',
+  'ui.overview.structured-data': 'Strukturierte Daten',
+  'ui.overview.social': 'Linkvorschau',
+  'ui.overview.social.complete': 'Titel, Beschreibung und Bild',
+  'ui.overview.social.partial': 'Unvollständig',
+  'ui.overview.languages': 'Sprachversionen',
+  'ui.overview.none': 'Keine',
+  'ui.overview.not-set': 'Nicht angegeben',
+  'ui.overview.status': 'Statuscode',
+  'ui.overview.final-address': 'Endgültige Adresse',
+  'ui.overview.redirects': 'Weiterleitungen',
+  'ui.overview.time': 'Ladezeit',
+  'ui.overview.time.value': '{seconds} s',
+  'ui.overview.size': 'HTML-Größe',
+  'ui.overview.size.value': '{kilobytes} KB',
+  'ui.overview.compression': 'Komprimierung',
+  'ui.overview.https': 'Sichere Verbindung',
+  'ui.overview.https.hsts': 'HTTPS, mit HSTS',
+  'ui.overview.https.on': 'HTTPS',
+  'ui.overview.https.off': 'Keine',
+  'ui.overview.robots-txt': 'robots.txt',
+  'ui.overview.robots-txt.allows': 'Erlaubt den Googlebot',
+  'ui.overview.robots-txt.blocks': 'Sperrt den Googlebot',
+  'ui.overview.robots-txt.missing': 'Keine, also ist alles erlaubt',
+  'ui.overview.robots-txt.unknown': 'Nicht lesbar',
+  'ui.overview.sitemaps': 'Genannte Sitemaps',
+  'ui.overview.outline': 'Gliederung der Überschriften',
+  'ui.overview.outline.empty': 'Die Seite hat keine Überschriften.',
+  'ui.overview.outline.more':
+    '{count, plural, one {und # weitere Überschrift} other {und # weitere Überschriften}}',
+  'ui.analysis.title': 'Tiefere Analyse mit KI',
+  'ui.analysis.lead':
+    'Claude Fable 5.2, das leistungsfähigste Modell von Anthropic, liest diese Prüfung und den Text der Seite und erklärt, worauf es am meisten ankommt und was genau Sie ändern sollten.',
+  'ui.analysis.sends.server':
+    'Wenn Sie sie starten, gehen die Ergebnisse, die Angaben oben und der Anfang des sichtbaren Seitentexts über den Server von SearchUnveil an Anthropic.',
+  'ui.analysis.sends.claude':
+    'Wenn Sie sie starten, gehen die Ergebnisse, die Angaben oben und der Anfang des sichtbaren Seitentexts an Claude, über Ihr eigenes Claude-Konto.',
+  'ui.analysis.unavailable':
+    'Die KI-Analyse funktioniert, wenn SearchUnveil mit seinem Server und einem Anthropic-API-Schlüssel läuft oder in Claude geöffnet wird.',
+  'ui.analysis.start': 'Mit Fable 5.2 analysieren',
+  'ui.analysis.again': 'Erneut analysieren',
+  'ui.analysis.thinking':
+    'Claude liest die Prüfung und denkt sie durch. Das dauert meist ein bis drei Minuten.',
+  'ui.analysis.writing': 'Claude schreibt die Analyse …',
+  'ui.analysis.done': 'Analyse fertig.',
+  'ui.analysis.by': 'Geschrieben von {model}.',
+  'ui.analysis.by-tier':
+    'Geschrieben vom leistungsfähigsten Claude-Modell, das Ihnen zur Verfügung steht.',
+  'ui.analysis.fallback':
+    'Das angefragte Modell hat einen Teil dieser Anfrage abgelehnt, daher hat {model} sie beendet.',
+  'ui.analysis.caution':
+    'KI kann sich irren. Prüfen Sie jeden Vorschlag, bevor Sie Ihre Website ändern.',
+  'ui.analysis.verdict':
+    'Gesamteindruck: {verdict, select, strong {stark} weak {schwach} other {ordentlich}}',
+  'ui.analysis.priorities': 'Was zu tun ist, der Reihe nach',
+  'ui.analysis.why': 'Warum es wichtig ist',
+  'ui.analysis.how': 'So geht es',
+  'ui.analysis.evidence': 'Grundlage',
+  'ui.analysis.impact': 'Wirkung: {level, select, high {hoch} low {gering} other {mittel}}',
+  'ui.analysis.effort': 'Aufwand: {level, select, high {hoch} low {gering} other {mittel}}',
+  'ui.analysis.titles': 'Ideen für den Titel',
+  'ui.analysis.descriptions': 'Ideen für die Beschreibung',
+  'ui.analysis.characters': '{count, plural, one {# Zeichen} other {# Zeichen}}',
+  'ui.analysis.content': 'Zum Inhalt',
+  'ui.analysis.technical': 'Technische Hinweise',
+  'ui.analysis.caveats': 'Was diese Analyse nicht wissen kann',
+  'ui.analysis.error.cancelled': 'Die Analyse wurde angehalten.',
+  'ui.analysis.error.not-granted':
+    'Claude durfte hier nicht ausgeführt werden. Laden Sie die Seite neu, um erneut gefragt zu werden.',
+  'ui.analysis.error.rate-limited':
+    'Zu viele Analysen in kurzer Zeit. Versuchen Sie es später erneut.',
+  'ui.analysis.error.refused': 'Claude hat die Analyse dieser Seite abgelehnt.',
+  'ui.analysis.error.too-long': 'Die Antwort wurde abgeschnitten. Versuchen Sie es erneut.',
+  'ui.analysis.error.invalid-answer': 'Die Antwort ließ sich nicht lesen. Versuchen Sie es erneut.',
+  'ui.analysis.error.unavailable':
+    'Die KI-Analyse ist gerade nicht verfügbar. Versuchen Sie es später erneut.',
+  'ui.analysis.error.failed':
+    'Die Analyse wurde nicht fertig. Versuchen Sie es gleich noch einmal.',
   'ui.site.title': 'Eine ganze Website prüfen',
   'ui.site.lead':
     'Wählen Sie ein ZIP mit den Dateien der Website, etwa ein Backup oder einen statischen Export, oder mehrere HTML-Dateien. Jede Seite wird auf diesem Gerät geprüft; Bilder, Stylesheets und andere Dateien werden gezählt, aber nicht gelesen.',
@@ -210,6 +343,18 @@ export const uiDe: UiCatalog = {
 
   'ui.privacy.title': 'Ihre Daten',
   'ui.privacy.lead': 'SearchUnveil läuft vollständig in Ihrem Browser.',
+  'ui.privacy.lead.server':
+    'SearchUnveil prüft Seiten in Ihrem Browser. Sein Server hilft nur, wenn Sie darum bitten.',
+  'ui.privacy.lead.claude':
+    'SearchUnveil arbeitet in Ihrem Browser. Nur die KI-Analyse sendet Daten, und nur wenn Sie sie anfordern.',
+  'ui.privacy.address':
+    'Wenn Sie per Adresse prüfen, lädt der Server diese öffentliche Seite und ihre robots.txt und gibt sie an Ihren Browser weiter. Er speichert nichts.',
+  'ui.privacy.ai.server':
+    'Wenn Sie eine KI-Analyse anfordern, gehen die Ergebnisse, die Seitenangaben und der Anfang des sichtbaren Seitentexts über den Server an Claude von Anthropic. Ihre Dateien nicht.',
+  'ui.privacy.ai.claude':
+    'Wenn Sie eine KI-Analyse anfordern, gehen die Ergebnisse, die Seitenangaben und der Anfang des sichtbaren Seitentexts über Ihr Konto an Claude. Ihre Dateien nicht.',
+  'ui.privacy.network.server':
+    'Die Sicherheitsrichtlinie der Seite erlaubt Verbindungen nur zu ihrem eigenen Server.',
   'ui.privacy.files':
     'Dateien, die Sie analysieren, werden im Arbeitsspeicher gelesen. Sie werden nie gespeichert oder hochgeladen.',
   'ui.privacy.stored':

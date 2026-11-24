@@ -1,5 +1,6 @@
 dist/
 dist-standalone/
+dist-server/
 coverage/
 playwright-report/
 test-results/

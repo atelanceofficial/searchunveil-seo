@@ -31,6 +31,12 @@ export const zhCN: CoreCatalog = {
   'evidence.canonical': '规范链接',
   'evidence.heading': '小标题',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': '状态码',
+  'evidence.final-address': '最终地址',
+  'evidence.redirect': '重定向',
+  'evidence.header': '标头',
+  'evidence.robots-rule': 'robots.txt 规则',
+  'evidence.response-time': '响应时间（秒）',
   'table.query': '查询',
   'table.page': '网页',
   'table.text': '{text}',
@@ -60,6 +66,9 @@ export const zhCN: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2：信息和关系（1.3.1）',
   'ref.viewport': 'MDN：viewport meta 标记',
   'ref.open-graph': 'Open Graph 协议',
+  'ref.robots-txt': 'Google 搜索中心：robots.txt 简介',
+  'ref.http-status': 'Google 搜索中心：HTTP 状态代码和网络错误',
+  'ref.https': 'web.dev：HTTPS 为何重要',
 
   'gsc.headline.method':
     '我们将 {current} 与 {previous} 进行了比较，并把每一天与星期几相同的那一天对应。',
@@ -280,6 +289,34 @@ export const zhCN: CoreCatalog = {
   'page.social.missing.summary':
     '社交网络和聊天应用会使用 Open Graph 标记生成链接预览。它们不会影响搜索排名。',
   'page.social.ok': '此网页有用于链接预览的标记',
+  'page.limit.fetched':
+    '我们检查的是服务器为此地址发送的 HTML。网页加载后由 JavaScript 添加的内容不包括在内。',
+  'page.limit.scope.fetched': '加载速度和来自其他网站的链接也会影响搜索，但不在本次检查范围内。',
+
+  'http.status': '服务器返回了状态码 {status}，而不是网页',
+  'http.status.summary':
+    '搜索引擎会将以成功状态码（200）响应的网页编入索引。错误和重定向状态码会让此地址无法出现在结果中。',
+  'http.check.status': '请在浏览器中打开此地址，并检查返回此状态码的服务器或托管设置。',
+  'http.https': '此网页未通过 HTTPS 提供',
+  'http.https.summary':
+    '浏览器会将未使用 HTTPS 的网页标记为“不安全”，搜索引擎也会优先选择网页的安全版本。',
+  'http.check.https': '请安装证书，并将每个 http:// 地址重定向到对应的 https:// 版本。',
+  'http.x-robots-tag': '服务器要求搜索引擎不要在结果中显示此网页',
+  'http.x-robots-tag.summary':
+    'X-Robots-Tag 标头的作用与 robots meta 标记相同，但由服务器设置，因此只看 HTML 很容易遗漏。',
+  'http.check.x-robots-tag':
+    '如果此网页应当出现在搜索中，请在服务器或托管设置中从 X-Robots-Tag 标头删除 noindex。',
+  'http.robots-txt': 'robots.txt 禁止搜索引擎访问此网页',
+  'http.robots-txt.summary': 'Googlebot 不会抓取 robots.txt 禁止的地址，因此无法读取此网页的内容。',
+  'http.check.robots-txt':
+    '如果此网页应当出现在搜索中，请删除 robots.txt 中的这条规则或缩小其范围。',
+  'http.robots-txt.unreadable': '我们无法读取该网站的 robots.txt',
+  'http.robots-txt.unreadable.summary':
+    '如果 robots.txt 返回服务器错误，Google 会暂停抓取整个网站，直到能再次读取该文件。请确认它可以打开。',
+  'http.redirects': '该地址在到达网页前重定向了 {count} 次',
+  'http.redirects.summary': '每次重定向都会让访问者和抓取工具多一次往返。请直接链接到最终地址。',
+  'http.ok': '服务器顺利提供此网页',
+  'http.ok.summary': '它通过 HTTPS 成功响应，robots.txt 和服务器标头都没有阻止搜索引擎。',
 
   'mentions.kind.citation': '附带链接引用',
   'mentions.kind.mention': '提及但未附链接',

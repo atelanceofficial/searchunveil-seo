@@ -37,6 +37,12 @@ export const fr: CoreCatalog = {
   'evidence.canonical': 'Lien canonique',
   'evidence.heading': 'Titre de section',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'Code d’état',
+  'evidence.final-address': 'Adresse finale',
+  'evidence.redirect': 'Redirections',
+  'evidence.header': 'En-tête',
+  'evidence.robots-rule': 'Règle robots.txt',
+  'evidence.response-time': 'Temps de réponse (secondes)',
   'table.query': 'Requête',
   'table.page': 'Page',
   'table.text': '{text}',
@@ -66,6 +72,9 @@ export const fr: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2\u00A0: Information et relations (1.3.1)',
   'ref.viewport': 'MDN\u00A0: la balise meta viewport',
   'ref.open-graph': 'Le protocole Open Graph',
+  'ref.robots-txt': 'Google Search Central\u00A0: présentation du fichier robots.txt',
+  'ref.http-status': 'Google Search Central\u00A0: codes d’état HTTP et erreurs réseau',
+  'ref.https': 'web.dev\u00A0: pourquoi HTTPS est important',
 
   'gsc.headline.method':
     'Nous avons comparé {current} avec {previous}, en associant chaque jour au même jour de la semaine.',
@@ -356,6 +365,42 @@ export const fr: CoreCatalog = {
   'page.social.missing.summary':
     'Les réseaux sociaux et les messageries utilisent les balises Open Graph pour créer les aperçus de liens. Elles n’influencent pas le classement dans la recherche.',
   'page.social.ok': 'La page a des balises pour les aperçus de liens',
+  'page.limit.fetched':
+    'Nous avons examiné le HTML envoyé par le serveur pour cette adresse. Le contenu ajouté par JavaScript après le chargement de la page n’est pas inclus.',
+  'page.limit.scope.fetched':
+    'La vitesse de chargement et les liens depuis d’autres sites comptent aussi pour la recherche. Ils ne font pas partie de cet examen.',
+
+  'http.status': 'Le serveur a répondu avec le code {status} au lieu de la page',
+  'http.status.summary':
+    'Les moteurs de recherche indexent les pages qui répondent avec un code de succès (200). Les codes d’erreur et de redirection excluent cette adresse des résultats.',
+  'http.check.status':
+    'Ouvrez l’adresse dans un navigateur et vérifiez le réglage du serveur ou de l’hébergement qui renvoie ce code.',
+  'http.https': 'La page est servie sans HTTPS',
+  'http.https.summary':
+    'Les navigateurs signalent les pages sans HTTPS comme non sécurisées, et les moteurs de recherche préfèrent la version sécurisée d’une page.',
+  'http.check.https':
+    'Installez un certificat et redirigez chaque adresse http:// vers sa version https://.',
+  'http.x-robots-tag':
+    'Le serveur demande aux moteurs de recherche de ne pas afficher la page dans les résultats',
+  'http.x-robots-tag.summary':
+    'L’en-tête X-Robots-Tag agit comme une balise meta robots, mais c’est le serveur qui l’ajoute\u202F; il passe donc facilement inaperçu dans le HTML.',
+  'http.check.x-robots-tag':
+    'Si cette page doit apparaître dans la recherche, retirez noindex de l’en-tête X-Robots-Tag dans les réglages du serveur ou de l’hébergement.',
+  'http.robots-txt': 'Le fichier robots.txt interdit cette page aux moteurs de recherche',
+  'http.robots-txt.summary':
+    'Googlebot n’explore pas les adresses que robots.txt interdit\u202F; il ne peut donc pas lire le contenu de cette page.',
+  'http.check.robots-txt':
+    'Si cette page doit apparaître dans la recherche, supprimez la règle de robots.txt ou restreignez-la.',
+  'http.robots-txt.unreadable': 'Nous n’avons pas pu lire le fichier robots.txt du site',
+  'http.robots-txt.unreadable.summary':
+    'Si robots.txt répond par une erreur serveur, Google cesse d’explorer tout le site jusqu’à ce qu’il puisse relire le fichier. Vérifiez qu’il s’ouvre.',
+  'http.redirects':
+    'L’adresse redirige {count, plural, one {une fois} other {# fois}} avant d’atteindre la page',
+  'http.redirects.summary':
+    'Chaque redirection ajoute un aller-retour pour les visiteurs et les robots d’exploration. Faites pointer vos liens directement vers l’adresse finale.',
+  'http.ok': 'Le serveur livre la page sans obstacle',
+  'http.ok.summary':
+    'Il répond avec succès en HTTPS, et ni robots.txt ni les en-têtes du serveur n’écartent les moteurs de recherche.',
 
   'mentions.kind.citation': 'Cité avec un lien',
   'mentions.kind.mention': 'Nommé sans lien',

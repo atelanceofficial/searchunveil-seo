@@ -6,6 +6,7 @@ import {
   isValidLanguageTag,
   normalizeUrl,
   reviewHtml,
+  siteAddress,
   type PageReport,
 } from './review.ts';
 
@@ -392,5 +393,121 @@ describe('normalizeUrl', () => {
     expect(normalizeUrl('ftp://example.com/')).toBeNull();
     expect(normalizeUrl('https://user:pass@example.com/')).toBeNull();
     expect(normalizeUrl('not a url')).toBeNull();
+  });
+});
+
+describe('page facts', () => {
+  it('describes what the page shows search engines and visitors', () => {
+    const report = review(
+      page(
+        `${GOOD_HEAD}<meta name="robots" content="max-snippet:50"><meta name="googlebot" content="noarchive">` +
+          '<link rel="alternate" hreflang="de" href="https://example.com/de/shoes">' +
+          '<script type="application/ld+json">{"@type":"Product","name":"Shoe"}</script>',
+        '<h1>Running shoes</h1><p>Light shoes for long runs.</p><h2>Sizing</h2>' +
+          '<img src="a.jpg"><img src="b.jpg" alt=""><img src="c.jpg" alt="Trail shoe">' +
+          '<a href="/a">Trails</a><a href="https://www.example.com/b">Roads</a>' +
+          '<a href="https://other.org/" rel="nofollow">Elsewhere</a><a href="/c"></a>' +
+          '<a href="mailto:hi@example.com">Mail</a>',
+      ),
+      'https://example.com/shoes',
+    );
+    expect(report.facts).toMatchObject({
+      title: 'Running shoes for trails and roads | Example',
+      description: 'Compare running shoes for trails and roads, with sizing advice.',
+      lang: 'en',
+      canonical: 'https://example.com/shoes',
+      robots: 'max-snippet:50; googlebot: noarchive',
+      headings: [
+        { level: 1, text: 'Running shoes' },
+        { level: 2, text: 'Sizing' },
+      ],
+      headingCount: 2,
+      images: { total: 3, missingAlt: 1, decorative: 1 },
+      links: { total: 5, internal: 3, external: 1, nofollow: 1, unnamed: 1 },
+      structuredData: ['Product'],
+      social: {
+        title: 'Running shoes',
+        description: 'Compare running shoes.',
+        image: 'https://example.com/shoes.jpg',
+      },
+      languageVersions: 1,
+    });
+    expect(report.facts.words).toBe(12);
+    expect(report.facts.textSample).toContain('Light shoes for long runs.');
+    expect(report.http).toBeNull();
+  });
+
+  it('reads only text a visitor can see', () => {
+    const report = review(
+      page(
+        '<title>Shop</title><style>p{color:red}</style>',
+        '<h1>Shop</h1><script>var secret = 1;</script><noscript>Enable JavaScript</noscript>' +
+          '<div hidden><p>Hidden promo</p></div><template><p>Template</p></template>' +
+          '<svg><text>Chart label</text></svg><p>Open   every\nday</p>',
+      ),
+    );
+    expect(report.facts.textSample).toBe('Shop Open every day');
+    expect(report.facts.words).toBe(4);
+  });
+
+  it('keeps empty values out and lists at most the first headings', () => {
+    const headings = Array.from({ length: 70 }, (_, i) => `<h2>Part ${String(i)}</h2>`).join('');
+    const report = review(page('<title> </title>', `<h1>Guide</h1>${headings}`, 'lang=" "'));
+    expect(report.facts).toMatchObject({ title: null, lang: null, robots: null, canonical: null });
+    expect(report.facts.headings).toHaveLength(60);
+    expect(report.facts.headingCount).toBe(71);
+  });
+
+  it('adds the server’s answer when the page was fetched by its address', () => {
+    const result = reviewHtml(page(GOOD_HEAD), parse, {
+      url: 'https://example.com/shoes',
+      http: {
+        requestedUrl: 'https://example.com/shoes',
+        finalUrl: 'https://example.com/shoes',
+        status: 200,
+        redirects: [],
+        elapsedMs: 300,
+        bytes: 2000,
+        contentType: 'text/html',
+        contentEncoding: null,
+        xRobotsTag: 'noindex',
+        hsts: false,
+        robotsTxt: { found: true, allowsPage: true, rule: null, sitemaps: [] },
+      },
+    });
+    if (!result.ok) throw new Error('fixture');
+    expect(result.value.http?.status).toBe(200);
+    expect(result.value.findings[0]?.rule).toBe('http.x-robots-tag');
+    const indexable = result.value.findings.find((f) => f.rule === 'page.robots.indexable');
+    expect(indexable?.summary).toBeUndefined();
+    expect(result.value.limitations.map((m) => m.key)).toEqual([
+      'page.limit.fetched',
+      'page.limit.scope.fetched',
+    ]);
+  });
+});
+
+describe('siteAddress', () => {
+  it('reads addresses the way people type them', () => {
+    expect(siteAddress('atelance.com')).toBe('https://atelance.com/');
+    expect(siteAddress('  www.example.com/shop?x=1 ')).toBe('https://www.example.com/shop?x=1');
+    expect(siteAddress('http://example.com')).toBe('http://example.com/');
+    expect(siteAddress('//example.com/a')).toBe('https://example.com/a');
+    expect(siteAddress('example.com:8443/a')).toBe('https://example.com:8443/a');
+    expect(siteAddress('[2001:db8::1]')).toBe('https://[2001:db8::1]/');
+    expect(siteAddress('ÖRNEK.com.tr')).toBe('https://xn--rnek-4qa.com.tr/');
+  });
+
+  it('refuses text that cannot be a website', () => {
+    for (const value of [
+      '',
+      'localhost',
+      'my site.com',
+      'ftp://example.com',
+      'user:pw@example.com',
+      'mailto:a@b.co',
+    ]) {
+      expect(siteAddress(value), value).toBeNull();
+    }
   });
 });

@@ -11,7 +11,8 @@ import {
 import { code, list, message } from '../i18n/message.ts';
 import { resolveLimits, type InputLimits } from '../limits.ts';
 import { REFERENCES } from '../references.ts';
-import { extractSnapshot, type PageSnapshot } from './snapshot.ts';
+import { reviewHttp, type HttpFacts } from './http.ts';
+import { extractSnapshot, type Heading, type PageSnapshot } from './snapshot.ts';
 
 /**
  * Reviews one page's HTML for common search and accessibility issues.
@@ -35,13 +36,65 @@ export const PAGE_THRESHOLDS = Object.freeze({
 export interface PageReviewOptions {
   /** The page's address. Optional; it enables checks that compare links with the page. */
   readonly url?: string;
+  /** How the server answered, when the page was fetched by its address. */
+  readonly http?: HttpFacts;
   readonly limits?: Partial<InputLimits>;
 }
+
+/** What the page tells search engines and visitors, as plain facts for an overview. */
+export interface PageFacts {
+  readonly title: string | null;
+  readonly description: string | null;
+  readonly lang: string | null;
+  readonly canonical: string | null;
+  /** The robots directives as written, such as `noindex, follow`; `null` when there are none. */
+  readonly robots: string | null;
+  /** The page's headings in order; at most {@link FACT_HEADINGS}. */
+  readonly headings: readonly Heading[];
+  readonly headingCount: number;
+  /** Words in the text a visitor reads. */
+  readonly words: number;
+  readonly images: {
+    readonly total: number;
+    /** Images that need a text alternative and have none. */
+    readonly missingAlt: number;
+    /** Images marked as decorative (`alt=""` or hidden). */
+    readonly decorative: number;
+  };
+  readonly links: {
+    readonly total: number;
+    /** Links within the site: relative, or to the page's own host. */
+    readonly internal: number;
+    /** Links to other hosts. */
+    readonly external: number;
+    readonly nofollow: number;
+    /** Links with no name a screen reader could announce. */
+    readonly unnamed: number;
+  };
+  /** Schema.org types found in valid JSON-LD. */
+  readonly structuredData: readonly string[];
+  /** The preview social networks show when the page is shared (Open Graph). */
+  readonly social: {
+    readonly title: string | null;
+    readonly description: string | null;
+    readonly image: string | null;
+  };
+  /** Language versions the page declares with hreflang. */
+  readonly languageVersions: number;
+  /** The start of the text a visitor reads, for summaries. */
+  readonly textSample: string;
+}
+
+/** Most headings an overview lists. */
+export const FACT_HEADINGS = 60;
 
 export interface PageReport {
   readonly url: string | null;
   /** The page's title as written, for telling pages apart; `null` when it has none. */
   readonly title: string | null;
+  readonly facts: PageFacts;
+  /** How the server answered, when the page was fetched by its address; otherwise `null`. */
+  readonly http: HttpFacts | null;
   readonly findings: readonly Finding[];
   /** What this review cannot see, stated before it can mislead. */
   readonly limitations: readonly CoreMessage[];
@@ -71,13 +124,14 @@ export function reviewHtml(
     if (url === null)
       diagnostics.push(diagnostic('page.invalid-url', 'warning', { value: options.url }));
   }
-  return success(reviewSnapshot(extractSnapshot(parse(html), url)), diagnostics);
+  return success(reviewSnapshot(extractSnapshot(parse(html), url), options.http), diagnostics);
 }
 
-export function reviewSnapshot(snapshot: PageSnapshot): PageReport {
+export function reviewSnapshot(snapshot: PageSnapshot, http?: HttpFacts): PageReport {
   const findings = sortFindings([
+    ...(http === undefined ? [] : reviewHttp(http)),
     ...headRules(snapshot),
-    ...robotsRules(snapshot),
+    ...robotsRules(snapshot, http !== undefined),
     ...titleRules(snapshot),
     ...descriptionRules(snapshot),
     ...languageRules(snapshot),
@@ -94,14 +148,100 @@ export function reviewSnapshot(snapshot: PageSnapshot): PageReport {
   const counts = Object.fromEntries(
     STATUS_ORDER.map((status) => [status, findings.filter((f) => f.status === status).length]),
   ) as Record<FindingStatus, number>;
-  const title = (snapshot.titles.find((t) => t.inHead) ?? snapshot.titles[0])?.value.trim();
+  const facts = pageFacts(snapshot);
   return {
     url: snapshot.url,
-    title: title === undefined || title === '' ? null : title,
+    title: facts.title,
+    facts,
+    http: http ?? null,
     findings,
-    limitations: [message('page.limit.source'), message('page.limit.scope')],
+    limitations:
+      http === undefined
+        ? [message('page.limit.source'), message('page.limit.scope')]
+        : [message('page.limit.fetched'), message('page.limit.scope.fetched')],
     counts,
   };
+}
+
+/** The facts an overview shows, read from the same snapshot the rules use. */
+export function pageFacts(snapshot: PageSnapshot): PageFacts {
+  const first = (values: PageSnapshot['titles']) => {
+    const value = (values.find((v) => v.inHead) ?? values[0])?.value.trim() ?? '';
+    return value === '' ? null : value;
+  };
+  const pageHost = hostOf(snapshot.url);
+  let internal = 0;
+  let external = 0;
+  for (const link of snapshot.links) {
+    if (/^(mailto|tel|javascript|data):/i.test(link.href)) continue;
+    const host =
+      /^[a-z][a-z0-9+.-]*:/i.test(link.href) || link.href.startsWith('//')
+        ? hostOf(link.href.startsWith('//') ? `https:${link.href}` : link.href)
+        : pageHost;
+    if (host === null || host === pageHost) internal++;
+    else external++;
+  }
+  const og = (name: string) => {
+    const value = snapshot.openGraph[name]?.trim() ?? '';
+    return value === '' ? null : value;
+  };
+  const robots = snapshot.robots
+    .map((r) => (r.name === 'robots' ? r.content : `${r.name}: ${r.content}`))
+    .filter((value) => value.trim() !== '')
+    .join('; ');
+  const lang = snapshot.lang?.trim() ?? '';
+  return {
+    title: first(snapshot.titles),
+    description: first(snapshot.descriptions),
+    lang: lang === '' ? null : lang,
+    canonical: first(snapshot.canonicals),
+    robots: robots === '' ? null : robots,
+    headings: snapshot.headings.slice(0, FACT_HEADINGS),
+    headingCount: snapshot.headings.length,
+    words: snapshot.words,
+    images: {
+      total: snapshot.images.length,
+      missingAlt: snapshot.images.filter((i) => i.alt === null && !i.hidden).length,
+      decorative: snapshot.images.filter((i) => i.alt === '' || i.hidden).length,
+    },
+    links: {
+      total: snapshot.links.length,
+      internal,
+      external,
+      nofollow: snapshot.links.filter((l) => l.nofollow).length,
+      unnamed: snapshot.links.filter((l) => l.name === '').length,
+    },
+    structuredData: [...new Set(snapshot.structuredData.flatMap((block) => block.types))],
+    social: { title: og('og:title'), description: og('og:description'), image: og('og:image') },
+    languageVersions: snapshot.alternates.length,
+    textSample: snapshot.textSample,
+  };
+}
+
+function hostOf(url: string | null): string | null {
+  if (url === null) return null;
+  try {
+    return new URL(url).host.toLowerCase().replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Reads a web address the way people type it, such as `example.com` or `www.example.com/shop`,
+ * adding `https://` when no scheme is given. Returns the normalized address, or `null` when the
+ * text cannot be a website's address (single words such as `localhost` are not).
+ */
+export function siteAddress(input: string): string | null {
+  const text = input.trim();
+  if (text === '' || /\s/.test(text)) return null;
+  const absolute = /^[a-z][a-z0-9+.-]*:\/\//i.test(text)
+    ? text
+    : `https://${text.replace(/^\/+/, '')}`;
+  const url = normalizeUrl(absolute);
+  if (url === null) return null;
+  const host = new URL(url).hostname;
+  return host.includes('.') || host.startsWith('[') ? url : null;
 }
 
 /** An absolute http(s) URL without credentials, normalized; otherwise `null`. */
@@ -175,7 +315,7 @@ function headRules(page: PageSnapshot): Finding[] {
   ];
 }
 
-function robotsRules(page: PageSnapshot): Finding[] {
+function robotsRules(page: PageSnapshot, fetched: boolean): Finding[] {
   const findings: Finding[] = [];
   const directives = page.robots.filter((r) => r.inHead);
   const evidence = directives.map((r) =>
@@ -237,7 +377,8 @@ function robotsRules(page: PageSnapshot): Finding[] {
         rule: 'page.robots.indexable',
         status: 'good',
         title: message('page.robots.indexable'),
-        summary: message('page.robots.indexable.summary'),
+        // The summary points to headers and robots.txt, which a fetched page's own findings cover.
+        ...(fetched ? {} : { summary: message('page.robots.indexable.summary') }),
       }),
     );
   }

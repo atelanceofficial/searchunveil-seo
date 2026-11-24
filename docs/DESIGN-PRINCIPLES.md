@@ -56,7 +56,7 @@ Typography rules:
 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |
-| **Mark** | Header, footer, favicon | A lens reduced to three shapes: a tilted disc, the loop standing beside it, a bright core. |
+| **Mark** | Header, footer, favicon | One thread of light drawn as an S: a gold strand with a dark line running through it, around a mist-green bead at its centre. |
 | **Threads** | The home page's cover, the sample section's far corner, the footer's far edge on wide screens | Threads of light lifted from a photograph without its ground: loops beside the title, strands dissolving towards the page's edge. They never pass behind words. |
 | **Ruler** | Under the cover and every page title, along the footer | Marks where content begins, like the scale on an instrument. |
 | **Graph paper** | The drop zone | A sheet for data to land on, with a heavier line every fifth square. |

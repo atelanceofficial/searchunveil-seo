@@ -6,13 +6,12 @@ import { defineConfig, type Plugin } from 'vite';
  * The production Content Security Policy, delivered as a meta tag so it travels with the
  * static files to any host.
  *
- * `connect-src 'none'` is the privacy guarantee made verifiable: once loaded, the page cannot
- * send data anywhere. Trusted Types restrict HTML parsing to one named policy, used only to
+ * In the static and standalone builds, `connect-src 'none'` is the privacy guarantee made
+ * verifiable: once loaded, the page cannot send data anywhere. Trusted Types restrict HTML parsing to one named policy, used only to
  * parse pasted pages into inert documents. (The development server needs a looser policy
  * for hot reloading, so the tag is added to builds only.)
  */
 const SHARED_POLICY = [
-  "connect-src 'none'",
   "base-uri 'none'",
   "form-action 'none'",
   "object-src 'none'",
@@ -20,15 +19,22 @@ const SHARED_POLICY = [
   'trusted-types searchunveil-inert-html',
 ];
 
-const CONTENT_SECURITY_POLICY = [
-  "default-src 'none'",
-  "script-src 'self'",
-  "style-src 'self'",
-  "img-src 'self' data:",
-  "font-src 'self'",
-  "manifest-src 'self'",
-  ...SHARED_POLICY,
-].join('; ');
+/**
+ * The hosted policy. The server build (`--mode server`, served by `apps/server`) may connect to
+ * its own origin and nowhere else: it asks its server to fetch pages and to run the AI analysis.
+ */
+function hostedPolicy(server: boolean): string {
+  return [
+    "default-src 'none'",
+    "script-src 'self'",
+    "style-src 'self'",
+    "img-src 'self' data:",
+    "font-src 'self'",
+    "manifest-src 'self'",
+    server ? "connect-src 'self'" : "connect-src 'none'",
+    ...SHARED_POLICY,
+  ].join('; ');
+}
 
 const CHARSET = '<meta charset="utf-8" />';
 
@@ -45,12 +51,12 @@ function withPolicy(html: string, policy: string): string {
   return html.replace(CHARSET, `${CHARSET}\n    ${meta}`);
 }
 
-function contentSecurityPolicy(): Plugin {
+function contentSecurityPolicy(server: boolean): Plugin {
   return {
     name: 'searchunveil:content-security-policy',
     apply: 'build',
     transformIndexHtml(html) {
-      return withPolicy(html, CONTENT_SECURITY_POLICY);
+      return withPolicy(html, hostedPolicy(server));
     },
   };
 }
@@ -119,6 +125,7 @@ function singleFile(): Plugin {
           `style-src ${styles.map(sha256).join(' ')}`,
           'img-src data:',
           'font-src data:',
+          "connect-src 'none'",
           ...SHARED_POLICY,
         ].join('; ');
 
@@ -135,10 +142,11 @@ function singleFile(): Plugin {
 
 export default defineConfig(({ mode }) => {
   const standalone = mode === 'standalone';
+  const server = mode === 'server';
   return {
     // Relative asset URLs let the static build run from any folder or subpath.
     base: './',
-    plugins: [standalone ? singleFile() : contentSecurityPolicy()],
+    plugins: [standalone ? singleFile() : contentSecurityPolicy(server)],
     oxc: { jsx: { runtime: 'automatic', importSource: 'preact' } },
     ...(standalone ? { publicDir: false as const } : {}),
     build: standalone
@@ -154,6 +162,7 @@ export default defineConfig(({ mode }) => {
         }
       : {
           target: 'es2022',
+          ...(server ? { outDir: 'dist-server' } : {}),
           // Keep the build self-contained: no inlined data: scripts, every asset a real file.
           assetsInlineLimit: 0,
         },

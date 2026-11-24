@@ -33,6 +33,12 @@ export const de: CoreCatalog = {
   'evidence.canonical': 'Canonical-Link',
   'evidence.heading': 'Überschrift',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'Statuscode',
+  'evidence.final-address': 'Endgültige Adresse',
+  'evidence.redirect': 'Weiterleitungen',
+  'evidence.header': 'Header',
+  'evidence.robots-rule': 'robots.txt-Regel',
+  'evidence.response-time': 'Antwortzeit (Sekunden)',
   'table.query': 'Suchanfrage',
   'table.page': 'Seite',
   'table.text': '{text}',
@@ -62,6 +68,9 @@ export const de: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2: Info und Beziehungen (1.3.1)',
   'ref.viewport': 'MDN: das Viewport-Meta-Tag',
   'ref.open-graph': 'Das Open-Graph-Protokoll',
+  'ref.robots-txt': 'Google Search Central: Einführung in robots.txt',
+  'ref.http-status': 'Google Search Central: HTTP-Statuscodes und Netzwerkfehler',
+  'ref.https': 'web.dev: Warum HTTPS wichtig ist',
 
   'gsc.headline.method':
     'Wir haben {current} mit {previous} verglichen und dabei jeden Tag dem gleichen Wochentag gegenübergestellt.',
@@ -347,6 +356,42 @@ export const de: CoreCatalog = {
   'page.social.missing.summary':
     'Soziale Netzwerke und Chat-Apps erstellen Linkvorschauen mit Open-Graph-Tags. Auf das Ranking in der Suche haben sie keinen Einfluss.',
   'page.social.ok': 'Die Seite hat Tags für Linkvorschauen',
+  'page.limit.fetched':
+    'Wir haben das HTML geprüft, das der Server für diese Adresse gesendet hat. Inhalte, die JavaScript nach dem Laden der Seite hinzufügt, sind nicht enthalten.',
+  'page.limit.scope.fetched':
+    'Ladegeschwindigkeit und Links von anderen Websites sind für die Suche ebenfalls wichtig. Sie sind nicht Teil dieser Prüfung.',
+
+  'http.status': 'Der Server hat mit Status {status} statt mit der Seite geantwortet',
+  'http.status.summary':
+    'Suchmaschinen indexieren Seiten, die mit einem Erfolgsstatus (200) antworten. Fehler- und Weiterleitungsstatus halten diese Adresse aus den Ergebnissen heraus.',
+  'http.check.status':
+    'Öffnen Sie die Adresse im Browser und prüfen Sie die Server- oder Hosting-Einstellung, die diesen Status liefert.',
+  'http.https': 'Die Seite wird ohne HTTPS ausgeliefert',
+  'http.https.summary':
+    'Browser kennzeichnen Seiten ohne HTTPS als nicht sicher, und Suchmaschinen bevorzugen die sichere Version einer Seite.',
+  'http.check.https':
+    'Installieren Sie ein Zertifikat und leiten Sie jede http://-Adresse auf ihre https://-Version weiter.',
+  'http.x-robots-tag':
+    'Der Server weist Suchmaschinen an, die Seite nicht in den Ergebnissen zu zeigen',
+  'http.x-robots-tag.summary':
+    'Der X-Robots-Tag-Header wirkt wie ein Robots-Meta-Tag, wird aber vom Server gesetzt und ist deshalb im HTML leicht zu übersehen.',
+  'http.check.x-robots-tag':
+    'Wenn diese Seite in der Suche erscheinen soll, entfernen Sie noindex aus dem X-Robots-Tag-Header in den Server- oder Hosting-Einstellungen.',
+  'http.robots-txt': 'robots.txt sperrt Suchmaschinen für diese Seite',
+  'http.robots-txt.summary':
+    'Der Googlebot crawlt keine Adressen, die robots.txt verbietet, und kann den Inhalt dieser Seite daher nicht lesen.',
+  'http.check.robots-txt':
+    'Wenn diese Seite in der Suche erscheinen soll, entfernen Sie die Regel aus robots.txt oder fassen Sie sie enger.',
+  'http.robots-txt.unreadable': 'Wir konnten die robots.txt der Website nicht lesen',
+  'http.robots-txt.unreadable.summary':
+    'Antwortet robots.txt mit einem Serverfehler, crawlt Google die ganze Website nicht mehr, bis die Datei wieder lesbar ist. Prüfen Sie, ob sie sich öffnen lässt.',
+  'http.redirects':
+    'Die Adresse leitet {count, plural, one {einmal} other {#-mal}} weiter, bevor die Seite erreicht ist',
+  'http.redirects.summary':
+    'Jede Weiterleitung kostet Besucher und Crawler eine zusätzliche Anfrage. Verlinken Sie direkt die endgültige Adresse.',
+  'http.ok': 'Der Server liefert die Seite ohne Hindernisse aus',
+  'http.ok.summary':
+    'Er antwortet über HTTPS mit Erfolg, und weder robots.txt noch die Header des Servers halten Suchmaschinen fern.',
 
   'mentions.kind.citation': 'Mit Link zitiert',
   'mentions.kind.mention': 'Ohne Link genannt',

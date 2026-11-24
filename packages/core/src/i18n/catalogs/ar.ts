@@ -35,6 +35,12 @@ export const ar: CoreCatalog = {
   'evidence.canonical': 'الرابط الأساسي',
   'evidence.heading': 'عنوان القسم',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'رمز الحالة',
+  'evidence.final-address': 'العنوان النهائي',
+  'evidence.redirect': 'عمليات إعادة التوجيه',
+  'evidence.header': 'عنوان HTTP',
+  'evidence.robots-rule': 'قاعدة robots.txt',
+  'evidence.response-time': 'زمن الاستجابة (بالثواني)',
   'table.query': 'طلب البحث',
   'table.page': 'الصفحة',
   'table.text': '{text}',
@@ -64,6 +70,9 @@ export const ar: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2: المعلومات والعلاقات (1.3.1)',
   'ref.viewport': 'MDN: علامة viewport الوصفية',
   'ref.open-graph': 'بروتوكول Open Graph',
+  'ref.robots-txt': 'مركز Google للبحث: مقدمة عن ملف robots.txt',
+  'ref.http-status': 'مركز Google للبحث: رموز حالة HTTP وأخطاء الشبكة',
+  'ref.https': 'web.dev: لماذا يهم HTTPS',
 
   'gsc.headline.method':
     'قارنّا الفترة {current} مع الفترة {previous}، مع مطابقة كل يوم باليوم نفسه من الأسبوع.',
@@ -332,6 +341,40 @@ export const ar: CoreCatalog = {
   'page.social.missing.summary':
     'تستخدم الشبكات الاجتماعية وتطبيقات المراسلة وسوم Open Graph لإنشاء معاينات الروابط. ولا تؤثر هذه الوسوم في ترتيب البحث.',
   'page.social.ok': 'للصفحة وسوم لمعاينة الروابط',
+  'page.limit.fetched':
+    'راجعنا رمز HTML الذي أرسله الخادم لهذا العنوان. ولا يشمل ذلك المحتوى الذي تضيفه JavaScript بعد تحميل الصفحة.',
+  'page.limit.scope.fetched':
+    'تؤثر أيضًا سرعة التحميل والروابط من المواقع الأخرى في البحث، لكنها ليست جزءًا من هذه المراجعة.',
+
+  'http.status': 'ردّ الخادم برمز الحالة {status} بدلًا من الصفحة',
+  'http.status.summary':
+    'تفهرس محركات البحث الصفحات التي تردّ برمز نجاح (200). أما رموز الخطأ وإعادة التوجيه فتُبقي هذا العنوان خارج النتائج.',
+  'http.check.status':
+    'افتح العنوان في متصفح، وراجع إعداد الخادم أو الاستضافة الذي يُرجع هذا الرمز.',
+  'http.https': 'تُقدَّم الصفحة بدون HTTPS',
+  'http.https.summary':
+    'تَسِم المتصفحات الصفحات التي لا تستخدم HTTPS بأنها غير آمنة، وتفضّل محركات البحث النسخة الآمنة من الصفحة.',
+  'http.check.https': 'ثبّت شهادة أمان، وأعِد توجيه كل عنوان http:// إلى نسخته https://.',
+  'http.x-robots-tag': 'يطلب الخادم من محركات البحث عدم عرض الصفحة في النتائج',
+  'http.x-robots-tag.summary':
+    'يعمل عنوان X-Robots-Tag مثل علامة robots الوصفية، لكن الخادم هو من يضيفه، لذا يسهل أن يفوتك عند فحص HTML.',
+  'http.check.x-robots-tag':
+    'إن كان يجب أن تظهر هذه الصفحة في البحث، فاحذف noindex من عنوان X-Robots-Tag في إعدادات الخادم أو الاستضافة.',
+  'http.robots-txt': 'يمنع ملف robots.txt محركات البحث من الوصول إلى هذه الصفحة',
+  'http.robots-txt.summary':
+    'لا يزحف Googlebot إلى العناوين التي يمنعها robots.txt، لذا لا يستطيع قراءة محتوى هذه الصفحة.',
+  'http.check.robots-txt':
+    'إن كان يجب أن تظهر هذه الصفحة في البحث، فاحذف القاعدة من robots.txt أو اجعلها أضيق نطاقًا.',
+  'http.robots-txt.unreadable': 'تعذّرت علينا قراءة ملف robots.txt للموقع',
+  'http.robots-txt.unreadable.summary':
+    'إذا ردّ ملف robots.txt بخطأ في الخادم، يتوقف Google عن الزحف إلى الموقع كله حتى يتمكن من قراءة الملف مجددًا. تحقّق من أنه يُفتح.',
+  'http.redirects':
+    'يُعاد توجيه العنوان {count, plural, one {مرة واحدة} two {مرتين} few {# مرات} many {# مرةً} other {# مرة}} قبل الوصول إلى الصفحة',
+  'http.redirects.summary':
+    'تضيف كل عملية إعادة توجيه طلبًا إضافيًا للزوار وبرامج الزحف. اربط مباشرةً بالعنوان النهائي.',
+  'http.ok': 'يقدّم الخادم الصفحة دون عوائق',
+  'http.ok.summary':
+    'يردّ بنجاح عبر HTTPS، ولا يُبعد robots.txt ولا عناوين الخادم محركاتِ البحث عنها.',
 
   'mentions.kind.citation': 'ذُكر مع رابط',
   'mentions.kind.mention': 'ذُكر بالاسم دون رابط',

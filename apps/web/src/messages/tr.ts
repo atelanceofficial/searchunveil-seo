@@ -21,6 +21,10 @@ export const uiTr: UiCatalog = {
   'ui.footer.built-by': 'SearchUnveil · Atelance tarafından geliştiriliyor',
   'ui.footer.status': 'Geliştirme aşamasında. Herkese açık bir sürüm değil.',
   'ui.footer.privacy': 'Çerez yok, analiz yok ve sayfa yüklendikten sonra hiçbir ağ isteği yok.',
+  'ui.footer.privacy.server':
+    'Çerez yok, analiz yok. Sayfalar yalnızca siz istediğinizde indirilir ve incelenir.',
+  'ui.footer.privacy.claude':
+    'Çerez yok, analiz yok. Yapay zekâ analizi istemediğiniz sürece hiçbir şey cihazınızdan çıkmaz.',
   'ui.page-title': '{page} · SearchUnveil',
 
   'ui.home.title': 'Web sitenizin nasıl bulunduğunu görün',
@@ -32,20 +36,21 @@ export const uiTr: UiCatalog = {
   'ui.home.gsc.action': 'Dışa aktarımı analiz et',
   'ui.home.page.title': 'Sayfam kolayca bulunabiliyor mu?',
   'ui.home.page.text':
-    'Bir sayfanın HTML’ini yaygın arama ve erişilebilirlik sorunları açısından inceleyin.',
+    'Bir adres girerek ya da HTML yapıştırarak sayfayı yaygın arama ve erişilebilirlik sorunlarına karşı denetleyin.',
   'ui.home.page.action': 'Sayfa incele',
   'ui.home.mentions.title': 'Yapay zekâ sitemden nerede bahsetti?',
   'ui.home.mentions.text':
     'Sitenizden bahseden veya sitenizi kaynak gösteren yapay zekâ yanıtlarının tarihli bir kaydını tutun.',
   'ui.home.mentions.action': 'Günlüğü aç',
   'ui.home.principles': 'SearchUnveil nasıl çalışır?',
-  'ui.home.principle.local': 'Her şey tarayıcınızda çalışır. Seçtiğiniz dosyalar asla yüklenmez.',
+  'ui.home.principle.local':
+    'Her inceleme tarayıcınızda çalışır; seçtiğiniz dosyalar asla yüklenmez.',
   'ui.home.principle.evidence': 'Her bulgu, dayandığı kanıtı gösterir.',
   'ui.home.principle.limits': 'Her sonuç, verinin size neyi söyleyemeyeceğini de belirtir.',
   'ui.home.fact.languages': 'dil',
   'ui.home.fact.uploads': 'yüklenen dosya',
   'ui.home.fact.trackers': 'çerez ya da izleyici',
-  'ui.home.fact.device': 'işlem cihazınızda yapılır',
+  'ui.home.fact.device': 'denetimler cihazınızda yapılır',
   'ui.home.showcase.title': 'Örnek dışa aktarımın gösterdikleri',
   'ui.home.showcase.text':
     'Kurgusal bir site olan example.com, bu sayfa açıldığı anda tarayıcınızda analiz edildi.',
@@ -109,7 +114,16 @@ export const uiTr: UiCatalog = {
 
   'ui.page.title': 'Sayfa incelemesi',
   'ui.page.lead':
-    'Bir sayfanın HTML kaynağını yapıştırın ya da kaydedilmiş bir HTML dosyası seçin. İnceleme bu cihazda çalışır.',
+    'Bir web sitesinin adresini girin ya da bir sayfanın HTML’ini yapıştırın. Her bulgu, kanıtı ve kaynaklarıyla birlikte gelir.',
+  'ui.page.mode': 'İnceleme yöntemi',
+  'ui.page.mode.address': 'Adresle',
+  'ui.page.mode.html': 'HTML yapıştırarak',
+  'ui.page.address': 'Web sitesi adresi',
+  'ui.page.address.hint':
+    'Örneğin atelance.com ya da atelance.com/hakkimizda. Sayfa ve robots.txt dosyası, bir tarayıcının yaptığı gibi indirilir.',
+  'ui.page.address.no-server':
+    'Adresle inceleme için SearchUnveil’in sunucusu gerekir; bu kopya sunucusuz çalışıyor. Sayfanın HTML’ini yine de yapıştırabilirsiniz.',
+  'ui.page.address.invalid': 'example.com gibi bir web sitesi adresi girin.',
   'ui.page.html': 'Sayfa HTML’i',
   'ui.page.html.hint':
     'Çoğu tarayıcıda sayfayı açın, Ctrl+U’ya (Mac’te ⌥⌘U) basın, ardından tümünü seçip kopyalayın.',
@@ -119,12 +133,123 @@ export const uiTr: UiCatalog = {
   'ui.page.file': 'Ya da bir HTML dosyası seçin',
   'ui.page.submit': 'Sayfayı incele',
   'ui.page.sample': 'Örnek bir sayfa dene',
-  'ui.page.why-paste':
-    'Neden adres girmek yerine yapıştırıyoruz? Sayfaları getirmek bir sunucu gerektirirdi. Bu önizleme her şeyi cihazınızda tutar.',
+  'ui.page.fetching': '{address} indiriliyor…',
+  'ui.page.no-server.title': 'Bu kopya sayfa indiremiyor',
+  'ui.page.no-server.steps':
+    '{address} adresini tarayıcınızda açın ve kaynağını görmek için Ctrl+U’ya (Mac’te ⌥⌘U) basın. Tamamını kopyalayıp “HTML yapıştırarak” bölümüne yapıştırın.',
+  'ui.page.no-server.switch': 'Bunun yerine HTML yapıştır',
+  'ui.page.fetch.invalid-address':
+    'Bu bir web sitesi adresine benzemiyor. example.com gibi bir adres deneyin.',
+  'ui.page.fetch.blocked-address':
+    'Güvenlik nedeniyle yalnızca standart web bağlantı noktalarındaki herkese açık siteler indirilebilir.',
+  'ui.page.fetch.unknown-host': 'Bu adreste yanıt veren bir web sitesi yok. Yazımı kontrol edin.',
+  'ui.page.fetch.unreachable':
+    'Web sitesi yanıt vermedi. Kapalı olabilir ya da otomatik ziyaretleri geri çeviriyor olabilir.',
+  'ui.page.fetch.timeout': 'Web sitesinin yanıt vermesi çok uzun sürdü. Birazdan yeniden deneyin.',
+  'ui.page.fetch.tls': 'Web sitesinin güvenlik sertifikası doğrulanamadığı için sayfa indirilmedi.',
+  'ui.page.fetch.too-many-redirects':
+    'Adres çok fazla kez yönlendiriyor. Kontrol etmek için bir tarayıcıda açın.',
+  'ui.page.fetch.too-large': 'Sayfa, incelenemeyecek kadar büyük.',
+  'ui.page.fetch.not-html': 'Adres bir web sayfasına değil, bir dosyaya çıkıyor.',
+  'ui.page.fetch.http-status': 'Web sitesi sayfa yerine {detail} durum koduyla yanıt verdi.',
+  'ui.page.fetch.rate-limited':
+    'Kısa sürede çok fazla inceleme yapıldı. Bir dakika bekleyip yeniden deneyin.',
+  'ui.page.fetch.offline':
+    'SearchUnveil’in sunucusuna ulaşılamadı. Bağlantınızı kontrol edip yeniden deneyin.',
+  'ui.page.fetch.failed': 'Sayfa indirilemedi. Yeniden deneyin ya da HTML’ini yapıştırın.',
   'ui.page.results': 'Sonuçlar',
   'ui.page.reviewed': 'İncelenen: {url}',
   'ui.page.reviewed-pasted': 'Sağladığınız HTML incelendi',
   'ui.page.done': 'İnceleme hazır.',
+  'ui.overview.title': 'Arama motorlarının gördüğü',
+  'ui.overview.serp': 'Google’da nasıl görünebilir',
+  'ui.overview.serp.note':
+    'Google başlığı ve açıklamayı kısaltabilir ya da sayfaya bakarak kendi metnini yazabilir.',
+  'ui.overview.serp.no-description': 'Açıklama yok. Google sayfadan bir metin seçecek.',
+  'ui.overview.page': 'Sayfa',
+  'ui.overview.server': 'Sunucu',
+  'ui.overview.language': 'Dil',
+  'ui.overview.canonical': 'Standart adres',
+  'ui.overview.robots': 'Robots kuralları',
+  'ui.overview.words': 'Metindeki kelime sayısı',
+  'ui.overview.headings': 'Başlıklar',
+  'ui.overview.images': 'Görseller',
+  'ui.overview.images.value': '{total} · {missing} tanesinde metin alternatifi yok',
+  'ui.overview.links': 'Bağlantılar',
+  'ui.overview.links.value': '{internal} iç · {external} dış',
+  'ui.overview.structured-data': 'Yapılandırılmış veri',
+  'ui.overview.social': 'Bağlantı önizlemesi',
+  'ui.overview.social.complete': 'Başlık, açıklama ve görsel',
+  'ui.overview.social.partial': 'Eksik',
+  'ui.overview.languages': 'Dil sürümleri',
+  'ui.overview.none': 'Yok',
+  'ui.overview.not-set': 'Belirtilmemiş',
+  'ui.overview.status': 'Durum kodu',
+  'ui.overview.final-address': 'Son adres',
+  'ui.overview.redirects': 'Yönlendirmeler',
+  'ui.overview.time': 'İndirme süresi',
+  'ui.overview.time.value': '{seconds} sn',
+  'ui.overview.size': 'HTML boyutu',
+  'ui.overview.size.value': '{kilobytes} KB',
+  'ui.overview.compression': 'Sıkıştırma',
+  'ui.overview.https': 'Güvenli bağlantı',
+  'ui.overview.https.hsts': 'HTTPS, HSTS ile',
+  'ui.overview.https.on': 'HTTPS var',
+  'ui.overview.https.off': 'Yok',
+  'ui.overview.robots-txt': 'robots.txt dosyası',
+  'ui.overview.robots-txt.allows': 'Googlebot’a izin veriyor',
+  'ui.overview.robots-txt.blocks': 'Googlebot’u engelliyor',
+  'ui.overview.robots-txt.missing': 'Yok; yani her şeye izin var',
+  'ui.overview.robots-txt.unknown': 'Okunamadı',
+  'ui.overview.sitemaps': 'Listelenen site haritaları',
+  'ui.overview.outline': 'Başlık yapısı',
+  'ui.overview.outline.empty': 'Sayfada başlık yok.',
+  'ui.overview.outline.more': '{count, plural, one {ve # başlık daha} other {ve # başlık daha}}',
+  'ui.analysis.title': 'Yapay zekâ ile ayrıntılı analiz',
+  'ui.analysis.lead':
+    'Anthropic’in en yetenekli modeli Claude Fable 5.2, bu incelemeyi ve sayfanın metnini okur; en çok neyin önemli olduğunu ve tam olarak neyi değiştirmeniz gerektiğini açıklar.',
+  'ui.analysis.sends.server':
+    'Başlattığınızda bulgular, yukarıdaki bilgiler ve sayfadaki görünür metnin başı, SearchUnveil’in sunucusu üzerinden Anthropic’e gönderilir.',
+  'ui.analysis.sends.claude':
+    'Başlattığınızda bulgular, yukarıdaki bilgiler ve sayfadaki görünür metnin başı, kendi Claude hesabınız üzerinden Claude’a gönderilir.',
+  'ui.analysis.unavailable':
+    'Yapay zekâ analizi, SearchUnveil sunucusu ve bir Anthropic API anahtarıyla çalıştığında ya da Claude içinde açıldığında kullanılabilir.',
+  'ui.analysis.start': 'Fable 5.2 ile analiz et',
+  'ui.analysis.again': 'Yeniden analiz et',
+  'ui.analysis.thinking':
+    'Claude incelemeyi okuyor ve üzerinde düşünüyor. Bu genellikle bir ile üç dakika sürer.',
+  'ui.analysis.writing': 'Claude analizi yazıyor…',
+  'ui.analysis.done': 'Analiz hazır.',
+  'ui.analysis.by': 'Yazan: {model}.',
+  'ui.analysis.by-tier': 'Hesabınızda kullanılabilen en yetenekli Claude modeli yazdı.',
+  'ui.analysis.fallback':
+    'İstenen model bu isteğin bir kısmını geri çevirdiği için analizi {model} tamamladı.',
+  'ui.analysis.caution':
+    'Yapay zekâ hata yapabilir. Sitenizi değiştirmeden önce her öneriyi kontrol edin.',
+  'ui.analysis.verdict': 'Genel durum: {verdict, select, strong {güçlü} weak {zayıf} other {orta}}',
+  'ui.analysis.priorities': 'Sırasıyla yapılacaklar',
+  'ui.analysis.why': 'Neden önemli',
+  'ui.analysis.how': 'Nasıl yapılır',
+  'ui.analysis.evidence': 'Dayanağı',
+  'ui.analysis.impact': 'Etki: {level, select, high {yüksek} low {düşük} other {orta}}',
+  'ui.analysis.effort': 'Emek: {level, select, high {yüksek} low {düşük} other {orta}}',
+  'ui.analysis.titles': 'Başlık önerileri',
+  'ui.analysis.descriptions': 'Açıklama önerileri',
+  'ui.analysis.characters': '{count, plural, one {# karakter} other {# karakter}}',
+  'ui.analysis.content': 'İçerik hakkında',
+  'ui.analysis.technical': 'Teknik notlar',
+  'ui.analysis.caveats': 'Bu analizin bilemeyecekleri',
+  'ui.analysis.error.cancelled': 'Analiz durduruldu.',
+  'ui.analysis.error.not-granted':
+    'Claude’un burada çalışmasına izin verilmedi. Yeniden sorulması için sayfayı yenileyin.',
+  'ui.analysis.error.rate-limited':
+    'Kısa sürede çok fazla analiz yapıldı. Daha sonra yeniden deneyin.',
+  'ui.analysis.error.refused': 'Claude bu sayfayı analiz etmeyi geri çevirdi.',
+  'ui.analysis.error.too-long': 'Yanıt yarıda kesildi. Yeniden deneyin.',
+  'ui.analysis.error.invalid-answer': 'Yanıt okunamadı. Yeniden deneyin.',
+  'ui.analysis.error.unavailable':
+    'Yapay zekâ analizi şu anda kullanılamıyor. Daha sonra yeniden deneyin.',
+  'ui.analysis.error.failed': 'Analiz tamamlanamadı. Birazdan yeniden deneyin.',
   'ui.site.title': 'Tüm siteyi inceleyin',
   'ui.site.lead':
     'Sitenin dosyalarını içeren bir ZIP (örneğin bir yedek ya da statik dışa aktarım) veya birkaç HTML dosyası seçin. Her sayfa bu cihazda incelenir; görseller, stiller ve diğer dosyalar sayılır ama okunmaz.',
@@ -206,6 +331,18 @@ export const uiTr: UiCatalog = {
 
   'ui.privacy.title': 'Verileriniz',
   'ui.privacy.lead': 'SearchUnveil tamamen tarayıcınızda çalışır.',
+  'ui.privacy.lead.server':
+    'SearchUnveil sayfaları tarayıcınızda inceler. Sunucusu yalnızca siz istediğinizde devreye girer.',
+  'ui.privacy.lead.claude':
+    'SearchUnveil tarayıcınızda çalışır. Dışarıya veri gönderen tek şey, istediğinizde çalışan yapay zekâ analizidir.',
+  'ui.privacy.address':
+    'Adresle inceleme yaptığınızda sunucu, herkese açık o sayfayı ve robots.txt dosyasını indirip tarayıcınıza iletir. Hiçbir şey saklamaz.',
+  'ui.privacy.ai.server':
+    'Yapay zekâ analizi istediğinizde bulgular, sayfa bilgileri ve sayfadaki görünür metnin başı, sunucu üzerinden Anthropic’in Claude modeline gider. Dosyalarınız gitmez.',
+  'ui.privacy.ai.claude':
+    'Yapay zekâ analizi istediğinizde bulgular, sayfa bilgileri ve sayfadaki görünür metnin başı, hesabınız üzerinden Claude’a gider. Dosyalarınız gitmez.',
+  'ui.privacy.network.server':
+    'Sayfanın güvenlik politikası, yalnızca kendi sunucusuna bağlanmasına izin verir.',
   'ui.privacy.files': 'Analiz ettiğiniz dosyalar bellekte okunur. Asla saklanmaz veya yüklenmez.',
   'ui.privacy.stored':
     'Bu tarayıcı yalnızca yapay zekâ bahsetme günlüğünüzü ve dil ile tema tercihlerinizi saklar.',

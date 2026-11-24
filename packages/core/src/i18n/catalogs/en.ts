@@ -45,6 +45,12 @@ const messages = {
   'evidence.canonical': 'Canonical link',
   'evidence.heading': 'Heading',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'Status',
+  'evidence.final-address': 'Final address',
+  'evidence.redirect': 'Redirects',
+  'evidence.header': 'Header',
+  'evidence.robots-rule': 'robots.txt rule',
+  'evidence.response-time': 'Response time (seconds)',
   'table.query': 'Query',
   'table.page': 'Page',
   'table.text': '{text}',
@@ -75,6 +81,9 @@ const messages = {
   'ref.wcag-structure': 'WCAG 2.2: Info and Relationships (1.3.1)',
   'ref.viewport': 'MDN: the viewport meta tag',
   'ref.open-graph': 'The Open Graph protocol',
+  'ref.robots-txt': 'Google Search Central: introduction to robots.txt',
+  'ref.http-status': 'Google Search Central: HTTP status codes and network errors',
+  'ref.https': 'web.dev: why HTTPS matters',
 
   // Search Console: headline
   'gsc.headline.method':
@@ -353,6 +362,42 @@ const messages = {
   'page.social.missing.summary':
     'Social networks and chat apps use Open Graph tags to build link previews. They don’t affect search rankings.',
   'page.social.ok': 'The page has link preview tags',
+  'page.limit.fetched':
+    'We reviewed the HTML the server sent for this address. Content that JavaScript adds after the page loads isn’t included.',
+  'page.limit.scope.fetched':
+    'Loading speed and links from other sites also matter for search. They aren’t part of this review.',
+
+  // Server response (pages fetched by address)
+  'http.status': 'The server answered with status {status} instead of the page',
+  'http.status.summary':
+    'Search engines index pages that answer with a success status (200). Error and redirect statuses keep this address out of results.',
+  'http.check.status':
+    'Open the address in a browser and check the server or hosting setting that returns this status.',
+  'http.https': 'The page is served without HTTPS',
+  'http.https.summary':
+    'Browsers mark pages without HTTPS as not secure, and search engines prefer the secure version of a page.',
+  'http.check.https':
+    'Install a certificate and redirect every http:// address to its https:// version.',
+  'http.x-robots-tag': 'The server tells search engines not to show the page in results',
+  'http.x-robots-tag.summary':
+    'The X-Robots-Tag header works like a robots meta tag, but the server sets it, so it’s easy to miss in the HTML.',
+  'http.check.x-robots-tag':
+    'If this page should appear in search, remove noindex from the X-Robots-Tag header in your server or hosting settings.',
+  'http.robots-txt': 'robots.txt blocks search engines from this page',
+  'http.robots-txt.summary':
+    'Googlebot doesn’t crawl addresses that robots.txt disallows, so it can’t read this page’s content.',
+  'http.check.robots-txt':
+    'If this page should appear in search, remove the rule from robots.txt or narrow it.',
+  'http.robots-txt.unreadable': 'We couldn’t read the site’s robots.txt',
+  'http.robots-txt.unreadable.summary':
+    'When robots.txt answers with a server error, Google stops crawling the whole site until it can read the file again. Check that it opens.',
+  'http.redirects':
+    '{count, plural, one {The address redirects once} other {The address redirects # times}} before reaching the page',
+  'http.redirects.summary':
+    'Each redirect adds a round trip for visitors and crawlers. Link to the final address directly.',
+  'http.ok': 'The server delivers the page without obstacles',
+  'http.ok.summary':
+    'It answers with success over HTTPS, and neither robots.txt nor the server’s headers keep search engines away.',
 
   // AI mention log
   'mentions.kind.citation': 'Cited with a link',

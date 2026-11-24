@@ -1,0 +1,15 @@
+{
+  "name": "@searchunveil/server",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Optional SearchUnveil server: reviews pages by their address and runs the AI analysis with Claude. Serves the web app.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "start": "node src/main.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "1.7.0",
+    "@searchunveil/core": "0.1.0"
+  }
+}

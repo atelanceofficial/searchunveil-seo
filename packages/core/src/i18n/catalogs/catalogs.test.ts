@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { describe, expect, it } from 'vitest';
+import { reviewHttp } from '../../audit/http.ts';
 import { reviewHtml } from '../../audit/review.ts';
 import type { Finding } from '../../findings.ts';
 import { analyzeSearchConsole } from '../../gsc/analyze.ts';
@@ -152,6 +153,44 @@ describe('findings render in every language', () => {
     if (!result.ok) throw new Error('fixture');
     for (const locale of LOCALES) {
       for (const finding of result.value.findings) {
+        for (const message of messagesOf(finding)) {
+          expect(render(locale, message), `${locale} ${message.key}`).not.toMatch(/[{}]/);
+        }
+      }
+    }
+  });
+
+  it('for a page fetched by its address with every server problem', () => {
+    const base = {
+      requestedUrl: 'http://example.com/',
+      finalUrl: 'http://example.com/a',
+      status: 404,
+      redirects: [
+        { url: 'http://example.com/', status: 301 },
+        { url: 'http://example.com/b', status: 302 },
+      ],
+      elapsedMs: 1250,
+      bytes: 1000,
+      contentType: 'text/html',
+      contentEncoding: null,
+      xRobotsTag: 'noindex',
+      hsts: false,
+      robotsTxt: { found: true, allowsPage: false, rule: 'Disallow: /a', sitemaps: [] },
+    };
+    const findings = [
+      ...reviewHttp(base),
+      ...reviewHttp({ ...base, robotsTxt: null }),
+      ...reviewHttp({
+        ...base,
+        finalUrl: 'https://example.com/',
+        status: 200,
+        xRobotsTag: null,
+        robotsTxt: { found: false, allowsPage: true, rule: null, sitemaps: [] },
+      }),
+    ];
+    expect(new Set(findings.map((f) => f.rule)).size).toBe(7);
+    for (const locale of LOCALES) {
+      for (const finding of findings) {
         for (const message of messagesOf(finding)) {
           expect(render(locale, message), `${locale} ${message.key}`).not.toMatch(/[{}]/);
         }

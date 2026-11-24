@@ -34,6 +34,12 @@ export const es: CoreCatalog = {
   'evidence.canonical': 'Enlace canónico',
   'evidence.heading': 'Encabezado',
   'evidence.heading-level': 'h{level}',
+  'evidence.status': 'Código de estado',
+  'evidence.final-address': 'Dirección final',
+  'evidence.redirect': 'Redirecciones',
+  'evidence.header': 'Encabezado',
+  'evidence.robots-rule': 'Regla de robots.txt',
+  'evidence.response-time': 'Tiempo de respuesta (segundos)',
   'table.query': 'Consulta',
   'table.page': 'Página',
   'table.text': '{text}',
@@ -63,6 +69,9 @@ export const es: CoreCatalog = {
   'ref.wcag-structure': 'WCAG 2.2: Información y relaciones (1.3.1)',
   'ref.viewport': 'MDN: la metaetiqueta viewport',
   'ref.open-graph': 'El protocolo Open Graph',
+  'ref.robots-txt': 'Google Search Central: introducción a robots.txt',
+  'ref.http-status': 'Google Search Central: códigos de estado HTTP y errores de red',
+  'ref.https': 'web.dev: por qué importa HTTPS',
 
   'gsc.headline.method':
     'Comparamos {current} con {previous}, emparejando cada día con el mismo día de la semana.',
@@ -347,6 +356,42 @@ export const es: CoreCatalog = {
   'page.social.missing.summary':
     'Las redes sociales y las aplicaciones de chat usan las etiquetas Open Graph para crear vistas previas de enlaces. No influyen en las clasificaciones de búsqueda.',
   'page.social.ok': 'La página tiene etiquetas para vistas previas de enlaces',
+  'page.limit.fetched':
+    'Revisamos el HTML que el servidor envió para esta dirección. No se incluye el contenido que JavaScript añade después de cargar la página.',
+  'page.limit.scope.fetched':
+    'La velocidad de carga y los enlaces desde otros sitios también influyen en la búsqueda. No forman parte de esta revisión.',
+
+  'http.status': 'El servidor respondió con el estado {status} en lugar de la página',
+  'http.status.summary':
+    'Los buscadores indexan las páginas que responden con un estado de éxito (200). Los estados de error y de redirección dejan esta dirección fuera de los resultados.',
+  'http.check.status':
+    'Abre la dirección en un navegador y revisa la configuración del servidor o del hosting que devuelve este estado.',
+  'http.https': 'La página se sirve sin HTTPS',
+  'http.https.summary':
+    'Los navegadores marcan como no seguras las páginas sin HTTPS, y los buscadores prefieren la versión segura de una página.',
+  'http.check.https':
+    'Instala un certificado y redirige cada dirección http:// a su versión https://.',
+  'http.x-robots-tag':
+    'El servidor indica a los buscadores que no muestren la página en los resultados',
+  'http.x-robots-tag.summary':
+    'El encabezado X-Robots-Tag funciona como una metaetiqueta robots, pero lo añade el servidor, así que es fácil pasarlo por alto en el HTML.',
+  'http.check.x-robots-tag':
+    'Si esta página debe aparecer en la búsqueda, quita noindex del encabezado X-Robots-Tag en la configuración del servidor o del hosting.',
+  'http.robots-txt': 'robots.txt impide a los buscadores acceder a esta página',
+  'http.robots-txt.summary':
+    'Googlebot no rastrea las direcciones que robots.txt prohíbe, así que no puede leer el contenido de esta página.',
+  'http.check.robots-txt':
+    'Si esta página debe aparecer en la búsqueda, elimina la regla de robots.txt o hazla más específica.',
+  'http.robots-txt.unreadable': 'No pudimos leer el robots.txt del sitio',
+  'http.robots-txt.unreadable.summary':
+    'Si robots.txt responde con un error del servidor, Google deja de rastrear todo el sitio hasta que puede volver a leer el archivo. Comprueba que se abre.',
+  'http.redirects':
+    'La dirección redirige {count, plural, one {una vez} other {# veces}} antes de llegar a la página',
+  'http.redirects.summary':
+    'Cada redirección añade un viaje de ida y vuelta para visitantes y rastreadores. Enlaza directamente a la dirección final.',
+  'http.ok': 'El servidor entrega la página sin obstáculos',
+  'http.ok.summary':
+    'Responde con éxito a través de HTTPS, y ni robots.txt ni los encabezados del servidor alejan a los buscadores.',
 
   'mentions.kind.citation': 'Citado con enlace',
   'mentions.kind.mention': 'Nombrado sin enlace',

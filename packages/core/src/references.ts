@@ -84,4 +84,16 @@ export const REFERENCES = {
     title: message('ref.open-graph'),
     url: 'https://ogp.me/',
   },
+  robotsTxt: {
+    title: message('ref.robots-txt'),
+    url: 'https://developers.google.com/search/docs/crawling-indexing/robots/intro',
+  },
+  httpStatus: {
+    title: message('ref.http-status'),
+    url: 'https://developers.google.com/search/docs/crawling-indexing/http-network-errors',
+  },
+  https: {
+    title: message('ref.https'),
+    url: 'https://web.dev/articles/why-https-matters',
+  },
 } as const satisfies Record<string, Reference>;

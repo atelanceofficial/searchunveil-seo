@@ -1,6 +1,6 @@
 # 0001. Process data on the person's device
 
-**Status:** Proposed · **Date:** 2026-11-23
+**Status:** Proposed · **Date:** 2026-11-23 · **Amended by:** [0005](0005-optional-server-for-addresses-and-ai.md)
 
 ## Context
 
@@ -11,7 +11,7 @@ The technical direction left open where uploaded data is processed and whether a
 - All analysis runs in the browser. Files are read in memory and never uploaded.
 - The production build carries a Content Security Policy with `connect-src 'none'`, so the page cannot open network connections after it loads. This turns a privacy promise into a property anyone can verify.
 - The only stored data is the AI mention log and two preferences (language and theme), kept in the browser's local storage, with one control to delete everything.
-- Page reviews work on HTML the person pastes or chooses. Fetching pages is left for later: it needs a server with the request-forgery protections listed in the technical direction.
+- Page reviews work on HTML the person pastes or chooses. Fetching pages needs a server with request-forgery protections; [ADR 0005](0005-optional-server-for-addresses-and-ai.md) adds one as a separate, optional build, and leaves this decision in force for the static app.
 
 ## Consequences
 

@@ -4,6 +4,7 @@ node_modules/
 # Build and test output
 dist/
 dist-standalone/
+dist-server/
 coverage/
 playwright-report/
 test-results/

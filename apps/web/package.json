@@ -9,6 +9,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:standalone": "vite build --mode standalone",
+    "build:server": "vite build --mode server",
     "preview": "vite preview",
     "test:e2e": "playwright test"
   },

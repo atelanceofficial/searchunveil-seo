@@ -114,15 +114,29 @@ export type { DailyPoint } from './analysis/series.ts';
 // Page review
 export {
   displayWidth,
+  FACT_HEADINGS,
   isValidLanguageTag,
   normalizeUrl,
   PAGE_THRESHOLDS,
+  pageFacts,
   reviewHtml,
   reviewSnapshot,
+  siteAddress,
+  type PageFacts,
   type PageReport,
   type PageReviewOptions,
 } from './audit/review.ts';
-export { extractSnapshot, type PageSnapshot } from './audit/snapshot.ts';
+export { extractSnapshot, TEXT_SAMPLE_LENGTH, type PageSnapshot } from './audit/snapshot.ts';
+export { reviewHttp, robotsAddress, type HttpFacts } from './audit/http.ts';
+export {
+  parseRobots,
+  ROBOTS_MAX_CHARS,
+  robotsAllows,
+  robotsRule,
+  type RobotsFile,
+  type RobotsGroup,
+  type RobotsRule,
+} from './audit/robots.ts';
 export {
   pageAddress,
   reviewSite,
@@ -133,6 +147,26 @@ export {
   type SiteReviewOptions,
   type SkippedPage,
 } from './audit/site.ts';
+
+// Analysis by a language model
+export {
+  ANALYSIS_EVIDENCE_MAX_CHARS,
+  ANALYSIS_MODEL,
+  extractJson,
+  PAGE_ANALYSIS_SCHEMA,
+  PAGE_ANALYSIS_SHAPE,
+  pageAnalysisEvidence,
+  pageAnalysisInstructions,
+  pageAnalysisPrompt,
+  pageAnalysisRequest,
+  parsePageAnalysis,
+  serializePageAnalysis,
+  type AnalysisLevel,
+  type AnalysisPriority,
+  type AnalysisRequest,
+  type AnalysisVerdict,
+  type PageAnalysis,
+} from './ai/page-analysis.ts';
 
 // AI mention log
 export {
