@@ -25,7 +25,7 @@ const messages = {
   'ui.footer.status': 'In development. Not a public release.',
   'ui.footer.privacy': 'No cookies, no analytics, and no network requests after the page loads.',
   'ui.footer.privacy.server':
-    'No cookies and no analytics. Pages are downloaded and analyzed only when you ask.',
+    'No cookies and no analytics. Pages are downloaded only when you ask, and reviewed on your device.',
   'ui.footer.privacy.claude':
     'No cookies and no analytics. Nothing leaves your device unless you ask for an AI analysis.',
   'ui.page-title': '{page} · SearchUnveil',
@@ -215,12 +215,8 @@ const messages = {
   'ui.analysis.title': 'Second opinion from Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, Anthropic’s most capable model, reads this review and the page’s text, then explains what matters most and exactly what to change.',
-  'ui.analysis.sends.server':
-    'When you start it, the findings, the facts above and the start of the page’s visible text are sent to Anthropic through SearchUnveil’s server.',
   'ui.analysis.sends.claude':
     'When you start it, the findings, the facts above and the start of the page’s visible text are sent to Claude, on your own Claude account.',
-  'ui.analysis.unavailable':
-    'The AI analysis works when SearchUnveil runs with its server and an Anthropic API key, or inside Claude.',
   'ui.analysis.start': 'Analyze with Fable 5.2',
   'ui.analysis.again': 'Analyze again',
   'ui.analysis.thinking':
@@ -340,8 +336,6 @@ const messages = {
     'SearchUnveil works in your browser. Only the AI analysis, when you ask for it, sends data out.',
   'ui.privacy.address':
     'When you review by address, the server downloads that public page and its robots.txt and passes them to your browser. It keeps nothing.',
-  'ui.privacy.ai.server':
-    'When you ask for an AI analysis, the findings, the page facts and the start of the page’s visible text go to Anthropic’s Claude through the server. Your files don’t.',
   'ui.privacy.ai.claude':
     'When you ask for an AI analysis, the findings, the page facts and the start of the page’s visible text go to Claude on your account. Your files don’t.',
   'ui.privacy.network.server': 'The page’s security policy lets it connect only to its own server.',

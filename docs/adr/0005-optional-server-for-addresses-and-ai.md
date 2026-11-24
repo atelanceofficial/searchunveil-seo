@@ -1,6 +1,6 @@
 # 0005. An optional server for reviews by address and the AI analysis
 
-**Status:** Proposed · **Date:** 2026-11-24 · **Amends:** [0001](0001-local-first-processing.md)
+**Status:** Proposed · **Date:** 2026-11-24 · **Amends:** [0001](0001-local-first-processing.md) · **Amended by:** [0007](0007-no-api-keys.md): the server no longer runs the AI analysis, and no API key is used anywhere
 
 ## Context
 

@@ -6,12 +6,12 @@ import { createTranslator } from '../i18n/format.ts';
 import { LOCALE_INFO, type Locale } from '../i18n/locales.ts';
 
 /**
- * A deeper reading of a page review by a language model.
+ * A second opinion on a page review, by a language model.
  *
- * The engine never calls a model itself. It builds the request (standing instructions, the
- * review's evidence and the page's own text) and checks the answer, which is untrusted input
- * like any file a person chooses. The app sends the request through whatever is available to
- * it: Claude inside a claude.ai viewer, or the app's own server with an Anthropic API key.
+ * The engine never calls a model itself, and nothing here needs an API key. It builds the
+ * request (standing instructions, the review's evidence and the page's own text) and checks the
+ * answer, which is untrusted input like any file a person chooses. The app sends the request
+ * through Claude in the claude.ai viewer that shows it, on the viewer's own account.
  */
 
 /** The model the analysis asks for: Anthropic's most capable widely released model. */
@@ -69,47 +69,6 @@ const LIMITS = {
   findings: 60,
 } as const;
 
-/** The answer's shape, as JSON Schema for structured outputs. */
-export const PAGE_ANALYSIS_SCHEMA = {
-  type: 'object',
-  additionalProperties: false,
-  required: [
-    'summary',
-    'verdict',
-    'priorities',
-    'title_suggestions',
-    'description_suggestions',
-    'content_notes',
-    'technical_notes',
-    'caveats',
-  ],
-  properties: {
-    summary: { type: 'string' },
-    verdict: { type: 'string', enum: ['strong', 'fair', 'weak'] },
-    priorities: {
-      type: 'array',
-      items: {
-        type: 'object',
-        additionalProperties: false,
-        required: ['title', 'why', 'how', 'evidence', 'impact', 'effort'],
-        properties: {
-          title: { type: 'string' },
-          why: { type: 'string' },
-          how: { type: 'string' },
-          evidence: { type: 'string' },
-          impact: { type: 'string', enum: ['high', 'medium', 'low'] },
-          effort: { type: 'string', enum: ['low', 'medium', 'high'] },
-        },
-      },
-    },
-    title_suggestions: { type: 'array', items: { type: 'string' } },
-    description_suggestions: { type: 'array', items: { type: 'string' } },
-    content_notes: { type: 'array', items: { type: 'string' } },
-    technical_notes: { type: 'array', items: { type: 'string' } },
-    caveats: { type: 'array', items: { type: 'string' } },
-  },
-} as const;
-
 const SHAPE = `{
   "summary": string,              // 2-4 sentences: where the page stands and the biggest opportunity
   "verdict": "strong" | "fair" | "weak",
@@ -129,9 +88,6 @@ const SHAPE = `{
   "technical_notes": [string],          // structure, markup and server observations
   "caveats": [string]                   // what cannot be judged from this evidence
 }`;
-
-/** The longest evidence document a server should accept; real ones are far smaller. */
-export const ANALYSIS_EVIDENCE_MAX_CHARS = 150_000;
 
 /** Builds the request for one reviewed page, with explanations in the reader's language. */
 export function pageAnalysisRequest(
@@ -212,9 +168,6 @@ export function pageAnalysisPrompt(request: AnalysisRequest): string {
   ].join('\n');
 }
 
-/** The text the instructions ask the model to produce, for the structured-output path. */
-export const PAGE_ANALYSIS_SHAPE = SHAPE;
-
 /**
  * Reads a model's answer, which is untrusted: keeps only fields of the expected types, trims
  * them to sensible lengths and drops the rest. Returns `null` when nothing useful remains.
@@ -254,20 +207,6 @@ export function parsePageAnalysis(value: unknown): PageAnalysis | null {
     contentNotes: strings(value['content_notes'], LIMITS.notes, LIMITS.note),
     technicalNotes: strings(value['technical_notes'], LIMITS.notes, LIMITS.note),
     caveats: strings(value['caveats'], LIMITS.caveats, LIMITS.note),
-  };
-}
-
-/** An analysis in the answer's own shape, which `parsePageAnalysis` reads back. */
-export function serializePageAnalysis(analysis: PageAnalysis): Record<string, unknown> {
-  return {
-    summary: analysis.summary,
-    verdict: analysis.verdict,
-    priorities: analysis.priorities,
-    title_suggestions: analysis.titleSuggestions,
-    description_suggestions: analysis.descriptionSuggestions,
-    content_notes: analysis.contentNotes,
-    technical_notes: analysis.technicalNotes,
-    caveats: analysis.caveats,
   };
 }
 

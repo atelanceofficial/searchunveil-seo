@@ -38,8 +38,9 @@ function pageLanguage(report: PageReport): string | undefined {
 
 /**
  * The analysis of one page review. SearchUnveil Analyst, the app's own engine, writes it at once
- * on the person's device. Where Claude is available, Claude Fable 5.2 can add a second opinion;
- * nothing is sent until the person asks, and the panel says beforehand what will be sent.
+ * on the person's device, with no API key or account. Inside Claude, Claude Fable 5.2 can add a
+ * second opinion on the viewer's own account; nothing is sent until the person asks, and the
+ * panel says beforehand what will be sent.
  */
 export function AnalysisPanel(props: { readonly report: PageReport }) {
   const { t } = useI18n();
@@ -91,10 +92,10 @@ function SecondOpinion(props: { readonly report: PageReport }) {
     if (state.kind === 'done') resultHeading.current?.focus();
   }, [state.kind]);
 
-  if (analyst === undefined) return null;
+  // Without Claude, the analyst's plan stands alone: nothing to offer, nothing to explain.
+  if (analyst === undefined || analyst === null) return null;
 
   const start = async () => {
-    if (analyst === null) return;
     controller.current?.abort();
     const current = new AbortController();
     controller.current = current;
@@ -130,42 +131,34 @@ function SecondOpinion(props: { readonly report: PageReport }) {
   return (
     <section class="second-opinion" aria-labelledby={`${id}-title`}>
       <h4 id={`${id}-title`}>{t.t('ui.analysis.title')}</h4>
-      {analyst === null ? (
-        <p class="hint">{t.t('ui.analysis.unavailable')}</p>
-      ) : (
-        <>
-          <p>{t.t('ui.analysis.lead')}</p>
-          <p class="hint">
-            <Icon name="lock" />
-            {t.t(
-              analyst.kind === 'server' ? 'ui.analysis.sends.server' : 'ui.analysis.sends.claude',
-            )}
-          </p>
-          <div class="actions">
-            <button
-              type="button"
-              class="button"
-              disabled={running}
-              onClick={() => {
-                void start();
-              }}
-            >
-              {t.t(state.kind === 'done' ? 'ui.analysis.again' : 'ui.analysis.start')}
-            </button>
-            {running ? (
-              <button
-                type="button"
-                class="button"
-                onClick={() => {
-                  controller.current?.abort();
-                }}
-              >
-                {t.t('ui.site.stop')}
-              </button>
-            ) : null}
-          </div>
-        </>
-      )}
+      <p>{t.t('ui.analysis.lead')}</p>
+      <p class="hint">
+        <Icon name="lock" />
+        {t.t('ui.analysis.sends.claude')}
+      </p>
+      <div class="actions">
+        <button
+          type="button"
+          class="button"
+          disabled={running}
+          onClick={() => {
+            void start();
+          }}
+        >
+          {t.t(state.kind === 'done' ? 'ui.analysis.again' : 'ui.analysis.start')}
+        </button>
+        {running ? (
+          <button
+            type="button"
+            class="button"
+            onClick={() => {
+              controller.current?.abort();
+            }}
+          >
+            {t.t('ui.site.stop')}
+          </button>
+        ) : null}
+      </div>
       <div role="status" class="analysis-panel__status">
         {running ? (
           <p class="progress analysis-progress">

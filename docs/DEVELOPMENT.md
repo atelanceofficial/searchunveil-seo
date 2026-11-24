@@ -29,24 +29,19 @@ The build is a folder of static files with relative paths; it can be served from
 
 ## Run the server version
 
-The server version reviews pages by their address and offers the AI analysis ([ADR 0005](adr/0005-optional-server-for-addresses-and-ai.md)).
+The server version reviews pages by their address ([ADR 0005](adr/0005-optional-server-for-addresses-and-ai.md)). It needs no API key ([ADR 0007](adr/0007-no-api-keys.md)).
 
 ```sh
-export ANTHROPIC_API_KEY=...   # optional: turns on the AI analysis with Claude Fable 5.2
-npm run serve                  # builds apps/web/dist-server, then serves it at http://127.0.0.1:8787
+npm run serve   # builds apps/web/dist-server, then serves it at http://127.0.0.1:8787
 ```
-
-Without a key, pages can still be reviewed by address and the interface says the analysis is off. Never put the key in the web app, a `.env` file in the repository, or an issue.
 
 | Variable | Default | What it does |
 | :--- | :--- | :--- |
 | `PORT` | `8787` | The port to listen on. |
 | `HOST` | `127.0.0.1` | The interface to listen on; `0.0.0.0` accepts connections from other machines, as most hosts need. |
-| `ANTHROPIC_API_KEY` | none | Turns on the AI analysis. Read by Anthropic's SDK; never sent to browsers. |
 | `TRUST_PROXY` | off | Set to `1` behind a reverse proxy that sets `X-Forwarded-For`, so limits apply per visitor rather than per proxy. |
-| `ANALYSES_PER_DAY` | `200` | Ceiling on AI analyses for everyone per day, a bound on what the key can spend. |
 
-To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.ts` on any host with Node.js 22.22 or later, behind HTTPS. The server keeps no data. The analysis uses Anthropic's server-side fallback: if Claude Fable 5.2 declines a request, Anthropic's recommended fallback model finishes it, and the panel names the model that wrote the answer.
+To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.ts` on any host with Node.js 22.22 or later, behind HTTPS. The server keeps no data and calls no paid service.
 
 ## Commands
 
@@ -79,8 +74,8 @@ To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.t
 | `apps/web/src/styles/app.css` | Design tokens and styles; contrast is tested in `contrast.test.ts`. |
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
 | `packages/core/src/analyst` | SearchUnveil Analyst: language detection, key phrases, ideas and the ranked plan. |
-| `packages/core/src/ai` | The AI analysis: request, answer schema and checks. |
-| `apps/server/src` | The optional server: page fetching (`fetch-page.ts`, `network.ts`), the Claude analysis (`analyze.ts`) and the HTTP endpoints (`server.ts`). |
+| `packages/core/src/ai` | Claude's second opinion inside Claude: the request and the checks on its answer. |
+| `apps/server/src` | The optional server: page fetching (`fetch-page.ts`, `network.ts`) and the HTTP endpoints (`server.ts`). |
 
 ## Common changes
 

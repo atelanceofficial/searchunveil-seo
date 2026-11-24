@@ -15,7 +15,7 @@ Training a general language model at that level takes very large amounts of comp
 - Language knowledge comes from the platform: `Intl.Segmenter` divides words and sentences (Chinese and Japanese included), Unicode script properties and short word lists tell twelve languages apart, `Intl.DisplayNames` names languages in the reader's language. No model files, no network.
 - Ideas are assembled only from the page's own words: the subject from the main heading or the most repeated phrase, a place only when the text writes it as one, the brand only when the page names it, and description sentences taken from the page's lead. Nothing is invented.
 - Every message is translated like the findings, into all seven languages. Thresholds are constants, tested, and listed in [FINDINGS.md](../FINDINGS.md#searchunveil-analyst).
-- The analyst's plan is shown with every page review, at once. Claude Fable 5.2 stays available as an optional second opinion where ADR 0005 allows it.
+- The analyst's plan is shown with every page review, at once. Claude Fable 5.2 stays available as an optional second opinion inside Claude ([ADR 0007](0007-no-api-keys.md)).
 
 ## Consequences
 

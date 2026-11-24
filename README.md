@@ -16,7 +16,7 @@ Today, website information is often spread across different tools and reports. W
 
 | What you want to understand | What SearchUnveil aims to show |
 | :--- | :--- |
-| **Is my website easy to find?** | Common website and SEO issues, explained in plain language: type an address or paste a page, or review every page in a ZIP of your site. SearchUnveil Analyst, our own engine, turns each review into a ranked plan with title and description ideas, on your device; Claude Fable 5.2 can add a second opinion. |
+| **Is my website easy to find?** | Common website and SEO issues, explained in plain language: type an address or paste a page, or review every page in a ZIP of your site. SearchUnveil Analyst, our own engine, turns each review into a ranked plan with title and description ideas, on your device, with no API key or account. Opened inside Claude, Claude Fable 5.2 can add a second opinion. |
 | **How is my website doing in Google Search?** | Trends in clicks, impressions, pages, and queries from a Search Console CSV file you provide. |
 | **Where has AI mentioned my website?** | A record of AI-generated mentions or citations that you add, with a source and date when known. |
 | **What should I look at next?** | Simple charts, clear explanations, and suggested checks based on the information available. |
@@ -101,14 +101,13 @@ Open the address it prints, then choose **Try sample data** on the Search Consol
 
 To share the prototype as a single file, run `npm run build:standalone`. It writes `apps/web/dist-standalone/searchunveil.html`, which opens in any current browser without a server or a network connection.
 
-To review pages by typing only their address, and to get the AI analysis, run the server version:
+To review pages by typing only their address, run the server version. It needs no API key:
 
 ```sh
-export ANTHROPIC_API_KEY=...   # optional; turns on the AI analysis
-npm run serve                  # then open http://127.0.0.1:8787
+npm run serve   # then open http://127.0.0.1:8787
 ```
 
-The server downloads the page you name and its robots.txt, and runs the AI analysis only when you ask, showing first what will be sent. It keeps nothing. The [development guide](docs/DEVELOPMENT.md#run-the-server-version) lists its settings.
+The server downloads the page you name and its robots.txt, and keeps nothing; the review and SearchUnveil Analyst's plan run in your browser. The [development guide](docs/DEVELOPMENT.md#run-the-server-version) lists its settings.
 
 ## Follow along
 

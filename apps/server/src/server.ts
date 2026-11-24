@@ -2,35 +2,22 @@ import { createReadStream } from 'node:fs';
 import { stat } from 'node:fs/promises';
 import http from 'node:http';
 import path from 'node:path';
-import {
-  ANALYSIS_EVIDENCE_MAX_CHARS,
-  ANALYSIS_MODEL,
-  isLocale,
-  pageAnalysisInstructions,
-  serializePageAnalysis,
-} from '@searchunveil/core';
-import { AnalysisError, type Analyze } from './analyze.ts';
 import { FetchError, type FetchedPage } from './fetch-page.ts';
 import { RateLimiter } from './rate-limit.ts';
 
 /**
- * SearchUnveil's optional server. It serves the web app and adds two things a browser cannot
- * do alone: fetching a public page by its address, and the AI analysis with an Anthropic API
- * key that stays on the server.
+ * SearchUnveil's optional server. It serves the web app and adds the one thing a browser cannot
+ * do alone: fetching a public page by its address. It needs no API key and keeps nothing; the
+ * review and the analysis run in the browser.
  *
  *   GET  /api/health   what this server offers
  *   POST /api/page     {address} -> {html, http}
- *   POST /api/analyze  {locale, pageLanguage, evidence} -> {analysis, model, fallback}
- *
- * The analysis travels in the model's own JSON shape, which the browser checks again.
  */
 
 export interface AppOptions {
   /** The built web app (`apps/web/dist-server`), or `null` to serve only the API. */
   readonly staticDir: string | null;
   readonly fetchPage: (address: string, signal: AbortSignal) => Promise<FetchedPage>;
-  /** `null` when no API key is configured: the analysis is then unavailable. */
-  readonly analyze: Analyze | null;
   /** Read the client address from X-Forwarded-For; only behind a proxy that sets it. */
   readonly trustProxy?: boolean;
   readonly limits?: Partial<ServerLimits>;
@@ -39,21 +26,11 @@ export interface AppOptions {
 export interface ServerLimits {
   /** Page fetches per visitor per minute. */
   readonly pagesPerMinute: number;
-  /** Analyses per visitor per hour. */
-  readonly analysesPerHour: number;
-  /** Analyses for everyone per day: a ceiling on what the API key can spend. */
-  readonly analysesPerDay: number;
 }
 
-export const DEFAULT_SERVER_LIMITS: ServerLimits = {
-  pagesPerMinute: 20,
-  analysesPerHour: 10,
-  analysesPerDay: 200,
-};
+export const DEFAULT_SERVER_LIMITS: ServerLimits = { pagesPerMinute: 20 };
 
 const MINUTE = 60_000;
-const HOUR = 60 * MINUTE;
-const DAY = 24 * HOUR;
 
 const SECURITY_HEADERS = {
   'x-content-type-options': 'nosniff',
@@ -94,8 +71,6 @@ class HttpError extends Error {
 export function createApp(options: AppOptions): http.Server {
   const limits = { ...DEFAULT_SERVER_LIMITS, ...options.limits };
   const pageLimiter = new RateLimiter(limits.pagesPerMinute, MINUTE);
-  const analysisLimiter = new RateLimiter(limits.analysesPerHour, HOUR);
-  const dailyLimiter = new RateLimiter(limits.analysesPerDay, DAY);
 
   const handle = async (request: http.IncomingMessage, response: http.ServerResponse) => {
     const url = new URL(request.url ?? '/', 'http://localhost');
@@ -116,14 +91,10 @@ export function createApp(options: AppOptions): http.Server {
     response: http.ServerResponse,
   ) => {
     if (pathname === '/api/health' && request.method === 'GET') {
-      send(response, 200, {
-        fetch: true,
-        analysis: options.analyze !== null,
-        model: ANALYSIS_MODEL,
-      });
+      send(response, 200, { fetch: true });
       return;
     }
-    if (pathname !== '/api/page' && pathname !== '/api/analyze') {
+    if (pathname !== '/api/page') {
       send(response, 404, { error: 'not-found' });
       return;
     }
@@ -131,7 +102,7 @@ export function createApp(options: AppOptions): http.Server {
       send(response, 405, { error: 'method-not-allowed' }, { allow: 'POST' });
       return;
     }
-    // Only this app's own pages may call the API: other sites can't spend its quota.
+    // Only this app's own pages may call the API: other sites can't use it as a fetcher.
     if (!sameOrigin(request)) throw new HttpError(403, 'forbidden');
     if (!/^application\/json\b/i.test(request.headers['content-type'] ?? '')) {
       throw new HttpError(415, 'unsupported-media-type');
@@ -142,53 +113,20 @@ export function createApp(options: AppOptions): http.Server {
       if (!response.writableFinished) controller.abort();
     });
 
-    if (pathname === '/api/page') {
-      const body = await readJson(request, 4 * 1024);
-      const address = body['address'];
-      if (typeof address !== 'string' || address.length > 2048) {
-        throw new HttpError(400, 'invalid-address');
-      }
-      if (!pageLimiter.take(client)) throw new HttpError(429, 'rate-limited');
-      try {
-        send(response, 200, await options.fetchPage(address, controller.signal));
-      } catch (error) {
-        if (!(error instanceof FetchError)) throw error;
-        send(response, fetchStatus(error), {
-          error: error.code,
-          ...(error.detail === null ? {} : { detail: error.detail }),
-        });
-      }
-      return;
+    const body = await readJson(request, 4 * 1024);
+    const address = body['address'];
+    if (typeof address !== 'string' || address.length > 2048) {
+      throw new HttpError(400, 'invalid-address');
     }
-
-    if (options.analyze === null) throw new HttpError(503, 'not-configured');
-    const body = await readJson(request, ANALYSIS_EVIDENCE_MAX_CHARS + 4 * 1024);
-    const { locale, pageLanguage, evidence } = body;
-    if (
-      !isLocale(locale) ||
-      (pageLanguage !== null && typeof pageLanguage !== 'string') ||
-      typeof evidence !== 'string' ||
-      evidence.length > ANALYSIS_EVIDENCE_MAX_CHARS ||
-      !isEvidence(evidence)
-    ) {
-      throw new HttpError(400, 'invalid-request');
-    }
-    if (!analysisLimiter.take(client) || !dailyLimiter.take('everyone')) {
-      throw new HttpError(429, 'rate-limited');
-    }
+    if (!pageLimiter.take(client)) throw new HttpError(429, 'rate-limited');
     try {
-      const outcome = await options.analyze(
-        { instructions: pageAnalysisInstructions({ locale, pageLanguage }), evidence },
-        controller.signal,
-      );
-      send(response, 200, {
-        analysis: serializePageAnalysis(outcome.analysis),
-        model: outcome.model,
-        fallback: outcome.fallback,
-      });
+      send(response, 200, await options.fetchPage(address, controller.signal));
     } catch (error) {
-      if (!(error instanceof AnalysisError)) throw error;
-      send(response, analysisStatus(error), { error: error.code });
+      if (!(error instanceof FetchError)) throw error;
+      send(response, fetchStatus(error), {
+        error: error.code,
+        ...(error.detail === null ? {} : { detail: error.detail }),
+      });
     }
   };
 
@@ -282,22 +220,6 @@ async function readJson(
   return value as Record<string, unknown>;
 }
 
-/** Evidence as `pageAnalysisEvidence` builds it: a JSON object describing a page. */
-function isEvidence(text: string): boolean {
-  try {
-    const value = JSON.parse(text) as unknown;
-    return (
-      typeof value === 'object' &&
-      value !== null &&
-      'page' in value &&
-      'findings' in value &&
-      Array.isArray(value.findings)
-    );
-  } catch {
-    return false;
-  }
-}
-
 /**
  * Browsers send Origin with every cross-site POST. Requests without one come from tools
  * such as curl, which the rate limits cover.
@@ -335,24 +257,6 @@ function fetchStatus(error: FetchError): number {
     case 'too-large':
     case 'not-html':
     case 'http-status':
-      return 502;
-  }
-}
-
-function analysisStatus(error: AnalysisError): number {
-  switch (error.code) {
-    case 'cancelled':
-      return 499;
-    case 'rate-limited':
-      return 429;
-    case 'overloaded':
-    case 'not-configured':
-      return 503;
-    case 'refused':
-    case 'too-long':
-    case 'invalid-answer':
-      return 422;
-    case 'upstream-error':
       return 502;
   }
 }

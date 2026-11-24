@@ -23,7 +23,7 @@ export const uiFr: UiCatalog = {
   'ui.footer.privacy':
     'Aucun cookie, aucune mesure d’audience et aucune requête réseau une fois la page chargée.',
   'ui.footer.privacy.server':
-    'Aucun cookie, aucune mesure d’audience. Les pages ne sont téléchargées et analysées qu’à votre demande.',
+    'Aucun cookie, aucune mesure d’audience. Les pages ne sont téléchargées qu’à votre demande, et examinées sur votre appareil.',
   'ui.footer.privacy.claude':
     'Aucun cookie, aucune mesure d’audience. Rien ne quitte votre appareil, sauf si vous demandez une analyse par IA.',
   'ui.page-title': '{page} · SearchUnveil',
@@ -216,12 +216,8 @@ export const uiFr: UiCatalog = {
   'ui.analysis.title': 'Deuxième avis de Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, le modèle le plus performant d’Anthropic, lit cet examen et le texte de la page, puis explique ce qui compte le plus et ce qu’il faut changer, précisément.',
-  'ui.analysis.sends.server':
-    'Quand vous la lancez, les constats, les informations ci-dessus et le début du texte visible de la page sont envoyés à Anthropic par le serveur de SearchUnveil.',
   'ui.analysis.sends.claude':
     'Quand vous la lancez, les constats, les informations ci-dessus et le début du texte visible de la page sont envoyés à Claude, avec votre propre compte Claude.',
-  'ui.analysis.unavailable':
-    'L’analyse par IA fonctionne quand SearchUnveil tourne avec son serveur et une clé d’API Anthropic, ou dans Claude.',
   'ui.analysis.start': 'Analyser avec Fable 5.2',
   'ui.analysis.again': 'Relancer l’analyse',
   'ui.analysis.thinking':
@@ -348,8 +344,6 @@ export const uiFr: UiCatalog = {
     'SearchUnveil fonctionne dans votre navigateur. Seule l’analyse par IA, quand vous la demandez, envoie des données.',
   'ui.privacy.address':
     'Quand vous examinez une adresse, le serveur télécharge cette page publique et son fichier robots.txt, puis les transmet à votre navigateur. Il ne garde rien.',
-  'ui.privacy.ai.server':
-    'Quand vous demandez une analyse par IA, les constats, les informations sur la page et le début de son texte visible vont à Claude, d’Anthropic, par le serveur. Vos fichiers, non.',
   'ui.privacy.ai.claude':
     'Quand vous demandez une analyse par IA, les constats, les informations sur la page et le début de son texte visible vont à Claude, avec votre compte. Vos fichiers, non.',
   'ui.privacy.network.server':

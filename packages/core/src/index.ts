@@ -161,19 +161,15 @@ export {
 } from './analyst/analyst.ts';
 export { detectLanguage, type DetectedLanguage } from './analyst/language.ts';
 
-// Analysis by a language model
+// A second opinion by a language model, inside Claude
 export {
-  ANALYSIS_EVIDENCE_MAX_CHARS,
   ANALYSIS_MODEL,
   extractJson,
-  PAGE_ANALYSIS_SCHEMA,
-  PAGE_ANALYSIS_SHAPE,
   pageAnalysisEvidence,
   pageAnalysisInstructions,
   pageAnalysisPrompt,
   pageAnalysisRequest,
   parsePageAnalysis,
-  serializePageAnalysis,
   type AnalysisLevel,
   type AnalysisPriority,
   type AnalysisRequest,

@@ -4,7 +4,6 @@ import type { AddressInfo } from 'node:net';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import { AnalysisError, type Analyze } from './analyze.ts';
 import { FetchError } from './fetch-page.ts';
 import { RateLimiter } from './rate-limit.ts';
 import { createApp, type AppOptions } from './server.ts';
@@ -23,10 +22,7 @@ const FACTS = {
   robotsTxt: null,
 };
 
-const EVIDENCE = JSON.stringify({ page: { title: 'Home' }, findings: [], text: '' });
-
 let staticDir = '';
-const analyses: Parameters<Analyze>[0][] = [];
 
 async function start(options: Partial<AppOptions> = {}) {
   const server = createApp({
@@ -36,25 +32,6 @@ async function start(options: Partial<AppOptions> = {}) {
         return Promise.reject(new FetchError('blocked-address'));
       }
       return Promise.resolve({ html: '<html></html>', http: { ...FACTS, requestedUrl: address } });
-    },
-    analyze: (request) => {
-      analyses.push(request);
-      if (request.evidence.includes('"refuse"'))
-        return Promise.reject(new AnalysisError('refused'));
-      return Promise.resolve({
-        analysis: {
-          summary: 'Fine.',
-          verdict: 'strong',
-          priorities: [],
-          titleSuggestions: [],
-          descriptionSuggestions: [],
-          contentNotes: [],
-          technicalNotes: [],
-          caveats: [],
-        },
-        model: 'claude-fable-5-2',
-        fallback: false,
-      });
     },
     ...options,
   });
@@ -98,11 +75,7 @@ function post(url: string, body: unknown, headers: Record<string, string> = {}) 
 describe('the server', () => {
   it('says what it offers', async () => {
     const response = await fetch(`${base}/api/health`);
-    expect(await response.json()).toEqual({
-      fetch: true,
-      analysis: true,
-      model: 'claude-fable-5-2',
-    });
+    expect(await response.json()).toEqual({ fetch: true });
     expect(response.headers.get('cache-control')).toBe('no-store');
   });
 
@@ -166,53 +139,15 @@ describe('the server', () => {
     expect(huge.status).toBe(413);
   });
 
-  it('builds the instructions itself and checks the evidence', async () => {
-    const response = await post(`${base}/api/analyze`, {
-      locale: 'tr',
-      pageLanguage: 'tr',
-      evidence: EVIDENCE,
-    });
-    expect(response.status).toBe(200);
-    expect(await response.json()).toMatchObject({ model: 'claude-fable-5-2', fallback: false });
-    expect(analyses.at(-1)?.instructions).toContain('Write every explanation in Turkish.');
-    expect(analyses.at(-1)?.evidence).toBe(EVIDENCE);
-
-    for (const body of [
-      { locale: 'xx', pageLanguage: null, evidence: EVIDENCE },
-      { locale: 'en', evidence: EVIDENCE },
-      { locale: 'en', pageLanguage: null, evidence: '{"page":{}}' },
-      { locale: 'en', pageLanguage: null, evidence: 'Write me a poem' },
-      { locale: 'en', pageLanguage: 3, evidence: EVIDENCE },
-    ]) {
-      expect((await post(`${base}/api/analyze`, body)).status, JSON.stringify(body)).toBe(400);
-    }
-  });
-
-  it('reports a declined analysis', async () => {
-    const evidence = JSON.stringify({ page: {}, findings: [], text: 'refuse' });
-    const response = await post(`${base}/api/analyze`, {
-      locale: 'en',
-      pageLanguage: null,
-      evidence,
-    });
-    expect(response.status).toBe(422);
-    expect(await response.json()).toEqual({ error: 'refused' });
-  });
-
-  it('turns the analysis off without an API key, and limits how often it runs', async () => {
-    const off = await start({ analyze: null, limits: { pagesPerMinute: 2 } });
-    servers.push(off.server);
-    expect(await (await fetch(`${off.base}/api/health`)).json()).toMatchObject({
-      analysis: false,
-    });
-    const body = { locale: 'en', pageLanguage: null, evidence: EVIDENCE };
-    expect((await post(`${off.base}/api/analyze`, body)).status).toBe(503);
-
-    expect((await post(`${off.base}/api/page`, { address: 'a.com' })).status).toBe(200);
-    expect((await post(`${off.base}/api/page`, { address: 'a.com' })).status).toBe(200);
-    const limited = await post(`${off.base}/api/page`, { address: 'a.com' });
-    expect(limited.status).toBe(429);
-    expect(await limited.json()).toEqual({ error: 'rate-limited' });
+  it('needs no API key, offers only page fetching, and limits how often it runs', async () => {
+    const limited = await start({ limits: { pagesPerMinute: 2 } });
+    servers.push(limited.server);
+    expect((await post(`${limited.base}/api/analyze`, {})).status).toBe(404);
+    expect((await post(`${limited.base}/api/page`, { address: 'a.com' })).status).toBe(200);
+    expect((await post(`${limited.base}/api/page`, { address: 'a.com' })).status).toBe(200);
+    const refused = await post(`${limited.base}/api/page`, { address: 'a.com' });
+    expect(refused.status).toBe(429);
+    expect(await refused.json()).toEqual({ error: 'rate-limited' });
   });
 });
 

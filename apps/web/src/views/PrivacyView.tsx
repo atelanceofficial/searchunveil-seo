@@ -39,12 +39,12 @@ export function PrivacyView() {
             {t.t('ui.privacy.address')}
           </li>
         ) : null}
-        {mode === 'local' ? null : (
+        {mode === 'claude' ? (
           <li>
             <Icon name="spark" />
-            {t.t(mode === 'server' ? 'ui.privacy.ai.server' : 'ui.privacy.ai.claude')}
+            {t.t('ui.privacy.ai.claude')}
           </li>
-        )}
+        ) : null}
         <li>
           <Icon name="info" />
           {t.t('ui.privacy.stored')}

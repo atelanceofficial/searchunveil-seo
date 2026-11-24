@@ -6,12 +6,10 @@ import { reviewHtml, type PageReport } from '../audit/review.ts';
 import {
   ANALYSIS_MODEL,
   extractJson,
-  PAGE_ANALYSIS_SCHEMA,
   pageAnalysisInstructions,
   pageAnalysisPrompt,
   pageAnalysisRequest,
   parsePageAnalysis,
-  serializePageAnalysis,
 } from './page-analysis.ts';
 
 const HTML =
@@ -121,11 +119,8 @@ describe('pageAnalysisRequest', () => {
     );
   });
 
-  it('names the most capable model and a schema that lists every field', () => {
+  it('names the most capable model', () => {
     expect(ANALYSIS_MODEL).toBe('claude-fable-5-2');
-    expect([...PAGE_ANALYSIS_SCHEMA.required].sort()).toEqual(
-      Object.keys(PAGE_ANALYSIS_SCHEMA.properties).sort(),
-    );
   });
 });
 
@@ -176,12 +171,6 @@ describe('parsePageAnalysis', () => {
     expect(analysis?.titleSuggestions).toEqual(['A', 'B', 'C']);
     expect(analysis?.technicalNotes).toEqual([]);
     expect(analysis).not.toHaveProperty('extra');
-  });
-
-  it('reads back what it serializes', () => {
-    const analysis = parsePageAnalysis(ANSWER);
-    if (analysis === null) throw new Error('fixture');
-    expect(parsePageAnalysis(serializePageAnalysis(analysis))).toEqual(analysis);
   });
 
   it('returns null when nothing useful remains', () => {

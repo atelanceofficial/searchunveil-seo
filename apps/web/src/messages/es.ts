@@ -23,7 +23,7 @@ export const uiEs: UiCatalog = {
   'ui.footer.privacy':
     'Sin cookies, sin analítica y sin solicitudes de red una vez cargada la página.',
   'ui.footer.privacy.server':
-    'Sin cookies y sin analítica. Las páginas solo se descargan y analizan cuando lo pides.',
+    'Sin cookies y sin analítica. Las páginas solo se descargan cuando lo pides y se revisan en tu dispositivo.',
   'ui.footer.privacy.claude':
     'Sin cookies y sin analítica. Nada sale de tu dispositivo salvo que pidas un análisis con IA.',
   'ui.page-title': '{page} · SearchUnveil',
@@ -219,12 +219,8 @@ export const uiEs: UiCatalog = {
   'ui.analysis.title': 'Segunda opinión de Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, el modelo más capaz de Anthropic, lee esta revisión y el texto de la página, y explica qué importa más y qué cambiar exactamente.',
-  'ui.analysis.sends.server':
-    'Cuando lo inicias, los hallazgos, los datos de arriba y el comienzo del texto visible de la página se envían a Anthropic a través del servidor de SearchUnveil.',
   'ui.analysis.sends.claude':
     'Cuando lo inicias, los hallazgos, los datos de arriba y el comienzo del texto visible de la página se envían a Claude, con tu propia cuenta de Claude.',
-  'ui.analysis.unavailable':
-    'El análisis con IA funciona cuando SearchUnveil se ejecuta con su servidor y una clave de la API de Anthropic, o dentro de Claude.',
   'ui.analysis.start': 'Analizar con Fable 5.2',
   'ui.analysis.again': 'Analizar de nuevo',
   'ui.analysis.thinking':
@@ -350,8 +346,6 @@ export const uiEs: UiCatalog = {
     'SearchUnveil funciona en tu navegador. Solo el análisis con IA, cuando lo pides, envía datos fuera.',
   'ui.privacy.address':
     'Cuando revisas por dirección, el servidor descarga esa página pública y su robots.txt y se los pasa a tu navegador. No guarda nada.',
-  'ui.privacy.ai.server':
-    'Cuando pides un análisis con IA, los hallazgos, los datos de la página y el comienzo de su texto visible van a Claude, de Anthropic, a través del servidor. Tus archivos, no.',
   'ui.privacy.ai.claude':
     'Cuando pides un análisis con IA, los hallazgos, los datos de la página y el comienzo de su texto visible van a Claude con tu cuenta. Tus archivos, no.',
   'ui.privacy.network.server':

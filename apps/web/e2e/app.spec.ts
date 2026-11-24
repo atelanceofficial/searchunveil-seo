@@ -175,9 +175,9 @@ test.describe('page review', () => {
     await expect(page.getByRole('heading', { name: 'Expert analysis' })).toBeVisible();
     await expect(page.locator('.analysis').first().locator('.priority').first()).toBeVisible();
     await expect(page.locator('.analysis__footer').first()).toContainText('SearchUnveil Analyst');
-    // Claude's second opinion needs a server or a Claude viewer; this copy has neither.
-    await expect(page.getByText('The AI analysis works when SearchUnveil runs with')).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Analyze with Fable 5.2' })).toHaveCount(0);
+    // Claude's second opinion exists only inside Claude; nothing here asks for an API key.
+    await expect(page.locator('.second-opinion')).toHaveCount(0);
+    await expect(page.getByText(/API key/i)).toHaveCount(0);
     await expectAccessible(page);
   });
 });
@@ -211,12 +211,10 @@ test.describe('server version', () => {
   test.use({ baseURL: 'http://localhost:4174' });
 
   test.beforeEach(async ({ page }) => {
-    await page.route('**/api/health', (route) =>
-      route.fulfill({ json: { fetch: true, analysis: true, model: 'claude-fable-5-2' } }),
-    );
+    await page.route('**/api/health', (route) => route.fulfill({ json: { fetch: true } }));
   });
 
-  test('reviews a site by its address, then analyzes it with Claude', async ({ page }) => {
+  test('reviews a site by its address and writes the plan, with no API key', async ({ page }) => {
     const requests: unknown[] = [];
     await page.route('**/api/page', async (route) => {
       requests.push(route.request().postDataJSON());
@@ -239,13 +237,6 @@ test.describe('server version', () => {
         },
       });
     });
-    await page.route('**/api/analyze', async (route) => {
-      requests.push(route.request().postDataJSON());
-      await route.fulfill({
-        json: { analysis: ANALYSIS, model: 'claude-fable-5-2', fallback: false },
-      });
-    });
-
     await page.goto('/#/page-review');
     await page.getByLabel('Website address').fill('example.com');
     await page.getByRole('button', { name: 'Review page' }).click();
@@ -258,17 +249,13 @@ test.describe('server version', () => {
     ).toBeVisible();
     await expect(page.getByRole('heading', { name: 'The server', exact: true })).toBeVisible();
 
-    await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
-    const second = page.locator('.second-opinion');
-    await expect(second.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
-    await expect(second.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
-    await expect(second.locator('.priority__how code')).toHaveText(
-      '<title>Trail running shoes | Example</title>',
+    // The analyst's plan puts the header that hides the page first.
+    const plan = page.locator('.analysis').first();
+    await expect(plan.locator('.priority__title').first()).toHaveText(
+      'Remove noindex from the server’s headers',
     );
-    const analysis = requests[1] as { locale: string; pageLanguage: string; evidence: string };
-    expect(analysis.locale).toBe('en');
-    expect(analysis.pageLanguage).toBe('en');
-    expect(JSON.parse(analysis.evidence)).toMatchObject({ server: { status: 200 } });
+    await expect(page.locator('.second-opinion')).toHaveCount(0);
+    expect(requests).toHaveLength(1);
     await expectAccessible(page);
   });
 

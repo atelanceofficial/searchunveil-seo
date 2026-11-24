@@ -1,15 +1,14 @@
-import type { HttpFacts, Locale } from '@searchunveil/core';
+import type { HttpFacts } from '@searchunveil/core';
 
 /**
- * The optional server (`apps/server`). Only the server build talks to it: the static and
- * standalone builds keep `connect-src 'none'` and never try.
+ * The optional server (`apps/server`), which downloads pages by their address and needs no API
+ * key. Only the server build talks to it: the static and standalone builds keep
+ * `connect-src 'none'` and never try.
  */
 export const SERVER_BUILD = import.meta.env.MODE === 'server';
 
 export interface ServerHealth {
   readonly fetch: boolean;
-  readonly analysis: boolean;
-  readonly model: string;
 }
 
 let health: Promise<ServerHealth | null> | undefined;
@@ -19,15 +18,7 @@ export function serverHealth(): Promise<ServerHealth | null> {
   if (!SERVER_BUILD) return Promise.resolve(null);
   health ??= fetch('./api/health', { headers: { accept: 'application/json' } })
     .then(async (response) => (response.ok ? ((await response.json()) as unknown) : null))
-    .then((value) =>
-      isRecord(value)
-        ? {
-            fetch: value['fetch'] === true,
-            analysis: value['analysis'] === true,
-            model: typeof value['model'] === 'string' ? value['model'] : '',
-          }
-        : null,
-    )
+    .then((value) => (isRecord(value) ? { fetch: value['fetch'] === true } : null))
     .catch(() => null);
   return health;
 }
@@ -49,31 +40,6 @@ export async function fetchPageByAddress(
     return { ok: false, error: 'failed', detail: null };
   }
   return { ok: true, html: value['html'], http };
-}
-
-/** Asks the server for the AI analysis. The answer is checked by the caller. */
-export async function analyzeOnServer(
-  request: {
-    readonly locale: Locale;
-    readonly pageLanguage: string | null;
-    readonly evidence: string;
-  },
-  signal: AbortSignal,
-): Promise<
-  ServerResult<{ readonly analysis: unknown; readonly model: string; readonly fallback: boolean }>
-> {
-  const reply = await post('./api/analyze', request, signal);
-  if (!reply.ok) return reply;
-  const { value } = reply;
-  if (!isRecord(value) || typeof value['model'] !== 'string') {
-    return { ok: false, error: 'failed', detail: null };
-  }
-  return {
-    ok: true,
-    analysis: value['analysis'],
-    model: value['model'],
-    fallback: value['fallback'] === true,
-  };
 }
 
 async function post(

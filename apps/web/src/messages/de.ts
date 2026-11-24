@@ -23,7 +23,7 @@ export const uiDe: UiCatalog = {
   'ui.footer.privacy':
     'Keine Cookies, keine Analyse und keine Netzwerkanfragen, nachdem die Seite geladen ist.',
   'ui.footer.privacy.server':
-    'Keine Cookies und keine Analyse. Seiten werden nur auf Ihren Wunsch geladen und analysiert.',
+    'Keine Cookies und keine Analyse. Seiten werden nur auf Ihren Wunsch geladen und auf Ihrem Gerät geprüft.',
   'ui.footer.privacy.claude':
     'Keine Cookies und keine Analyse. Nichts verlässt Ihr Gerät, außer Sie fordern eine KI-Analyse an.',
   'ui.page-title': '{page} · SearchUnveil',
@@ -219,12 +219,8 @@ export const uiDe: UiCatalog = {
   'ui.analysis.title': 'Zweite Meinung von Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, das leistungsfähigste Modell von Anthropic, liest diese Prüfung und den Text der Seite und erklärt, worauf es am meisten ankommt und was genau Sie ändern sollten.',
-  'ui.analysis.sends.server':
-    'Wenn Sie sie starten, gehen die Ergebnisse, die Angaben oben und der Anfang des sichtbaren Seitentexts über den Server von SearchUnveil an Anthropic.',
   'ui.analysis.sends.claude':
     'Wenn Sie sie starten, gehen die Ergebnisse, die Angaben oben und der Anfang des sichtbaren Seitentexts an Claude, über Ihr eigenes Claude-Konto.',
-  'ui.analysis.unavailable':
-    'Die KI-Analyse funktioniert, wenn SearchUnveil mit seinem Server und einem Anthropic-API-Schlüssel läuft oder in Claude geöffnet wird.',
   'ui.analysis.start': 'Mit Fable 5.2 analysieren',
   'ui.analysis.again': 'Erneut analysieren',
   'ui.analysis.thinking':
@@ -353,8 +349,6 @@ export const uiDe: UiCatalog = {
     'SearchUnveil arbeitet in Ihrem Browser. Nur die KI-Analyse sendet Daten, und nur wenn Sie sie anfordern.',
   'ui.privacy.address':
     'Wenn Sie per Adresse prüfen, lädt der Server diese öffentliche Seite und ihre robots.txt und gibt sie an Ihren Browser weiter. Er speichert nichts.',
-  'ui.privacy.ai.server':
-    'Wenn Sie eine KI-Analyse anfordern, gehen die Ergebnisse, die Seitenangaben und der Anfang des sichtbaren Seitentexts über den Server an Claude von Anthropic. Ihre Dateien nicht.',
   'ui.privacy.ai.claude':
     'Wenn Sie eine KI-Analyse anfordern, gehen die Ergebnisse, die Seitenangaben und der Anfang des sichtbaren Seitentexts über Ihr Konto an Claude. Ihre Dateien nicht.',
   'ui.privacy.network.server':

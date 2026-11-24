@@ -22,7 +22,7 @@ export const uiTr: UiCatalog = {
   'ui.footer.status': 'Geliştirme aşamasında. Herkese açık bir sürüm değil.',
   'ui.footer.privacy': 'Çerez yok, analiz yok ve sayfa yüklendikten sonra hiçbir ağ isteği yok.',
   'ui.footer.privacy.server':
-    'Çerez yok, analiz yok. Sayfalar yalnızca siz istediğinizde indirilir ve incelenir.',
+    'Çerez yok, analiz yok. Sayfalar yalnızca siz istediğinizde indirilir ve cihazınızda incelenir.',
   'ui.footer.privacy.claude':
     'Çerez yok, analiz yok. Yapay zekâ analizi istemediğiniz sürece hiçbir şey cihazınızdan çıkmaz.',
   'ui.page-title': '{page} · SearchUnveil',
@@ -212,12 +212,8 @@ export const uiTr: UiCatalog = {
   'ui.analysis.title': 'Claude Fable 5.2 ile ikinci görüş',
   'ui.analysis.lead':
     'Anthropic’in en yetenekli modeli Claude Fable 5.2, bu incelemeyi ve sayfanın metnini okur; en çok neyin önemli olduğunu ve tam olarak neyi değiştirmeniz gerektiğini açıklar.',
-  'ui.analysis.sends.server':
-    'Başlattığınızda bulgular, yukarıdaki bilgiler ve sayfadaki görünür metnin başı, SearchUnveil’in sunucusu üzerinden Anthropic’e gönderilir.',
   'ui.analysis.sends.claude':
     'Başlattığınızda bulgular, yukarıdaki bilgiler ve sayfadaki görünür metnin başı, kendi Claude hesabınız üzerinden Claude’a gönderilir.',
-  'ui.analysis.unavailable':
-    'Yapay zekâ analizi, SearchUnveil sunucusu ve bir Anthropic API anahtarıyla çalıştığında ya da Claude içinde açıldığında kullanılabilir.',
   'ui.analysis.start': 'Fable 5.2 ile analiz et',
   'ui.analysis.again': 'Yeniden analiz et',
   'ui.analysis.thinking':
@@ -341,8 +337,6 @@ export const uiTr: UiCatalog = {
     'SearchUnveil tarayıcınızda çalışır. Dışarıya veri gönderen tek şey, istediğinizde çalışan yapay zekâ analizidir.',
   'ui.privacy.address':
     'Adresle inceleme yaptığınızda sunucu, herkese açık o sayfayı ve robots.txt dosyasını indirip tarayıcınıza iletir. Hiçbir şey saklamaz.',
-  'ui.privacy.ai.server':
-    'Yapay zekâ analizi istediğinizde bulgular, sayfa bilgileri ve sayfadaki görünür metnin başı, sunucu üzerinden Anthropic’in Claude modeline gider. Dosyalarınız gitmez.',
   'ui.privacy.ai.claude':
     'Yapay zekâ analizi istediğinizde bulgular, sayfa bilgileri ve sayfadaki görünür metnin başı, hesabınız üzerinden Claude’a gider. Dosyalarınız gitmez.',
   'ui.privacy.network.server':

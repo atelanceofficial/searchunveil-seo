@@ -113,9 +113,9 @@ The analyst turns a finished review into a ranked plan, on the device ([ADR 0006
 
 **Verdict.** Weak when the page is kept out of search (noindex, a blocking robots.txt rule or header, an error status) or has three or more findings that need attention; fair with one or more, or with three findings worth a look; otherwise strong.
 
-## AI analysis
+## Claude’s second opinion
 
-The analysis is not a rule: it is a reading of a finished review by Claude Fable 5.2, offered only when the person asks. It receives the findings (in English, as evidence), the page facts, the server's answer when there is one, and the start of the page's visible text (at most 6,000 characters). It is asked to rank changes by their effect on being found and chosen in search and on accessibility, to point to the evidence for each, to give exact steps, to write title and description ideas in the page's own language and everything else in the reader's, and to say what it cannot know. The answer must match a fixed JSON schema; anything else is discarded, and long fields are cut to fixed lengths.
+The second opinion is not a rule: it is a reading of a finished review by Claude Fable 5.2, offered only inside Claude, on the viewer’s own account, and only when the person asks. No API key is involved. It receives the findings (in English, as evidence), the page facts, the server's answer when there is one, and the start of the page's visible text (at most 6,000 characters). It is asked to rank changes by their effect on being found and chosen in search and on accessibility, to point to the evidence for each, to give exact steps, to write title and description ideas in the page's own language and everything else in the reader's, and to say what it cannot know. The answer must be JSON of a fixed shape; anything else is discarded, and long fields are cut to fixed lengths.
 
 ## AI mention log
 

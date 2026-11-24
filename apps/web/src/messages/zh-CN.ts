@@ -21,7 +21,8 @@ export const uiZhCN: UiCatalog = {
   'ui.footer.built-by': 'SearchUnveil · 由 Atelance 打造',
   'ui.footer.status': '正在开发中，并非公开发布版本。',
   'ui.footer.privacy': '没有 Cookie，没有统计分析，网页加载后也不会发出任何网络请求。',
-  'ui.footer.privacy.server': '没有 Cookie，没有统计分析。只有在您要求时，才会下载和分析网页。',
+  'ui.footer.privacy.server':
+    '没有 Cookie，没有统计分析。只有在您要求时才会下载网页，并在您的设备上检查。',
   'ui.footer.privacy.claude':
     '没有 Cookie，没有统计分析。除非您要求 AI 分析，否则任何数据都不会离开您的设备。',
   'ui.page-title': '{page} · SearchUnveil',
@@ -191,12 +192,8 @@ export const uiZhCN: UiCatalog = {
   'ui.analysis.title': 'Claude Fable 5.2 提供的第二意见',
   'ui.analysis.lead':
     'Anthropic 最强大的模型 Claude Fable 5.2 会阅读这份检查结果和网页文字，然后说明最重要的问题，以及具体该改什么。',
-  'ui.analysis.sends.server':
-    '开始后，检查发现、上方的信息以及网页可见文字的开头部分，会通过 SearchUnveil 的服务器发送给 Anthropic。',
   'ui.analysis.sends.claude':
     '开始后，检查发现、上方的信息以及网页可见文字的开头部分，会通过您自己的 Claude 账户发送给 Claude。',
-  'ui.analysis.unavailable':
-    '当 SearchUnveil 带服务器和 Anthropic API 密钥运行，或在 Claude 中打开时，才能使用 AI 分析。',
   'ui.analysis.start': '用 Fable 5.2 分析',
   'ui.analysis.again': '重新分析',
   'ui.analysis.thinking': 'Claude 正在阅读检查结果并仔细思考，通常需要一到三分钟。',
@@ -309,8 +306,6 @@ export const uiZhCN: UiCatalog = {
   'ui.privacy.lead.claude': 'SearchUnveil 在您的浏览器中运行。只有您要求的 AI 分析会向外发送数据。',
   'ui.privacy.address':
     '按网址检查时，服务器会下载该公开网页及其 robots.txt，再传给您的浏览器，不会保存任何内容。',
-  'ui.privacy.ai.server':
-    '当您要求 AI 分析时，检查发现、网页信息和网页可见文字的开头部分会通过服务器发送给 Anthropic 的 Claude。您的文件不会被发送。',
   'ui.privacy.ai.claude':
     '当您要求 AI 分析时，检查发现、网页信息和网页可见文字的开头部分会通过您的账户发送给 Claude。您的文件不会被发送。',
   'ui.privacy.network.server': '网页的安全策略只允许它连接到自己的服务器。',

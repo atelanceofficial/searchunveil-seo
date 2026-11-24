@@ -1,7 +1,6 @@
 import {
   ANALYSIS_MODEL,
   extractJson,
-  pageAnalysisEvidence,
   pageAnalysisPrompt,
   pageAnalysisRequest,
   parsePageAnalysis,
@@ -11,15 +10,14 @@ import {
 } from '@searchunveil/core';
 import { useEffect, useState } from 'preact/hooks';
 import { claudeSample, sampleErrorCode, type Sample } from './claude-runtime.ts';
-import { analyzeOnServer, serverHealth } from './server-api.ts';
 
 /**
- * Who writes the AI analysis: the app's own server with its Anthropic API key, or Claude in
- * the claude.ai viewer showing this page, on the viewer's account. Both ask for Claude Fable
- * 5.2 with the same instructions and evidence, and both answers are checked the same way.
+ * Who writes the second opinion: Claude, in the claude.ai viewer showing this page, on the
+ * viewer's own account. It needs no API key; anywhere else there is no second opinion, and the
+ * app's own analyst (SearchUnveil Analyst) stands alone.
  */
 
-export type AnalystKind = 'server' | 'claude';
+export type AnalystKind = 'claude';
 
 export type AnalystError =
   | 'cancelled'
@@ -50,20 +48,6 @@ export interface Analyst {
     options: { readonly signal: AbortSignal; readonly onWriting?: () => void },
   ) => Promise<AnalystOutcome>;
 }
-
-const serverAnalyst: Analyst = {
-  kind: 'server',
-  run: async (report, locale, { signal }) => {
-    const reply = await analyzeOnServer(
-      { locale, pageLanguage: report.facts.lang, evidence: pageAnalysisEvidence(report) },
-      signal,
-    );
-    if (!reply.ok) return { ok: false, error: serverError(reply.error) };
-    const analysis = parsePageAnalysis(reply.analysis);
-    if (analysis === null) return { ok: false, error: 'invalid-answer' };
-    return { ok: true, analysis, model: reply.model, fallback: reply.fallback };
-  },
-};
 
 function claudeAnalyst(sample: Sample): Analyst {
   return {
@@ -97,14 +81,9 @@ function claudeAnalyst(sample: Sample): Analyst {
 
 let analyst: Promise<Analyst | null> | undefined;
 
-/** The analyst available here, if any: the server's first, then Claude's. */
+/** Claude, when this page is shown inside a Claude viewer; otherwise `null`. */
 export function findAnalyst(): Promise<Analyst | null> {
-  analyst ??= (async () => {
-    const health = await serverHealth();
-    if (health?.analysis === true) return serverAnalyst;
-    const sample = await claudeSample();
-    return sample === null ? null : claudeAnalyst(sample);
-  })();
+  analyst ??= claudeSample().then((sample) => (sample === null ? null : claudeAnalyst(sample)));
   return analyst;
 }
 
@@ -130,23 +109,6 @@ export function modelName(id: string): string {
   const [, family = '', major = '', minor] = match;
   const version = minor === undefined ? major : `${major}.${minor}`;
   return `Claude ${family.charAt(0).toUpperCase()}${family.slice(1)} ${version}`;
-}
-
-function serverError(code: string): AnalystError {
-  switch (code) {
-    case 'cancelled':
-    case 'rate-limited':
-    case 'refused':
-    case 'too-long':
-    case 'invalid-answer':
-      return code;
-    case 'not-configured':
-    case 'overloaded':
-    case 'offline':
-      return 'unavailable';
-    default:
-      return 'failed';
-  }
 }
 
 function sampleError(code: string): AnalystError {
