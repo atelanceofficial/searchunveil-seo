@@ -8,15 +8,38 @@ import { describe, expect, it } from 'vitest';
 
 const css = readFileSync(new URL('./app.css', import.meta.url), 'utf8');
 
-function tokens(theme: 0 | 1): Map<string, string> {
+/** The declarations of the first rule written exactly as `selector {`. */
+function block(selector: string): string {
+  const start = css.indexOf(`${selector} {`);
+  if (start < 0) throw new Error(`app.css has no rule for ${selector}`);
+  return css.slice(start, css.indexOf('}', start));
+}
+
+function hexTokens(source: string): Map<string, string> {
   const result = new Map<string, string>();
-  for (const match of css.matchAll(
-    /--([\w-]+):\s*light-dark\((#[0-9a-f]{6}),\s*(#[0-9a-f]{6})\)/gi,
-  )) {
-    result.set(match[1] ?? '', (theme === 0 ? match[2] : match[3]) ?? '');
+  for (const match of source.matchAll(/--([\w-]+):\s*(#[0-9a-f]{6});/gi)) {
+    result.set(match[1] ?? '', match[2] ?? '');
   }
   return result;
 }
+
+const LIGHT = hexTokens(block(':root'));
+const DARK = hexTokens(block(":root[data-theme='dark']"));
+const DARK_BY_SYSTEM = hexTokens(block(":root:not([data-theme='light'])"));
+
+function tokens(theme: 0 | 1): Map<string, string> {
+  return theme === 0 ? LIGHT : new Map([...LIGHT, ...DARK]);
+}
+
+describe('theme blocks', () => {
+  it('redefines every colour for the dark theme', () => {
+    expect([...DARK.keys()].sort()).toEqual([...LIGHT.keys()].sort());
+  });
+
+  it('gives the system dark setting and the explicit dark choice the same colours', () => {
+    expect(DARK_BY_SYSTEM).toEqual(DARK);
+  });
+});
 
 function luminance(hex: string): number {
   const channel = (offset: number) => {
@@ -36,6 +59,8 @@ const PAIRS: readonly (readonly [string, string, number])[] = [
   ['color-text', 'color-canvas', 4.5],
   ['color-text', 'color-surface', 4.5],
   ['color-text', 'color-surface-sunken', 4.5],
+  ['color-text-soft', 'color-canvas', 4.5],
+  ['color-text-soft', 'color-surface', 4.5],
   ['color-text-muted', 'color-canvas', 4.5],
   ['color-text-muted', 'color-surface', 4.5],
   ['color-text-muted', 'color-surface-sunken', 4.5],

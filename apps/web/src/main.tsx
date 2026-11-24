@@ -8,8 +8,10 @@ import { AnnouncerProvider } from './lib/announce.tsx';
 import { I18nProvider, initialLocale, loadCatalogs } from './lib/i18n.tsx';
 import { applyTheme, readTheme } from './lib/theme.ts';
 
-// Apply the saved theme before the first paint to avoid a flash of the wrong colors.
-applyTheme(readTheme());
+// Apply a saved theme before the first paint to avoid a flash of the wrong colors. With no saved
+// choice, leave the page to the system setting, or to a theme its host has already set.
+const savedTheme = readTheme();
+if (savedTheme !== 'system') applyTheme(savedTheme);
 
 const root = document.getElementById('app');
 if (root === null) throw new Error('The #app element is missing from index.html.');
