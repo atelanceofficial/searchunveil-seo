@@ -44,6 +44,13 @@ export const uiDe: UiCatalog = {
     'Alles läuft in Ihrem Browser. Die Dateien, die Sie auswählen, werden nie hochgeladen.',
   'ui.home.principle.evidence': 'Jedes Ergebnis zeigt die Belege, auf denen es beruht.',
   'ui.home.principle.limits': 'Jedes Ergebnis sagt auch, was die Daten nicht verraten können.',
+  'ui.home.fact.languages': 'Sprachen',
+  'ui.home.fact.uploads': 'hochgeladene Dateien',
+  'ui.home.fact.trackers': 'Cookies oder Tracker',
+  'ui.home.fact.device': 'der Arbeit geschieht auf Ihrem Gerät',
+  'ui.home.showcase.title': 'Was der Beispielexport zeigt',
+  'ui.home.showcase.text':
+    'Eine fiktive Website, example.com, in Ihrem Browser analysiert, sobald sich diese Seite geöffnet hat.',
 
   'ui.file.choose': 'Dateien auswählen',
   'ui.file.choose-one': 'Datei auswählen',

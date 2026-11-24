@@ -44,6 +44,13 @@ const messages = {
     'Everything runs in your browser. The files you choose are never uploaded.',
   'ui.home.principle.evidence': 'Every finding shows the evidence it is based on.',
   'ui.home.principle.limits': 'Every result says what the data can’t tell you.',
+  'ui.home.fact.languages': 'languages',
+  'ui.home.fact.uploads': 'files uploaded',
+  'ui.home.fact.trackers': 'cookies or trackers',
+  'ui.home.fact.device': 'of the work happens on your device',
+  'ui.home.showcase.title': 'What the sample export shows',
+  'ui.home.showcase.text':
+    'A fictional site, example.com, analyzed in your browser the moment this page opened.',
 
   'ui.file.choose': 'Choose files',
   'ui.file.choose-one': 'Choose a file',

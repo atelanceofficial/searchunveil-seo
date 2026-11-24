@@ -114,8 +114,15 @@ export function TrendChart(props: {
             to: indexOf(comparison.current.end),
           },
         ].filter((band) => band.from >= 0 && band.to >= band.from);
+  // On narrow screens, fewer dates and no labels inside the bands, so nothing overlaps;
+  // the legend names the periods instead.
+  const compact = width < 480;
   const xTicks = [
-    ...new Set([0, 0.25, 0.5, 0.75, 1].map((f) => Math.round(f * (points.length - 1)))),
+    ...new Set(
+      (compact ? [0, 0.5, 1] : [0, 0.25, 0.5, 0.75, 1]).map((f) =>
+        Math.round(f * (points.length - 1)),
+      ),
+    ),
   ];
   const first = points[0]?.date ?? '';
   const last = points.at(-1)?.date ?? '';
@@ -199,9 +206,11 @@ export function TrendChart(props: {
                     fill={`url(#${id}-hatch)`}
                   />
                 ) : null}
-                <text x={start + 6} y={MARGIN.top - 10}>
-                  {band.label}
-                </text>
+                {compact ? null : (
+                  <text x={start + 6} y={MARGIN.top - 10}>
+                    {band.label}
+                  </text>
+                )}
               </g>
             );
           })}
@@ -249,6 +258,11 @@ export function TrendChart(props: {
       <p class="chart__legend">
         <span class="legend legend--average">{t.t('ui.chart.average')}</span>
         <span class="legend legend--daily">{t.t('ui.chart.daily')}</span>
+        {bands.map((band) => (
+          <span key={band.key} class={`legend legend--${band.key}`}>
+            {band.label}
+          </span>
+        ))}
         {points.some((p) => p.incomplete) ? (
           <span class="legend legend--incomplete">{t.t('ui.chart.incomplete')}</span>
         ) : null}

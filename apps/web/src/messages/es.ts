@@ -44,6 +44,13 @@ export const uiEs: UiCatalog = {
     'Todo se ejecuta en tu navegador. Los archivos que eliges nunca se suben.',
   'ui.home.principle.evidence': 'Cada hallazgo muestra la evidencia en la que se basa.',
   'ui.home.principle.limits': 'Cada resultado indica lo que los datos no pueden decirte.',
+  'ui.home.fact.languages': 'idiomas',
+  'ui.home.fact.uploads': 'archivos subidos',
+  'ui.home.fact.trackers': 'cookies o rastreadores',
+  'ui.home.fact.device': 'del trabajo ocurre en tu dispositivo',
+  'ui.home.showcase.title': 'Lo que muestra la exportación de ejemplo',
+  'ui.home.showcase.text':
+    'Un sitio ficticio, example.com, analizado en tu navegador en cuanto se abrió esta página.',
 
   'ui.file.choose': 'Elegir archivos',
   'ui.file.choose-one': 'Elegir un archivo',

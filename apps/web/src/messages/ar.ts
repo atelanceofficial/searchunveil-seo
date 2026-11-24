@@ -41,6 +41,12 @@ export const uiAr: UiCatalog = {
   'ui.home.principle.local': 'يعمل كل شيء داخل متصفحك. لا تُحمَّل الملفات التي تختارها أبدًا.',
   'ui.home.principle.evidence': 'تعرض كل نتيجة الأدلة التي تستند إليها.',
   'ui.home.principle.limits': 'توضّح كل نتيجة ما لا تستطيع البيانات إخبارك به.',
+  'ui.home.fact.languages': 'لغات',
+  'ui.home.fact.uploads': 'ملفات مرفوعة',
+  'ui.home.fact.trackers': 'ملفات تعريف ارتباط أو أدوات تتبّع',
+  'ui.home.fact.device': 'من العمل يتم على جهازك',
+  'ui.home.showcase.title': 'ما يُظهره الملف المُصدَّر النموذجي',
+  'ui.home.showcase.text': 'موقع خيالي هو example.com، حُلِّل في متصفحك لحظة فتح هذه الصفحة.',
 
   'ui.file.choose': 'اختيار ملفات',
   'ui.file.choose-one': 'اختيار ملف',

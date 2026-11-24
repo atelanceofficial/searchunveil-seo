@@ -38,6 +38,12 @@ export const uiZhCN: UiCatalog = {
   'ui.home.principle.local': '一切都在您的浏览器中运行。您选择的文件绝不会被上传。',
   'ui.home.principle.evidence': '每项发现都会展示其依据。',
   'ui.home.principle.limits': '每个结果都会说明数据无法告诉您的内容。',
+  'ui.home.fact.languages': '种语言',
+  'ui.home.fact.uploads': '个上传的文件',
+  'ui.home.fact.trackers': '个 Cookie 或跟踪器',
+  'ui.home.fact.device': '的处理在您的设备上完成',
+  'ui.home.showcase.title': '示例导出文件显示了什么',
+  'ui.home.showcase.text': '虚构网站 example.com 在此页面打开时，已在您的浏览器中完成分析。',
 
   'ui.file.choose': '选择文件',
   'ui.file.choose-one': '选择一个文件',

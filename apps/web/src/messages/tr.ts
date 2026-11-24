@@ -42,6 +42,13 @@ export const uiTr: UiCatalog = {
   'ui.home.principle.local': 'Her şey tarayıcınızda çalışır. Seçtiğiniz dosyalar asla yüklenmez.',
   'ui.home.principle.evidence': 'Her bulgu, dayandığı kanıtı gösterir.',
   'ui.home.principle.limits': 'Her sonuç, verinin size neyi söyleyemeyeceğini de belirtir.',
+  'ui.home.fact.languages': 'dil',
+  'ui.home.fact.uploads': 'yüklenen dosya',
+  'ui.home.fact.trackers': 'çerez ya da izleyici',
+  'ui.home.fact.device': 'işlem cihazınızda yapılır',
+  'ui.home.showcase.title': 'Örnek dışa aktarımın gösterdikleri',
+  'ui.home.showcase.text':
+    'Kurgusal bir site olan example.com, bu sayfa açıldığı anda tarayıcınızda analiz edildi.',
 
   'ui.file.choose': 'Dosya seç',
   'ui.file.choose-one': 'Bir dosya seç',

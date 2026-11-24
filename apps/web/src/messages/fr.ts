@@ -45,6 +45,13 @@ export const uiFr: UiCatalog = {
   'ui.home.principle.evidence': 'Chaque constat montre les éléments sur lesquels il repose.',
   'ui.home.principle.limits':
     'Chaque résultat indique ce que les données ne permettent pas de savoir.',
+  'ui.home.fact.languages': 'langues',
+  'ui.home.fact.uploads': 'fichiers envoyés',
+  'ui.home.fact.trackers': 'cookies ou traceurs',
+  'ui.home.fact.device': 'du travail se fait sur votre appareil',
+  'ui.home.showcase.title': 'Ce que montre l’export d’exemple',
+  'ui.home.showcase.text':
+    'Un site fictif, example.com, analysé dans votre navigateur dès l’ouverture de cette page.',
 
   'ui.file.choose': 'Choisir des fichiers',
   'ui.file.choose-one': 'Choisir un fichier',
