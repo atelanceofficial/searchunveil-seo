@@ -41,7 +41,23 @@ npm run serve   # builds apps/web/dist-server, then serves it at http://127.0.0.
 | `HOST` | `127.0.0.1` | The interface to listen on; `0.0.0.0` accepts connections from other machines, as most hosts need. |
 | `TRUST_PROXY` | off | Set to `1` behind a reverse proxy that sets `X-Forwarded-For`, so limits apply per visitor rather than per proxy. |
 
-To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.ts` on any host with Node.js 22.22 or later, behind HTTPS. The server keeps no data and calls no paid service.
+### Put it online
+
+Reviews by address work wherever the server runs. The repository's `Dockerfile` builds the server version into one image, and hosts that build a Dockerfile from a GitHub repository (Render, Railway, Fly.io, Google Cloud Run and others) need only:
+
+- the repository and the branch to deploy;
+- the port: the server listens on `PORT`, 8080 in the image unless the host sets its own;
+- a health check at `/api/health`;
+- `TRUST_PROXY=1`, because such hosts put a proxy in front of the app.
+
+On any machine with Docker:
+
+```sh
+docker build -t searchunveil .
+docker run -p 8080:8080 searchunveil   # then open http://localhost:8080
+```
+
+Without Docker, run `npm ci`, `npm run build:server` and `node apps/server/src/main.ts` on a host with Node.js 22.22 or later, behind HTTPS. Either way the server needs no API key, keeps no data and calls no paid service. CI builds the image, starts it and checks that it answers on every change.
 
 ## Commands
 

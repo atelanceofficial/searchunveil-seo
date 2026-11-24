@@ -1,0 +1,15 @@
+# Keep the image small and free of local state: dependencies and builds are made inside it.
+**/node_modules
+**/dist
+**/dist-standalone
+**/dist-server
+**/coverage
+**/test-results
+**/playwright-report
+.git
+.github
+assets
+docs
+*.md
+.env
+.env.*

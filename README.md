@@ -107,7 +107,14 @@ To review pages by typing only their address, run the server version. It needs n
 npm run serve   # then open http://127.0.0.1:8787
 ```
 
-The server downloads the page you name and its robots.txt, and keeps nothing; the review and SearchUnveil Analyst's plan run in your browser. The [development guide](docs/DEVELOPMENT.md#run-the-server-version) lists its settings.
+The server downloads the page you name and its robots.txt, and keeps nothing; the review and SearchUnveil Analyst's plan run in your browser. To put it online, any host that runs a Dockerfile will do, or Docker on your own machine:
+
+```sh
+docker build -t searchunveil .
+docker run -p 8080:8080 searchunveil   # then open http://localhost:8080
+```
+
+The [development guide](docs/DEVELOPMENT.md#put-it-online) lists the settings.
 
 ## Follow along
 

@@ -147,7 +147,7 @@ The [technical direction](TECHNICAL-DIRECTION.md#release-gates) lists what must 
 | Keyboard, screen reader, mobile and contrast checks | Automated checks in place; manual screen reader testing not done. |
 | Translation review, including Arabic right to left | Draft translations; native review not done. |
 | Accurate privacy information and data deletion | Implemented in the prototype; not reviewed. |
-| A working demo and installation instructions | Local demo with fictional sample data; no hosted demo. |
+| A working demo and installation instructions | Local demo with fictional sample data, and a container image of the server version that CI builds and checks; no hosted demo yet. |
 
 ## What the prototype does not do
 

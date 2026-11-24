@@ -39,6 +39,32 @@ jobs:
       - name: Production build
         run: npm run build
 
+  container:
+    name: Server image (build, start, answer)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Build the image
+        run: docker build -t searchunveil .
+      - name: Start it and check that it answers, serves the app and refuses private addresses
+        run: |
+          docker run -d --name searchunveil -p 8080:8080 searchunveil
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/api/health > /dev/null; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8080/api/health | grep -q '"fetch":true'
+          curl -fsS http://127.0.0.1:8080/ | grep -q "connect-src 'self'"
+          status=$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'content-type: application/json' \
+            -d '{"address":"http://169.254.169.254/"}' http://127.0.0.1:8080/api/page)
+          test "$status" = 400
+      - name: Show the server's log when it fails
+        if: failure()
+        run: docker logs searchunveil
+
   browser:
     name: Browser tests (accessibility, security policy, user flows)
     runs-on: ubuntu-24.04
