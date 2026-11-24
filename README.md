@@ -99,6 +99,8 @@ npm run dev
 
 Open the address it prints, then choose **Try sample data** on the Search Console page. The sample is fictional data for example.com. The [development guide](docs/DEVELOPMENT.md) covers tests and the production build.
 
+To share the prototype as a single file, run `npm run build:standalone`. It writes `apps/web/dist-standalone/searchunveil.html`, which opens in any current browser without a server or a network connection.
+
 ## Follow along
 
 This repository is the public home for SearchUnveil's development.

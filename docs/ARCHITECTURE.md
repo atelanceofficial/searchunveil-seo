@@ -80,6 +80,7 @@ Seven languages ship together: English, Spanish, German, French, Turkish, Simpli
 | Cross-site scripting | No `innerHTML`; Preact escapes text; Trusted Types are required for any HTML sink. |
 | Spreadsheet formula injection | Exported CSV neutralizes cells that begin with `=`, `+`, `-`, `@` and their full-width forms. |
 | Stored data | Only the AI mention log and two preferences, in this browser's storage, with a "delete everything" control. |
+| Single-file build | The standalone file carries the same policy: its inline script and styles are allowed only by their SHA-256 hashes, and `connect-src 'none'` still applies. A browser test opens it from disk. |
 | Supply chain | Exact versions, a lockfile, a 14-day release cooldown, no dependency install scripts, CI actions pinned to commit SHAs. See [ADR 0004](adr/0004-dependency-and-supply-chain-policy.md). |
 | Hidden characters in source | A repository check rejects invisible and bidirectional control characters ("Trojan Source"). |
 

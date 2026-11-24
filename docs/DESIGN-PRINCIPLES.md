@@ -36,26 +36,26 @@ These are **brand references**, not final app color tokens. Interactive interfac
 
 ### How the prototype uses it
 
-The interface borrows the cover's own elements rather than adding new ones.
+The interface should read like a well-made report, not like a screen effect. It takes its marks from technical drawing and cartography, which is what a tool for measuring search visibility is closest to.
 
 | Element | Where it appears | What it is for |
 | :--- | :--- | :--- |
-| **Lens rings** | Home page, page headings, the main finding, the drop zone, the footer | The brand's signature. Generated from the same equations as the cover's wire lens. |
-| **Measurement grid** | Page headings, the home page lens | Structure and precision, faded at the edges. |
-| **Dot grid** | The drop zone and the tool pictures | Graph paper for places where data arrives. |
-| **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on color. |
-| **Gold rule** | Eyebrow labels, the current page in the menu, the header's edge | The cover's short metallic line, used to mark what matters. |
-| **Grain and ambient light** | The page background | Keeps large gradients from banding and gives the canvas depth. |
+| **Paper and ink** | Everywhere | A warm ivory or deep blue-black page, solid text colors, hairline rules instead of shadows. |
+| **Editorial serif** | Page and section titles, the main finding | Newsreader gives headings a voice; Inter stays for the interface and for figures. |
+| **Lens** | The home page, engraved into the footer | The cover's own artwork, generated from the same equations as the wordmark render. |
+| **Ruler** | Under every page title, along the footer | Marks the start of the content, like the scale on a drawing. |
+| **Graph paper** | The drop zone | A sheet for data to land on, with a heavier line every fifth square. |
+| **Hatching** | The chart's earlier period, the sample data label | Tells the two periods apart without relying on color, as maps and drawings do. |
 
 Rules for every decorative element:
 
 - Decoration stays behind content and never carries meaning on its own.
 - Status is always an icon and words, then color; the chart's periods also have labels and hatching.
+- No glows, gradients on text, glass effects or looping motion.
 - Decoration disappears in forced-color modes, when more contrast is requested, and in print.
-- Nothing moves in a loop. When motion is welcome, the home page lens draws itself once, in under two seconds.
-- Patterns are generated from code (`npm run patterns`) and tested, so they can be rebuilt exactly.
+- The lens is generated from code (`npm run patterns`) and tested, so it can be rebuilt exactly.
 
-Type is Inter with optical sizes: large headings use its display design and numbers use tabular figures, so columns of figures line up.
+Figures use tabular numbers so that columns line up, and a metric's number shrinks to fit its tile rather than wrapping.
 
 ## Writing rules
 

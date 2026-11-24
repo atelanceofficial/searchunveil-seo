@@ -38,6 +38,7 @@ The build is a folder of static files with relative paths; it can be served from
 | `npm run test:e2e` | Browser tests against the production build. Run `npx playwright install chromium` in `apps/web` once first. |
 | `npm run lint` / `npm run typecheck` | Type-aware ESLint / TypeScript for every project. |
 | `npm run format` | Format code with Prettier (Markdown is formatted by hand). |
+| `npm run build:standalone` | One self-contained file, `apps/web/dist-standalone/searchunveil.html`, that opens in a browser without a server. |
 | `npm run patterns` | Regenerate the decorative pattern files from their source; a unit test fails while they are out of date. |
 | `npm run check:links` | Check that every cited source still resolves (needs network access). |
 
