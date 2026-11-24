@@ -184,7 +184,11 @@ export const uiZhCN: UiCatalog = {
   'ui.overview.outline': '标题大纲',
   'ui.overview.outline.empty': '这个网页没有标题。',
   'ui.overview.outline.more': '还有 {count} 个标题',
-  'ui.analysis.title': '借助 AI 深入分析',
+  'ui.analyst.title': '专家分析',
+  'ui.analyst.lead':
+    '我们自己的分析引擎 SearchUnveil Analyst 会把这份检查结果和网页文字整理成按优先级排列的计划。它在您的设备上运行，即时、免费，每一条都以本网页中的证据为依据。',
+  'ui.analyst.by': '由 SearchUnveil Analyst {version} 在您的设备上撰写。',
+  'ui.analysis.title': 'Claude Fable 5.2 提供的第二意见',
   'ui.analysis.lead':
     'Anthropic 最强大的模型 Claude Fable 5.2 会阅读这份检查结果和网页文字，然后说明最重要的问题，以及具体该改什么。',
   'ui.analysis.sends.server':

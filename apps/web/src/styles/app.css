@@ -2339,6 +2339,31 @@
     margin-block-start: 0.2em;
   }
 
+  /* Claude's second opinion sits below the analyst's plan, under a hairline. */
+  .second-opinion {
+    display: grid;
+    gap: var(--space-3);
+    padding-block-start: var(--space-5);
+    border-block-start: 1px solid var(--color-border);
+  }
+
+  .second-opinion > p:not(.hint) {
+    max-inline-size: var(--measure);
+    color: var(--color-text-soft);
+  }
+
+  .second-opinion .hint {
+    display: flex;
+    gap: var(--space-2);
+    align-items: flex-start;
+    max-inline-size: var(--measure);
+  }
+
+  .second-opinion .hint .icon {
+    flex: none;
+    margin-block-start: 0.2em;
+  }
+
   .analysis-progress {
     display: flex;
     align-items: center;

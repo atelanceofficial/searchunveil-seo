@@ -402,6 +402,154 @@ export const fr: CoreCatalog = {
   'http.ok.summary':
     'Il répond avec succès en HTTPS, et ni robots.txt ni les en-têtes du serveur n’écartent les moteurs de recherche.',
 
+  'analyst.do.status': 'Faites en sorte que cette adresse renvoie la page',
+  'analyst.do.status.how':
+    'Le serveur répond avec le code {status}. Si la page a déménagé, redirigez l’ancienne adresse vers la nouvelle avec une 301\u202F; si elle a été supprimée par erreur, restaurez-la\u202F; si le serveur échoue, demandez à votre hébergeur de consulter ses journaux d’erreurs.',
+  'analyst.do.https': 'Passez le site en HTTPS',
+  'analyst.do.https.how':
+    'Activez un certificat dans votre panneau d’hébergement (beaucoup d’hébergeurs incluent des certificats Let’s Encrypt gratuits), redirigez chaque adresse http:// vers sa version https:// avec une 301, puis utilisez {url} dans le lien canonique et le sitemap.',
+  'analyst.do.header-noindex': 'Retirez noindex des en-têtes du serveur',
+  'analyst.do.header-noindex.how':
+    'Le serveur envoie {header}. Retirez noindex de cet en-tête dans les réglages du serveur, de l’hébergement ou du CDN, puis examinez la page de nouveau pour vérifier.',
+  'analyst.do.robots-txt': 'Laissez les moteurs de recherche explorer cette page',
+  'analyst.do.robots-txt.how':
+    'Le fichier robots.txt contient {rule}, qui couvre {path}. Supprimez cette ligne, ou restreignez-la aux adresses que vous voulez vraiment exclure.',
+  'analyst.do.robots-txt-error': 'Faites en sorte que robots.txt se charge sans faute',
+  'analyst.do.robots-txt-error.how':
+    'Ouvrez {url}. Il doit se charger vite avec le code 200, ou répondre 404 si vous n’avez besoin d’aucune règle, mais jamais par une erreur serveur.',
+  'analyst.do.redirects': 'Faites pointer vos liens vers l’adresse finale',
+  'analyst.do.redirects.how':
+    'Faites pointer vos liens, votre sitemap et votre lien canonique vers {url}, et redirigez chaque ancienne adresse vers elle en une seule étape.',
+  'analyst.do.noindex': 'Laissez les moteurs de recherche indexer la page',
+  'analyst.do.noindex.how': 'Supprimez la balise meta robots, ou remplacez-la par {snippet}.',
+  'analyst.do.nofollow': 'Vérifiez si les liens de la page doivent être suivis',
+  'analyst.do.nofollow.how':
+    'Si les moteurs de recherche doivent suivre les liens de cette page, retirez nofollow de sa balise meta robots.',
+  'analyst.do.head': 'Remettez les balises importantes dans le head',
+  'analyst.do.head.how':
+    'Un élément qui appartient au body apparaît tôt dans le head et le termine. Déplacez-le dans le body, après les balises title, meta et link.',
+  'analyst.do.title-missing': 'Donnez un titre à la page',
+  'analyst.do.title-missing.how':
+    'Ajoutez ceci dans le head, puis adaptez-le à votre ton\u00A0: {snippet}',
+  'analyst.do.title': 'Réécrivez le titre',
+  'analyst.do.title.how':
+    'Nommez d’abord ce que la page propose et votre marque en dernier, en 60 caractères environ. Par exemple\u00A0: {snippet}',
+  'analyst.do.description': 'Rédigez une meta description',
+  'analyst.do.description.how':
+    'Ajoutez ceci dans le head, puis adaptez-le à votre ton\u00A0: {snippet}',
+  'analyst.do.lang': 'Déclarez la langue de la page',
+  'analyst.do.lang.how':
+    'Commencez la page par {snippet}, pour que les lecteurs d’écran prononcent bien le texte et que les navigateurs proposent la bonne traduction.',
+  'analyst.do.language-mismatch': 'Déclarez la langue dans laquelle le texte est écrit',
+  'analyst.do.language-mismatch.how':
+    'La page indique qu’elle est en {declaredLanguage}, mais son texte est rédigé en {detectedLanguage}. Remplacez la balise html par {snippet}.',
+  'analyst.do.viewport': 'Adaptez la page aux écrans de téléphone',
+  'analyst.do.viewport.how': 'Ajoutez {snippet} dans le head, et ne bloquez pas le zoom.',
+  'analyst.do.canonical': 'Corrigez le lien canonique',
+  'analyst.do.canonical.how':
+    'Gardez un seul lien canonique dans le head, avec l’adresse complète de la page que vous voulez voir dans les résultats\u00A0: {snippet}',
+  'analyst.do.h1': 'Donnez à la page un titre principal',
+  'analyst.do.h1.how':
+    'Ajoutez un seul h1 en haut de la page qui dit ce qu’elle propose, par exemple {snippet}.',
+  'analyst.do.generic-heading': 'Faites dire au titre principal ce que la page propose',
+  'analyst.do.generic-heading.how':
+    '«\u202F{heading}\u202F» pourrait figurer sur n’importe quel site. Nommez plutôt le sujet, par exemple {snippet}.',
+  'analyst.do.heading-order': 'Corrigez les niveaux de titres',
+  'analyst.do.heading-order.how':
+    'Utilisez h2 pour les sections principales et h3 à l’intérieur, sans sauter de niveau.',
+  'analyst.do.heading-empty': 'Remplissez ou supprimez les titres vides',
+  'analyst.do.heading-empty.how':
+    'Donnez à chaque titre un texte visible, ou supprimez-le s’il ne sert qu’à créer de l’espace.',
+  'analyst.do.alt': 'Décrivez les images porteuses de sens',
+  'analyst.do.alt.how':
+    '{count, plural, one {Ajoutez un texte alternatif à cette image} other {Ajoutez un texte alternatif à ces # images}}\u00A0: quelques mots sur ce que montre chacune. Laissez alt vide pour la décoration. Commencez par {examples}.',
+  'analyst.do.link-names': 'Nommez chaque lien',
+  'analyst.do.link-names.how':
+    '{count, plural, one {Donnez à ce lien} other {Donnez à ces # liens}} un texte visible, ou un aria-label pour les liens en icône. Commencez par {examples}.',
+  'analyst.do.crawlable': 'Utilisez de vraies adresses dans les liens',
+  'analyst.do.crawlable.how':
+    'Remplacez les liens javascript: par un href normal vers la page qu’ils ouvrent, pour que les moteurs de recherche puissent les suivre.',
+  'analyst.do.structured-data': 'Corrigez les données structurées',
+  'analyst.do.structured-data.how':
+    'Collez chaque bloc JSON-LD dans le test des résultats enrichis de Google, corrigez les erreurs signalées et testez de nouveau.',
+  'analyst.do.hreflang': 'Corrigez les annotations de langue',
+  'analyst.do.hreflang.how':
+    'Utilisez des codes comme en, en-GB ou tr, incluez cette page parmi ses propres variantes et faites en sorte que chaque page indiquée renvoie un lien.',
+  'analyst.do.charset': 'Déclarez l’UTF-8',
+  'analyst.do.charset.how': 'Placez {snippet} au tout début du head.',
+  'analyst.do.social': 'Ajoutez des balises d’aperçu de lien',
+  'analyst.do.social.how':
+    'Ajoutez ces balises dans le head pour que les liens partagés affichent un titre, un texte et une image\u00A0: {snippet}',
+  'analyst.do.thin': 'Dites-en plus sur ce que vous proposez',
+  'analyst.do.thin.how':
+    'La page compte {words} mots. Expliquez avec vos mots ce que vous proposez, pour qui, où, et quelle est l’étape suivante.',
+  'analyst.why.language-mismatch':
+    'Les lecteurs d’écran prononcent le texte selon la langue déclarée, et les navigateurs s’en servent pour proposer une traduction.',
+  'analyst.why.generic-heading':
+    'Le titre principal dit aux visiteurs et aux moteurs de recherche de quoi parle la page\u202F; une formule d’accueil ne leur dit rien.',
+  'analyst.why.generic-title':
+    '«\u202F{title}\u202F» pourrait être le titre de n’importe quelle page, et le titre est la première chose que lisent les internautes.',
+  'analyst.why.thin':
+    'Les moteurs de recherche et les visiteurs comprennent une page par ses mots. Très peu de texte leur donne peu de prise.',
+  'analyst.evidence.declared': 'Langue déclarée',
+  'analyst.evidence.detected': 'Langue du texte',
+  'analyst.evidence.words': 'Mots',
+  'analyst.note.topic-title':
+    'La page parle surtout de «\u202F{topic}\u202F», mais le titre ne le mentionne pas.',
+  'analyst.note.topic-h1':
+    'Le titre principal ne mentionne pas «\u202F{topic}\u202F», le sujet principal de la page.',
+  'analyst.note.topic-description': 'La description ne mentionne pas «\u202F{topic}\u202F».',
+  'analyst.note.brand':
+    'Le titre ne contient pas votre marque, «\u202F{brand}\u202F». La placer à la fin aide les internautes à vous reconnaître dans les résultats.',
+  'analyst.note.thin':
+    'Le texte est assez court ({words} mots). Vérifiez qu’il répond à ce que les gens recherchent.',
+  'analyst.note.long-sentences':
+    'Les phrases comptent en moyenne {average} mots. Des phrases plus courtes se lisent mieux, surtout sur téléphone.',
+  'analyst.note.same-title-description':
+    'Le titre et la description disent la même chose\u202F; la description peut plutôt apporter des détails.',
+  'analyst.note.description-short':
+    'La description est courte ({count} caractères)\u202F; il reste de la place pour une phrase qui donne envie de cliquer.',
+  'analyst.note.headings-few':
+    'La page n’a aucun titre de section. Les titres aident les visiteurs à la parcourir et les moteurs de recherche à comprendre sa structure.',
+  'analyst.note.internal-links':
+    'La page ne renvoie vers aucune autre page de votre site. Des liens vers des pages proches aident les visiteurs et les moteurs de recherche à les trouver.',
+  'analyst.note.contact':
+    'La page affiche des coordonnées. Des données structurées de type LocalBusiness ou Organization peuvent décrire votre activité aux moteurs de recherche.',
+  'analyst.note.prices':
+    'La page mentionne des prix. Des données structurées de type Product ou Offer peuvent les décrire aux moteurs de recherche.',
+  'analyst.note.slow':
+    'Le serveur a mis {seconds} secondes à envoyer le HTML. Visez bien moins d’une seconde\u202F; un cache ou un hébergement plus rapide aident.',
+  'analyst.note.compression':
+    'Le HTML ({kilobytes}\u00A0Ko) est envoyé sans compression. Activer gzip ou Brotli sur le serveur le rend plus léger et plus rapide.',
+  'analyst.note.heavy':
+    'Le HTML seul pèse {kilobytes}\u00A0Ko. Les pages lourdes se chargent lentement sur téléphone\u202F; cherchez des données ou des scripts intégrés à déplacer.',
+  'analyst.note.hsts':
+    'HTTPS fonctionne, mais le serveur n’envoie pas HSTS, qui demande aux navigateurs d’utiliser toujours la version sécurisée.',
+  'analyst.note.sitemap':
+    'Le fichier robots.txt n’indique aucun sitemap. Une ligne «\u202FSitemap:\u202F» avec l’adresse de votre sitemap aide les moteurs de recherche à trouver chaque page.',
+  'analyst.caveat.scope':
+    'Cette analyse ne lit que cette page. Elle ne voit ni les classements, ni les concurrents, ni les liens depuis d’autres sites, ni la rapidité ressentie sur téléphone.',
+  'analyst.caveat.pasted':
+    'La réponse du serveur et le fichier robots.txt n’ont pas été vérifiés, car le HTML a été fourni directement.',
+  'analyst.caveat.little-text':
+    'Le HTML contient très peu de texte. Si le contenu s’affiche par JavaScript, les moteurs de recherche peuvent en voir moins que les visiteurs.',
+  'analyst.caveat.no-language':
+    'La langue de la page n’a pas pu être déduite de son texte\u202F; les vérifications qui lisent les mots ont donc été ignorées.',
+  'analyst.caveat.ideas':
+    'Les idées de titre et de description sont construites avec les mots de la page\u202F; adaptez-les pour qu’elles vous ressemblent.',
+  'analyst.summary.strong':
+    'La page est en bon état\u00A0: rien ne l’écarte de la recherche, et l’essentiel est en place.',
+  'analyst.summary.fair':
+    'La page peut être trouvée, mais {count, plural, one {# problème la freine} other {# problèmes la freinent}}.',
+  'analyst.summary.weak':
+    '{count, plural, one {# problème grave peut} other {# problèmes graves peuvent}} empêcher cette page d’être trouvée ou utilisée.',
+  'analyst.summary.blocked':
+    'En l’état, on demande aux moteurs de recherche de ne pas afficher cette page, ou ils ne peuvent pas l’atteindre.',
+  'analyst.summary.topic': 'Son texte porte surtout sur «\u202F{topic}\u202F».',
+  'analyst.summary.start': 'Commencez par ceci\u00A0: {action}.',
+  'analyst.summary.done':
+    'Plus rien d’urgent\u00A0: gardez le texte à jour et examinez de nouveau la page après chaque modification.',
+
   'mentions.kind.citation': 'Cité avec un lien',
   'mentions.kind.mention': 'Nommé sans lien',
   'mentions.method.own-check': 'J’ai interrogé l’assistant moi-même',

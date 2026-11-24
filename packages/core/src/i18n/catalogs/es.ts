@@ -393,6 +393,152 @@ export const es: CoreCatalog = {
   'http.ok.summary':
     'Responde con éxito a través de HTTPS, y ni robots.txt ni los encabezados del servidor alejan a los buscadores.',
 
+  'analyst.do.status': 'Haz que esta dirección devuelva la página',
+  'analyst.do.status.how':
+    'El servidor responde con el estado {status}. Si la página se movió, redirige la dirección antigua a la nueva con un 301; si se eliminó por error, restáurala; si el servidor falla, pide a tu proveedor de hosting que revise sus registros de errores.',
+  'analyst.do.https': 'Pasa el sitio a HTTPS',
+  'analyst.do.https.how':
+    'Activa un certificado en el panel de tu hosting (muchos incluyen certificados gratuitos de Let’s Encrypt), redirige cada dirección http:// a su versión https:// con un 301 y luego usa {url} en el enlace canónico y en el sitemap.',
+  'analyst.do.header-noindex': 'Quita noindex de los encabezados del servidor',
+  'analyst.do.header-noindex.how':
+    'El servidor envía {header}. Quita noindex de ese encabezado en la configuración del servidor, del hosting o de la CDN, y vuelve a revisar la página para confirmarlo.',
+  'analyst.do.robots-txt': 'Deja que los buscadores rastreen esta página',
+  'analyst.do.robots-txt.how':
+    'El robots.txt contiene {rule}, que abarca {path}. Borra esa línea o limítala a las direcciones que de verdad quieras mantener fuera.',
+  'analyst.do.robots-txt-error': 'Haz que robots.txt cargue sin fallos',
+  'analyst.do.robots-txt-error.how':
+    'Abre {url}. Debe cargar rápido con el estado 200, o responder 404 si no necesitas reglas, pero nunca con un error del servidor.',
+  'analyst.do.redirects': 'Enlaza directamente a la dirección final',
+  'analyst.do.redirects.how':
+    'Apunta tus enlaces, el sitemap y el enlace canónico a {url}, y haz que cada dirección antigua redirija allí en un solo paso.',
+  'analyst.do.noindex': 'Deja que los buscadores indexen la página',
+  'analyst.do.noindex.how': 'Quita la metaetiqueta robots o cámbiala por {snippet}.',
+  'analyst.do.nofollow': 'Comprueba si se deben seguir los enlaces de la página',
+  'analyst.do.nofollow.how':
+    'Si los buscadores deben seguir los enlaces de esta página, quita nofollow de su metaetiqueta robots.',
+  'analyst.do.head': 'Devuelve las etiquetas importantes al head',
+  'analyst.do.head.how':
+    'Un elemento que pertenece al body aparece al principio del head y lo cierra. Muévelo al body, después de las etiquetas title, meta y link.',
+  'analyst.do.title-missing': 'Dale un título a la página',
+  'analyst.do.title-missing.how': 'Añade esto dentro del head y ajústalo a tu estilo: {snippet}',
+  'analyst.do.title': 'Reescribe el título',
+  'analyst.do.title.how':
+    'Nombra primero lo que ofrece la página y al final tu marca, en unos 60 caracteres. Por ejemplo: {snippet}',
+  'analyst.do.description': 'Escribe una metadescripción',
+  'analyst.do.description.how': 'Añade esto dentro del head y ajústalo a tu estilo: {snippet}',
+  'analyst.do.lang': 'Declara el idioma de la página',
+  'analyst.do.lang.how':
+    'Empieza la página con {snippet} para que los lectores de pantalla pronuncien bien el texto y los navegadores ofrezcan la traducción correcta.',
+  'analyst.do.language-mismatch': 'Declara el idioma en que está escrito el texto',
+  'analyst.do.language-mismatch.how':
+    'La página dice que está en {declaredLanguage}, pero su texto está escrito en {detectedLanguage}. Cambia la etiqueta html por {snippet}.',
+  'analyst.do.viewport': 'Haz que la página se adapte a los móviles',
+  'analyst.do.viewport.how': 'Añade {snippet} al head y no bloquees el zoom.',
+  'analyst.do.canonical': 'Corrige el enlace canónico',
+  'analyst.do.canonical.how':
+    'Deja un solo enlace canónico en el head, con la dirección completa de la página que quieres en los resultados: {snippet}',
+  'analyst.do.h1': 'Dale a la página un encabezado principal',
+  'analyst.do.h1.how':
+    'Añade un único h1 cerca del principio que diga lo que ofrece la página, por ejemplo {snippet}.',
+  'analyst.do.generic-heading': 'Haz que el encabezado principal diga lo que ofrece la página',
+  'analyst.do.generic-heading.how':
+    '«{heading}» podría estar en cualquier sitio. Nombra el tema, por ejemplo {snippet}.',
+  'analyst.do.heading-order': 'Corrige los niveles de los encabezados',
+  'analyst.do.heading-order.how':
+    'Usa h2 para las secciones principales y h3 dentro de ellas, sin saltarte niveles.',
+  'analyst.do.heading-empty': 'Rellena o quita los encabezados vacíos',
+  'analyst.do.heading-empty.how':
+    'Dale a cada encabezado un texto visible, o quítalo si solo añade espacio.',
+  'analyst.do.alt': 'Describe las imágenes que transmiten información',
+  'analyst.do.alt.how':
+    '{count, plural, one {Añade texto alternativo a esta imagen} other {Añade texto alternativo a estas # imágenes}}: unas palabras sobre lo que muestra cada una. Deja alt vacío en las decorativas. Empieza por {examples}.',
+  'analyst.do.link-names': 'Dale un nombre a cada enlace',
+  'analyst.do.link-names.how':
+    '{count, plural, one {Dale a este enlace} other {Dales a estos # enlaces}} un texto visible, o un aria-label si son iconos. Empieza por {examples}.',
+  'analyst.do.crawlable': 'Usa direcciones reales en los enlaces',
+  'analyst.do.crawlable.how':
+    'Sustituye los enlaces javascript: por un href normal a la página que abren, para que los buscadores puedan seguirlos.',
+  'analyst.do.structured-data': 'Corrige los datos estructurados',
+  'analyst.do.structured-data.how':
+    'Pega cada bloque JSON-LD en la prueba de resultados enriquecidos de Google, corrige los errores que muestre y vuelve a probar.',
+  'analyst.do.hreflang': 'Corrige las anotaciones de idioma',
+  'analyst.do.hreflang.how':
+    'Usa códigos como en, en-GB o tr, incluye esta página entre sus propias alternativas y haz que cada página indicada enlace de vuelta.',
+  'analyst.do.charset': 'Declara UTF-8',
+  'analyst.do.charset.how': 'Pon {snippet} al principio del head.',
+  'analyst.do.social': 'Añade etiquetas para vistas previas de enlaces',
+  'analyst.do.social.how':
+    'Añade esto al head para que los enlaces compartidos muestren título, texto e imagen: {snippet}',
+  'analyst.do.thin': 'Cuenta más sobre lo que ofreces',
+  'analyst.do.thin.how':
+    'La página tiene {words} palabras. Explica con tus palabras qué ofreces, para quién, dónde y cuál es el siguiente paso.',
+  'analyst.why.language-mismatch':
+    'Los lectores de pantalla pronuncian el texto según el idioma declarado, y los navegadores lo usan para ofrecer traducción.',
+  'analyst.why.generic-heading':
+    'El encabezado principal dice a visitantes y buscadores de qué trata la página; un saludo no les dice nada.',
+  'analyst.why.generic-title':
+    '«{title}» podría ser el título de cualquier página, y el título es lo primero que leen quienes buscan.',
+  'analyst.why.thin':
+    'Buscadores y visitantes entienden una página por sus palabras. Muy poco texto les da poco con qué trabajar.',
+  'analyst.evidence.declared': 'Idioma declarado',
+  'analyst.evidence.detected': 'Idioma del texto',
+  'analyst.evidence.words': 'Palabras',
+  'analyst.note.topic-title':
+    'La página habla sobre todo de «{topic}», pero el título no lo menciona.',
+  'analyst.note.topic-h1':
+    'El encabezado principal no menciona «{topic}», el tema principal de la página.',
+  'analyst.note.topic-description': 'La descripción no menciona «{topic}».',
+  'analyst.note.brand':
+    'El título no incluye tu marca, «{brand}». Ponerla al final ayuda a que te reconozcan en los resultados.',
+  'analyst.note.thin':
+    'El texto es bastante corto ({words} palabras). Asegúrate de que responde a lo que la gente busca.',
+  'analyst.note.long-sentences':
+    'Las frases tienen de media {average} palabras. Las frases cortas se leen mejor, sobre todo en el móvil.',
+  'analyst.note.same-title-description':
+    'El título y la descripción dicen lo mismo; la descripción puede aportar detalles.',
+  'analyst.note.description-short':
+    'La descripción es corta ({count} caracteres); hay sitio para una frase que invite a hacer clic.',
+  'analyst.note.headings-few':
+    'La página no tiene encabezados de sección. Los encabezados ayudan a los visitantes a recorrerla y a los buscadores a entender su estructura.',
+  'analyst.note.internal-links':
+    'La página no enlaza a ninguna otra página de tu sitio. Los enlaces a páginas relacionadas ayudan a visitantes y buscadores a encontrarlas.',
+  'analyst.note.contact':
+    'La página muestra datos de contacto. Los datos estructurados de tipo LocalBusiness u Organization pueden describir tu negocio a los buscadores.',
+  'analyst.note.prices':
+    'La página menciona precios. Los datos estructurados de tipo Product u Offer pueden describirlos a los buscadores.',
+  'analyst.note.slow':
+    'El servidor tardó {seconds} segundos en enviar el HTML. Apunta a bastante menos de un segundo; la caché o un hosting más rápido ayudan.',
+  'analyst.note.compression':
+    'El HTML ({kilobytes} KB) se envía sin comprimir. Activar gzip o Brotli en el servidor lo hace más pequeño y rápido.',
+  'analyst.note.heavy':
+    'Solo el HTML ocupa {kilobytes} KB. Las páginas grandes cargan despacio en el móvil; busca datos o scripts incrustados que puedas sacar.',
+  'analyst.note.hsts':
+    'HTTPS funciona, pero el servidor no envía HSTS, que indica a los navegadores que usen siempre la versión segura.',
+  'analyst.note.sitemap':
+    'El robots.txt no indica ningún sitemap. Una línea «Sitemap:» con la dirección de tu sitemap ayuda a los buscadores a encontrar todas las páginas.',
+  'analyst.caveat.scope':
+    'Este análisis solo lee esta página. No ve posiciones, competidores, enlaces desde otros sitios ni lo rápida que se siente en un móvil.',
+  'analyst.caveat.pasted':
+    'No se revisaron la respuesta del servidor ni el robots.txt, porque el HTML se proporcionó directamente.',
+  'analyst.caveat.little-text':
+    'El HTML contiene muy poco texto. Si el contenido aparece mediante JavaScript, los buscadores pueden ver menos que los visitantes.',
+  'analyst.caveat.no-language':
+    'No se pudo saber el idioma de la página por su texto, así que se omitieron las comprobaciones que leen palabras.',
+  'analyst.caveat.ideas':
+    'Las ideas de título y descripción se construyen con las propias palabras de la página; ajústalas para que suenen como tú.',
+  'analyst.summary.strong':
+    'La página está en buena forma: nada de lo encontrado la deja fuera de la búsqueda y lo básico está en su sitio.',
+  'analyst.summary.fair':
+    'La página se puede encontrar, pero {count, plural, one {# problema la frena} other {# problemas la frenan}}.',
+  'analyst.summary.weak':
+    '{count, plural, one {# problema grave puede} other {# problemas graves pueden}} impedir que esta página se encuentre o se use.',
+  'analyst.summary.blocked':
+    'Tal como está, se pide a los buscadores que no muestren esta página, o no pueden llegar a ella.',
+  'analyst.summary.topic': 'Su texto trata sobre todo de «{topic}».',
+  'analyst.summary.start': 'Empieza por esto: {action}.',
+  'analyst.summary.done':
+    'No queda nada urgente: mantén el texto al día y vuelve a revisar la página después de cada cambio.',
+
   'mentions.kind.citation': 'Citado con enlace',
   'mentions.kind.mention': 'Nombrado sin enlace',
   'mentions.method.own-check': 'Se lo pregunté yo al asistente',

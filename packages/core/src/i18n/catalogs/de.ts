@@ -393,6 +393,155 @@ export const de: CoreCatalog = {
   'http.ok.summary':
     'Er antwortet über HTTPS mit Erfolg, und weder robots.txt noch die Header des Servers halten Suchmaschinen fern.',
 
+  'analyst.do.status': 'Sorgen Sie dafür, dass diese Adresse die Seite liefert',
+  'analyst.do.status.how':
+    'Der Server antwortet mit Status {status}. Ist die Seite umgezogen, leiten Sie die alte Adresse mit 301 auf die neue weiter; wurde sie versehentlich entfernt, stellen Sie sie wieder her; schlägt der Server fehl, bitten Sie Ihren Hoster, die Fehlerprotokolle zu prüfen.',
+  'analyst.do.https': 'Stellen Sie die Website auf HTTPS um',
+  'analyst.do.https.how':
+    'Aktivieren Sie im Hosting-Panel ein Zertifikat (viele Hoster bieten kostenlose Let’s-Encrypt-Zertifikate), leiten Sie jede http://-Adresse mit 301 auf ihre https://-Version weiter und verwenden Sie dann {url} im Canonical-Link und in der Sitemap.',
+  'analyst.do.header-noindex': 'Entfernen Sie noindex aus den Server-Headern',
+  'analyst.do.header-noindex.how':
+    'Der Server sendet {header}. Entfernen Sie noindex aus diesem Header in den Server-, Hosting- oder CDN-Einstellungen und prüfen Sie die Seite danach erneut.',
+  'analyst.do.robots-txt': 'Lassen Sie Suchmaschinen diese Seite crawlen',
+  'analyst.do.robots-txt.how':
+    'Die robots.txt enthält {rule}, und diese Regel erfasst {path}. Löschen Sie die Zeile oder beschränken Sie sie auf die Adressen, die wirklich draußen bleiben sollen.',
+  'analyst.do.robots-txt-error': 'Sorgen Sie dafür, dass robots.txt zuverlässig lädt',
+  'analyst.do.robots-txt-error.how':
+    'Öffnen Sie {url}. Die Datei sollte schnell mit Status 200 laden oder, wenn Sie keine Regeln brauchen, mit 404 antworten, aber nie mit einem Serverfehler.',
+  'analyst.do.redirects': 'Verlinken Sie direkt die endgültige Adresse',
+  'analyst.do.redirects.how':
+    'Richten Sie Links, Sitemap und Canonical-Link auf {url} aus und lassen Sie jede alte Adresse in einem Schritt dorthin weiterleiten.',
+  'analyst.do.noindex': 'Lassen Sie Suchmaschinen die Seite indexieren',
+  'analyst.do.noindex.how': 'Entfernen Sie das Robots-Meta-Tag oder ändern Sie es in {snippet}.',
+  'analyst.do.nofollow': 'Prüfen Sie, ob den Links der Seite gefolgt werden soll',
+  'analyst.do.nofollow.how':
+    'Sollen Suchmaschinen den Links dieser Seite folgen, entfernen Sie nofollow aus ihrem Robots-Meta-Tag.',
+  'analyst.do.head': 'Bringen Sie die wichtigen Tags zurück in den Head',
+  'analyst.do.head.how':
+    'Ein Element, das in den Body gehört, steht früh im Head und beendet ihn. Verschieben Sie es in den Body, hinter die title-, meta- und link-Tags.',
+  'analyst.do.title-missing': 'Geben Sie der Seite einen Titel',
+  'analyst.do.title-missing.how':
+    'Fügen Sie dies in den Head ein und passen Sie es an Ihren Ton an: {snippet}',
+  'analyst.do.title': 'Formulieren Sie den Titel neu',
+  'analyst.do.title.how':
+    'Nennen Sie zuerst, was die Seite bietet, und zuletzt Ihre Marke, in etwa 60 Zeichen. Zum Beispiel: {snippet}',
+  'analyst.do.description': 'Schreiben Sie eine Meta-Beschreibung',
+  'analyst.do.description.how':
+    'Fügen Sie dies in den Head ein und passen Sie es an Ihren Ton an: {snippet}',
+  'analyst.do.lang': 'Geben Sie die Sprache der Seite an',
+  'analyst.do.lang.how':
+    'Beginnen Sie die Seite mit {snippet}, damit Screenreader den Text richtig aussprechen und Browser die passende Übersetzung anbieten.',
+  'analyst.do.language-mismatch': 'Geben Sie die Sprache an, in der der Text geschrieben ist',
+  'analyst.do.language-mismatch.how':
+    'Laut Seite ist sie auf {declaredLanguage}, ihr Text ist aber auf {detectedLanguage} geschrieben. Ändern Sie das html-Tag in {snippet}.',
+  'analyst.do.viewport': 'Passen Sie die Seite an Smartphone-Bildschirme an',
+  'analyst.do.viewport.how':
+    'Fügen Sie {snippet} in den Head ein und sperren Sie das Zoomen nicht.',
+  'analyst.do.canonical': 'Korrigieren Sie den Canonical-Link',
+  'analyst.do.canonical.how':
+    'Behalten Sie einen einzigen Canonical-Link im Head, mit der vollständigen Adresse der Seite, die in den Ergebnissen erscheinen soll: {snippet}',
+  'analyst.do.h1': 'Geben Sie der Seite eine Hauptüberschrift',
+  'analyst.do.h1.how':
+    'Fügen Sie oben eine einzige h1 ein, die sagt, was die Seite bietet, zum Beispiel {snippet}.',
+  'analyst.do.generic-heading': 'Lassen Sie die Hauptüberschrift sagen, was die Seite bietet',
+  'analyst.do.generic-heading.how':
+    '„{heading}“ könnte auf jeder Website stehen. Nennen Sie stattdessen das Thema, zum Beispiel {snippet}.',
+  'analyst.do.heading-order': 'Korrigieren Sie die Überschriftenebenen',
+  'analyst.do.heading-order.how':
+    'Verwenden Sie h2 für die Hauptabschnitte und h3 darin, ohne eine Ebene zu überspringen.',
+  'analyst.do.heading-empty': 'Füllen oder entfernen Sie leere Überschriften',
+  'analyst.do.heading-empty.how':
+    'Geben Sie jeder Überschrift sichtbaren Text oder entfernen Sie sie, wenn sie nur Abstand schafft.',
+  'analyst.do.alt': 'Beschreiben Sie die Bilder, die etwas aussagen',
+  'analyst.do.alt.how':
+    '{count, plural, one {Fügen Sie diesem Bild einen Alternativtext hinzu} other {Fügen Sie diesen # Bildern Alternativtexte hinzu}}: ein paar Wörter dazu, was jedes zeigt. Lassen Sie alt bei Dekoration leer. Beginnen Sie mit {examples}.',
+  'analyst.do.link-names': 'Geben Sie jedem Link einen Namen',
+  'analyst.do.link-names.how':
+    '{count, plural, one {Geben Sie diesem Link} other {Geben Sie diesen # Links}} sichtbaren Text, oder ein aria-label bei Icon-Links. Beginnen Sie mit {examples}.',
+  'analyst.do.crawlable': 'Verwenden Sie echte Adressen in Links',
+  'analyst.do.crawlable.how':
+    'Ersetzen Sie javascript:-Links durch einen normalen href auf die Seite, die sie öffnen, damit Suchmaschinen ihnen folgen können.',
+  'analyst.do.structured-data': 'Korrigieren Sie die strukturierten Daten',
+  'analyst.do.structured-data.how':
+    'Fügen Sie jeden JSON-LD-Block in Googles Test für Rich-Suchergebnisse ein, beheben Sie die angezeigten Fehler und testen Sie erneut.',
+  'analyst.do.hreflang': 'Korrigieren Sie die Sprachangaben',
+  'analyst.do.hreflang.how':
+    'Verwenden Sie Codes wie en, en-GB oder tr, führen Sie diese Seite unter ihren eigenen Alternativen auf und sorgen Sie dafür, dass jede aufgeführte Seite zurückverlinkt.',
+  'analyst.do.charset': 'Geben Sie UTF-8 an',
+  'analyst.do.charset.how': 'Setzen Sie {snippet} an den Anfang des Heads.',
+  'analyst.do.social': 'Fügen Sie Tags für Linkvorschauen hinzu',
+  'analyst.do.social.how':
+    'Fügen Sie diese in den Head ein, damit geteilte Links Titel, Text und Bild zeigen: {snippet}',
+  'analyst.do.thin': 'Erzählen Sie mehr über Ihr Angebot',
+  'analyst.do.thin.how':
+    'Die Seite hat {words} Wörter. Erklären Sie in Ihren eigenen Worten, was Sie anbieten, für wen, wo und was der nächste Schritt ist.',
+  'analyst.why.language-mismatch':
+    'Screenreader sprechen Text nach der angegebenen Sprache aus, und Browser nutzen sie, um eine Übersetzung anzubieten.',
+  'analyst.why.generic-heading':
+    'Die Hauptüberschrift sagt Besuchern und Suchmaschinen, worum es auf der Seite geht; eine Begrüßung sagt ihnen nichts.',
+  'analyst.why.generic-title':
+    '„{title}“ könnte der Titel jeder Seite sein, und der Titel ist das Erste, was Suchende lesen.',
+  'analyst.why.thin':
+    'Suchmaschinen und Besucher verstehen eine Seite über ihre Wörter. Sehr wenig Text gibt ihnen wenig an die Hand.',
+  'analyst.evidence.declared': 'Angegebene Sprache',
+  'analyst.evidence.detected': 'Sprache des Texts',
+  'analyst.evidence.words': 'Wörter',
+  'analyst.note.topic-title':
+    'Die Seite handelt vor allem von „{topic}“, aber der Titel erwähnt es nicht.',
+  'analyst.note.topic-h1':
+    'Die Hauptüberschrift erwähnt „{topic}“ nicht, das Hauptthema der Seite.',
+  'analyst.note.topic-description': 'Die Beschreibung erwähnt „{topic}“ nicht.',
+  'analyst.note.brand':
+    'Der Titel enthält Ihre Marke „{brand}“ nicht. Am Ende eingefügt, hilft sie Menschen, Sie in den Ergebnissen zu erkennen.',
+  'analyst.note.thin':
+    'Der Text ist recht kurz ({words} Wörter). Achten Sie darauf, dass er beantwortet, wonach Menschen suchen.',
+  'analyst.note.long-sentences':
+    'Sätze haben im Schnitt {average} Wörter. Kürzere Sätze lesen sich leichter, besonders auf dem Smartphone.',
+  'analyst.note.same-title-description':
+    'Titel und Beschreibung sagen dasselbe; die Beschreibung kann stattdessen Details ergänzen.',
+  'analyst.note.description-short':
+    'Die Beschreibung ist kurz ({count} Zeichen); es ist Platz für einen Satz, der zum Klicken einlädt.',
+  'analyst.note.headings-few':
+    'Die Seite hat keine Abschnittsüberschriften. Überschriften helfen Besuchern beim Überfliegen und Suchmaschinen, den Aufbau zu verstehen.',
+  'analyst.note.internal-links':
+    'Die Seite verlinkt keine andere Seite Ihrer Website. Links zu verwandten Seiten helfen Besuchern und Suchmaschinen, sie zu finden.',
+  'analyst.note.contact':
+    'Die Seite zeigt Kontaktdaten. Strukturierte Daten vom Typ LocalBusiness oder Organization können Ihr Unternehmen für Suchmaschinen beschreiben.',
+  'analyst.note.prices':
+    'Die Seite nennt Preise. Strukturierte Daten vom Typ Product oder Offer können sie für Suchmaschinen beschreiben.',
+  'analyst.note.slow':
+    'Der Server brauchte {seconds} Sekunden für das HTML. Ziel ist deutlich unter einer Sekunde; Caching oder schnelleres Hosting helfen.',
+  'analyst.note.compression':
+    'Das HTML ({kilobytes} KB) wird unkomprimiert gesendet. Mit gzip oder Brotli auf dem Server wird es kleiner und schneller.',
+  'analyst.note.heavy':
+    'Allein das HTML hat {kilobytes} KB. Große Seiten laden auf Smartphones langsam; suchen Sie nach eingebetteten Daten oder Skripten, die Sie auslagern können.',
+  'analyst.note.hsts':
+    'HTTPS funktioniert, aber der Server sendet kein HSTS, das Browsern sagt, immer die sichere Version zu verwenden.',
+  'analyst.note.sitemap':
+    'Die robots.txt nennt keine Sitemap. Eine „Sitemap:“-Zeile mit der Adresse Ihrer Sitemap hilft Suchmaschinen, jede Seite zu finden.',
+  'analyst.caveat.scope':
+    'Diese Analyse liest nur diese Seite. Sie sieht weder Rankings noch Mitbewerber, Links von anderen Websites oder wie schnell sich die Seite auf dem Smartphone anfühlt.',
+  'analyst.caveat.pasted':
+    'Die Antwort des Servers und die robots.txt wurden nicht geprüft, weil das HTML direkt eingegeben wurde.',
+  'analyst.caveat.little-text':
+    'Das HTML enthält sehr wenig Text. Erscheint der Inhalt per JavaScript, sehen Suchmaschinen womöglich weniger als Besucher.',
+  'analyst.caveat.no-language':
+    'Die Sprache der Seite ließ sich am Text nicht erkennen, daher wurden Prüfungen übersprungen, die Wörter auswerten.',
+  'analyst.caveat.ideas':
+    'Ideen für Titel und Beschreibung entstehen aus den Wörtern der Seite selbst; passen Sie sie an, damit sie nach Ihnen klingen.',
+  'analyst.summary.strong':
+    'Die Seite ist in gutem Zustand: Nichts hält sie aus der Suche heraus, und die Grundlagen stimmen.',
+  'analyst.summary.fair':
+    'Die Seite ist auffindbar, aber {count, plural, one {# Problem bremst} other {# Probleme bremsen}} sie.',
+  'analyst.summary.weak':
+    '{count, plural, one {# ernstes Problem kann} other {# ernste Probleme können}} verhindern, dass diese Seite gefunden oder genutzt wird.',
+  'analyst.summary.blocked':
+    'Derzeit werden Suchmaschinen angewiesen, diese Seite nicht zu zeigen, oder sie erreichen sie nicht.',
+  'analyst.summary.topic': 'Ihr Text handelt vor allem von „{topic}“.',
+  'analyst.summary.start': 'Beginnen Sie damit: {action}.',
+  'analyst.summary.done':
+    'Nichts Dringendes mehr: Halten Sie den Text aktuell und prüfen Sie die Seite nach Änderungen erneut.',
+
   'mentions.kind.citation': 'Mit Link zitiert',
   'mentions.kind.mention': 'Ohne Link genannt',
   'mentions.method.own-check': 'Ich habe den Assistenten selbst gefragt',

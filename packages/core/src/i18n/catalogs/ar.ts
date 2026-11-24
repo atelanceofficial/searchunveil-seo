@@ -376,6 +376,144 @@ export const ar: CoreCatalog = {
   'http.ok.summary':
     'يردّ بنجاح عبر HTTPS، ولا يُبعد robots.txt ولا عناوين الخادم محركاتِ البحث عنها.',
 
+  'analyst.do.status': 'اجعل هذا العنوان يُرجع الصفحة',
+  'analyst.do.status.how':
+    'يردّ الخادم برمز الحالة {status}. إن انتقلت الصفحة فأعِد توجيه العنوان القديم إلى الجديد برمز 301، وإن حُذفت بالخطأ فاستعِدها، وإن كان الخادم يتعطّل فاطلب من جهة الاستضافة مراجعة سجلات الأخطاء.',
+  'analyst.do.https': 'انقل الموقع إلى HTTPS',
+  'analyst.do.https.how':
+    'فعّل شهادة من لوحة الاستضافة (تقدّم كثير من جهات الاستضافة شهادات Let’s Encrypt مجانية)، وأعِد توجيه كل عنوان http:// إلى نسخته https:// برمز 301، ثم استخدم {url} في الرابط الأساسي وخريطة الموقع.',
+  'analyst.do.header-noindex': 'أزِل noindex من عناوين الخادم',
+  'analyst.do.header-noindex.how':
+    'يرسل الخادم {header}. أزِل noindex من هذا العنوان في إعدادات الخادم أو الاستضافة أو شبكة CDN، ثم راجِع الصفحة مجددًا للتأكد.',
+  'analyst.do.robots-txt': 'اسمح لمحركات البحث بالزحف إلى هذه الصفحة',
+  'analyst.do.robots-txt.how':
+    'يحتوي ملف robots.txt على {rule}، وهي تشمل {path}. احذف هذا السطر أو اقصره على العناوين التي تريد فعلًا إبقاءها خارجًا.',
+  'analyst.do.robots-txt-error': 'اجعل ملف robots.txt يُحمَّل دون أخطاء',
+  'analyst.do.robots-txt-error.how':
+    'افتح {url}. يجب أن يُحمَّل بسرعة برمز 200، أو يردّ برمز 404 إن لم تكن بحاجة إلى قواعد، لكن ليس بخطأ في الخادم أبدًا.',
+  'analyst.do.redirects': 'اربط مباشرةً بالعنوان النهائي',
+  'analyst.do.redirects.how':
+    'وجّه روابطك وخريطة الموقع والرابط الأساسي إلى {url}، واجعل كل عنوان قديم يُعاد توجيهه إليه بخطوة واحدة.',
+  'analyst.do.noindex': 'اسمح لمحركات البحث بفهرسة الصفحة',
+  'analyst.do.noindex.how': 'احذف علامة robots الوصفية أو غيّرها إلى {snippet}.',
+  'analyst.do.nofollow': 'تحقّق مما إذا كان يجب تتبّع روابط الصفحة',
+  'analyst.do.nofollow.how':
+    'إن كان يجب أن تتبع محركات البحث روابط هذه الصفحة، فاحذف nofollow من علامة robots الوصفية فيها.',
+  'analyst.do.head': 'أعِد العلامات المهمة إلى قسم head',
+  'analyst.do.head.how':
+    'يظهر في بداية قسم head عنصر مكانه body فيُنهيه مبكرًا. انقله إلى body بعد علامات title وmeta وlink.',
+  'analyst.do.title-missing': 'أعطِ الصفحة عنوانًا',
+  'analyst.do.title-missing.how': 'أضِف هذا داخل قسم head ثم عدّله بأسلوبك: {snippet}',
+  'analyst.do.title': 'أعِد كتابة العنوان',
+  'analyst.do.title.how':
+    'اذكر أولًا ما تقدّمه الصفحة واسم علامتك التجارية في النهاية، في نحو 60 حرفًا. على سبيل المثال: {snippet}',
+  'analyst.do.description': 'اكتب وصفًا تعريفيًا',
+  'analyst.do.description.how': 'أضِف هذا داخل قسم head ثم عدّله بأسلوبك: {snippet}',
+  'analyst.do.lang': 'حدّد لغة الصفحة',
+  'analyst.do.lang.how':
+    'ابدأ الصفحة بـ {snippet} لكي تنطق برامج قراءة الشاشة النص بشكل صحيح وتقترح المتصفحات الترجمة المناسبة.',
+  'analyst.do.language-mismatch': 'حدّد اللغة التي كُتب بها النص فعلًا',
+  'analyst.do.language-mismatch.how':
+    'تقول الصفحة إنها باللغة {declaredLanguage}، لكن نصها مكتوب باللغة {detectedLanguage}. غيّر علامة html إلى {snippet}.',
+  'analyst.do.viewport': 'اجعل الصفحة تناسب شاشات الهواتف',
+  'analyst.do.viewport.how': 'أضِف {snippet} إلى قسم head، ولا تمنع التكبير.',
+  'analyst.do.canonical': 'صحّح الرابط الأساسي',
+  'analyst.do.canonical.how':
+    'أبقِ رابطًا أساسيًا واحدًا في قسم head يحمل العنوان الكامل للصفحة التي تريدها في النتائج: {snippet}',
+  'analyst.do.h1': 'أعطِ الصفحة عنوانًا رئيسيًا واحدًا',
+  'analyst.do.h1.how': 'أضِف عنوان h1 واحدًا قرب أعلى الصفحة يقول ما تقدّمه، مثل {snippet}.',
+  'analyst.do.generic-heading': 'اجعل العنوان الرئيسي يقول ما تقدّمه الصفحة',
+  'analyst.do.generic-heading.how':
+    'قد يظهر «{heading}» على أي موقع. اذكر الموضوع بدلًا منه، مثل {snippet}.',
+  'analyst.do.heading-order': 'صحّح مستويات العناوين',
+  'analyst.do.heading-order.how': 'استخدم h2 للأقسام الرئيسية وh3 داخلها، دون تخطّي أي مستوى.',
+  'analyst.do.heading-empty': 'املأ العناوين الفارغة أو احذفها',
+  'analyst.do.heading-empty.how': 'أعطِ كل عنوان نصًا ظاهرًا، أو احذفه إن كان لا يضيف سوى مسافة.',
+  'analyst.do.alt': 'صِف الصور التي تحمل معنى',
+  'analyst.do.alt.how':
+    '{count, plural, one {أضِف نصًا بديلًا لهذه الصورة} two {أضِف نصًا بديلًا لهاتين الصورتين} few {أضِف نصًا بديلًا لهذه الصور الـ#} many {أضِف نصًا بديلًا لهذه الصور الـ#} other {أضِف نصًا بديلًا لهذه الصور الـ#}}: بضع كلمات تصف ما تُظهره كل صورة. اترك alt فارغًا للصور الزخرفية. ابدأ بـ {examples}.',
+  'analyst.do.link-names': 'أعطِ كل رابط اسمًا',
+  'analyst.do.link-names.how':
+    '{count, plural, one {أعطِ هذا الرابط} two {أعطِ هذين الرابطين} few {أعطِ هذه الروابط الـ#} many {أعطِ هذه الروابط الـ#} other {أعطِ هذه الروابط الـ#}} نصًا ظاهرًا، أو aria-label لروابط الأيقونات. ابدأ بـ {examples}.',
+  'analyst.do.crawlable': 'استخدم عناوين حقيقية في الروابط',
+  'analyst.do.crawlable.how':
+    'استبدل روابط javascript: برابط href عادي إلى الصفحة التي تفتحها، لتتمكن محركات البحث من تتبّعها.',
+  'analyst.do.structured-data': 'صحّح البيانات المنظَّمة',
+  'analyst.do.structured-data.how':
+    'الصق كل كتلة JSON-LD في اختبار النتائج الغنية من Google، وصحّح الأخطاء التي يعرضها، ثم اختبر مجددًا.',
+  'analyst.do.hreflang': 'صحّح التعليقات التوضيحية للغة',
+  'analyst.do.hreflang.how':
+    'استخدم رموزًا مثل en أو en-GB أو tr، وأدرِج هذه الصفحة ضمن بدائلها، واجعل كل صفحة مُدرَجة تربط بها بالمقابل.',
+  'analyst.do.charset': 'حدّد ترميز UTF-8',
+  'analyst.do.charset.how': 'ضع {snippet} في بداية قسم head.',
+  'analyst.do.social': 'أضِف وسوم معاينة الروابط',
+  'analyst.do.social.how':
+    'أضِف هذه الوسوم إلى قسم head لتعرض الروابط المُشارَكة عنوانًا ونصًا وصورة: {snippet}',
+  'analyst.do.thin': 'قل المزيد عمّا تقدّمه',
+  'analyst.do.thin.how':
+    'تحتوي الصفحة على {words} كلمة. اشرح بكلماتك ما تقدّمه، ولمن، وأين، وما الخطوة التالية.',
+  'analyst.why.language-mismatch':
+    'تنطق برامج قراءة الشاشة النص وفق اللغة المحددة، وتستخدمها المتصفحات لاقتراح الترجمة.',
+  'analyst.why.generic-heading':
+    'يخبر العنوان الرئيسي الزوار ومحركات البحث بموضوع الصفحة، أما التحية فلا تخبرهم بشيء.',
+  'analyst.why.generic-title':
+    'قد يكون «{title}» عنوانًا لأي صفحة، والعنوان أول ما يقرؤه الباحثون.',
+  'analyst.why.thin':
+    'تفهم محركات البحث والزوار الصفحة من كلماتها، والنص القليل جدًا لا يمنحهم ما يكفي.',
+  'analyst.evidence.declared': 'اللغة المحددة',
+  'analyst.evidence.detected': 'لغة النص',
+  'analyst.evidence.words': 'عدد الكلمات',
+  'analyst.note.topic-title': 'تتحدث الصفحة غالبًا عن «{topic}»، لكن العنوان لا يذكره.',
+  'analyst.note.topic-h1': 'لا يذكر العنوان الرئيسي «{topic}»، وهو موضوع الصفحة الأساسي.',
+  'analyst.note.topic-description': 'لا يذكر الوصف «{topic}».',
+  'analyst.note.brand':
+    'لا يتضمن العنوان علامتك التجارية «{brand}». وضعها في النهاية يساعد الناس على التعرّف إليك في النتائج.',
+  'analyst.note.thin': 'النص قصير نسبيًا ({words} كلمة). تأكّد من أنه يجيب عمّا يبحث عنه الناس.',
+  'analyst.note.long-sentences':
+    'متوسط طول الجملة {average} كلمة. الجمل الأقصر أسهل قراءةً، خاصةً على الهاتف.',
+  'analyst.note.same-title-description':
+    'يقول العنوان والوصف الشيء نفسه، ويمكن أن يضيف الوصف تفاصيل بدلًا من ذلك.',
+  'analyst.note.description-short': 'الوصف قصير ({count} حرفًا)، وهناك متسع لجملة تشجّع على النقر.',
+  'analyst.note.headings-few':
+    'لا تحتوي الصفحة على عناوين للأقسام. تساعد العناوين الزوار على تصفّح الصفحة ومحركات البحث على فهم بنيتها.',
+  'analyst.note.internal-links':
+    'لا تربط الصفحة بأي صفحة أخرى في موقعك. تساعد الروابط إلى الصفحات ذات الصلة الزوار ومحركات البحث على العثور عليها.',
+  'analyst.note.contact':
+    'تعرض الصفحة بيانات اتصال. يمكن للبيانات المنظَّمة من نوع LocalBusiness أو Organization أن تصف نشاطك لمحركات البحث.',
+  'analyst.note.prices':
+    'تذكر الصفحة أسعارًا. يمكن للبيانات المنظَّمة من نوع Product أو Offer أن تصفها لمحركات البحث.',
+  'analyst.note.slow':
+    'استغرق الخادم {seconds} ثانية لإرسال HTML. استهدف أقل بكثير من ثانية؛ التخزين المؤقت أو استضافة أسرع يساعدان.',
+  'analyst.note.compression':
+    'يُرسَل HTML ({kilobytes} ك.ب) دون ضغط. تفعيل gzip أو Brotli على الخادم يجعله أصغر وأسرع.',
+  'analyst.note.heavy':
+    'حجم HTML وحده {kilobytes} ك.ب. تُحمَّل الصفحات الكبيرة ببطء على الهواتف؛ ابحث عن بيانات أو نصوص برمجية مضمّنة يمكنك نقلها.',
+  'analyst.note.hsts':
+    'يعمل HTTPS، لكن الخادم لا يرسل HSTS الذي يطلب من المتصفحات استخدام النسخة الآمنة دائمًا.',
+  'analyst.note.sitemap':
+    'لا يذكر ملف robots.txt أي خريطة موقع. يساعد سطر «Sitemap:» يحمل عنوان خريطة موقعك محركات البحث على العثور على كل صفحة.',
+  'analyst.caveat.scope':
+    'يقرأ هذا التحليل هذه الصفحة فقط. لا يرى الترتيب في النتائج ولا المنافسين ولا الروابط من المواقع الأخرى ولا سرعة الصفحة على الهاتف.',
+  'analyst.caveat.pasted': 'لم يُفحص ردّ الخادم ولا ملف robots.txt، لأن رمز HTML قُدّم مباشرةً.',
+  'analyst.caveat.little-text':
+    'يحتوي HTML على نص قليل جدًا. إن كان المحتوى يظهر عبر JavaScript فقد ترى محركات البحث أقل مما يراه الزوار.',
+  'analyst.caveat.no-language':
+    'تعذّر تحديد لغة الصفحة من نصها، لذا تُخطّيت الفحوص التي تعتمد على قراءة الكلمات.',
+  'analyst.caveat.ideas':
+    'أفكار العنوان والوصف مبنية من كلمات الصفحة نفسها؛ عدّلها لتعبّر عن أسلوبك.',
+  'analyst.summary.strong':
+    'الصفحة في حالة جيدة: لم يُعثر على ما يُبعدها عن البحث، وأساسياتها في مكانها.',
+  'analyst.summary.fair':
+    'يمكن العثور على الصفحة، لكن {count, plural, one {مشكلة واحدة تعيقها} two {مشكلتين تعيقانها} few {# مشكلات تعيقها} many {# مشكلةً تعيقها} other {# مشكلة تعيقها}}.',
+  'analyst.summary.weak':
+    'قد {count, plural, one {تمنع مشكلة خطيرة واحدة} two {تمنع مشكلتان خطيرتان} few {تمنع # مشكلات خطيرة} many {تمنع # مشكلةً خطيرة} other {تمنع # مشكلة خطيرة}} العثور على هذه الصفحة أو استخدامها.',
+  'analyst.summary.blocked':
+    'بوضعها الحالي، يُطلب من محركات البحث عدم عرض هذه الصفحة، أو لا تستطيع الوصول إليها.',
+  'analyst.summary.topic': 'يدور نصها أساسًا حول «{topic}».',
+  'analyst.summary.start': 'ابدأ بهذا: {action}.',
+  'analyst.summary.done':
+    'لم يبقَ شيء عاجل: حافظ على تحديث النص وراجِع الصفحة مجددًا بعد التغييرات.',
+
   'mentions.kind.citation': 'ذُكر مع رابط',
   'mentions.kind.mention': 'ذُكر بالاسم دون رابط',
   'mentions.method.own-check': 'سألت المساعد بنفسي',

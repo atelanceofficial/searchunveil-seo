@@ -194,7 +194,11 @@ export const uiAr: UiCatalog = {
   'ui.overview.outline.empty': 'لا تحتوي الصفحة على عناوين.',
   'ui.overview.outline.more':
     '{count, plural, one {وعنوان واحد آخر} two {وعنوانان آخران} few {و# عناوين أخرى} many {و# عنوانًا آخر} other {و# عنوان آخر}}',
-  'ui.analysis.title': 'تحليل معمّق بالذكاء الاصطناعي',
+  'ui.analyst.title': 'تحليل الخبير',
+  'ui.analyst.lead':
+    'يحوّل SearchUnveil Analyst، محرّك التحليل الخاص بنا، هذه المراجعة ونص الصفحة إلى خطة مرتّبة حسب الأولوية. يعمل على جهازك فورًا ومجانًا، ويستند كل بند فيها إلى دليل من هذه الصفحة.',
+  'ui.analyst.by': 'كتبه SearchUnveil Analyst {version} على جهازك.',
+  'ui.analysis.title': 'رأي ثانٍ من Claude Fable 5.2',
   'ui.analysis.lead':
     'يقرأ Claude Fable 5.2، أقوى نماذج Anthropic، هذه المراجعة ونص الصفحة، ثم يشرح ما يهم أكثر وما الذي يجب تغييره بالضبط.',
   'ui.analysis.sends.server':

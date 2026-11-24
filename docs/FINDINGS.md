@@ -92,6 +92,27 @@ These rules run only when the [optional server](adr/0005-optional-server-for-add
 | `http.redirects` | Two or more redirects before the page; each one is listed. | Worth a look |
 | `http.ok` | All of the above pass. Shows the status and the time the page took to arrive. | Looks good |
 
+## SearchUnveil Analyst
+
+The analyst turns a finished review into a ranked plan, on the device ([ADR 0006](adr/0006-built-in-analyst.md)). Thresholds live in code as `ANALYST_THRESHOLDS`.
+
+**Reading the page.** The text's language is told from its writing system (Arabic, Chinese, Japanese, Korean, Cyrillic, Greek, Hebrew, Thai, Devanagari) or, for Latin letters, from the share of each language's most common words (English, Turkish, German, Spanish, French, Italian, Portuguese, Dutch). Words and sentences are divided by `Intl.Segmenter`; Turkish endings after an apostrophe and French elisions are set aside. Key phrases are counted with weights (title, main heading and link-preview title 3 or 2, section headings 2, description 2, text 1); phrases of two or three words count 1.6 and 2 times as much as their words, and must appear twice unless a title or heading uses them.
+
+**Actions.** Each finding that needs attention or a closer look becomes an action with an impact and an effort. Actions are ranked by impact, then by lower effort; at most seven are shown. The analyst adds its own:
+
+| Action | When | Impact · effort |
+| :--- | :--- | :--- |
+| `language-mismatch` | The declared language differs from the text's language, detected with at least 0.6 confidence. | Medium · low |
+| `generic-heading` | The main heading is a greeting or a word such as "Home" in any of the supported languages. | Medium · low |
+| `title` | The title is such a generic word. | High · low |
+| `thin` | Fewer than 150 words of text. | Medium · medium |
+
+**Ideas.** A title idea names the subject (the main heading when it says something, else the top phrase), a place when the page writes one as a place (after "in", "à", "en"…, or with a Turkish locative ending) in its first two sentences or twice, and the brand when the page names it (`og:site_name`, or a title part that matches the address). Ideas stay within 60 display units. A description idea is a sentence from the page's lead that mentions its main phrases, joined with the next one while under 110 units; ideas stay within 155 units, and sentences with phone numbers or boilerplate are left out.
+
+**Notes.** The main phrase missing from the title, main heading or description; a brand missing from the title; 150 to 299 words; sentences averaging more than 25 words; title and description identical, or a description under 70 characters; no section headings on a page of 300 words or more; no internal links; contact details without LocalBusiness or Organization data; prices without Product or Offer data; and, for fetched pages, HTML taking more than 1.5 seconds, uncompressed HTML over 30 KB, HTML over 1 MB, HTTPS without HSTS, and a robots.txt without a sitemap.
+
+**Verdict.** Weak when the page is kept out of search (noindex, a blocking robots.txt rule or header, an error status) or has three or more findings that need attention; fair with one or more, or with three findings worth a look; otherwise strong.
+
 ## AI analysis
 
 The analysis is not a rule: it is a reading of a finished review by Claude Fable 5.2, offered only when the person asks. It receives the findings (in English, as evidence), the page facts, the server's answer when there is one, and the start of the page's visible text (at most 6,000 characters). It is asked to rank changes by their effect on being found and chosen in search and on accessibility, to point to the evidence for each, to give exact steps, to write title and description ideas in the page's own language and everything else in the reader's, and to say what it cannot know. The answer must match a fixed JSON schema; anything else is discarded, and long fields are cut to fixed lengths.

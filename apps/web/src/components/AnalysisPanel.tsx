@@ -1,16 +1,23 @@
 import {
-  ANALYSIS_MODEL,
+  analyzePage,
+  ANALYST_VERSION,
   displayWidth,
   isValidLanguageTag,
+  renderAnalystReport,
   type AnalysisPriority,
   type PageAnalysis,
   type PageReport,
 } from '@searchunveil/core';
-import { useEffect, useId, useRef, useState } from 'preact/hooks';
+import type { JSX } from 'preact';
+import { useEffect, useId, useMemo, useRef, useState } from 'preact/hooks';
 import { useAnnounce } from '../lib/announce.tsx';
 import { modelName, useAnalyst, type AnalystError } from '../lib/analyst.ts';
 import { useI18n } from '../lib/i18n.tsx';
 import { Icon } from './Icon.tsx';
+
+type Level = 4 | 5;
+type HeadingTag = 'h4' | 'h5' | 'h6';
+const heading = (level: number): HeadingTag => (level <= 4 ? 'h4' : level === 5 ? 'h5' : 'h6');
 
 type State =
   | { readonly kind: 'idle' }
@@ -23,11 +30,47 @@ type State =
     }
   | { readonly kind: 'failed'; readonly error: AnalystError };
 
+function pageLanguage(report: PageReport): string | undefined {
+  return report.facts.lang !== null && isValidLanguageTag(report.facts.lang)
+    ? report.facts.lang
+    : undefined;
+}
+
 /**
- * The optional AI analysis of one page review, written by Claude Fable 5.2. Nothing is sent
- * until the person presses the button; the panel says beforehand what will be sent, and where.
+ * The analysis of one page review. SearchUnveil Analyst, the app's own engine, writes it at once
+ * on the person's device. Where Claude is available, Claude Fable 5.2 can add a second opinion;
+ * nothing is sent until the person asks, and the panel says beforehand what will be sent.
  */
 export function AnalysisPanel(props: { readonly report: PageReport }) {
+  const { t } = useI18n();
+  const id = useId();
+  const builtIn = useMemo(
+    () => renderAnalystReport(analyzePage(props.report), t),
+    [props.report, t],
+  );
+
+  return (
+    <section class="analysis-panel" aria-labelledby={`${id}-title`}>
+      <div class="analysis-panel__intro">
+        <h3 id={`${id}-title`}>
+          <Icon name="spark" />
+          {t.t('ui.analyst.title')}
+        </h3>
+        <p class="lead">{t.t('ui.analyst.lead')}</p>
+      </div>
+      <AnalysisResult
+        analysis={builtIn}
+        level={4}
+        pageLang={pageLanguage(props.report)}
+        byline={t.t('ui.analyst.by', { version: ANALYST_VERSION })}
+      />
+      <SecondOpinion report={props.report} />
+    </section>
+  );
+}
+
+/** Claude Fable 5.2's reading of the same review, on request. */
+function SecondOpinion(props: { readonly report: PageReport }) {
   const { t, locale } = useI18n();
   const announce = useAnnounce();
   const analyst = useAnalyst();
@@ -74,75 +117,75 @@ export function AnalysisPanel(props: { readonly report: PageReport }) {
   };
 
   const running = state.kind === 'running';
-  const pageLang =
-    props.report.facts.lang !== null && isValidLanguageTag(props.report.facts.lang)
-      ? props.report.facts.lang
-      : undefined;
+  const byline = (model: string | null, fallback: boolean) =>
+    [
+      model === null
+        ? t.t('ui.analysis.by-tier')
+        : t.t('ui.analysis.by', { model: modelName(model) }),
+      fallback && model !== null ? t.t('ui.analysis.fallback', { model: modelName(model) }) : '',
+    ]
+      .filter((part) => part !== '')
+      .join(' ');
 
   return (
-    <section class="analysis-panel" aria-labelledby={`${id}-title`}>
-      <div class="analysis-panel__intro">
-        <h3 id={`${id}-title`}>
-          <Icon name="spark" />
-          {t.t('ui.analysis.title')}
-        </h3>
-        <p class="lead">{t.t('ui.analysis.lead')}</p>
-        {analyst === null ? (
-          <p class="callout">{t.t('ui.analysis.unavailable')}</p>
-        ) : (
-          <>
-            <p class="hint">
-              <Icon name="lock" />
-              {t.t(
-                analyst.kind === 'server' ? 'ui.analysis.sends.server' : 'ui.analysis.sends.claude',
-              )}
-            </p>
-            <div class="actions">
+    <section class="second-opinion" aria-labelledby={`${id}-title`}>
+      <h4 id={`${id}-title`}>{t.t('ui.analysis.title')}</h4>
+      {analyst === null ? (
+        <p class="hint">{t.t('ui.analysis.unavailable')}</p>
+      ) : (
+        <>
+          <p>{t.t('ui.analysis.lead')}</p>
+          <p class="hint">
+            <Icon name="lock" />
+            {t.t(
+              analyst.kind === 'server' ? 'ui.analysis.sends.server' : 'ui.analysis.sends.claude',
+            )}
+          </p>
+          <div class="actions">
+            <button
+              type="button"
+              class="button"
+              disabled={running}
+              onClick={() => {
+                void start();
+              }}
+            >
+              {t.t(state.kind === 'done' ? 'ui.analysis.again' : 'ui.analysis.start')}
+            </button>
+            {running ? (
               <button
                 type="button"
-                class="button button--primary"
-                disabled={running}
+                class="button"
                 onClick={() => {
-                  void start();
+                  controller.current?.abort();
                 }}
               >
-                {t.t(state.kind === 'done' ? 'ui.analysis.again' : 'ui.analysis.start')}
+                {t.t('ui.site.stop')}
               </button>
-              {running ? (
-                <button
-                  type="button"
-                  class="button"
-                  onClick={() => {
-                    controller.current?.abort();
-                  }}
-                >
-                  {t.t('ui.site.stop')}
-                </button>
-              ) : null}
-            </div>
-          </>
-        )}
-        <div role="status" class="analysis-panel__status">
-          {running ? (
-            <p class="progress analysis-progress">
-              <span class="analysis-progress__pulse" aria-hidden="true" />
-              {t.t(state.writing ? 'ui.analysis.writing' : 'ui.analysis.thinking')}
-            </p>
-          ) : null}
-          {state.kind === 'failed' ? (
-            <p class={state.error === 'cancelled' ? 'muted' : 'alert'}>
-              {t.t(`ui.analysis.error.${state.error}`)}
-            </p>
-          ) : null}
-        </div>
+            ) : null}
+          </div>
+        </>
+      )}
+      <div role="status" class="analysis-panel__status">
+        {running ? (
+          <p class="progress analysis-progress">
+            <span class="analysis-progress__pulse" aria-hidden="true" />
+            {t.t(state.writing ? 'ui.analysis.writing' : 'ui.analysis.thinking')}
+          </p>
+        ) : null}
+        {state.kind === 'failed' ? (
+          <p class={state.error === 'cancelled' ? 'muted' : 'alert'}>
+            {t.t(`ui.analysis.error.${state.error}`)}
+          </p>
+        ) : null}
       </div>
-
       {state.kind === 'done' ? (
         <AnalysisResult
           analysis={state.analysis}
-          model={state.model}
-          fallback={state.fallback}
-          pageLang={pageLang}
+          level={5}
+          pageLang={pageLanguage(props.report)}
+          byline={byline(state.model, state.fallback)}
+          caution
           headingRef={resultHeading}
         />
       ) : null}
@@ -152,36 +195,43 @@ export function AnalysisPanel(props: { readonly report: PageReport }) {
 
 function AnalysisResult(props: {
   readonly analysis: PageAnalysis;
-  readonly model: string | null;
-  readonly fallback: boolean;
+  /** The heading level of the result's own sections. */
+  readonly level: Level;
   readonly pageLang: string | undefined;
-  readonly headingRef: { current: HTMLHeadingElement | null };
+  readonly byline: string;
+  /** Whether to warn that the text was written by a language model. */
+  readonly caution?: boolean;
+  readonly headingRef?: { current: HTMLHeadingElement | null };
 }) {
   const { t } = useI18n();
-  const { analysis } = props;
+  const { analysis, level } = props;
+  const Verdict = heading(level);
 
   return (
     <article class="analysis">
       <header class="analysis__head">
-        <h4 ref={props.headingRef} tabIndex={-1} class={`verdict verdict--${analysis.verdict}`}>
+        <Verdict
+          {...(props.headingRef === undefined ? {} : { ref: props.headingRef })}
+          tabIndex={-1}
+          class={`verdict verdict--${analysis.verdict}`}
+        >
           {t.t('ui.analysis.verdict', { verdict: analysis.verdict })}
-        </h4>
+        </Verdict>
         {analysis.summary === '' ? null : (
           <p class="analysis__summary" dir="auto">
-            {analysis.summary}
+            <RichText text={analysis.summary} />
           </p>
         )}
       </header>
 
       {analysis.priorities.length === 0 ? null : (
-        <section class="analysis__section">
-          <h4>{t.t('ui.analysis.priorities')}</h4>
+        <Section title={t.t('ui.analysis.priorities')} level={level}>
           <ol class="priorities" role="list">
             {analysis.priorities.map((priority, index) => (
-              <Priority key={index} priority={priority} number={index + 1} />
+              <Priority key={index} priority={priority} number={index + 1} level={level + 1} />
             ))}
           </ol>
-        </section>
+        </Section>
       )}
 
       {analysis.titleSuggestions.length + analysis.descriptionSuggestions.length === 0 ? null : (
@@ -190,46 +240,60 @@ function AnalysisResult(props: {
             title={t.t('ui.analysis.titles')}
             items={analysis.titleSuggestions}
             lang={props.pageLang}
+            level={level}
           />
           <Suggestions
             title={t.t('ui.analysis.descriptions')}
             items={analysis.descriptionSuggestions}
             lang={props.pageLang}
+            level={level}
           />
         </div>
       )}
 
-      <Notes title={t.t('ui.analysis.content')} items={analysis.contentNotes} />
-      <Notes title={t.t('ui.analysis.technical')} items={analysis.technicalNotes} />
-      <Notes title={t.t('ui.analysis.caveats')} items={analysis.caveats} />
+      <Notes title={t.t('ui.analysis.content')} items={analysis.contentNotes} level={level} />
+      <Notes title={t.t('ui.analysis.technical')} items={analysis.technicalNotes} level={level} />
+      <Notes title={t.t('ui.analysis.caveats')} items={analysis.caveats} level={level} />
 
       <footer class="analysis__footer">
-        <p>
-          {props.model === null
-            ? t.t('ui.analysis.by-tier')
-            : t.t('ui.analysis.by', { model: modelName(props.model) })}
-          {props.fallback && props.model !== null
-            ? ` ${t.t('ui.analysis.fallback', { model: modelName(props.model) })}`
-            : null}
-        </p>
-        <p>{t.t('ui.analysis.caution')}</p>
+        <p>{props.byline}</p>
+        {props.caution === true ? <p>{t.t('ui.analysis.caution')}</p> : null}
       </footer>
     </article>
   );
 }
 
-function Priority(props: { readonly priority: AnalysisPriority; readonly number: number }) {
+function Section(props: {
+  readonly title: string;
+  readonly level: number;
+  readonly children: JSX.Element;
+}) {
+  const Title = heading(props.level);
+  return (
+    <section class="analysis__section">
+      <Title>{props.title}</Title>
+      {props.children}
+    </section>
+  );
+}
+
+function Priority(props: {
+  readonly priority: AnalysisPriority;
+  readonly number: number;
+  readonly level: number;
+}) {
   const { t } = useI18n();
   const { priority } = props;
+  const Title = heading(props.level);
   return (
     <li class="priority">
       <div class="priority__head">
         <span class="priority__number" aria-hidden="true">
           {t.value(props.number)}
         </span>
-        <h5 class="priority__title" dir="auto">
+        <Title class="priority__title" dir="auto">
           {priority.title}
-        </h5>
+        </Title>
         <p class="priority__levels">
           <span class={`level level--${priority.impact}`}>
             {t.t('ui.analysis.impact', { level: priority.impact })}
@@ -271,12 +335,14 @@ function Suggestions(props: {
   readonly title: string;
   readonly items: readonly string[];
   readonly lang: string | undefined;
+  readonly level: number;
 }) {
   const { t } = useI18n();
   if (props.items.length === 0) return null;
+  const Title = heading(props.level);
   return (
     <section class="ideas">
-      <h4>{props.title}</h4>
+      <Title>{props.title}</Title>
       <ul class="ideas__list" role="list">
         {props.items.map((item, index) => (
           <li key={index} class="ideas__item">
@@ -293,11 +359,14 @@ function Suggestions(props: {
   );
 }
 
-function Notes(props: { readonly title: string; readonly items: readonly string[] }) {
+function Notes(props: {
+  readonly title: string;
+  readonly items: readonly string[];
+  readonly level: number;
+}) {
   if (props.items.length === 0) return null;
   return (
-    <section class="analysis__section">
-      <h4>{props.title}</h4>
+    <Section title={props.title} level={props.level}>
       <ul class="notes">
         {props.items.map((item, index) => (
           <li key={index} dir="auto">
@@ -305,13 +374,14 @@ function Notes(props: { readonly title: string; readonly items: readonly string[
           </li>
         ))}
       </ul>
-    </section>
+    </Section>
   );
 }
 
 /**
- * The model's text, always rendered as text: `code` between backticks becomes a code span,
- * line breaks are kept by the stylesheet, and nothing in it is ever treated as markup.
+ * Text written by the analyst or a model, always rendered as text: `code` between backticks
+ * becomes a code span, line breaks are kept by the stylesheet, and nothing in it is ever
+ * treated as markup.
  */
 function RichText(props: { readonly text: string }) {
   const parts = props.text.split('`');
@@ -331,6 +401,3 @@ function RichText(props: { readonly text: string }) {
     </>
   );
 }
-
-/** For tests and the preview: the model the panel asks for. */
-export const REQUESTED_MODEL = ANALYSIS_MODEL;

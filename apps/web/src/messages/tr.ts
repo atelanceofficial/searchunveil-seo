@@ -205,7 +205,11 @@ export const uiTr: UiCatalog = {
   'ui.overview.outline': 'Başlık yapısı',
   'ui.overview.outline.empty': 'Sayfada başlık yok.',
   'ui.overview.outline.more': '{count, plural, one {ve # başlık daha} other {ve # başlık daha}}',
-  'ui.analysis.title': 'Yapay zekâ ile ayrıntılı analiz',
+  'ui.analyst.title': 'Uzman analizi',
+  'ui.analyst.lead':
+    'Kendi analiz motorumuz SearchUnveil Analist, bu incelemeyi ve sayfanın metnini öncelik sırasına konmuş bir eylem planına dönüştürür. Cihazınızda, anında ve ücretsiz çalışır; her maddesi bu sayfadaki bir kanıta dayanır.',
+  'ui.analyst.by': 'SearchUnveil Analist {version} tarafından, cihazınızda yazıldı.',
+  'ui.analysis.title': 'Claude Fable 5.2 ile ikinci görüş',
   'ui.analysis.lead':
     'Anthropic’in en yetenekli modeli Claude Fable 5.2, bu incelemeyi ve sayfanın metnini okur; en çok neyin önemli olduğunu ve tam olarak neyi değiştirmeniz gerektiğini açıklar.',
   'ui.analysis.sends.server':

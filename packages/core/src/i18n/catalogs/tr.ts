@@ -384,6 +384,154 @@ export const tr: CoreCatalog = {
   'http.ok.summary':
     'HTTPS üzerinden başarıyla yanıt veriyor; ne robots.txt ne de sunucunun üst bilgileri arama motorlarını uzak tutuyor.',
 
+  'analyst.do.status': 'Bu adresin sayfayı döndürmesini sağlayın',
+  'analyst.do.status.how':
+    'Sunucu {status} durum koduyla yanıt veriyor. Sayfa taşındıysa eski adresi 301 ile yenisine yönlendirin; yanlışlıkla kaldırıldıysa geri yükleyin; sunucu hata veriyorsa barındırma firmanızdan hata kayıtlarını incelemesini isteyin.',
+  'analyst.do.https': 'Siteyi HTTPS’e taşıyın',
+  'analyst.do.https.how':
+    'Barındırma panelinizden bir sertifika etkinleştirin (çoğu firma ücretsiz Let’s Encrypt sertifikası sunar), her http:// adresini 301 ile https:// sürümüne yönlendirin, ardından standart bağlantıda ve site haritasında {url} adresini kullanın.',
+  'analyst.do.header-noindex': 'Sunucu üst bilgilerinden noindex’i kaldırın',
+  'analyst.do.header-noindex.how':
+    'Sunucu {header} gönderiyor. Bu üst bilgideki noindex’i sunucu, barındırma ya da CDN ayarlarınızdan kaldırın; ardından sayfayı yeniden inceleyerek doğrulayın.',
+  'analyst.do.robots-txt': 'Arama motorlarının bu sayfayı taramasına izin verin',
+  'analyst.do.robots-txt.how':
+    'robots.txt dosyasında {path} adresini kapsayan {rule} kuralı var. Bu satırı silin ya da yalnızca gerçekten dışarıda tutmak istediğiniz adreslerle sınırlayın.',
+  'analyst.do.robots-txt-error': 'robots.txt dosyasının sorunsuz açılmasını sağlayın',
+  'analyst.do.robots-txt-error.how':
+    '{url} adresini açın. Dosya 200 durum koduyla hızlıca açılmalı; hiç kurala ihtiyacınız yoksa 404 de olur, ama asla sunucu hatası vermemeli.',
+  'analyst.do.redirects': 'Bağlantılarda doğrudan son adresi kullanın',
+  'analyst.do.redirects.how':
+    'Bağlantılarınızı, site haritanızı ve standart bağlantınızı {url} adresine yöneltin; eski adreslerin her biri oraya tek adımda yönlensin.',
+  'analyst.do.noindex': 'Arama motorlarının sayfayı dizine eklemesine izin verin',
+  'analyst.do.noindex.how': 'robots meta etiketini kaldırın ya da {snippet} olarak değiştirin.',
+  'analyst.do.nofollow': 'Sayfadaki bağlantıların izlenip izlenmeyeceğini kontrol edin',
+  'analyst.do.nofollow.how':
+    'Arama motorlarının bu sayfadaki bağlantıları izlemesi gerekiyorsa robots meta etiketinden nofollow’u kaldırın.',
+  'analyst.do.head': 'Önemli etiketleri head bölümüne geri taşıyın',
+  'analyst.do.head.how':
+    'Gövdeye (body) ait bir öğe head bölümünün başında yer alıyor ve onu erkenden sonlandırıyor. Bu öğeyi title, meta ve link etiketlerinin ardından body içine taşıyın.',
+  'analyst.do.title-missing': 'Sayfaya bir başlık verin',
+  'analyst.do.title-missing.how':
+    'Bunu head bölümüne ekleyin, sonra kendi üslubunuza göre düzenleyin: {snippet}',
+  'analyst.do.title': 'Başlığı yeniden yazın',
+  'analyst.do.title.how':
+    'Önce sayfanın ne sunduğunu, en sonda markanızı yazın; yaklaşık 60 karakteri geçmeyin. Örneğin: {snippet}',
+  'analyst.do.description': 'Bir meta açıklama yazın',
+  'analyst.do.description.how':
+    'Bunu head bölümüne ekleyin, sonra kendi üslubunuza göre düzenleyin: {snippet}',
+  'analyst.do.lang': 'Sayfanın dilini belirtin',
+  'analyst.do.lang.how':
+    'Sayfayı {snippet} ile başlatın; böylece ekran okuyucular metni doğru seslendirir, tarayıcılar da doğru çeviriyi önerir.',
+  'analyst.do.language-mismatch': 'Metnin gerçekten yazıldığı dili belirtin',
+  'analyst.do.language-mismatch.how':
+    'Sayfa {declaredLanguage} olduğunu söylüyor, ancak metni {detectedLanguage} yazılmış. html etiketini {snippet} olarak değiştirin.',
+  'analyst.do.viewport': 'Sayfayı telefon ekranlarına uydurun',
+  'analyst.do.viewport.how': 'head bölümüne {snippet} ekleyin ve yakınlaştırmayı engellemeyin.',
+  'analyst.do.canonical': 'Standart bağlantıyı düzeltin',
+  'analyst.do.canonical.how':
+    'head bölümünde, sonuçlarda görünmesini istediğiniz sayfanın tam adresini içeren tek bir standart bağlantı bırakın: {snippet}',
+  'analyst.do.h1': 'Sayfaya tek bir ana başlık verin',
+  'analyst.do.h1.how':
+    'Sayfanın üst kısmına, ne sunduğunuzu söyleyen tek bir h1 ekleyin; örneğin {snippet}.',
+  'analyst.do.generic-heading': 'Ana başlık sayfanın ne sunduğunu söylesin',
+  'analyst.do.generic-heading.how':
+    '“{heading}” herhangi bir sitede olabilir. Bunun yerine konuyu yazın; örneğin {snippet}.',
+  'analyst.do.heading-order': 'Başlık düzeylerini düzeltin',
+  'analyst.do.heading-order.how':
+    'Ana bölümler için h2, onların içinde h3 kullanın; düzey atlamayın.',
+  'analyst.do.heading-empty': 'Boş başlıkları doldurun ya da kaldırın',
+  'analyst.do.heading-empty.how':
+    'Her başlığa görünür bir metin verin; yalnızca boşluk için kullanılıyorsa kaldırın.',
+  'analyst.do.alt': 'Anlam taşıyan görselleri tanımlayın',
+  'analyst.do.alt.how':
+    '{count, plural, one {Bu görsele alt metin ekleyin} other {Bu # görsele alt metin ekleyin}}: her birinin ne gösterdiğini birkaç kelimeyle anlatın. Süs amaçlı görsellerde alt değerini boş bırakın. {examples} ile başlayın.',
+  'analyst.do.link-names': 'Her bağlantıya bir ad verin',
+  'analyst.do.link-names.how':
+    '{count, plural, one {Bu bağlantıya} other {Bu # bağlantıya}} görünür bir metin, simge bağlantılarına da aria-label verin. {examples} ile başlayın.',
+  'analyst.do.crawlable': 'Bağlantılarda gerçek adresler kullanın',
+  'analyst.do.crawlable.how':
+    'javascript: bağlantılarını, açtıkları sayfanın normal adresini (href) içeren bağlantılarla değiştirin; böylece arama motorları onları izleyebilir.',
+  'analyst.do.structured-data': 'Yapılandırılmış veriyi düzeltin',
+  'analyst.do.structured-data.how':
+    'Her JSON-LD bloğunu Google’ın Zengin Sonuçlar Testi’ne yapıştırın, gösterdiği hataları düzeltin ve yeniden test edin.',
+  'analyst.do.hreflang': 'Dil işaretlerini düzeltin',
+  'analyst.do.hreflang.how':
+    'en, en-GB ya da tr gibi kodlar kullanın, bu sayfayı kendi alternatifleri arasında listeleyin ve listelenen her sayfanın geri bağlantı vermesini sağlayın.',
+  'analyst.do.charset': 'UTF-8 kodlamasını belirtin',
+  'analyst.do.charset.how': 'head bölümünün en başına {snippet} ekleyin.',
+  'analyst.do.social': 'Bağlantı önizleme etiketlerini ekleyin',
+  'analyst.do.social.how':
+    'Paylaşılan bağlantılarda başlık, metin ve görsel görünsün diye bunları head bölümüne ekleyin: {snippet}',
+  'analyst.do.thin': 'Sunduklarınızı daha ayrıntılı anlatın',
+  'analyst.do.thin.how':
+    'Sayfada {words} kelime var. Kendi sözlerinizle ne sunduğunuzu, kimin için olduğunu, nerede olduğunu ve bir sonraki adımın ne olduğunu anlatın.',
+  'analyst.why.language-mismatch':
+    'Ekran okuyucular metni belirtilen dile göre seslendirir; tarayıcılar da çeviri önerirken bu dili kullanır.',
+  'analyst.why.generic-heading':
+    'Ana başlık ziyaretçilere ve arama motorlarına sayfanın ne hakkında olduğunu söyler; bir selamlama hiçbir şey söylemez.',
+  'analyst.why.generic-title':
+    '“{title}” herhangi bir sayfanın başlığı olabilir; oysa başlık, arama yapanların ilk okuduğu şeydir.',
+  'analyst.why.thin':
+    'Arama motorları ve ziyaretçiler bir sayfayı kelimelerinden anlar. Çok az metin, onlara dayanacak çok az şey bırakır.',
+  'analyst.evidence.declared': 'Belirtilen dil',
+  'analyst.evidence.detected': 'Metnin dili',
+  'analyst.evidence.words': 'Kelime sayısı',
+  'analyst.note.topic-title':
+    'Sayfa en çok “{topic}” hakkında konuşuyor, ama başlık bundan bahsetmiyor.',
+  'analyst.note.topic-h1':
+    'Ana başlık, sayfanın asıl konusu olan “{topic}” ifadesine yer vermiyor.',
+  'analyst.note.topic-description': 'Açıklama “{topic}” ifadesine yer vermiyor.',
+  'analyst.note.brand':
+    'Başlıkta markanız (“{brand}”) yok. Sona eklemek, insanların sizi sonuçlarda tanımasına yardımcı olur.',
+  'analyst.note.thin':
+    'Metin oldukça kısa ({words} kelime). İnsanların aradığı soruları yanıtladığından emin olun.',
+  'analyst.note.long-sentences':
+    'Cümleler ortalama {average} kelime. Kısa cümleler, özellikle telefonda daha kolay okunur.',
+  'analyst.note.same-title-description':
+    'Başlık ve açıklama aynı şeyi söylüyor; açıklama bunun yerine ayrıntı ekleyebilir.',
+  'analyst.note.description-short':
+    'Açıklama kısa ({count} karakter); tıklamaya teşvik eden bir cümleye daha yer var.',
+  'analyst.note.headings-few':
+    'Sayfada bölüm başlığı yok. Başlıklar, ziyaretçilerin sayfayı göz gezdirerek okumasına, arama motorlarının da yapısını anlamasına yardım eder.',
+  'analyst.note.internal-links':
+    'Sayfa, sitenizdeki başka hiçbir sayfaya bağlantı vermiyor. İlgili sayfalara verilen bağlantılar, ziyaretçilerin ve arama motorlarının onları bulmasını sağlar.',
+  'analyst.note.contact':
+    'Sayfada iletişim bilgileri var. LocalBusiness ya da Organization türündeki yapılandırılmış veri, işletmenizi arama motorlarına tanıtabilir.',
+  'analyst.note.prices':
+    'Sayfada fiyatlar geçiyor. Product ya da Offer türündeki yapılandırılmış veri, bunları arama motorlarına anlatabilir.',
+  'analyst.note.slow':
+    'Sunucunun HTML’i göndermesi {seconds} saniye sürdü. Bir saniyenin epey altını hedefleyin; önbellek ya da daha hızlı barındırma işe yarar.',
+  'analyst.note.compression':
+    'HTML ({kilobytes} KB) sıkıştırılmadan gönderiliyor. Sunucuda gzip ya da Brotli’yi açmak onu küçültür ve hızlandırır.',
+  'analyst.note.heavy':
+    'Yalnızca HTML {kilobytes} KB tutuyor. Büyük sayfalar telefonda yavaş açılır; dışarı taşıyabileceğiniz satır içi veri ya da betikleri arayın.',
+  'analyst.note.hsts':
+    'HTTPS çalışıyor, ama sunucu HSTS göndermiyor; HSTS, tarayıcılara her zaman güvenli sürümü kullanmalarını söyler.',
+  'analyst.note.sitemap':
+    'robots.txt dosyasında site haritası yok. Site haritanızın adresini içeren bir “Sitemap:” satırı, arama motorlarının her sayfayı bulmasına yardım eder.',
+  'analyst.caveat.scope':
+    'Bu analiz yalnızca bu sayfayı okur. Sıralamaları, rakipleri, başka sitelerden gelen bağlantıları ya da sayfanın telefonda ne kadar hızlı açıldığını göremez.',
+  'analyst.caveat.pasted':
+    'HTML doğrudan verildiği için sunucunun yanıtı ve robots.txt kontrol edilmedi.',
+  'analyst.caveat.little-text':
+    'HTML çok az metin içeriyor. İçerik JavaScript ile geliyorsa arama motorları ziyaretçilerden daha azını görebilir.',
+  'analyst.caveat.no-language':
+    'Sayfanın dili metninden anlaşılamadığı için kelimelere dayanan kontroller atlandı.',
+  'analyst.caveat.ideas':
+    'Başlık ve açıklama önerileri sayfanın kendi kelimelerinden kurulur; size benzesin diye düzenleyin.',
+  'analyst.summary.strong':
+    'Sayfa iyi durumda: onu aramanın dışında tutan bir şey bulunmadı ve temel öğeleri yerinde.',
+  'analyst.summary.fair':
+    'Sayfa bulunabiliyor, ama {count, plural, one {# sorun} other {# sorun}} onu geride tutuyor.',
+  'analyst.summary.weak':
+    '{count, plural, one {# ciddi sorun} other {# ciddi sorun}} bu sayfanın bulunmasını ya da kullanılmasını engelleyebilir.',
+  'analyst.summary.blocked':
+    'Şu hâliyle arama motorlarına bu sayfayı göstermemeleri söyleniyor ya da sayfaya ulaşamıyorlar.',
+  'analyst.summary.topic': 'Metni ağırlıklı olarak “{topic}” hakkında.',
+  'analyst.summary.start': 'İlk iş: {action}.',
+  'analyst.summary.done':
+    'Acil bir şey kalmadı: metni güncel tutun ve değişikliklerden sonra sayfayı yeniden inceleyin.',
+
   'mentions.kind.citation': 'Bağlantıyla kaynak gösterildi',
   'mentions.kind.mention': 'Bağlantısız olarak adı geçti',
   'mentions.method.own-check': 'Asistana kendim sordum',

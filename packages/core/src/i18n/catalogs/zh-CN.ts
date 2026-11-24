@@ -318,6 +318,132 @@ export const zhCN: CoreCatalog = {
   'http.ok': '服务器顺利提供此网页',
   'http.ok.summary': '它通过 HTTPS 成功响应，robots.txt 和服务器标头都没有阻止搜索引擎。',
 
+  'analyst.do.status': '让这个地址返回网页',
+  'analyst.do.status.how':
+    '服务器返回了状态码 {status}。如果网页已迁移，请用 301 将旧地址重定向到新地址；如果是误删，请恢复它；如果服务器出错，请让托管服务商检查错误日志。',
+  'analyst.do.https': '将网站迁移到 HTTPS',
+  'analyst.do.https.how':
+    '在托管面板中启用证书（许多服务商提供免费的 Let’s Encrypt 证书），用 301 将每个 http:// 地址重定向到对应的 https:// 版本，然后在规范链接和站点地图中使用 {url}。',
+  'analyst.do.header-noindex': '从服务器标头中删除 noindex',
+  'analyst.do.header-noindex.how':
+    '服务器发送了 {header}。请在服务器、托管或 CDN 设置中从该标头删除 noindex，然后重新检查网页以确认。',
+  'analyst.do.robots-txt': '允许搜索引擎抓取此网页',
+  'analyst.do.robots-txt.how':
+    'robots.txt 中有 {rule}，它涵盖了 {path}。请删除这一行，或将其范围缩小到确实要排除的地址。',
+  'analyst.do.robots-txt-error': '确保 robots.txt 能稳定加载',
+  'analyst.do.robots-txt-error.how':
+    '打开 {url}。它应当以状态码 200 快速加载；如果不需要规则，也可以返回 404，但绝不能返回服务器错误。',
+  'analyst.do.redirects': '直接链接到最终地址',
+  'analyst.do.redirects.how':
+    '将链接、站点地图和规范链接都指向 {url}，并让每个旧地址一步重定向到那里。',
+  'analyst.do.noindex': '允许搜索引擎将网页编入索引',
+  'analyst.do.noindex.how': '删除 robots meta 标记，或将其改为 {snippet}。',
+  'analyst.do.nofollow': '检查是否应跟踪此网页上的链接',
+  'analyst.do.nofollow.how':
+    '如果搜索引擎应当跟踪此网页上的链接，请从 robots meta 标记中删除 nofollow。',
+  'analyst.do.head': '把重要标记放回 head 中',
+  'analyst.do.head.how':
+    '一个本应属于 body 的元素出现在 head 开头，导致 head 提前结束。请把它移到 body 中，放在 title、meta 和 link 标记之后。',
+  'analyst.do.title-missing': '为网页添加标题',
+  'analyst.do.title-missing.how': '将以下内容加入 head，再按您的语气调整：{snippet}',
+  'analyst.do.title': '重写标题',
+  'analyst.do.title.how':
+    '先写网页提供的内容，最后写品牌名，控制在约 60 个字符以内。例如：{snippet}',
+  'analyst.do.description': '撰写元描述',
+  'analyst.do.description.how': '将以下内容加入 head，再按您的语气调整：{snippet}',
+  'analyst.do.lang': '声明网页的语言',
+  'analyst.do.lang.how':
+    '以 {snippet} 开始网页，让读屏软件正确朗读文字，也让浏览器提供合适的翻译。',
+  'analyst.do.language-mismatch': '声明正文实际使用的语言',
+  'analyst.do.language-mismatch.how':
+    '网页声明的语言是{declaredLanguage}，但正文是用{detectedLanguage}写的。请将 html 标记改为 {snippet}。',
+  'analyst.do.viewport': '让网页适配手机屏幕',
+  'analyst.do.viewport.how': '在 head 中加入 {snippet}，并且不要禁止缩放。',
+  'analyst.do.canonical': '修正规范链接',
+  'analyst.do.canonical.how':
+    '在 head 中只保留一个规范链接，写上您希望出现在结果中的网页完整地址：{snippet}',
+  'analyst.do.h1': '为网页设置一个主标题',
+  'analyst.do.h1.how': '在网页顶部附近添加唯一的 h1，说明网页提供什么，例如 {snippet}。',
+  'analyst.do.generic-heading': '让主标题说明网页提供什么',
+  'analyst.do.generic-heading.how':
+    '“{heading}”放在任何网站上都可以。请改为写出主题，例如 {snippet}。',
+  'analyst.do.heading-order': '修正标题层级',
+  'analyst.do.heading-order.how': '主要部分使用 h2，其中的小节使用 h3，不要跳级。',
+  'analyst.do.heading-empty': '填写或删除空标题',
+  'analyst.do.heading-empty.how': '为每个标题提供可见文字；如果它只是用来留白，请删除。',
+  'analyst.do.alt': '为有意义的图片添加描述',
+  'analyst.do.alt.how':
+    '为这 {count} 张图片添加替代文本：用几个词说明每张图片的内容。装饰性图片请将 alt 留空。从 {examples} 开始。',
+  'analyst.do.link-names': '为每个链接命名',
+  'analyst.do.link-names.how':
+    '为这 {count} 个链接添加可见文字，图标链接可使用 aria-label。从 {examples} 开始。',
+  'analyst.do.crawlable': '在链接中使用真实地址',
+  'analyst.do.crawlable.how':
+    '将 javascript: 链接替换为指向目标网页的普通 href，让搜索引擎能够跟踪。',
+  'analyst.do.structured-data': '修正结构化数据',
+  'analyst.do.structured-data.how':
+    '将每个 JSON-LD 块粘贴到 Google 的富媒体搜索结果测试中，修正显示的错误后再测试一次。',
+  'analyst.do.hreflang': '修正语言注释',
+  'analyst.do.hreflang.how':
+    '使用 en、en-GB 或 tr 之类的代码，在备用版本中列出此网页本身，并确保列出的每个网页都链接回来。',
+  'analyst.do.charset': '声明 UTF-8',
+  'analyst.do.charset.how': '将 {snippet} 放在 head 的最前面。',
+  'analyst.do.social': '添加链接预览标记',
+  'analyst.do.social.how': '将以下标记加入 head，让分享的链接显示标题、文字和图片：{snippet}',
+  'analyst.do.thin': '多介绍一些您提供的内容',
+  'analyst.do.thin.how':
+    '这个网页只有 {words} 个词。请用自己的话说明您提供什么、面向谁、在哪里，以及下一步该做什么。',
+  'analyst.why.language-mismatch': '读屏软件会按声明的语言朗读文字，浏览器也会据此提供翻译。',
+  'analyst.why.generic-heading':
+    '主标题会告诉访问者和搜索引擎网页讲的是什么；一句问候什么也说明不了。',
+  'analyst.why.generic-title': '“{title}”可以是任何网页的标题，而标题是搜索者最先读到的内容。',
+  'analyst.why.thin':
+    '搜索引擎和访问者都是通过文字来理解网页的。文字太少，他们能依据的信息也就太少。',
+  'analyst.evidence.declared': '声明的语言',
+  'analyst.evidence.detected': '正文语言',
+  'analyst.evidence.words': '词数',
+  'analyst.note.topic-title': '网页主要在讲“{topic}”，但标题没有提到它。',
+  'analyst.note.topic-h1': '主标题没有提到网页的主要主题“{topic}”。',
+  'analyst.note.topic-description': '描述中没有提到“{topic}”。',
+  'analyst.note.brand': '标题中没有您的品牌“{brand}”。把它放在末尾，有助于用户在结果中认出您。',
+  'analyst.note.thin': '正文较短（{words} 个词）。请确认它回答了用户搜索的问题。',
+  'analyst.note.long-sentences':
+    '句子平均有 {average} 个词。较短的句子更易阅读，在手机上尤其如此。',
+  'analyst.note.same-title-description': '标题和描述内容相同；描述可以改为补充细节。',
+  'analyst.note.description-short': '描述较短（{count} 个字符），还可以加一句吸引点击的话。',
+  'analyst.note.headings-few':
+    '网页没有分节标题。标题能帮助访问者快速浏览，也能帮助搜索引擎理解网页结构。',
+  'analyst.note.internal-links':
+    '网页没有链接到您网站上的其他网页。指向相关网页的链接能帮助访问者和搜索引擎找到它们。',
+  'analyst.note.contact':
+    '网页上有联系方式。LocalBusiness 或 Organization 类型的结构化数据可以向搜索引擎描述您的商家。',
+  'analyst.note.prices':
+    '网页中提到了价格。Product 或 Offer 类型的结构化数据可以向搜索引擎描述它们。',
+  'analyst.note.slow':
+    '服务器用了 {seconds} 秒才发送完 HTML。目标应远低于一秒；缓存或更快的托管会有帮助。',
+  'analyst.note.compression':
+    'HTML（{kilobytes} KB）以未压缩的形式发送。在服务器上启用 gzip 或 Brotli 可以让它更小、更快。',
+  'analyst.note.heavy':
+    '仅 HTML 就有 {kilobytes} KB。大网页在手机上加载缓慢；请找出可以移出去的内嵌数据或脚本。',
+  'analyst.note.hsts': 'HTTPS 正常工作，但服务器没有发送 HSTS，它会告诉浏览器始终使用安全版本。',
+  'analyst.note.sitemap':
+    'robots.txt 中没有列出站点地图。添加一行写有站点地图地址的“Sitemap:”，有助于搜索引擎找到每个网页。',
+  'analyst.caveat.scope':
+    '本分析只读取这个网页，看不到排名、竞争对手、来自其他网站的链接，也看不到网页在手机上的实际速度。',
+  'analyst.caveat.pasted': '由于 HTML 是直接提供的，没有检查服务器的响应和 robots.txt。',
+  'analyst.caveat.little-text':
+    'HTML 中的文字很少。如果内容是通过 JavaScript 显示的，搜索引擎看到的可能比访问者少。',
+  'analyst.caveat.no-language': '无法从正文判断网页的语言，因此跳过了需要读取词语的检查。',
+  'analyst.caveat.ideas': '标题和描述建议是用网页自己的文字组成的；请调整成符合您风格的说法。',
+  'analyst.summary.strong':
+    '网页状况良好：没有发现会让它无法出现在搜索中的问题，基础要素都已具备。',
+  'analyst.summary.fair': '网页可以被找到，但有 {count} 个问题拖了后腿。',
+  'analyst.summary.weak': '有 {count} 个严重问题，可能让这个网页难以被找到或使用。',
+  'analyst.summary.blocked': '按目前的设置，搜索引擎被要求不要显示这个网页，或者无法访问它。',
+  'analyst.summary.topic': '正文主要讲的是“{topic}”。',
+  'analyst.summary.start': '先从这一步开始：{action}。',
+  'analyst.summary.done': '没有紧急事项了：请保持正文更新，并在修改后重新检查网页。',
+
   'mentions.kind.citation': '附带链接引用',
   'mentions.kind.mention': '提及但未附链接',
   'mentions.method.own-check': '我亲自询问了助手',

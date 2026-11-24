@@ -429,6 +429,7 @@ describe('page facts', () => {
         title: 'Running shoes',
         description: 'Compare running shoes.',
         image: 'https://example.com/shoes.jpg',
+        siteName: null,
       },
       languageVersions: 1,
     });
@@ -446,7 +447,7 @@ describe('page facts', () => {
           '<svg><text>Chart label</text></svg><p>Open   every\nday</p>',
       ),
     );
-    expect(report.facts.textSample).toBe('Shop Open every day');
+    expect(report.facts.textSample).toBe('Shop\nOpen every day');
     expect(report.facts.words).toBe(4);
   });
 

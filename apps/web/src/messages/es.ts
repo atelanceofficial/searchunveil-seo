@@ -212,7 +212,11 @@ export const uiEs: UiCatalog = {
   'ui.overview.outline.empty': 'La página no tiene encabezados.',
   'ui.overview.outline.more':
     '{count, plural, one {y # encabezado más} other {y # encabezados más}}',
-  'ui.analysis.title': 'Análisis a fondo con IA',
+  'ui.analyst.title': 'Análisis experto',
+  'ui.analyst.lead':
+    'SearchUnveil Analyst, nuestro propio motor de análisis, convierte esta revisión y el texto de la página en un plan ordenado por prioridad. Funciona en tu dispositivo, al instante y gratis, y cada punto se basa en pruebas de esta página.',
+  'ui.analyst.by': 'Escrito por SearchUnveil Analyst {version}, en tu dispositivo.',
+  'ui.analysis.title': 'Segunda opinión de Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, el modelo más capaz de Anthropic, lee esta revisión y el texto de la página, y explica qué importa más y qué cambiar exactamente.',
   'ui.analysis.sends.server':

@@ -212,7 +212,11 @@ export const uiDe: UiCatalog = {
   'ui.overview.outline.empty': 'Die Seite hat keine Überschriften.',
   'ui.overview.outline.more':
     '{count, plural, one {und # weitere Überschrift} other {und # weitere Überschriften}}',
-  'ui.analysis.title': 'Tiefere Analyse mit KI',
+  'ui.analyst.title': 'Expertenanalyse',
+  'ui.analyst.lead':
+    'SearchUnveil Analyst, unsere eigene Analyse-Engine, macht aus dieser Prüfung und dem Text der Seite einen priorisierten Plan. Sie läuft auf Ihrem Gerät, sofort und kostenlos, und jeder Punkt stützt sich auf Belege von dieser Seite.',
+  'ui.analyst.by': 'Geschrieben von SearchUnveil Analyst {version}, auf Ihrem Gerät.',
+  'ui.analysis.title': 'Zweite Meinung von Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, das leistungsfähigste Modell von Anthropic, liest diese Prüfung und den Text der Seite und erklärt, worauf es am meisten ankommt und was genau Sie ändern sollten.',
   'ui.analysis.sends.server':

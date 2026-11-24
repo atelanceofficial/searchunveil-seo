@@ -208,7 +208,11 @@ const messages = {
   'ui.overview.outline.empty': 'The page has no headings.',
   'ui.overview.outline.more':
     '{count, plural, one {and # more heading} other {and # more headings}}',
-  'ui.analysis.title': 'Deeper analysis with AI',
+  'ui.analyst.title': 'Expert analysis',
+  'ui.analyst.lead':
+    'SearchUnveil Analyst, our own analysis engine, turns this review and the page’s text into a ranked plan. It runs on your device, instantly and free, and every point rests on evidence from this page.',
+  'ui.analyst.by': 'Written by SearchUnveil Analyst {version}, on your device.',
+  'ui.analysis.title': 'Second opinion from Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, Anthropic’s most capable model, reads this review and the page’s text, then explains what matters most and exactly what to change.',
   'ui.analysis.sends.server':

@@ -166,11 +166,16 @@ test.describe('page review', () => {
     await expectAccessible(page);
   });
 
-  test('shows what search engines see, and where the AI analysis works', async ({ page }) => {
+  test('shows what search engines see, and the built-in expert analysis', async ({ page }) => {
     await page.goto('/#/page-review');
     await page.getByRole('button', { name: 'Try a sample page' }).click();
     await expect(page.getByRole('heading', { name: 'What search engines see' })).toBeVisible();
     await expect(page.locator('.serp__title')).not.toBeEmpty();
+    // SearchUnveil Analyst writes its plan at once, on the device, with no server or account.
+    await expect(page.getByRole('heading', { name: 'Expert analysis' })).toBeVisible();
+    await expect(page.locator('.analysis').first().locator('.priority').first()).toBeVisible();
+    await expect(page.locator('.analysis__footer').first()).toContainText('SearchUnveil Analyst');
+    // Claude's second opinion needs a server or a Claude viewer; this copy has neither.
     await expect(page.getByText('The AI analysis works when SearchUnveil runs with')).toBeVisible();
     await expect(page.getByRole('button', { name: 'Analyze with Fable 5.2' })).toHaveCount(0);
     await expectAccessible(page);
@@ -254,9 +259,10 @@ test.describe('server version', () => {
     await expect(page.getByRole('heading', { name: 'The server', exact: true })).toBeVisible();
 
     await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
-    await expect(page.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
-    await expect(page.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
-    await expect(page.locator('.priority__how code')).toHaveText(
+    const second = page.locator('.second-opinion');
+    await expect(second.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
+    await expect(second.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
+    await expect(second.locator('.priority__how code')).toHaveText(
       '<title>Trail running shoes | Example</title>',
     );
     const analysis = requests[1] as { locale: string; pageLanguage: string; evidence: string };
@@ -316,8 +322,9 @@ test.describe('inside Claude', () => {
     await page.getByRole('button', { name: 'Try a sample page' }).click();
     await expect(page.getByText('sent to Claude, on your own Claude account')).toBeVisible();
     await page.getByRole('button', { name: 'Analyze with Fable 5.2' }).click();
-    await expect(page.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
-    await expect(page.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
+    const second = page.locator('.second-opinion');
+    await expect(second.getByRole('heading', { name: 'Overall: fair' })).toBeFocused();
+    await expect(second.locator('.analysis__footer')).toContainText('Claude Fable 5.2');
     const [call] = await page.evaluate(
       () => (window as unknown as { sampleCalls: Record<string, string>[] }).sampleCalls,
     );

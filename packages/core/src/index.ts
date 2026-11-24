@@ -148,6 +148,19 @@ export {
   type SkippedPage,
 } from './audit/site.ts';
 
+// SearchUnveil Analyst: the built-in analysis engine
+export {
+  ANALYST_NAME,
+  ANALYST_THRESHOLDS,
+  ANALYST_VERSION,
+  analyzePage,
+  MAX_ACTIONS,
+  renderAnalystReport,
+  type AnalystAction,
+  type AnalystReport,
+} from './analyst/analyst.ts';
+export { detectLanguage, type DetectedLanguage } from './analyst/language.ts';
+
 // Analysis by a language model
 export {
   ANALYSIS_EVIDENCE_MAX_CHARS,

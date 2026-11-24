@@ -209,7 +209,11 @@ export const uiFr: UiCatalog = {
   'ui.overview.outline': 'Plan des titres',
   'ui.overview.outline.empty': 'La page n’a aucun titre de section.',
   'ui.overview.outline.more': '{count, plural, one {et # autre titre} other {et # autres titres}}',
-  'ui.analysis.title': 'Analyse approfondie par IA',
+  'ui.analyst.title': 'Analyse experte',
+  'ui.analyst.lead':
+    'SearchUnveil Analyst, notre propre moteur d’analyse, transforme cet examen et le texte de la page en un plan classé par priorité. Il fonctionne sur votre appareil, instantanément et gratuitement, et chaque point repose sur des éléments de cette page.',
+  'ui.analyst.by': 'Rédigé par SearchUnveil Analyst {version}, sur votre appareil.',
+  'ui.analysis.title': 'Deuxième avis de Claude Fable 5.2',
   'ui.analysis.lead':
     'Claude Fable 5.2, le modèle le plus performant d’Anthropic, lit cet examen et le texte de la page, puis explique ce qui compte le plus et ce qu’il faut changer, précisément.',
   'ui.analysis.sends.server':

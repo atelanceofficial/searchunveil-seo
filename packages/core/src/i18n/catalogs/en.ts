@@ -399,6 +399,153 @@ const messages = {
   'http.ok.summary':
     'It answers with success over HTTPS, and neither robots.txt nor the server’s headers keep search engines away.',
 
+  // SearchUnveil Analyst
+  'analyst.do.status': 'Make this address return the page',
+  'analyst.do.status.how':
+    'The server answers with status {status}. If the page moved, redirect the old address to the new one with a 301; if it was removed by mistake, restore it; if the server fails, ask your host to check its error logs.',
+  'analyst.do.https': 'Move the site to HTTPS',
+  'analyst.do.https.how':
+    'Turn on a certificate in your hosting panel (many hosts include free Let’s Encrypt certificates), redirect every http:// address to its https:// version with a 301, then use {url} in your canonical link and sitemap.',
+  'analyst.do.header-noindex': 'Remove noindex from the server’s headers',
+  'analyst.do.header-noindex.how':
+    'The server sends {header}. Remove noindex from that header in your server, hosting or CDN settings, then review the page again to confirm.',
+  'analyst.do.robots-txt': 'Let search engines crawl this page',
+  'analyst.do.robots-txt.how':
+    'robots.txt contains {rule}, which covers {path}. Delete that line, or narrow it to the addresses you really want to keep out.',
+  'analyst.do.robots-txt-error': 'Make robots.txt load reliably',
+  'analyst.do.robots-txt-error.how':
+    'Open {url}. It should load quickly with status 200, or answer 404 if you need no rules, but never with a server error.',
+  'analyst.do.redirects': 'Link straight to the final address',
+  'analyst.do.redirects.how':
+    'Point your links, sitemap and canonical link to {url}, and make each old address redirect there in one step.',
+  'analyst.do.noindex': 'Let search engines index the page',
+  'analyst.do.noindex.how': 'Remove the robots meta tag, or change it to {snippet}.',
+  'analyst.do.nofollow': 'Check whether the page’s links should be followed',
+  'analyst.do.nofollow.how':
+    'If search engines should follow this page’s links, remove nofollow from its robots meta tag.',
+  'analyst.do.head': 'Put the important tags back in the head',
+  'analyst.do.head.how':
+    'An element that belongs in the body appears early in the head and ends it. Move it into the body, after the title, meta and link tags.',
+  'analyst.do.title-missing': 'Give the page a title',
+  'analyst.do.title-missing.how':
+    'Add this inside the head, then adjust it to your voice: {snippet}',
+  'analyst.do.title': 'Rewrite the title',
+  'analyst.do.title.how':
+    'Name what the page offers first and your brand last, within about 60 characters. For example: {snippet}',
+  'analyst.do.description': 'Write a meta description',
+  'analyst.do.description.how': 'Add this inside the head, then adjust it to your voice: {snippet}',
+  'analyst.do.lang': 'Declare the page’s language',
+  'analyst.do.lang.how':
+    'Start the page with {snippet}, so screen readers pronounce the text correctly and browsers offer the right translation.',
+  'analyst.do.language-mismatch': 'Declare the language the text is written in',
+  'analyst.do.language-mismatch.how':
+    'The page says it is in {declaredLanguage}, but its text reads as {detectedLanguage}. Change the html tag to {snippet}.',
+  'analyst.do.viewport': 'Make the page fit phone screens',
+  'analyst.do.viewport.how': 'Add {snippet} to the head, and don’t block zooming.',
+  'analyst.do.canonical': 'Fix the canonical link',
+  'analyst.do.canonical.how':
+    'Keep one canonical link in the head, with the full address of the page you want in results: {snippet}',
+  'analyst.do.h1': 'Give the page one main heading',
+  'analyst.do.h1.how':
+    'Add a single h1 near the top that says what the page offers, for example {snippet}.',
+  'analyst.do.generic-heading': 'Make the main heading say what the page offers',
+  'analyst.do.generic-heading.how':
+    '“{heading}” could stand on any site. Name the subject instead, for example {snippet}.',
+  'analyst.do.heading-order': 'Fix the heading levels',
+  'analyst.do.heading-order.how':
+    'Use h2 for the main sections and h3 inside them, without skipping a level.',
+  'analyst.do.heading-empty': 'Fill or remove empty headings',
+  'analyst.do.heading-empty.how':
+    'Give each heading visible text, or remove it if it only adds space.',
+  'analyst.do.alt': 'Describe the images that carry meaning',
+  'analyst.do.alt.how':
+    '{count, plural, one {Add alt text to this image} other {Add alt text to these # images}}: a few words saying what each shows. Use an empty alt for decoration. Start with {examples}.',
+  'analyst.do.link-names': 'Name every link',
+  'analyst.do.link-names.how':
+    '{count, plural, one {Give this link} other {Give these # links}} visible text, or an aria-label for icon links. Start with {examples}.',
+  'analyst.do.crawlable': 'Use real addresses in links',
+  'analyst.do.crawlable.how':
+    'Replace javascript: links with a normal href to the page they open, so search engines can follow them.',
+  'analyst.do.structured-data': 'Fix the structured data',
+  'analyst.do.structured-data.how':
+    'Paste each JSON-LD block into Google’s Rich Results Test, fix the errors it shows, and test again.',
+  'analyst.do.hreflang': 'Fix the language annotations',
+  'analyst.do.hreflang.how':
+    'Use codes such as en, en-GB or tr, list this page among its own alternates, and make every listed page link back.',
+  'analyst.do.charset': 'Declare UTF-8',
+  'analyst.do.charset.how': 'Put {snippet} first in the head.',
+  'analyst.do.social': 'Add link preview tags',
+  'analyst.do.social.how':
+    'Add these to the head so shared links show a title, text and image: {snippet}',
+  'analyst.do.thin': 'Say more about what you offer',
+  'analyst.do.thin.how':
+    'The page has {words} words. In your own words, explain what you offer, for whom, where, and what to do next.',
+  'analyst.why.language-mismatch':
+    'Screen readers pronounce text by the declared language, and browsers use it to offer translation.',
+  'analyst.why.generic-heading':
+    'The main heading tells visitors and search engines what the page is about; a greeting tells them nothing.',
+  'analyst.why.generic-title':
+    '“{title}” could be the title of any page, and the title is the first thing searchers read.',
+  'analyst.why.thin':
+    'Search engines and visitors understand a page from its words. Very little text gives them little to go on.',
+  'analyst.evidence.declared': 'Declared language',
+  'analyst.evidence.detected': 'Text reads as',
+  'analyst.evidence.words': 'Words',
+  'analyst.note.topic-title':
+    'The page talks most about “{topic}”, but the title doesn’t mention it.',
+  'analyst.note.topic-h1': 'The main heading doesn’t mention “{topic}”, the page’s main subject.',
+  'analyst.note.topic-description': 'The description doesn’t mention “{topic}”.',
+  'analyst.note.brand':
+    'The title doesn’t include your brand, “{brand}”. Putting it at the end helps people recognize you in results.',
+  'analyst.note.thin':
+    'The text is fairly short ({words} words). Make sure it answers what people search for.',
+  'analyst.note.long-sentences':
+    'Sentences average {average} words. Shorter sentences are easier to read, especially on phones.',
+  'analyst.note.same-title-description':
+    'The title and the description say the same thing; the description can add detail instead.',
+  'analyst.note.description-short':
+    'The description is short ({count} characters); there’s room for a sentence that makes people want to click.',
+  'analyst.note.headings-few':
+    'The page has no section headings. Headings help visitors scan it and help search engines understand its structure.',
+  'analyst.note.internal-links':
+    'The page links to no other page on your site. Links to related pages help visitors and search engines find them.',
+  'analyst.note.contact':
+    'The page shows contact details. LocalBusiness or Organization structured data can describe your business to search engines.',
+  'analyst.note.prices':
+    'The page mentions prices. Product or Offer structured data can describe them to search engines.',
+  'analyst.note.slow':
+    'The server took {seconds} seconds to send the HTML. Aim for well under a second; caching or faster hosting helps.',
+  'analyst.note.compression':
+    'The HTML ({kilobytes} KB) is sent uncompressed. Turning on gzip or Brotli on the server makes it smaller and faster.',
+  'analyst.note.heavy':
+    'The HTML alone is {kilobytes} KB. Large pages load slowly on phones; look for inline data or scripts you can move out.',
+  'analyst.note.hsts':
+    'HTTPS works, but the server doesn’t send HSTS, which tells browsers to always use the secure version.',
+  'analyst.note.sitemap':
+    'robots.txt lists no sitemap. A “Sitemap:” line with your sitemap’s address helps search engines find every page.',
+  'analyst.caveat.scope':
+    'This analysis reads only this page. It can’t see rankings, competitors, links from other sites, or how fast the page feels on a phone.',
+  'analyst.caveat.pasted':
+    'The server’s answer and robots.txt weren’t checked, because the HTML was provided directly.',
+  'analyst.caveat.little-text':
+    'The HTML holds very little text. If the content appears through JavaScript, search engines may see less than visitors do.',
+  'analyst.caveat.no-language':
+    'The page’s language couldn’t be told from its text, so checks that read words were skipped.',
+  'analyst.caveat.ideas':
+    'Title and description ideas are built from the page’s own words; adjust them so they sound like you.',
+  'analyst.summary.strong':
+    'The page is in good shape: nothing found keeps it out of search, and its basics are in place.',
+  'analyst.summary.fair':
+    'The page can be found, but {count, plural, one {# issue holds} other {# issues hold}} it back.',
+  'analyst.summary.weak':
+    '{count, plural, one {# serious issue} other {# serious issues}} may keep this page from being found or used.',
+  'analyst.summary.blocked':
+    'As it stands, search engines are told not to show this page, or can’t reach it.',
+  'analyst.summary.topic': 'Its text is mainly about “{topic}”.',
+  'analyst.summary.start': 'Start with this: {action}.',
+  'analyst.summary.done':
+    'Nothing urgent remains: keep the text current and review the page again after changes.',
+
   // AI mention log
   'mentions.kind.citation': 'Cited with a link',
   'mentions.kind.mention': 'Named without a link',

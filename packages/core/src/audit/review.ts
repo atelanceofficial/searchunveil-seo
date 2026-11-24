@@ -78,6 +78,8 @@ export interface PageFacts {
     readonly title: string | null;
     readonly description: string | null;
     readonly image: string | null;
+    /** The site's name for link previews (`og:site_name`), often its brand. */
+    readonly siteName: string | null;
   };
   /** Language versions the page declares with hreflang. */
   readonly languageVersions: number;
@@ -212,7 +214,12 @@ export function pageFacts(snapshot: PageSnapshot): PageFacts {
       unnamed: snapshot.links.filter((l) => l.name === '').length,
     },
     structuredData: [...new Set(snapshot.structuredData.flatMap((block) => block.types))],
-    social: { title: og('og:title'), description: og('og:description'), image: og('og:image') },
+    social: {
+      title: og('og:title'),
+      description: og('og:description'),
+      image: og('og:image'),
+      siteName: og('og:site_name'),
+    },
     languageVersions: snapshot.alternates.length,
     textSample: snapshot.textSample,
   };

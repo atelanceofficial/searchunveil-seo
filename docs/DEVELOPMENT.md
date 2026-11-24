@@ -78,6 +78,7 @@ To deploy, run `npm ci`, `npm run build:server` and `node apps/server/src/main.t
 | `apps/web/src/messages` | Interface text in seven languages. |
 | `apps/web/src/styles/app.css` | Design tokens and styles; contrast is tested in `contrast.test.ts`. |
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
+| `packages/core/src/analyst` | SearchUnveil Analyst: language detection, key phrases, ideas and the ranked plan. |
 | `packages/core/src/ai` | The AI analysis: request, answer schema and checks. |
 | `apps/server/src` | The optional server: page fetching (`fetch-page.ts`, `network.ts`), the Claude analysis (`analyze.ts`) and the HTTP endpoints (`server.ts`). |
 

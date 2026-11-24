@@ -31,7 +31,10 @@ export interface PageSnapshot {
   readonly headEndsWithNoscript: boolean;
   /** Words in the text a visitor reads (scripts, styles and templates left out). */
   readonly words: number;
-  /** The start of that text, for summaries; at most {@link TEXT_SAMPLE_LENGTH} characters. */
+  /**
+   * The start of that text, for summaries; at most {@link TEXT_SAMPLE_LENGTH} characters, with
+   * each block of text (paragraph, heading, list item) on its own line.
+   */
   readonly textSample: string;
 }
 
@@ -276,25 +279,72 @@ export function extractSnapshot(document: Document, url: string | null = null): 
 const NOT_READ = new Set(['script', 'style', 'noscript', 'template', 'svg', 'math']);
 
 /** The page's readable text: every text node in the body outside scripts, styles and the like. */
+/** Elements that start a new block of text: their text is kept on its own line. */
+const BLOCKS = new Set([
+  'address',
+  'article',
+  'aside',
+  'blockquote',
+  'dd',
+  'details',
+  'div',
+  'dl',
+  'dt',
+  'figcaption',
+  'figure',
+  'footer',
+  'form',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'header',
+  'li',
+  'main',
+  'nav',
+  'ol',
+  'p',
+  'pre',
+  'section',
+  'summary',
+  'table',
+  'td',
+  'th',
+  'tr',
+  'ul',
+]);
+
+/**
+ * The text a visitor reads, in document order. Each block (a paragraph, a heading, a list item)
+ * starts a new line, so later readers can tell a menu or a heading from a sentence.
+ */
 function readableText(document: Document): { words: number; textSample: string } {
   let words = 0;
   let sample = '';
+  let lastBlock: Element | null = null;
   const walker = document.createTreeWalker(document.body, SHOW_TEXT);
   for (let node = walker.nextNode(); node !== null; node = walker.nextNode()) {
     let parent = node.parentElement;
+    let block: Element | null = null;
     let skipped = false;
     while (parent !== null && parent !== document.body) {
       if (NOT_READ.has(parent.localName) || parent.hasAttribute('hidden')) {
         skipped = true;
         break;
       }
+      if (block === null && BLOCKS.has(parent.localName)) block = parent;
       parent = parent.parentElement;
     }
     if (skipped) continue;
     const value = (node.nodeValue ?? '').replace(/\s+/g, ' ').trim();
     if (value === '') continue;
     words += value.split(' ').length;
-    if (sample.length < TEXT_SAMPLE_LENGTH) sample += (sample === '' ? '' : ' ') + value;
+    if (sample.length < TEXT_SAMPLE_LENGTH) {
+      sample += (sample === '' ? '' : block === lastBlock ? ' ' : '\n') + value;
+    }
+    lastBlock = block;
   }
   return { words, textSample: sample.slice(0, TEXT_SAMPLE_LENGTH) };
 }
