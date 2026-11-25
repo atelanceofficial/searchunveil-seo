@@ -1,0 +1,19 @@
+{
+  "name": "@searchunveil/skill",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SearchUnveil as a skill for AI assistants: a SKILL.md and a command line that runs the engine on the person's computer.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "build": "vite build && node scripts/package.ts",
+    "cli": "node src/main.ts"
+  },
+  "dependencies": {
+    "@searchunveil/core": "0.1.0"
+  },
+  "devDependencies": {
+    "parse5": "8.1.1",
+    "vite": "8.3.6"
+  }
+}

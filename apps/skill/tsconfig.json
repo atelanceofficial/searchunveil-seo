@@ -1,0 +1,10 @@
+{
+  // The skill's command line runs in Node.js. It imports the engine, whose types mention DOM
+  // interfaces (a page review takes a parsed Document), so the DOM library is listed too.
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "DOM"],
+    "types": ["node"]
+  },
+  "include": ["src", "scripts", "vite.config.ts"]
+}

@@ -107,11 +107,20 @@ The runner treats every provider as untrusted:
 - Failed calls are recorded and never retried by the runner, since retrying costs money and only the provider knows how it bills.
 - Stopping lets no new call start and keeps every answer received so far.
 
+## Where it runs
+
+The check runs inside an AI assistant, through the [SearchUnveil skill](../apps/skill/skill/SKILL.md). The assistant is the provider: it asks the AI engines with the paid tools connected to it, such as a marketplace's tools, and the skill's command line does everything else.
+
+1. `visibility estimate` prints the AI engines and models with their prices, the AI products that cannot be checked with these tools, and the full cost notice.
+2. After the person agrees, `visibility calls --agreed` lists the calls, one JSON line each. The assistant makes each call and writes the answer to the same line.
+3. `visibility report` checks the answers against the plan, reports who is cited or named, says what the check cost and saves the record. `visibility trend` compares saved records.
+
+The skill never calls a paid tool itself, and its instructions forbid any call before the person agrees. [ADR 0010](adr/0010-skill-package.md) records the design.
+
 ## What it does not do yet
 
-- **No provider is built.** The check cannot ask a real AI engine until one is written, and the provider's terms and prices are confirmed.
-- **No screen is built.** Plans, the cost notice, the report and the trend still need an interface.
-- **Nothing in a build asks AI engines.** The static and server builds keep their privacy promises: the static build sends nothing anywhere, and the server only downloads pages people ask it to review.
+- **The marketplace's tools are not confirmed.** Which AI engines and models can be asked, at what price, for which country and language, is known only once the marketplace confirms its tools.
+- **The web app has no screen for it.** The static and server builds keep their privacy promises: the static build sends nothing anywhere, and the server only downloads pages people ask it to review.
 
 ---
 

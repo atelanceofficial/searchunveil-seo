@@ -38,6 +38,15 @@ jobs:
         run: npm run check
       - name: Production build
         run: npm run build
+      - name: Skill package (built within the marketplace's limits, then run from the ZIP)
+        run: |
+          npm run build:skill
+          mkdir -p "$RUNNER_TEMP/skill"
+          unzip -q apps/skill/dist/searchunveil-skill.zip -d "$RUNNER_TEMP/skill"
+          cd "$RUNNER_TEMP/skill"
+          printf '<title>T</title><h1>H</h1>' > page.html
+          node searchunveil/scripts/searchunveil.mjs review page.html | grep -q '## Page review'
+          node searchunveil/scripts/searchunveil.mjs notice trial --provider Test | grep -q '14-day free trial'
 
   container:
     name: Server image (build, start, answer)

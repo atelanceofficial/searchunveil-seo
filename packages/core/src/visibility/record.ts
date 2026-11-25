@@ -156,7 +156,8 @@ function readBrand(value: unknown): Brand | null {
   return isTextList(aliases) ? { site, name, aliases } : null;
 }
 
-function readPlan(value: unknown): VisibilityPlan | null {
+/** A plan in the shape a record keeps it, or `null` when `value` is not one. Not validated. */
+export function readPlan(value: unknown): VisibilityPlan | null {
   if (!isObject(value)) return null;
   const brand = readBrand(value['brand']);
   const competitors = value['competitors'];
@@ -184,7 +185,8 @@ function readPlan(value: unknown): VisibilityPlan | null {
   };
 }
 
-function readEngine(value: unknown): AnswerEngine | null {
+/** An engine in the shape a record keeps it, or `null` when `value` is not one. */
+export function readEngine(value: unknown): AnswerEngine | null {
   if (!isObject(value)) return null;
   const { id, label, family, model, pricePerCall } = value;
   if (!isText(id) || !isText(label) || !isText(family)) return null;

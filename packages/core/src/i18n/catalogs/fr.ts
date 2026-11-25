@@ -572,7 +572,7 @@ export const fr: CoreCatalog = {
   'visibility.approximate': 'Visibilité approximative',
   'visibility.approximate.why':
     'Les réponses obtenues par un programme peuvent différer de ce que les gens voient dans les applications, et elles changent d’un jour à l’autre. Lisez ces résultats comme une estimation, pas comme une mesure.',
-  'visibility.paid-tools': 'Cette vérification utilise des outils payants de {provider}.',
+  'visibility.paid-tools': 'Cette vérification utilise des outils payants sur {provider}.',
   'visibility.cost.calls':
     '{questions, plural, one {# question} other {# questions}} × {engines, plural, one {# IA} other {# IA}} × {repeats, plural, one {# fois} other {# fois}} = {calls, plural, one {# appel} other {# appels}}',
   'visibility.cost.estimate':
@@ -633,7 +633,7 @@ export const fr: CoreCatalog = {
 
   // Pricing
   'pricing.trial':
-    'Votre essai gratuit de {trialDays, plural, one {# jour} other {# jours}} ne couvre que l’abonnement SearchUnveil. La vérification de visibilité dans l’IA utilise des outils payants de {provider}, et leurs frais sont prélevés sur votre solde {provider} pendant l’essai aussi.',
+    'Votre essai gratuit de {trialDays, plural, one {# jour} other {# jours}} ne couvre que l’abonnement SearchUnveil. La vérification de visibilité dans l’IA utilise des outils payants sur {provider}, et leurs frais sont prélevés sur votre solde {provider} pendant l’essai aussi.',
 
   'diagnostic.input.empty': 'Ce fichier est vide.',
   'diagnostic.input.binary':

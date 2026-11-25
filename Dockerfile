@@ -9,6 +9,7 @@ COPY package.json package-lock.json .npmrc ./
 COPY packages/core/package.json packages/core/
 COPY apps/web/package.json apps/web/
 COPY apps/server/package.json apps/server/
+COPY apps/skill/package.json apps/skill/
 RUN npm ci
 COPY . .
 RUN npm run build:server

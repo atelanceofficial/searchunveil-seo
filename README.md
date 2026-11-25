@@ -83,11 +83,18 @@ Read the [proposed technical approach](docs/TECHNICAL-DIRECTION.md) or the [desi
 | Website audit prototype | **Early prototype** in this repository |
 | Search Console CSV analysis | **Early prototype** in this repository |
 | AI mention log and clear reports | **Early prototype** in this repository |
-| AI visibility check: are you cited in AI answers? | **Engine only**: cost estimate, agreement before spending, matching and reports are built and tested; asking AI engines and the screens are not built yet ([how it works](docs/AI-VISIBILITY.md)) |
+| AI visibility check: are you cited in AI answers? | **Early prototype**: the cost notice, agreement before spending, matching, reports and weekly comparison are built and tested; in the skill, the assistant asks AI engines with the marketplace's tools; no screens in the web app yet ([how it works](docs/AI-VISIBILITY.md)) |
+| SearchUnveil skill for AI assistants | **Draft package** in this repository: page reviews, Search Console analysis and the AI visibility check from an assistant such as Claude Code ([SKILL.md](apps/skill/skill/SKILL.md)) |
 | Accessibility, language, and security checks | **Automated checks in place**; manual and native-language reviews pending |
-| Public release | Not announced |
+| Public release | Planned between late November and late December 2026 |
 
-This roadmap can change. We have not set a release date. The [architecture](docs/ARCHITECTURE.md#release-gates-where-the-prototype-stands) lists where the prototype stands against each release gate.
+This roadmap can change. We plan the first release between late November and late December 2026, but the date is not fixed. The [architecture](docs/ARCHITECTURE.md#release-gates-where-the-prototype-stands) lists where the prototype stands against each release gate.
+
+## Pricing
+
+SearchUnveil is planned as a monthly subscription, and the first 14 days will be free.
+
+In addition to the subscription and the free trial, the AI visibility check uses Agensi's paid tools, and their fees are charged to your Agensi balance. Before every check, you see what it should cost, and nothing is asked until you agree. Page reviews and Search Console analysis use no paid tools.
 
 ## Try the early prototype
 
@@ -116,6 +123,14 @@ docker run -p 8080:8080 searchunveil   # then open http://localhost:8080
 ```
 
 The [development guide](docs/DEVELOPMENT.md#put-it-online) lists the settings.
+
+To use SearchUnveil inside an AI assistant such as Claude Code, build the skill:
+
+```sh
+npm run build:skill   # writes apps/skill/dist/searchunveil-skill.zip
+```
+
+The ZIP holds `SKILL.md`, its reference and one command-line file that runs on Node.js 20 or later, with nothing to install. The [development guide](docs/DEVELOPMENT.md#build-the-skill-package) explains what it contains.
 
 ## Follow along
 

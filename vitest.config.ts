@@ -21,6 +21,14 @@ export default defineConfig({
       },
       {
         test: {
+          name: 'skill',
+          root: './apps/skill',
+          include: ['src/**/*.test.ts'],
+          environment: 'node',
+        },
+      },
+      {
+        test: {
           name: 'web',
           root: './apps/web',
           include: ['src/**/*.test.ts'],

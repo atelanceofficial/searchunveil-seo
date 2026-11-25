@@ -248,6 +248,8 @@ export {
   createVisibilityRecord,
   parseVisibilityRecord,
   readAnswer,
+  readEngine,
+  readPlan,
   serializeVisibilityRecord,
   VISIBILITY_RECORD_FORMAT,
   VISIBILITY_RECORD_VERSION,

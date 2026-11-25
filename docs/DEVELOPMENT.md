@@ -59,6 +59,16 @@ docker run -p 8080:8080 searchunveil   # then open http://localhost:8080
 
 Without Docker, run `npm ci`, `npm run build:server` and `node apps/server/src/main.ts` on a host with Node.js 22.22 or later, behind HTTPS. Either way the server needs no API key, keeps no data and calls no paid service. CI builds the image, starts it and checks that it answers on every change.
 
+## Build the skill package
+
+```sh
+npm run build:skill
+```
+
+It bundles the skill's command line (`apps/skill/src`) with the engine, the HTML parser and the interface words into one readable file, `apps/skill/dist/searchunveil/scripts/searchunveil.mjs`, next to `SKILL.md` and its reference. Then it writes `apps/skill/dist/searchunveil-skill.zip` for a skill marketplace. The build fails if the package breaks the marketplace's limits (text files only, 5 MB zipped, 200 files besides `SKILL.md`, 6 million characters) or holds invisible characters, and it reads the ZIP back before keeping it.
+
+Try the command line without building: `node apps/skill/src/main.ts --help`. [ADR 0010](adr/0010-skill-package.md) records why the skill is built this way.
+
 ## Commands
 
 | Command | What it does |
@@ -72,6 +82,7 @@ Without Docker, run `npm ci`, `npm run build:server` and `node apps/server/src/m
 | `npm run format` | Format code with Prettier (Markdown is formatted by hand). |
 | `npm run build:standalone` | One self-contained file, `apps/web/dist-standalone/searchunveil.html`, that opens in a browser without a server. |
 | `npm run build:server` / `npm run serve` | The server build (`apps/web/dist-server`, allowed to connect to its own server only) / build it and start the server. |
+| `npm run build:skill` | The skill package for AI assistants: `apps/skill/dist/searchunveil-skill.zip`. |
 | `npm run check:links` | Check that every cited source still resolves (needs network access). |
 
 ## Project layout
@@ -91,6 +102,9 @@ Without Docker, run `npm ci`, `npm run build:server` and `node apps/server/src/m
 | `apps/web/e2e` | Browser tests with Playwright and axe-core. |
 | `packages/core/src/analyst` | SearchUnveil Analyst: language detection, key phrases, ideas and the ranked plan. |
 | `apps/server/src` | The optional server: page fetching (`fetch-page.ts`, `network.ts`) and the HTTP endpoints (`server.ts`). |
+| `packages/core/src/visibility` | The AI visibility check: plans, costs and notices, matching, reports, saved checks and trends. |
+| `apps/skill/skill` | The skill's `SKILL.md` and its reference, as they ship. |
+| `apps/skill/src` | The skill's command line: page review with a small DOM over parse5 (`dom.ts`), Search Console, and the AI visibility check (`visibility.ts`). |
 
 ## Common changes
 

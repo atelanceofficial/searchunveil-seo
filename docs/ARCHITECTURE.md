@@ -35,6 +35,7 @@ flowchart TD
 | `packages/core` | `@searchunveil/core`, the engine. TypeScript with no runtime dependencies; runs in browsers and in Node.js. |
 | `apps/web` | The static Preact app: views, components, interface translations and browser tests. |
 | `apps/server` | The optional server: serves the app and downloads pages by address. No API key, no dependencies beyond the engine. |
+| `apps/skill` | The skill for AI assistants: `SKILL.md`, its reference, and a command line bundled into one readable file with the engine. |
 | `scripts` | Repository checks: invisible-character scan and reference link check. |
 | `docs` | Product direction, design principles, this architecture, [finding rules](FINDINGS.md), [decision records](adr/README.md) and the [development guide](DEVELOPMENT.md). |
 
@@ -62,6 +63,18 @@ flowchart TD
 | `POST /api/page` | Downloads one page by its address, with its robots.txt. | Public addresses only, checked for every DNS answer and pinned for the connection; standard ports; at most five redirects, each checked; 15-second deadline; 15 MB after decompression; HTML only; nothing stored. |
 
 The server uses Node.js's built-in HTTP modules and the engine; it has no other dependency and needs no API key.
+
+### The skill (`apps/skill`)
+
+The skill lets an AI assistant, such as Claude Code, use SearchUnveil on the person's computer. `SKILL.md` tells the assistant what to run and the rules it must keep; the command line does the work and prints Markdown in the person's language.
+
+| Command | What it does | Guarantees |
+| :--- | :--- | :--- |
+| `review` | Reviews a saved HTML file, or a page by its address. | Parses HTML with parse5, which follows the HTML standard, into a small DOM that gives the same review as a browser (tested on fixed pages and 300 generated ones); fetches with the server's own fetcher and limits. |
+| `search-console` | Reads a Search Console export, CSV files or ZIP. | Files are read in parts, as in the browser. |
+| `visibility estimate` / `calls` / `report` / `trend` | The [AI visibility check](AI-VISIBILITY.md), with the assistant asking the AI engines through its own tools. | Never calls a paid tool. Prints the full cost notice before anything is asked, and lists the calls only with `--agreed`; answer lines that do not fit the plan are reported and left out. |
+
+The package is text only: `SKILL.md`, a reference and one JavaScript file of about 1 MB, 275 KB zipped. [ADR 0010](adr/0010-skill-package.md) records the decision.
 
 ### Findings
 
@@ -155,7 +168,7 @@ The [technical direction](TECHNICAL-DIRECTION.md#release-gates) lists what must 
 - It does not connect to Google Search Console; it reads exports the person chooses.
 - The static app does not fetch web pages; people paste HTML or choose a saved file. The optional server build fetches one page at a time by its address; it does not crawl a site.
 - It does not use a language model. SearchUnveil Analyst works from documented rules and text statistics on the device.
-- It does not monitor AI assistants; it records what people observed. The engine can run an [AI visibility check](AI-VISIBILITY.md), but no provider to ask AI engines and no screen for it are built yet.
+- It does not monitor AI assistants on its own. People record what they observed, and the [AI visibility check](AI-VISIBILITY.md) runs only inside an assistant, through the skill, after the person agrees to its cost. The web app has no screen for it yet.
 - It has no accounts, sync or sharing.
 
 ---
