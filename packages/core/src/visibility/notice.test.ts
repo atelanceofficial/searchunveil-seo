@@ -22,7 +22,7 @@ const TERMS = { currency: 'USD', engines: TEST_ENGINES, chargesFailedCalls: fals
 /** Rendered text without the marks that keep inserted names' direction. */
 function read(locale: Locale, messages: readonly CoreMessage[]) {
   const t = createTranslator(locale, CORE_CATALOGS[locale]);
-  return messages.map((m) => t.message(m).replace(/[⁨⁩]/g, '')).join(' ');
+  return messages.map((m) => t.message(m).replace(/[\u2068\u2069]/g, '')).join(' ');
 }
 
 /** The example in the notes: 10 questions × 3 engines × 3 repeats at 0.0052 USD a call. */
