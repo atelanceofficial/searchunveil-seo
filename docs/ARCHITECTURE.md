@@ -51,6 +51,7 @@ flowchart TD
 | `audit` | Reviews one page's HTML, or every page of a site from a ZIP or several HTML files; describes what search engines see; reviews a server's answer and reads robots.txt. | Works on any standard DOM; detects tags pushed out of `<head>`; never claims to know about JavaScript, and covers HTTP headers and robots.txt only when the server fetched the page. robots.txt follows RFC 9309 as Googlebot applies it. A site review decompresses one page at a time, hands control back to the browser between pages, can be stopped, and shows how many pages each issue affects. |
 | `analyst` | SearchUnveil Analyst: turns a review into a ranked plan with ideas, on the device. | Rules and text statistics only: no model, no network, the same output for the same input. Language detection for twelve languages, word and sentence division by `Intl.Segmenter`, ideas built only from the page's own words, every message translated. |
 | `mentions` | The AI mention log. | Validates every field; imports and exports a versioned JSON format; summarizes counts only, with no visibility score. |
+| `visibility` | The [AI visibility check](AI-VISIBILITY.md): plans, costs, matching, reports, saved checks and trends. Asking AI engines is left to a swappable provider. | Makes no call before the person agrees to the estimated cost; adds money in millionths; matches sites by host and names by folded whole words; treats provider answers as untrusted; marks every result approximate and gives rates only over the person's own questions. |
 | `i18n` | Messages and formatting. | ICU MessageFormat subset with plural and select; locale-aware numbers and UTC-safe dates; bidirectional isolation of people's own text. |
 
 ### The optional server (`apps/server`)
@@ -154,7 +155,7 @@ The [technical direction](TECHNICAL-DIRECTION.md#release-gates) lists what must 
 - It does not connect to Google Search Console; it reads exports the person chooses.
 - The static app does not fetch web pages; people paste HTML or choose a saved file. The optional server build fetches one page at a time by its address; it does not crawl a site.
 - It does not use a language model. SearchUnveil Analyst works from documented rules and text statistics on the device.
-- It does not monitor AI assistants; it records what people observed.
+- It does not monitor AI assistants; it records what people observed. The engine can run an [AI visibility check](AI-VISIBILITY.md), but no provider to ask AI engines and no screen for it are built yet.
 - It has no accounts, sync or sharing.
 
 ---

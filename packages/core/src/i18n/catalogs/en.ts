@@ -564,6 +564,46 @@ const messages = {
   'mentions.limit.scope':
     'These are the mentions you recorded. They show where you have seen your site, not how often AI assistants mention it overall.',
 
+  // AI visibility check
+  'visibility.approximate': 'Approximate visibility',
+  'visibility.approximate.why':
+    'Answers asked by a program can differ from what people see in the apps, and they change from one day to the next. Read these results as an estimate, not a measurement.',
+  'visibility.paid-tools': 'This check uses paid tools on {provider}.',
+  'visibility.cost.calls':
+    '{questions, plural, one {# question} other {# questions}} × {engines, plural, one {# AI} other {# AIs}} × {repeats, plural, one {# time} other {# times}} = {calls, plural, one {# call} other {# calls}}',
+  'visibility.cost.estimate':
+    'Estimated cost: {calls, plural, one {# call} other {# calls}}, about {amount}.',
+  'visibility.cost.unpriced':
+    '{calls, plural, one {# call has no stated price, so the estimate leaves it out.} other {# calls have no stated price, so the estimate leaves them out.}}',
+  'visibility.cost.billing':
+    '{billing, select, account {This fee is not included in your SearchUnveil subscription and is charged to your own {provider} account.} other {This fee is not included in your SearchUnveil subscription and is charged to your {provider} balance.}}',
+  'visibility.cost.failed-free': 'Failed calls are not charged.',
+  'visibility.cost.confirm': 'Do you want to continue?',
+  'visibility.cost.reduce':
+    'To pay less, ask fewer questions, choose fewer AIs or repeat each question fewer times. Competitors cost nothing extra.',
+  'visibility.cost.actual':
+    'This check made {calls, plural, one {# call} other {# calls}} and cost about {amount}.',
+  'visibility.cost.actual.unpriced':
+    '{calls, plural, one {# billed call had no stated price and is not included.} other {# billed calls had no stated price and are not included.}}',
+  'visibility.cost.interrupted':
+    '{calls, plural, one {# call was cut off when you stopped the check; {provider} may still charge for it.} other {# calls were cut off when you stopped the check; {provider} may still charge for them.}}',
+  'visibility.cell.cited': 'Cited',
+  'visibility.cell.position': 'source {position}',
+  'visibility.cell.named': 'Named, no link',
+  'visibility.cell.absent': 'Not there',
+  'visibility.cell.no-answer': 'No answer',
+  'visibility.cell.rate': '{count} of {answers}',
+  'visibility.summary':
+    'You appear in {present} of {answers, plural, one {# answer} other {# answers}}.',
+  'visibility.summary.competitor':
+    '{name} appears in {present} of {answers, plural, one {# answer} other {# answers}}.',
+  'visibility.summary.none': 'No answer came back, so there is nothing to compare yet.',
+  'visibility.stopped':
+    'You stopped the check, so these results cover only the answers received before then.',
+  'visibility.other-sources': 'Sites cited instead of yours',
+  'visibility.failure':
+    '{reason, select, unavailable {The AI was unavailable} rate-limited {Too many requests at once} refused {The AI declined to answer} no-balance {Not enough balance} timeout {No answer in time} stopped {Stopped by you} other {Something went wrong}}',
+
   // Diagnostics: files
   'diagnostic.input.empty': 'This file is empty.',
   'diagnostic.input.binary':
@@ -644,6 +684,18 @@ const messages = {
   'diagnostic.mentions.too-many': 'This log has more than {limit} mentions, the most we can read.',
   'diagnostic.mentions.invalid-field': 'Entry {index}: “{field}” is missing or invalid.',
   'diagnostic.mentions.duplicate-id': 'Entry {index} repeats an earlier entry. We kept the first.',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': 'This file isn’t valid JSON.',
+  'diagnostic.visibility.invalid-format':
+    'This file isn’t a saved SearchUnveil AI visibility check.',
+  'diagnostic.visibility.unsupported-version':
+    'This check was saved by a newer version of SearchUnveil (format {version}).',
+  'diagnostic.visibility.invalid-field':
+    'This saved check is damaged: “{field}” is missing or invalid.',
+  'diagnostic.visibility.invalid-answer': 'Answer {index} is damaged, so we left it out.',
+  'diagnostic.visibility.duplicate-answer':
+    'Answer {index} repeats an earlier one. We kept the first.',
 
   // Diagnostics: page review
   'diagnostic.page.empty': 'Paste a page’s HTML, or choose an HTML file, to review it.',

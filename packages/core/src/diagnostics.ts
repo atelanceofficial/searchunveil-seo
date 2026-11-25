@@ -66,6 +66,13 @@ export type DiagnosticCode =
   | 'mentions.too-many'
   | 'mentions.invalid-field'
   | 'mentions.duplicate-id'
+  // Saved AI visibility checks
+  | 'visibility.invalid-json'
+  | 'visibility.invalid-format'
+  | 'visibility.unsupported-version'
+  | 'visibility.invalid-field'
+  | 'visibility.invalid-answer'
+  | 'visibility.duplicate-answer'
   // Page review
   | 'page.empty'
   | 'page.too-large'

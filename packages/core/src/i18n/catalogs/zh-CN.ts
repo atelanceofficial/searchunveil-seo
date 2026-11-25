@@ -461,6 +461,38 @@ export const zhCN: CoreCatalog = {
   'mentions.limit.scope':
     '这些是您记录的提及。它们表明您在哪里看到过自己的网站，而不是 AI 助手总体上提及它的频率。',
 
+  // AI visibility check
+  'visibility.approximate': '近似可见度',
+  'visibility.approximate.why':
+    '程序获取的回答可能与人们在应用中看到的不同，而且每天都在变化。请把这些结果当作估计，而不是测量。',
+  'visibility.paid-tools': '此检查使用 {provider} 上的付费工具。',
+  'visibility.cost.calls': '{questions} 个问题 × {engines} 个 AI × {repeats} 次 = {calls} 次调用',
+  'visibility.cost.estimate': '预计费用：{calls} 次调用，约 {amount}。',
+  'visibility.cost.unpriced': '有 {calls} 次调用未标明价格，因此未计入估算。',
+  'visibility.cost.billing':
+    '{billing, select, account {此费用不包含在您的 SearchUnveil 订阅中，将从您自己的 {provider} 账户扣除。} other {此费用不包含在您的 SearchUnveil 订阅中，将从您的 {provider} 余额中扣除。}}',
+  'visibility.cost.failed-free': '失败的调用不收费。',
+  'visibility.cost.confirm': '要继续吗？',
+  'visibility.cost.reduce':
+    '想少花钱，可以少问几个问题、少选几个 AI，或减少每个问题的重复次数。竞争对手不额外收费。',
+  'visibility.cost.actual': '此检查共进行了 {calls} 次调用，费用约 {amount}。',
+  'visibility.cost.actual.unpriced': '有 {calls} 次已计费的调用未标明价格，未计入总额。',
+  'visibility.cost.interrupted':
+    '您停止检查时，有 {calls} 次调用被中断；{provider} 仍可能对其收费。',
+  'visibility.cell.cited': '已引用',
+  'visibility.cell.position': '第 {position} 个来源',
+  'visibility.cell.named': '提到名称，无链接',
+  'visibility.cell.absent': '未出现',
+  'visibility.cell.no-answer': '无回答',
+  'visibility.cell.rate': '{count}/{answers}',
+  'visibility.summary': '在 {answers} 个回答中，有 {present} 个出现了您。',
+  'visibility.summary.competitor': '在 {answers} 个回答中，有 {present} 个出现了 {name}。',
+  'visibility.summary.none': '没有收到任何回答，因此暂时没有可比较的内容。',
+  'visibility.stopped': '您停止了检查，因此这些结果只包括停止前收到的回答。',
+  'visibility.other-sources': '代替您被引用的网站',
+  'visibility.failure':
+    '{reason, select, unavailable {AI 不可用} rate-limited {同时发出的请求过多} refused {AI 拒绝回答} no-balance {余额不足} timeout {未能及时回答} stopped {已由您停止} other {出现错误}}',
+
   'diagnostic.input.empty': '此文件为空。',
   'diagnostic.input.binary': '这不是文本文件。请选择 CSV 文件，或 Search Console 下载的 ZIP 文件。',
   'diagnostic.input.spreadsheet':
@@ -528,6 +560,15 @@ export const zhCN: CoreCatalog = {
   'diagnostic.mentions.too-many': '此记录包含超过 {limit} 条提及，这是我们能读取的上限。',
   'diagnostic.mentions.invalid-field': '第 {index} 条：“{field}”缺失或无效。',
   'diagnostic.mentions.duplicate-id': '第 {index} 条与之前的某条记录重复。我们保留了第一条。',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': '此文件不是有效的 JSON。',
+  'diagnostic.visibility.invalid-format': '此文件不是 SearchUnveil 保存的 AI 可见度检查。',
+  'diagnostic.visibility.unsupported-version':
+    '此检查由更新版本的 SearchUnveil 保存（格式 {version}）。',
+  'diagnostic.visibility.invalid-field': '此已保存的检查已损坏：“{field}”缺失或无效。',
+  'diagnostic.visibility.invalid-answer': '第 {index} 个回答已损坏，已略过。',
+  'diagnostic.visibility.duplicate-answer': '第 {index} 个回答与之前的回答重复。我们保留了第一个。',
 
   'diagnostic.page.empty': '请粘贴网页的 HTML，或选择一个 HTML 文件，以便进行检查。',
   'diagnostic.page.too-large': '此 HTML 超过 {limit} 个字符，这是我们能检查的上限。',

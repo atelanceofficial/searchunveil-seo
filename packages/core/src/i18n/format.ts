@@ -270,6 +270,20 @@ export function createTranslator<K extends string>(
   const formatNumber = (value: number): string =>
     numberFormat({ maximumFractionDigits: Number.isInteger(value) ? 0 : 2 }).format(value);
 
+  const formatMoney = (amount: number, currency: string): string => {
+    const small = amount !== 0 && Math.abs(amount) < 1;
+    try {
+      return numberFormat({
+        style: 'currency',
+        currency,
+        ...(small ? { maximumFractionDigits: 4 } : {}),
+      }).format(amount);
+    } catch {
+      // An unknown currency code: the amount is still worth showing.
+      return `${formatNumber(amount)} ${currency}`;
+    }
+  };
+
   const value = (input: ParamValue): string => {
     if (typeof input === 'number') return formatNumber(input);
     if (typeof input === 'string') return isolate(input);
@@ -297,6 +311,8 @@ export function createTranslator<K extends string>(
         return listFormat.format(input.values.map(isolate));
       case 'code':
         return isolate(input.value);
+      case 'money':
+        return formatMoney(input.value, input.currency);
       case 'text':
         return input.value;
     }

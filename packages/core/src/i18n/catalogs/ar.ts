@@ -532,6 +532,45 @@ export const ar: CoreCatalog = {
   'mentions.limit.scope':
     'هذه هي الإشارات التي سجّلتها. وهي تُظهر أين رأيت موقعك، لا عدد المرات التي تذكره فيها مساعدات الذكاء الاصطناعي عمومًا.',
 
+  // AI visibility check
+  'visibility.approximate': 'ظهور تقريبي',
+  'visibility.approximate.why':
+    'قد تختلف الإجابات التي يحصل عليها برنامج عمّا يراه الناس في التطبيقات، كما أنها تتغير من يوم لآخر. اقرأ هذه النتائج على أنها تقدير لا قياس.',
+  'visibility.paid-tools': 'يستخدم هذا الفحص أدوات مدفوعة على {provider}.',
+  'visibility.cost.calls':
+    '{questions, plural, one {سؤال واحد} two {سؤالان} few {# أسئلة} many {# سؤالًا} other {# سؤال}} × {engines, plural, one {أداة ذكاء اصطناعي واحدة} two {أداتا ذكاء اصطناعي} few {# أدوات ذكاء اصطناعي} many {# أداة ذكاء اصطناعي} other {# أداة ذكاء اصطناعي}} × {repeats, plural, one {مرة واحدة} two {مرتان} few {# مرات} many {# مرة} other {# مرة}} = {calls, plural, one {طلب واحد} two {طلبان} few {# طلبات} many {# طلبًا} other {# طلب}}',
+  'visibility.cost.estimate':
+    'التكلفة التقديرية: {calls, plural, one {طلب واحد} two {طلبان} few {# طلبات} many {# طلبًا} other {# طلب}}، بنحو {amount}.',
+  'visibility.cost.unpriced':
+    '{calls, plural, one {طلب واحد بلا سعر معلن، لذا لا يشمله التقدير.} two {طلبان بلا سعر معلن، لذا لا يشملهما التقدير.} few {# طلبات بلا سعر معلن، لذا لا يشملها التقدير.} many {# طلبًا بلا سعر معلن، لذا لا يشملها التقدير.} other {# طلب بلا سعر معلن، لذا لا يشملها التقدير.}}',
+  'visibility.cost.billing':
+    '{billing, select, account {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil، وتُخصم من حسابك الخاص على {provider}.} other {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil، وتُخصم من رصيدك على {provider}.}}',
+  'visibility.cost.failed-free': 'لا تُحتسب رسوم على الطلبات التي تفشل.',
+  'visibility.cost.confirm': 'هل تريد المتابعة؟',
+  'visibility.cost.reduce':
+    'لتدفع أقل، اطرح أسئلة أقل، أو اختر أدوات ذكاء اصطناعي أقل، أو كرّر كل سؤال مرات أقل. لا يكلّف المنافسون شيئًا إضافيًا.',
+  'visibility.cost.actual':
+    'أجرى هذا الفحص {calls, plural, one {طلبًا واحدًا} two {طلبين} few {# طلبات} many {# طلبًا} other {# طلب}} وكلّف نحو {amount}.',
+  'visibility.cost.actual.unpriced':
+    '{calls, plural, one {طلب واحد محتسب لم يكن له سعر معلن، فلم يُدرج في المجموع.} two {طلبان محتسبان لم يكن لهما سعر معلن، فلم يُدرجا في المجموع.} few {# طلبات محتسبة لم يكن لها سعر معلن، فلم تُدرج في المجموع.} many {# طلبًا محتسبًا لم يكن لها سعر معلن، فلم تُدرج في المجموع.} other {# طلب محتسب لم يكن لها سعر معلن، فلم تُدرج في المجموع.}}',
+  'visibility.cost.interrupted':
+    '{calls, plural, one {انقطع طلب واحد عندما أوقفت الفحص، وقد يحتسب {provider} رسومه مع ذلك.} two {انقطع طلبان عندما أوقفت الفحص، وقد يحتسب {provider} رسومهما مع ذلك.} few {انقطعت # طلبات عندما أوقفت الفحص، وقد يحتسب {provider} رسومها مع ذلك.} many {انقطع # طلبًا عندما أوقفت الفحص، وقد يحتسب {provider} رسومها مع ذلك.} other {انقطع # طلب عندما أوقفت الفحص، وقد يحتسب {provider} رسومها مع ذلك.}}',
+  'visibility.cell.cited': 'مُستشهد به',
+  'visibility.cell.position': 'المصدر رقم {position}',
+  'visibility.cell.named': 'مذكور بالاسم، بلا رابط',
+  'visibility.cell.absent': 'غير موجود',
+  'visibility.cell.no-answer': 'لا إجابة',
+  'visibility.cell.rate': '{count} من {answers}',
+  'visibility.summary':
+    'تظهر في {present} من {answers, plural, one {إجابة واحدة} two {إجابتين} few {# إجابات} many {# إجابة} other {# إجابة}}.',
+  'visibility.summary.competitor':
+    'يظهر {name} في {present} من {answers, plural, one {إجابة واحدة} two {إجابتين} few {# إجابات} many {# إجابة} other {# إجابة}}.',
+  'visibility.summary.none': 'لم تصل أي إجابة، لذا لا يوجد ما يُقارن بعد.',
+  'visibility.stopped': 'أوقفت الفحص، لذا لا تشمل هذه النتائج إلا الإجابات التي وصلت قبل ذلك.',
+  'visibility.other-sources': 'مواقع استُشهد بها بدلًا من موقعك',
+  'visibility.failure':
+    '{reason, select, unavailable {لم تكن أداة الذكاء الاصطناعي متاحة} rate-limited {طلبات كثيرة جدًا في وقت واحد} refused {رفضت أداة الذكاء الاصطناعي الإجابة} no-balance {الرصيد غير كافٍ} timeout {لم تصل إجابة في الوقت المحدد} stopped {أوقفته أنت} other {حدث خطأ ما}}',
+
   'diagnostic.input.empty': 'هذا الملف فارغ.',
   'diagnostic.input.binary':
     'هذا ليس ملفًا نصيًا. اختر ملف CSV، أو ملف ZIP الذي ينزّله Search Console.',
@@ -611,6 +650,16 @@ export const ar: CoreCatalog = {
     'يحتوي هذا السجل على أكثر من {limit} إشارة، وهو الحد الأقصى الذي يمكننا قراءته.',
   'diagnostic.mentions.invalid-field': 'الإدخال {index}: «{field}» مفقود أو غير صالح.',
   'diagnostic.mentions.duplicate-id': 'الإدخال {index} يكرر إدخالًا سابقًا. احتفظنا بالأول.',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': 'هذا الملف ليس JSON صالحًا.',
+  'diagnostic.visibility.invalid-format':
+    'هذا الملف ليس فحصًا محفوظًا من SearchUnveil لظهورك في إجابات الذكاء الاصطناعي.',
+  'diagnostic.visibility.unsupported-version':
+    'حُفظ هذا الفحص بإصدار أحدث من SearchUnveil (التنسيق {version}).',
+  'diagnostic.visibility.invalid-field': 'هذا الفحص المحفوظ تالف: «{field}» مفقود أو غير صالح.',
+  'diagnostic.visibility.invalid-answer': 'الإجابة {index} تالفة، لذا استبعدناها.',
+  'diagnostic.visibility.duplicate-answer': 'الإجابة {index} تكرر إجابة سابقة. احتفظنا بالأولى.',
 
   'diagnostic.page.empty': 'الصق رمز HTML لصفحة ما، أو اختر ملف HTML، لمراجعتها.',
   'diagnostic.page.too-large':

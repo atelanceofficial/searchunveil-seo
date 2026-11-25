@@ -18,6 +18,7 @@ export type ParamValue =
   | { readonly kind: 'dateRange'; readonly start: string; readonly end: string }
   | { readonly kind: 'list'; readonly values: readonly string[] }
   | { readonly kind: 'code'; readonly value: string }
+  | { readonly kind: 'money'; readonly value: number; readonly currency: string }
   | { readonly kind: 'text'; readonly value: string };
 
 export type MessageParams = Readonly<Record<string, ParamValue>>;
@@ -60,6 +61,14 @@ export function list(values: readonly string[]): ParamValue {
  */
 export function text(value: string): ParamValue {
   return { kind: 'text', value };
+}
+
+/**
+ * An amount of money in an ISO 4217 currency, such as what a check cost in `USD`. Amounts
+ * under one unit keep up to four decimals, so a fraction of a cent never reads as zero.
+ */
+export function money(value: number, currency: string): ParamValue {
+  return { kind: 'money', value, currency };
 }
 
 /** Markup or source text quoted from a person's input, shown exactly as written. */

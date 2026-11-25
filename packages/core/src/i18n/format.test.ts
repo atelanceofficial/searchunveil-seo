@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { createTranslator, isolate, MessageSyntaxError, parseMessage } from './format.ts';
 import { matchLocale } from './locales.ts';
-import { code, date, dateRange, decimal, list, percent, text } from './message.ts';
+import { code, date, dateRange, decimal, list, money, percent, text } from './message.ts';
 
 const strip = (text: string) => text.replace(/[\u2068\u2069]/g, '');
 /** ICU chooses between several space characters by version; compare them as plain spaces. */
@@ -77,6 +77,17 @@ describe('value formatting', () => {
     expect(createTranslator('en', {}).value(decimal(8.25, 1))).toBe('8.3');
     expect(createTranslator('de', {}).value(decimal(8, 1))).toBe('8,0');
     expect(createTranslator('en', {}).value(decimal(-5, 0, true))).toBe('-5');
+  });
+
+  it('formats money, keeping fractions of a cent visible', () => {
+    const en = createTranslator('en', {});
+    expect(en.value(money(0.468, 'USD'))).toBe('$0.468');
+    expect(en.value(money(0.0052, 'USD'))).toBe('$0.0052');
+    expect(en.value(money(0, 'USD'))).toBe('$0.00');
+    expect(en.value(money(12.5, 'USD'))).toBe('$12.50');
+    expect(createTranslator('tr', {}).value(money(0.468, 'USD'))).toBe('$0,468');
+    expect(spaces(createTranslator('de', {}).value(money(12.5, 'EUR')))).toBe('12,50 €');
+    expect(en.value(money(3, 'not a currency'))).toBe('3 not a currency');
   });
 
   it('formats calendar dates in UTC so they never shift by a day', () => {

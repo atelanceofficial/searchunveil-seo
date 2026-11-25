@@ -71,6 +71,13 @@ None of these controls are claimed as implemented or independently audited.
 - Do not translate a few mentions into a market-wide visibility percentage.
 - Keep raw observations distinct from derived summaries.
 
+### AI visibility check
+
+- Show the estimated cost of a check before it runs, and run it only after the person agrees ([ADR 0009](adr/0009-ai-visibility-check.md)).
+- Show what the check actually cost afterwards, including calls without a stated price and calls cut off by stopping.
+- Give rates only over the person's own questions, engines and repeats, and label them approximate visibility.
+- Keep the part that asks AI engines separate and swappable, so each platform can bill in its own way.
+
 ## Release gates
 
 Before describing any feature as available, aim to demonstrate:

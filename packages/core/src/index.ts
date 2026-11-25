@@ -195,6 +195,82 @@ export {
   type MentionSummary,
 } from './mentions/log.ts';
 
+// AI visibility check: is the site cited or named in AI answers?
+export {
+  brandMatcher,
+  matchBrand,
+  mentionsName,
+  mentionsSite,
+  onSite,
+  siteKey,
+  sourcePosition,
+  type AnswerContent,
+  type BrandMatch,
+  type Presence,
+} from './visibility/match.ts';
+export {
+  ANSWER_FAILURES,
+  callCount,
+  defaultEngines,
+  normalizePlan,
+  requestsOf,
+  validatePlan,
+  VISIBILITY_LIMITS,
+  type Answer,
+  type AnswerEngine,
+  type AnswerFailure,
+  type AnswerProvider,
+  type AnswerRequest,
+  type Brand,
+  type PlanError,
+  type PlanErrorCode,
+  type PlanField,
+  type ProviderTerms,
+  type VisibilityPlan,
+} from './visibility/plan.ts';
+export {
+  actualCost,
+  estimateCost,
+  type ActualCost,
+  type CostEstimate,
+  type EngineEstimate,
+} from './visibility/cost.ts';
+export {
+  DEFAULT_CONCURRENCY,
+  MAX_CONCURRENCY,
+  runVisibilityCheck,
+  type CheckOptions,
+  type CheckOutcome,
+  type CheckProgress,
+} from './visibility/run.ts';
+export {
+  ANSWER_LIMITS,
+  createVisibilityRecord,
+  parseVisibilityRecord,
+  readAnswer,
+  serializeVisibilityRecord,
+  VISIBILITY_RECORD_FORMAT,
+  VISIBILITY_RECORD_VERSION,
+  type ProviderInfo,
+  type RecordedAnswer,
+  type RecordInput,
+  type VisibilityRecord,
+} from './visibility/record.ts';
+export {
+  cellStatus,
+  describeBrand,
+  OTHER_SOURCES_LISTED,
+  presenceRate,
+  visibilityReport,
+  type CallSummary,
+  type CellStatus,
+  type ReportBrand,
+  type SourceCount,
+  type Tally,
+  type VisibilityReport,
+} from './visibility/report.ts';
+export { visibilityTrend, type BrandTrend, type VisibilityTrend } from './visibility/trend.ts';
+
 // Languages
 export { en as englishCatalog, type CoreCatalog, type CoreMessageKey } from './i18n/catalogs/en.ts';
 export { loadCoreCatalog } from './i18n/catalogs/load.ts';
@@ -224,6 +300,7 @@ export {
   decimal,
   list,
   message,
+  money,
   percent,
   text,
   type Message,

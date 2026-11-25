@@ -2,7 +2,7 @@
 
 Short records of significant technical decisions: the context, the decision and its consequences. They answer the open questions in the [technical direction](../TECHNICAL-DIRECTION.md#open-technical-questions).
 
-All eight are **proposed**: they describe how the prototype works and why, and they are open to review before anything is released.
+All nine are **proposed**: they describe how the prototype works and why, and they are open to review before anything is released.
 
 | Record | Decision |
 | :--- | :--- |
@@ -14,6 +14,7 @@ All eight are **proposed**: they describe how the prototype works and why, and t
 | [0006](0006-built-in-analyst.md) | SearchUnveil Analyst, our own rule-based analysis engine, writes a ranked plan on the device. |
 | [0007](0007-no-api-keys.md) | Nothing requires an API key. |
 | [0008](0008-only-our-own-analyst.md) | SearchUnveil Analyst is the only analysis; the language-model second opinion is removed. |
+| [0009](0009-ai-visibility-check.md) | The AI visibility check shows its cost and asks before it spends; asking AI engines is a swappable provider. |
 
 ---
 

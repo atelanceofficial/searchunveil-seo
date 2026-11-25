@@ -560,6 +560,47 @@ export const de: CoreCatalog = {
   'mentions.limit.scope':
     'Das sind die Erwähnungen, die Sie erfasst haben. Sie zeigen, wo Sie Ihre Website gesehen haben, nicht, wie oft KI-Assistenten sie insgesamt erwähnen.',
 
+  // AI visibility check
+  'visibility.approximate': 'Ungefähre Sichtbarkeit',
+  'visibility.approximate.why':
+    'Antworten, die ein Programm abfragt, können von dem abweichen, was Menschen in den Apps sehen, und sie ändern sich von Tag zu Tag. Lesen Sie diese Ergebnisse als Schätzung, nicht als Messung.',
+  'visibility.paid-tools': 'Diese Prüfung nutzt kostenpflichtige Tools auf {provider}.',
+  'visibility.cost.calls':
+    '{questions, plural, one {# Frage} other {# Fragen}} × {engines, plural, one {# KI} other {# KIs}} × {repeats, plural, one {# Durchgang} other {# Durchgänge}} = {calls, plural, one {# Aufruf} other {# Aufrufe}}',
+  'visibility.cost.estimate':
+    'Geschätzte Kosten: {calls, plural, one {# Aufruf} other {# Aufrufe}}, etwa {amount}.',
+  'visibility.cost.unpriced':
+    '{calls, plural, one {Für # Aufruf ist kein Preis angegeben, daher fehlt er in der Schätzung.} other {Für # Aufrufe ist kein Preis angegeben, daher fehlen sie in der Schätzung.}}',
+  'visibility.cost.billing':
+    '{billing, select, account {Diese Gebühr ist nicht in Ihrem SearchUnveil-Abonnement enthalten und wird Ihrem eigenen {provider}-Konto belastet.} other {Diese Gebühr ist nicht in Ihrem SearchUnveil-Abonnement enthalten und wird von Ihrem {provider}-Guthaben abgebucht.}}',
+  'visibility.cost.failed-free': 'Fehlgeschlagene Aufrufe werden nicht berechnet.',
+  'visibility.cost.confirm': 'Möchten Sie fortfahren?',
+  'visibility.cost.reduce':
+    'Um weniger zu zahlen, stellen Sie weniger Fragen, wählen Sie weniger KIs aus oder wiederholen Sie jede Frage seltener. Wettbewerber kosten nichts extra.',
+  'visibility.cost.actual':
+    'Diese Prüfung hat {calls, plural, one {# Aufruf} other {# Aufrufe}} gemacht und etwa {amount} gekostet.',
+  'visibility.cost.actual.unpriced':
+    '{calls, plural, one {# berechneter Aufruf hatte keinen angegebenen Preis und ist nicht enthalten.} other {# berechnete Aufrufe hatten keinen angegebenen Preis und sind nicht enthalten.}}',
+  'visibility.cost.interrupted':
+    '{calls, plural, one {# Aufruf wurde abgebrochen, als Sie die Prüfung gestoppt haben; {provider} kann ihn trotzdem berechnen.} other {# Aufrufe wurden abgebrochen, als Sie die Prüfung gestoppt haben; {provider} kann sie trotzdem berechnen.}}',
+  'visibility.cell.cited': 'Zitiert',
+  'visibility.cell.position': 'Quelle {position}',
+  'visibility.cell.named': 'Genannt, ohne Link',
+  'visibility.cell.absent': 'Nicht dabei',
+  'visibility.cell.no-answer': 'Keine Antwort',
+  'visibility.cell.rate': '{count} von {answers}',
+  'visibility.summary':
+    'Sie erscheinen in {present} von {answers, plural, one {# Antwort} other {# Antworten}}.',
+  'visibility.summary.competitor':
+    '{name} erscheint in {present} von {answers, plural, one {# Antwort} other {# Antworten}}.',
+  'visibility.summary.none':
+    'Es kam keine Antwort zurück, daher gibt es noch nichts zu vergleichen.',
+  'visibility.stopped':
+    'Sie haben die Prüfung gestoppt, daher umfassen diese Ergebnisse nur die bis dahin erhaltenen Antworten.',
+  'visibility.other-sources': 'Stattdessen zitierte Websites',
+  'visibility.failure':
+    '{reason, select, unavailable {Die KI war nicht erreichbar} rate-limited {Zu viele Anfragen auf einmal} refused {Die KI hat die Antwort verweigert} no-balance {Das Guthaben reicht nicht aus} timeout {Keine Antwort in der vorgesehenen Zeit} stopped {Von Ihnen gestoppt} other {Etwas ist schiefgelaufen}}',
+
   'diagnostic.input.empty': 'Diese Datei ist leer.',
   'diagnostic.input.binary':
     'Das ist keine Textdatei. Wählen Sie eine CSV-Datei oder die ZIP-Datei, die die Search Console herunterlädt.',
@@ -651,6 +692,18 @@ export const de: CoreCatalog = {
   'diagnostic.mentions.invalid-field': 'Eintrag {index}: „{field}“ fehlt oder ist ungültig.',
   'diagnostic.mentions.duplicate-id':
     'Eintrag {index} wiederholt einen früheren Eintrag. Wir haben den ersten behalten.',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': 'Diese Datei ist kein gültiges JSON.',
+  'diagnostic.visibility.invalid-format':
+    'Diese Datei ist keine gespeicherte SearchUnveil-Prüfung der KI-Sichtbarkeit.',
+  'diagnostic.visibility.unsupported-version':
+    'Diese Prüfung wurde mit einer neueren SearchUnveil-Version gespeichert (Format {version}).',
+  'diagnostic.visibility.invalid-field':
+    'Diese gespeicherte Prüfung ist beschädigt: „{field}“ fehlt oder ist ungültig.',
+  'diagnostic.visibility.invalid-answer': 'Antwort {index} ist beschädigt und wurde ausgelassen.',
+  'diagnostic.visibility.duplicate-answer':
+    'Antwort {index} wiederholt eine frühere. Wir haben die erste behalten.',
 
   'diagnostic.page.empty':
     'Fügen Sie das HTML einer Seite ein oder wählen Sie eine HTML-Datei, um sie zu prüfen.',

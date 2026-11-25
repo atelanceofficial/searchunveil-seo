@@ -549,6 +549,42 @@ export const tr: CoreCatalog = {
   'mentions.limit.scope':
     'Bunlar sizin kaydettiğiniz bahsetmeler. Yapay zekâ asistanlarının sitenizden genel olarak ne sıklıkla bahsettiğini değil, sitenizi nerede gördüğünüzü gösterir.',
 
+  // AI visibility check
+  'visibility.approximate': 'Yaklaşık görünürlük',
+  'visibility.approximate.why':
+    'Bir programın aldığı cevaplar, insanların uygulamalarda gördüğünden farklı olabilir ve günden güne değişir. Bu sonuçları bir ölçüm değil, bir tahmin olarak okuyun.',
+  'visibility.paid-tools': 'Bu kontrol, {provider} üzerindeki ücretli araçları kullanır.',
+  'visibility.cost.calls':
+    '{questions} soru × {engines} yapay zekâ × {repeats} tekrar = {calls} çağrı',
+  'visibility.cost.estimate': 'Tahmini maliyet: {calls} çağrı, yaklaşık {amount}.',
+  'visibility.cost.unpriced':
+    '{calls} çağrının fiyatı belirtilmemiş, bu yüzden tahmine dahil değil.',
+  'visibility.cost.billing':
+    '{billing, select, account {Bu ücret SearchUnveil aboneliğinize dahil değildir ve kendi {provider} hesabınızdan kesilir.} other {Bu ücret SearchUnveil aboneliğinize dahil değildir ve {provider} bakiyenizden kesilir.}}',
+  'visibility.cost.failed-free': 'Başarısız çağrılar ücretlendirilmez.',
+  'visibility.cost.confirm': 'Devam etmek istiyor musunuz?',
+  'visibility.cost.reduce':
+    'Daha az ödemek için daha az soru sorun, daha az yapay zekâ seçin ya da her soruyu daha az tekrarlayın. Rakipler ek ücret getirmez.',
+  'visibility.cost.actual': 'Bu kontrol {calls} çağrı yaptı ve yaklaşık {amount} tuttu.',
+  'visibility.cost.actual.unpriced':
+    'Ücretlendirilen {calls} çağrının fiyatı belirtilmediği için toplama dahil değil.',
+  'visibility.cost.interrupted':
+    'Kontrolü durdurduğunuzda {calls} çağrı yarıda kesildi; {provider} bunlar için yine de ücret alabilir.',
+  'visibility.cell.cited': 'Var',
+  'visibility.cell.position': '{position}. kaynak',
+  'visibility.cell.named': 'İsim geçiyor, link yok',
+  'visibility.cell.absent': 'Yok',
+  'visibility.cell.no-answer': 'Cevap yok',
+  'visibility.cell.rate': '{count}/{answers}',
+  'visibility.summary': '{answers} cevabın {present} tanesinde geçiyorsunuz.',
+  'visibility.summary.competitor': '{name}, {answers} cevabın {present} tanesinde geçiyor.',
+  'visibility.summary.none': 'Hiç cevap gelmedi, bu yüzden henüz karşılaştırılacak bir şey yok.',
+  'visibility.stopped':
+    'Kontrolü durdurdunuz; bu sonuçlar yalnızca o ana kadar gelen cevapları kapsar.',
+  'visibility.other-sources': 'Sizin yerinize kaynak gösterilen siteler',
+  'visibility.failure':
+    '{reason, select, unavailable {Yapay zekâya ulaşılamadı} rate-limited {Aynı anda çok fazla istek gönderildi} refused {Yapay zekâ cevap vermeyi reddetti} no-balance {Bakiye yetersiz} timeout {Zamanında cevap gelmedi} stopped {Siz durdurdunuz} other {Bir hata oluştu}}',
+
   'diagnostic.input.empty': 'Bu dosya boş.',
   'diagnostic.input.binary':
     'Bu bir metin dosyası değil. Bir CSV dosyası ya da Search Console’un indirdiği ZIP dosyasını seçin.',
@@ -632,6 +668,17 @@ export const tr: CoreCatalog = {
     'Bu günlükte, okuyabildiğimiz en fazla sayı olan {limit} bahsetmeden fazlası var.',
   'diagnostic.mentions.invalid-field': '{index}. kayıt: “{field}” eksik veya geçersiz.',
   'diagnostic.mentions.duplicate-id': '{index}. kayıt önceki bir kaydı tekrarlıyor. İlkini tuttuk.',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': 'Bu dosya geçerli bir JSON değil.',
+  'diagnostic.visibility.invalid-format':
+    'Bu dosya, kaydedilmiş bir SearchUnveil yapay zekâ görünürlüğü kontrolü değil.',
+  'diagnostic.visibility.unsupported-version':
+    'Bu kontrol SearchUnveil’in daha yeni bir sürümüyle kaydedilmiş (biçim {version}).',
+  'diagnostic.visibility.invalid-field': 'Bu kayıtlı kontrol bozuk: “{field}” eksik veya geçersiz.',
+  'diagnostic.visibility.invalid-answer': '{index}. cevap bozuk olduğu için dışarıda bırakıldı.',
+  'diagnostic.visibility.duplicate-answer':
+    '{index}. cevap önceki bir cevabı tekrarlıyor. İlkini tuttuk.',
 
   'diagnostic.page.empty':
     'İncelemek için bir sayfanın HTML’ini yapıştırın ya da bir HTML dosyası seçin.',

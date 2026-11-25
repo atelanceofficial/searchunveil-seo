@@ -568,6 +568,46 @@ export const fr: CoreCatalog = {
   'mentions.limit.scope':
     'Voici les mentions que vous avez enregistrées. Elles montrent où vous avez vu votre site, et non la fréquence à laquelle les assistants IA le mentionnent en général.',
 
+  // AI visibility check
+  'visibility.approximate': 'Visibilité approximative',
+  'visibility.approximate.why':
+    'Les réponses obtenues par un programme peuvent différer de ce que les gens voient dans les applications, et elles changent d’un jour à l’autre. Lisez ces résultats comme une estimation, pas comme une mesure.',
+  'visibility.paid-tools': 'Cette vérification utilise des outils payants de {provider}.',
+  'visibility.cost.calls':
+    '{questions, plural, one {# question} other {# questions}} × {engines, plural, one {# IA} other {# IA}} × {repeats, plural, one {# fois} other {# fois}} = {calls, plural, one {# appel} other {# appels}}',
+  'visibility.cost.estimate':
+    'Coût estimé\u00A0: {calls, plural, one {# appel} other {# appels}}, environ {amount}.',
+  'visibility.cost.unpriced':
+    '{calls, plural, one {# appel n’a pas de prix indiqué, l’estimation ne le compte donc pas.} other {# appels n’ont pas de prix indiqué, l’estimation ne les compte donc pas.}}',
+  'visibility.cost.billing':
+    '{billing, select, account {Ces frais ne sont pas inclus dans votre abonnement SearchUnveil et sont facturés sur votre propre compte {provider}.} other {Ces frais ne sont pas inclus dans votre abonnement SearchUnveil et sont prélevés sur votre solde {provider}.}}',
+  'visibility.cost.failed-free': 'Les appels qui échouent ne sont pas facturés.',
+  'visibility.cost.confirm': 'Voulez-vous continuer\u00A0?',
+  'visibility.cost.reduce':
+    'Pour payer moins, posez moins de questions, choisissez moins d’IA ou répétez chaque question moins souvent. Les concurrents ne coûtent rien de plus.',
+  'visibility.cost.actual':
+    'Cette vérification a fait {calls, plural, one {# appel} other {# appels}} et a coûté environ {amount}.',
+  'visibility.cost.actual.unpriced':
+    '{calls, plural, one {# appel facturé n’avait pas de prix indiqué et n’est pas compté.} other {# appels facturés n’avaient pas de prix indiqué et ne sont pas comptés.}}',
+  'visibility.cost.interrupted':
+    '{calls, plural, one {# appel a été interrompu quand vous avez arrêté la vérification\u00A0; {provider} peut quand même le facturer.} other {# appels ont été interrompus quand vous avez arrêté la vérification\u00A0; {provider} peut quand même les facturer.}}',
+  'visibility.cell.cited': 'Cité',
+  'visibility.cell.position': 'source n°\u00A0{position}',
+  'visibility.cell.named': 'Nommé, sans lien',
+  'visibility.cell.absent': 'Absent',
+  'visibility.cell.no-answer': 'Pas de réponse',
+  'visibility.cell.rate': '{count} sur {answers}',
+  'visibility.summary':
+    '{present, plural, one {Vous apparaissez dans # réponse sur {answers}.} other {Vous apparaissez dans # réponses sur {answers}.}}',
+  'visibility.summary.competitor':
+    '{present, plural, one {{name} apparaît dans # réponse sur {answers}.} other {{name} apparaît dans # réponses sur {answers}.}}',
+  'visibility.summary.none': 'Aucune réponse n’est revenue, il n’y a donc encore rien à comparer.',
+  'visibility.stopped':
+    'Vous avez arrêté la vérification\u00A0: ces résultats ne couvrent que les réponses reçues jusque-là.',
+  'visibility.other-sources': 'Sites cités à votre place',
+  'visibility.failure':
+    '{reason, select, unavailable {L’IA n’était pas disponible} rate-limited {Trop de demandes à la fois} refused {L’IA a refusé de répondre} no-balance {Solde insuffisant} timeout {Pas de réponse à temps} stopped {Arrêté par vous} other {Une erreur s’est produite}}',
+
   'diagnostic.input.empty': 'Ce fichier est vide.',
   'diagnostic.input.binary':
     'Ce n’est pas un fichier texte. Choisissez un fichier CSV, ou le fichier ZIP que télécharge la Search Console.',
@@ -661,6 +701,19 @@ export const fr: CoreCatalog = {
     'Entrée {index}\u00A0: «\u202F{field}\u202F» est manquant ou non valide.',
   'diagnostic.mentions.duplicate-id':
     'L’entrée {index} répète une entrée précédente. Nous avons conservé la première.',
+
+  // Diagnostics: saved AI visibility checks
+  'diagnostic.visibility.invalid-json': 'Ce fichier n’est pas un JSON valide.',
+  'diagnostic.visibility.invalid-format':
+    'Ce fichier n’est pas une vérification de visibilité dans l’IA enregistrée par SearchUnveil.',
+  'diagnostic.visibility.unsupported-version':
+    'Cette vérification a été enregistrée par une version plus récente de SearchUnveil (format {version}).',
+  'diagnostic.visibility.invalid-field':
+    'Cette vérification enregistrée est endommagée\u00A0: «\u202F{field}\u202F» est manquant ou non valide.',
+  'diagnostic.visibility.invalid-answer':
+    'La réponse {index} est endommagée, nous l’avons donc écartée.',
+  'diagnostic.visibility.duplicate-answer':
+    'La réponse {index} répète une réponse précédente. Nous avons conservé la première.',
 
   'diagnostic.page.empty':
     'Collez le HTML d’une page, ou choisissez un fichier HTML, pour l’examiner.',

@@ -83,6 +83,7 @@ Read the [proposed technical approach](docs/TECHNICAL-DIRECTION.md) or the [desi
 | Website audit prototype | **Early prototype** in this repository |
 | Search Console CSV analysis | **Early prototype** in this repository |
 | AI mention log and clear reports | **Early prototype** in this repository |
+| AI visibility check: are you cited in AI answers? | **Engine only**: cost estimate, agreement before spending, matching and reports are built and tested; asking AI engines and the screens are not built yet ([how it works](docs/AI-VISIBILITY.md)) |
 | Accessibility, language, and security checks | **Automated checks in place**; manual and native-language reviews pending |
 | Public release | Not announced |
 
