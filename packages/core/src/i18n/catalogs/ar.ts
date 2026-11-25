@@ -544,7 +544,7 @@ export const ar: CoreCatalog = {
   'visibility.cost.unpriced':
     '{calls, plural, one {طلب واحد بلا سعر معلن، لذا لا يشمله التقدير.} two {طلبان بلا سعر معلن، لذا لا يشملهما التقدير.} few {# طلبات بلا سعر معلن، لذا لا يشملها التقدير.} many {# طلبًا بلا سعر معلن، لذا لا يشملها التقدير.} other {# طلب بلا سعر معلن، لذا لا يشملها التقدير.}}',
   'visibility.cost.billing':
-    '{billing, select, account {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil، وتُخصم من حسابك الخاص على {provider}.} other {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil، وتُخصم من رصيدك على {provider}.}}',
+    '{billing, select, account {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil ولا في فترة تجربتك المجانية البالغة {trialDays, plural, one {يومًا واحدًا} two {يومين} few {# أيام} many {# يومًا} other {# يوم}}، وتُخصم من حسابك الخاص على {provider}.} other {هذه الرسوم غير مشمولة في اشتراكك في SearchUnveil ولا في فترة تجربتك المجانية البالغة {trialDays, plural, one {يومًا واحدًا} two {يومين} few {# أيام} many {# يومًا} other {# يوم}}، وتُخصم من رصيدك على {provider}.}}',
   'visibility.cost.failed-free': 'لا تُحتسب رسوم على الطلبات التي تفشل.',
   'visibility.cost.confirm': 'هل تريد المتابعة؟',
   'visibility.cost.reduce':
@@ -570,6 +570,33 @@ export const ar: CoreCatalog = {
   'visibility.other-sources': 'مواقع استُشهد بها بدلًا من موقعك',
   'visibility.failure':
     '{reason, select, unavailable {لم تكن أداة الذكاء الاصطناعي متاحة} rate-limited {طلبات كثيرة جدًا في وقت واحد} refused {رفضت أداة الذكاء الاصطناعي الإجابة} no-balance {الرصيد غير كافٍ} timeout {لم تصل إجابة في الوقت المحدد} stopped {أوقفته أنت} other {حدث خطأ ما}}',
+  'visibility.cost.failed-charged': 'تُحتسب رسوم الطلبات التي تفشل أيضًا.',
+  'visibility.cost.failed-free-count':
+    '{calls, plural, one {فشل طلب واحد ولم تُحتسب رسومه.} two {فشل طلبان ولم تُحتسب رسومهما.} few {فشلت # طلبات ولم تُحتسب رسومها.} many {فشل # طلبًا ولم تُحتسب رسومها.} other {فشل # طلب ولم تُحتسب رسومها.}}',
+  'visibility.engine.unavailable':
+    '{count, plural, one {لا يمكن فحص {products} على {provider}: لا تتوفر أداة لذلك.} other {لا يمكن فحص {products} على {provider}: لا تتوفر أدوات لذلك.}}',
+  'visibility.engine.price': '{price} لكل طلب، ونحو {cost} لهذا الفحص',
+  'visibility.engine.unpriced': 'لا يوجد سعر معلن',
+  'visibility.engine.cheapest': 'الأرخص',
+  'visibility.engine.chosen': 'مُختار',
+  'visibility.column.question': 'السؤال',
+  'visibility.source.count':
+    '{site}: مُستشهد به في {count, plural, one {إجابة واحدة} two {إجابتين} few {# إجابات} many {# إجابة} other {# إجابة}}',
+  'visibility.calls.failed':
+    '{count, plural, one {لم يأتِ طلب واحد بإجابة} two {لم يأتِ طلبان بإجابة} few {لم تأتِ # طلبات بإجابة} many {لم يأتِ # طلبًا بإجابة} other {لم يأتِ # طلب بإجابة}}: {reasons}.',
+  'visibility.heading.engines': 'أدوات الذكاء الاصطناعي والنماذج المتاحة للاختيار',
+  'visibility.heading.cost': 'التكلفة',
+  'visibility.trend.title': 'التغير بمرور الوقت',
+  'visibility.trend.point': '{date}: {present} من {answers}',
+  'visibility.trend.basis':
+    'المقارنة على أساس {questions, plural, one {سؤال واحد} two {سؤالين} few {# أسئلة} many {# سؤالًا} other {# سؤال}} و{products} المشتركة بين كل الفحوص.',
+  'visibility.trend.skipped':
+    '{count, plural, one {استُبعد فحص واحد لموقع أو بلد أو لغة أخرى.} two {استُبعد فحصان لموقع أو بلد أو لغة أخرى.} few {استُبعدت # فحوص لموقع أو بلد أو لغة أخرى.} many {استُبعد # فحصًا لموقع أو بلد أو لغة أخرى.} other {استُبعد # فحص لموقع أو بلد أو لغة أخرى.}}',
+  'visibility.trend.not-checked': 'لم يُبحث عنه',
+
+  // Pricing
+  'pricing.trial':
+    'تشمل فترة التجربة المجانية البالغة {trialDays, plural, one {يومًا واحدًا} two {يومين} few {# أيام} many {# يومًا} other {# يوم}} اشتراك SearchUnveil فقط. يستخدم فحص الظهور في الذكاء الاصطناعي أدوات مدفوعة على {provider}، وتُخصم رسومها من رصيدك على {provider} خلال فترة التجربة أيضًا.',
 
   'diagnostic.input.empty': 'هذا الملف فارغ.',
   'diagnostic.input.binary':

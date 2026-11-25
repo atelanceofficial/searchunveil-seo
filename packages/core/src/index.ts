@@ -270,6 +270,19 @@ export {
   type VisibilityReport,
 } from './visibility/report.ts';
 export { visibilityTrend, type BrandTrend, type VisibilityTrend } from './visibility/trend.ts';
+export {
+  actualCostNotice,
+  AI_PRODUCTS,
+  costNotice,
+  engineOptions,
+  trialNotice,
+  unavailableNotice,
+  unavailableProducts,
+  type Billing,
+  type EngineOption,
+  type NoticeTerms,
+} from './visibility/notice.ts';
+export { PRICING } from './pricing.ts';
 
 // Languages
 export { en as englishCatalog, type CoreCatalog, type CoreMessageKey } from './i18n/catalogs/en.ts';

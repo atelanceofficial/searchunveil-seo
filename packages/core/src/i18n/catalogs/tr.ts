@@ -560,7 +560,7 @@ export const tr: CoreCatalog = {
   'visibility.cost.unpriced':
     '{calls} çağrının fiyatı belirtilmemiş, bu yüzden tahmine dahil değil.',
   'visibility.cost.billing':
-    '{billing, select, account {Bu ücret SearchUnveil aboneliğinize dahil değildir ve kendi {provider} hesabınızdan kesilir.} other {Bu ücret SearchUnveil aboneliğinize dahil değildir ve {provider} bakiyenizden kesilir.}}',
+    '{billing, select, account {Bu ücret SearchUnveil aboneliğinize ve {trialDays} günlük ücretsiz deneme sürenize dahil değildir ve kendi {provider} hesabınızdan kesilir.} other {Bu ücret SearchUnveil aboneliğinize ve {trialDays} günlük ücretsiz deneme sürenize dahil değildir ve {provider} bakiyenizden kesilir.}}',
   'visibility.cost.failed-free': 'Başarısız çağrılar ücretlendirilmez.',
   'visibility.cost.confirm': 'Devam etmek istiyor musunuz?',
   'visibility.cost.reduce':
@@ -584,6 +584,30 @@ export const tr: CoreCatalog = {
   'visibility.other-sources': 'Sizin yerinize kaynak gösterilen siteler',
   'visibility.failure':
     '{reason, select, unavailable {Yapay zekâya ulaşılamadı} rate-limited {Aynı anda çok fazla istek gönderildi} refused {Yapay zekâ cevap vermeyi reddetti} no-balance {Bakiye yetersiz} timeout {Zamanında cevap gelmedi} stopped {Siz durdurdunuz} other {Bir hata oluştu}}',
+  'visibility.cost.failed-charged': 'Başarısız çağrılar da ücretlendirilir.',
+  'visibility.cost.failed-free-count': '{calls} çağrı başarısız oldu ve ücretlendirilmedi.',
+  'visibility.engine.unavailable':
+    '{count, plural, one {{products} {provider} üzerinde kontrol edilemiyor: bunun için bir araç sunulmuyor.} other {{products} {provider} üzerinde kontrol edilemiyor: bunlar için araç sunulmuyor.}}',
+  'visibility.engine.price': 'Çağrı başına {price}, bu kontrol için yaklaşık {cost}',
+  'visibility.engine.unpriced': 'Fiyatı belirtilmemiş',
+  'visibility.engine.cheapest': 'En ucuz',
+  'visibility.engine.chosen': 'Seçili',
+  'visibility.column.question': 'Soru',
+  'visibility.source.count': '{site}: {count} cevapta kaynak gösterildi',
+  'visibility.calls.failed': '{count} çağrı cevap getirmedi: {reasons}.',
+  'visibility.heading.engines': 'Seçebileceğiniz yapay zekâlar ve modeller',
+  'visibility.heading.cost': 'Maliyet',
+  'visibility.trend.title': 'Zaman içindeki değişim',
+  'visibility.trend.point': '{date}: {answers} cevabın {present} tanesi',
+  'visibility.trend.basis':
+    'Tüm kontrollerde ortak olan {questions} soru ve {products} üzerinden karşılaştırıldı.',
+  'visibility.trend.skipped':
+    'Başka bir site, ülke veya dil için yapılan {count} kontrol dışarıda bırakıldı.',
+  'visibility.trend.not-checked': 'Aranmadı',
+
+  // Pricing
+  'pricing.trial':
+    '{trialDays} günlük ücretsiz deneme yalnızca SearchUnveil aboneliğini kapsar. Yapay zekâ görünürlüğü kontrolü {provider} üzerindeki ücretli araçları kullanır ve bu araçların ücreti deneme süresinde de {provider} bakiyenizden kesilir.',
 
   'diagnostic.input.empty': 'Bu dosya boş.',
   'diagnostic.input.binary':

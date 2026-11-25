@@ -580,7 +580,7 @@ export const fr: CoreCatalog = {
   'visibility.cost.unpriced':
     '{calls, plural, one {# appel n’a pas de prix indiqué, l’estimation ne le compte donc pas.} other {# appels n’ont pas de prix indiqué, l’estimation ne les compte donc pas.}}',
   'visibility.cost.billing':
-    '{billing, select, account {Ces frais ne sont pas inclus dans votre abonnement SearchUnveil et sont facturés sur votre propre compte {provider}.} other {Ces frais ne sont pas inclus dans votre abonnement SearchUnveil et sont prélevés sur votre solde {provider}.}}',
+    '{billing, select, account {Ces frais ne sont inclus ni dans votre abonnement SearchUnveil ni dans votre essai gratuit de {trialDays, plural, one {# jour} other {# jours}}, et sont facturés sur votre propre compte {provider}.} other {Ces frais ne sont inclus ni dans votre abonnement SearchUnveil ni dans votre essai gratuit de {trialDays, plural, one {# jour} other {# jours}}, et sont prélevés sur votre solde {provider}.}}',
   'visibility.cost.failed-free': 'Les appels qui échouent ne sont pas facturés.',
   'visibility.cost.confirm': 'Voulez-vous continuer\u00A0?',
   'visibility.cost.reduce':
@@ -607,6 +607,33 @@ export const fr: CoreCatalog = {
   'visibility.other-sources': 'Sites cités à votre place',
   'visibility.failure':
     '{reason, select, unavailable {L’IA n’était pas disponible} rate-limited {Trop de demandes à la fois} refused {L’IA a refusé de répondre} no-balance {Solde insuffisant} timeout {Pas de réponse à temps} stopped {Arrêté par vous} other {Une erreur s’est produite}}',
+  'visibility.cost.failed-charged': 'Les appels qui échouent sont facturés aussi.',
+  'visibility.cost.failed-free-count':
+    '{calls, plural, one {# appel a échoué et n’a pas été facturé.} other {# appels ont échoué et n’ont pas été facturés.}}',
+  'visibility.engine.unavailable':
+    '{count, plural, one {{products} ne peut pas être vérifié sur {provider}\u00A0: aucun outil n’y est proposé pour cela.} other {{products} ne peuvent pas être vérifiés sur {provider}\u00A0: aucun outil n’y est proposé pour cela.}}',
+  'visibility.engine.price': '{price} par appel, environ {cost} pour cette vérification',
+  'visibility.engine.unpriced': 'Aucun prix indiqué',
+  'visibility.engine.cheapest': 'Le moins cher',
+  'visibility.engine.chosen': 'Choisi',
+  'visibility.column.question': 'Question posée',
+  'visibility.source.count':
+    '{site}\u00A0: cité dans {count, plural, one {# réponse} other {# réponses}}',
+  'visibility.calls.failed':
+    '{count, plural, one {# appel n’a apporté aucune réponse} other {# appels n’ont apporté aucune réponse}}\u00A0: {reasons}.',
+  'visibility.heading.engines': 'IA et modèles au choix',
+  'visibility.heading.cost': 'Coût',
+  'visibility.trend.title': 'Évolution dans le temps',
+  'visibility.trend.point': '{date}\u00A0: {present} sur {answers}',
+  'visibility.trend.basis':
+    'Comparé sur {questions, plural, one {# question} other {# questions}} et {products}, communs à toutes les vérifications.',
+  'visibility.trend.skipped':
+    '{count, plural, one {# vérification pour un autre site, pays ou langue a été écartée.} other {# vérifications pour un autre site, pays ou langue ont été écartées.}}',
+  'visibility.trend.not-checked': 'Non recherché',
+
+  // Pricing
+  'pricing.trial':
+    'Votre essai gratuit de {trialDays, plural, one {# jour} other {# jours}} ne couvre que l’abonnement SearchUnveil. La vérification de visibilité dans l’IA utilise des outils payants de {provider}, et leurs frais sont prélevés sur votre solde {provider} pendant l’essai aussi.',
 
   'diagnostic.input.empty': 'Ce fichier est vide.',
   'diagnostic.input.binary':

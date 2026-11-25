@@ -78,6 +78,8 @@ export interface ActualCost {
   readonly unpricedCalls: number;
   /** Whether the provider reported every billed call's cost itself. */
   readonly reported: boolean;
+  /** Whether the provider bills calls that fail. */
+  readonly chargesFailedCalls: boolean;
 }
 
 /**
@@ -126,5 +128,6 @@ export function actualCost(
     total: total / MICROS,
     unpricedCalls,
     reported,
+    chargesFailedCalls: record.provider.chargesFailedCalls,
   };
 }

@@ -18,7 +18,7 @@ The engine's part is built and tested in `packages/core/src/visibility`. Nothing
 
 ## What it costs, and when the person agrees
 
-Asking is the only step that costs money, and the person agrees to the cost before anything is asked.
+SearchUnveil is planned as a monthly subscription whose first 14 days are free (`PRICING` in `packages/core/src/pricing.ts`). Asking AI engines is the only step that costs money beyond that, and neither the subscription nor the free trial covers it: whoever provides the tools bills each call. The person agrees to that cost before anything is asked.
 
 ```text
 calls          = questions × engines × repeats
@@ -27,17 +27,23 @@ estimated cost = sum over engines of (price per call × calls made with that eng
 
 For example, 10 questions × 3 engines × 3 repeats = 90 calls. At 0.0052 USD a call, that is about 0.468 USD.
 
-1. **Before:** `estimateCost` gives the calls and the cost for each engine. `runVisibilityCheck` validates the plan, works out the estimate and passes it to the `confirm` callback. It asks nothing until `confirm` returns `true`. Any other answer, including a truthy one, declines.
+1. **Before:** `estimateCost` gives the calls and the cost for each engine. `costNotice` turns the estimate into the notice, sentence by sentence, so no screen or assistant can leave one out. `runVisibilityCheck` validates the plan, works out the estimate and passes it to the `confirm` callback. It asks nothing until `confirm` returns `true`. Any other answer, including a truthy one, declines.
 2. **Prices not stated:** an engine may have no stated price. The estimate then says how many calls it leaves out (`unpricedCalls`), and the default engine choice never includes such an engine.
-3. **Failed calls:** each provider says whether it bills failed calls (`chargesFailedCalls`). The notice says so when it doesn't.
-4. **After:** `actualCost` works out what was billed from the calls actually made. It uses the cost a provider reports for a call when there is one, and the stated price otherwise. Calls cut off when the person stopped the check are counted apart, because a provider may still bill them.
-5. **Paying less:** fewer questions, fewer engines or fewer repeats. The cheapest priced model of each AI product is chosen by default; dearer models are optional. The dearest model is not the truest measure, since what matters is the answer people actually get.
+3. **Failed calls:** each provider says whether it bills failed calls (`chargesFailedCalls`), and the notice says which.
+4. **After:** `actualCost` works out what was billed from the calls actually made, and `actualCostNotice` says it. It uses the cost a provider reports for a call when there is one, and the stated price otherwise. Failed calls that were not billed are counted, and so are calls cut off when the person stopped the check, because a provider may still bill those.
+5. **When a free trial starts:** `trialNotice` warns that the trial covers the SearchUnveil subscription only, and that the paid tools are billed during the trial too. "Free" must never read as "everything is free".
+6. **Paying less:** fewer questions, fewer engines or fewer repeats. `engineOptions` lists every model the provider offers, grouped by AI product, with what it would cost for this plan, so that a choice of model shows its price. The cheapest priced model of each AI product is chosen by default; dearer models are optional. The dearest model is not the truest measure, since what matters is the answer people actually get.
+7. **AI products a provider cannot ask:** `unavailableProducts` names the well-known AI products (ChatGPT, Claude, Gemini, Google AI Overviews and others) that the provider offers no tool for, and `unavailableNotice` tells the person plainly that they cannot be checked there.
 
-The notice is written in all seven languages (`visibility.cost.*` messages), for example in English:
+The notices are written in all seven languages. In English, the notice before a check reads:
 
-> This check uses paid tools on {provider}. Estimated cost: 90 calls, about $0.468. This fee is not included in your SearchUnveil subscription and is charged to your {provider} balance. Failed calls are not charged. Do you want to continue?
+> This check uses paid tools on {provider}. Estimated cost: 90 calls, about $0.468. This fee is not included in your SearchUnveil subscription or 14-day free trial and is charged to your {provider} balance. Failed calls are not charged. Do you want to continue?
 
-When people use their own accounts with AI services, the billing message says the fee is charged to their own account instead.
+In Turkish:
+
+> Bu kontrol, {provider} üzerindeki ücretli araçları kullanır. Tahmini maliyet: 90 çağrı, yaklaşık $0,468. Bu ücret SearchUnveil aboneliğinize ve 14 günlük ücretsiz deneme sürenize dahil değildir ve {provider} bakiyenizden kesilir. Başarısız çağrılar ücretlendirilmez. Devam etmek istiyor musunuz?
+
+The provider's name is inserted as written, so the sentences never add a suffix to it. When people use their own accounts with AI services, the billing sentence says the fee is charged to their own account instead.
 
 ## How answers are read
 

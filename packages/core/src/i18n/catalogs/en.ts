@@ -576,7 +576,7 @@ const messages = {
   'visibility.cost.unpriced':
     '{calls, plural, one {# call has no stated price, so the estimate leaves it out.} other {# calls have no stated price, so the estimate leaves them out.}}',
   'visibility.cost.billing':
-    '{billing, select, account {This fee is not included in your SearchUnveil subscription and is charged to your own {provider} account.} other {This fee is not included in your SearchUnveil subscription and is charged to your {provider} balance.}}',
+    '{billing, select, account {This fee is not included in your SearchUnveil subscription or {trialDays}-day free trial and is charged to your own {provider} account.} other {This fee is not included in your SearchUnveil subscription or {trialDays}-day free trial and is charged to your {provider} balance.}}',
   'visibility.cost.failed-free': 'Failed calls are not charged.',
   'visibility.cost.confirm': 'Do you want to continue?',
   'visibility.cost.reduce':
@@ -603,6 +603,32 @@ const messages = {
   'visibility.other-sources': 'Sites cited instead of yours',
   'visibility.failure':
     '{reason, select, unavailable {The AI was unavailable} rate-limited {Too many requests at once} refused {The AI declined to answer} no-balance {Not enough balance} timeout {No answer in time} stopped {Stopped by you} other {Something went wrong}}',
+  'visibility.cost.failed-charged': 'Failed calls are charged too.',
+  'visibility.cost.failed-free-count':
+    '{calls, plural, one {# call failed and was not charged.} other {# calls failed and were not charged.}}',
+  'visibility.engine.unavailable':
+    '{count, plural, one {{products} can’t be checked on {provider}: it offers no tool for it.} other {{products} can’t be checked on {provider}: it offers no tools for them.}}',
+  'visibility.engine.price': '{price} per call, about {cost} for this check',
+  'visibility.engine.unpriced': 'No stated price',
+  'visibility.engine.cheapest': 'Cheapest',
+  'visibility.engine.chosen': 'Chosen',
+  'visibility.column.question': 'Question',
+  'visibility.source.count': '{site}: cited in {count, plural, one {# answer} other {# answers}}',
+  'visibility.calls.failed':
+    '{count, plural, one {# call brought no answer} other {# calls brought no answer}}: {reasons}.',
+  'visibility.heading.engines': 'AI engines and models you can choose',
+  'visibility.heading.cost': 'Cost',
+  'visibility.trend.title': 'Change over time',
+  'visibility.trend.point': '{date}: {present} of {answers}',
+  'visibility.trend.basis':
+    'Compared on {questions, plural, one {# question} other {# questions}} and {products}, which every check shares.',
+  'visibility.trend.skipped':
+    '{count, plural, one {# check for another site, country or language was left out.} other {# checks for another site, country or language were left out.}}',
+  'visibility.trend.not-checked': 'Not looked for',
+
+  // Pricing
+  'pricing.trial':
+    'Your {trialDays}-day free trial covers the SearchUnveil subscription only. The AI visibility check uses paid tools on {provider}, and their fees are charged to your {provider} balance during the trial too.',
 
   // Diagnostics: files
   'diagnostic.input.empty': 'This file is empty.',

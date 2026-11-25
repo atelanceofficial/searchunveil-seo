@@ -470,7 +470,7 @@ export const zhCN: CoreCatalog = {
   'visibility.cost.estimate': '预计费用：{calls} 次调用，约 {amount}。',
   'visibility.cost.unpriced': '有 {calls} 次调用未标明价格，因此未计入估算。',
   'visibility.cost.billing':
-    '{billing, select, account {此费用不包含在您的 SearchUnveil 订阅中，将从您自己的 {provider} 账户扣除。} other {此费用不包含在您的 SearchUnveil 订阅中，将从您的 {provider} 余额中扣除。}}',
+    '{billing, select, account {此费用不包含在您的 SearchUnveil 订阅和 {trialDays} 天免费试用中，将从您自己的 {provider} 账户扣除。} other {此费用不包含在您的 SearchUnveil 订阅和 {trialDays} 天免费试用中，将从您的 {provider} 余额中扣除。}}',
   'visibility.cost.failed-free': '失败的调用不收费。',
   'visibility.cost.confirm': '要继续吗？',
   'visibility.cost.reduce':
@@ -492,6 +492,28 @@ export const zhCN: CoreCatalog = {
   'visibility.other-sources': '代替您被引用的网站',
   'visibility.failure':
     '{reason, select, unavailable {AI 不可用} rate-limited {同时发出的请求过多} refused {AI 拒绝回答} no-balance {余额不足} timeout {未能及时回答} stopped {已由您停止} other {出现错误}}',
+  'visibility.cost.failed-charged': '失败的调用也会收费。',
+  'visibility.cost.failed-free-count': '有 {calls} 次调用失败，未收费。',
+  'visibility.engine.unavailable':
+    '{count, plural, other {无法在 {provider} 上检查 {products}：该平台未提供相应工具。}}',
+  'visibility.engine.price': '每次调用 {price}，此次检查约 {cost}',
+  'visibility.engine.unpriced': '未标明价格',
+  'visibility.engine.cheapest': '最便宜',
+  'visibility.engine.chosen': '已选',
+  'visibility.column.question': '问题',
+  'visibility.source.count': '{site}：在 {count} 个回答中被引用',
+  'visibility.calls.failed': '有 {count} 次调用没有得到回答：{reasons}。',
+  'visibility.heading.engines': '可选择的 AI 和模型',
+  'visibility.heading.cost': '费用',
+  'visibility.trend.title': '随时间的变化',
+  'visibility.trend.point': '{date}：{answers} 个回答中有 {present} 个',
+  'visibility.trend.basis': '基于所有检查共有的 {questions} 个问题和 {products} 进行比较。',
+  'visibility.trend.skipped': '已排除 {count} 次针对其他网站、国家或语言的检查。',
+  'visibility.trend.not-checked': '未检查',
+
+  // Pricing
+  'pricing.trial':
+    '{trialDays} 天免费试用仅涵盖 SearchUnveil 订阅。AI 可见度检查使用 {provider} 上的付费工具，试用期间其费用同样从您的 {provider} 余额中扣除。',
 
   'diagnostic.input.empty': '此文件为空。',
   'diagnostic.input.binary': '这不是文本文件。请选择 CSV 文件，或 Search Console 下载的 ZIP 文件。',

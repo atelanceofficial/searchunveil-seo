@@ -572,7 +572,7 @@ export const de: CoreCatalog = {
   'visibility.cost.unpriced':
     '{calls, plural, one {Für # Aufruf ist kein Preis angegeben, daher fehlt er in der Schätzung.} other {Für # Aufrufe ist kein Preis angegeben, daher fehlen sie in der Schätzung.}}',
   'visibility.cost.billing':
-    '{billing, select, account {Diese Gebühr ist nicht in Ihrem SearchUnveil-Abonnement enthalten und wird Ihrem eigenen {provider}-Konto belastet.} other {Diese Gebühr ist nicht in Ihrem SearchUnveil-Abonnement enthalten und wird von Ihrem {provider}-Guthaben abgebucht.}}',
+    '{billing, select, account {Diese Gebühr ist weder in Ihrem SearchUnveil-Abonnement noch in Ihrem {trialDays}-tägigen kostenlosen Testzeitraum enthalten und wird Ihrem eigenen {provider}-Konto belastet.} other {Diese Gebühr ist weder in Ihrem SearchUnveil-Abonnement noch in Ihrem {trialDays}-tägigen kostenlosen Testzeitraum enthalten und wird von Ihrem {provider}-Guthaben abgebucht.}}',
   'visibility.cost.failed-free': 'Fehlgeschlagene Aufrufe werden nicht berechnet.',
   'visibility.cost.confirm': 'Möchten Sie fortfahren?',
   'visibility.cost.reduce':
@@ -600,6 +600,33 @@ export const de: CoreCatalog = {
   'visibility.other-sources': 'Stattdessen zitierte Websites',
   'visibility.failure':
     '{reason, select, unavailable {Die KI war nicht erreichbar} rate-limited {Zu viele Anfragen auf einmal} refused {Die KI hat die Antwort verweigert} no-balance {Das Guthaben reicht nicht aus} timeout {Keine Antwort in der vorgesehenen Zeit} stopped {Von Ihnen gestoppt} other {Etwas ist schiefgelaufen}}',
+  'visibility.cost.failed-charged': 'Auch fehlgeschlagene Aufrufe werden berechnet.',
+  'visibility.cost.failed-free-count':
+    '{calls, plural, one {# Aufruf ist fehlgeschlagen und wurde nicht berechnet.} other {# Aufrufe sind fehlgeschlagen und wurden nicht berechnet.}}',
+  'visibility.engine.unavailable':
+    '{count, plural, one {{products} kann auf {provider} nicht geprüft werden: Dafür gibt es dort kein Tool.} other {{products} können auf {provider} nicht geprüft werden: Dafür gibt es dort keine Tools.}}',
+  'visibility.engine.price': '{price} pro Aufruf, etwa {cost} für diese Prüfung',
+  'visibility.engine.unpriced': 'Kein Preis angegeben',
+  'visibility.engine.cheapest': 'Am günstigsten',
+  'visibility.engine.chosen': 'Ausgewählt',
+  'visibility.column.question': 'Frage',
+  'visibility.source.count':
+    '{site}: in {count, plural, one {# Antwort} other {# Antworten}} zitiert',
+  'visibility.calls.failed':
+    '{count, plural, one {# Aufruf brachte keine Antwort} other {# Aufrufe brachten keine Antwort}}: {reasons}.',
+  'visibility.heading.engines': 'KIs und Modelle zur Auswahl',
+  'visibility.heading.cost': 'Kosten',
+  'visibility.trend.title': 'Veränderung im Zeitverlauf',
+  'visibility.trend.point': '{date}: {present} von {answers}',
+  'visibility.trend.basis':
+    'Verglichen anhand von {questions, plural, one {# Frage} other {# Fragen}} und {products}, die alle Prüfungen gemeinsam haben.',
+  'visibility.trend.skipped':
+    '{count, plural, one {# Prüfung für eine andere Website, ein anderes Land oder eine andere Sprache wurde ausgelassen.} other {# Prüfungen für eine andere Website, ein anderes Land oder eine andere Sprache wurden ausgelassen.}}',
+  'visibility.trend.not-checked': 'Nicht gesucht',
+
+  // Pricing
+  'pricing.trial':
+    'Ihr {trialDays}-tägiger kostenloser Testzeitraum gilt nur für das SearchUnveil-Abonnement. Die Prüfung der KI-Sichtbarkeit nutzt kostenpflichtige Tools auf {provider}, und deren Gebühren werden auch während des Testzeitraums von Ihrem {provider}-Guthaben abgebucht.',
 
   'diagnostic.input.empty': 'Diese Datei ist leer.',
   'diagnostic.input.binary':

@@ -213,6 +213,7 @@ describe('actualCost', () => {
       total: 0.0102,
       unpricedCalls: 1,
       reported: false,
+      chargesFailedCalls: false,
     });
     const billing = { ...provider, chargesFailedCalls: true };
     const charged = actualCost({ answers, engines: TEST_ENGINES, provider: billing });
